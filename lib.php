@@ -47,6 +47,33 @@ function saveUser($username, $firstname, $lastname, $email, $contact, $address, 
 	}
 	return $id;
 }
+function isExist($FBID){
+	$sql = "SELECT * FROM `users` WHERE id = '$FBID';";
+	$db = getDBConnection();
+	if($db != NULL){
+		$res = $db->query($sql);
+		if($res && $row = $res->fetch_assoc()){
+			//var_dump($data);
+			if($row["id"]!=NUll)return true;
+		}
+		return false;
+	}
+}
+
+function saveFBUser($FBUsername, $FBID){
+	$sql = "INSERT INTO `users` (`id`,`username`) VALUES ('$FBID','$FBUsername');";
+	$id = -1;
+	$db = getDBConnection();
+	if ($db != NULL){
+		$res = $db->query($sql);
+	
+		if ($res && $db->insert_id > 0){
+			$id = $db->insert_id;
+		}
+		$db->close();
+	}
+	return $id;
+}
 
 
 function saveProfile($contact, $interest, $tradables){
