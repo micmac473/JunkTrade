@@ -33,10 +33,15 @@ include "base.php";
       </div>
     </div>
 
-    <div id = "itemblock" class="col-lg-7 col-md-4 col-s-4 col-xs-12">
+    <div class="col-xs-2">
+    </div>
+
+    <div id = "itemblock" class="col-lg-4- col-md-4 col-s-4 col-xs-12">
+      </div>
+     <div class="col-xs-2">
     
     </div>
-    <div class="col-xs-3 well">
+    <div class="col-xs-2 well">
       <div class="thumbnail">
         <p>NOTIFICATIONS ABOUT FOLLOWERS</p>
       </div>      

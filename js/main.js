@@ -148,7 +148,7 @@ function listAllItems(records){
         //htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+"); window.open(this.src)\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
         itemdiv += "<div class='panel panel-primary'>";
         itemdiv += "<div class='panel-heading'>"+  el['itemname'] + "</div>"; 
-        itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:270px;height:200px;' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+        itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
         itemdiv += "<div class='panel-footer'>"+  el['username'] + "</div>"; 
         itemdiv += "<div class='panel-footer'>"+  el['itemdescription'] + "</div>"; 
         itemdiv += "<div class='panel-footer'> <button type='button' class='btn btn-primary' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i></button><button type='button' class='btn btn-success' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-user-plus' aria-hidden='true'></i></button></div>";
