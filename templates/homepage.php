@@ -8,61 +8,8 @@ include "base.php";
 <div class="container-fluid">
   <div class="row">
     
-    <div class="col-xs-2 well">
-      <div class="thumbnail">
-        <p>A FIXED DROP DOWN MENU LIKE HOW GOOGLE+ HAS IT</p>
-      </div>      
-      <div class="well">
-        <p>HOME</p>
-      </div>
-      <div class="well">
-        <p>PROFILE</p>
-      </div>
-      <div class="well">
-        <p>PEOPLE</p>
-      </div>
-      <div class="well">
-        <p>FOLLOWERS</p>
-      </div>
-      <div class="well">
-        <p>NOTIFICATIONS</p>
-      </div>
-
-      <div class="well">
-        <p>MEET UP</p>
-      </div>
-    </div>
-
-    <div class="col-xs-2">
-    </div>
-
-    <div id = "itemblock" class="col-lg-4- col-md-4 col-s-4 col-xs-12">
-      </div>
-     <div class="col-xs-2">
     
-    </div>
-    <div class="col-xs-2 well">
-      <div class="thumbnail">
-        <p>NOTIFICATIONS ABOUT FOLLOWERS</p>
-      </div>      
-      <div class="well">
-        <p>FOLLOWER 1 just uploaded an item</p>
-      </div>
-      <div class="well">
-        <p>FOLLOWER 2 just uploaded an item</p>
-      </div>
-      <div class="well">
-        <p>FOLLOWER 3 just uploaded an item</p>
-      </div>
-      <div class="well">
-        <p>FOLLOWER 4 just uploaded an item</p>
-      </div>
-      <div class="well">
-        <p>FOLLOWER 5 just uploaded an item</p>
-      </div>
-      <div class="well">
-        <p>FOLLOWER 6 just uploaded an item</p>
-      </div>
+    <div id = "itemblock" class="col-lg-5 col-lg-offset-3 col-md-4 col-s-4 col-xs-12">
     </div>
   </div>
 </div>

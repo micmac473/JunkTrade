@@ -142,7 +142,7 @@ function listAllItems(records){
     var key;
     var sec_id = "#table_sech";
     var htmlStr = $("#table_headingh").html(); //Includes all the table, thead and tbody declarations
-    var itemdiv;
+    var itemdiv = "<div>";
     records.forEach(function(el){
         htmlStr += "<tr>";
         //htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+"); window.open(this.src)\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
