@@ -1,0 +1,99 @@
+<h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Join JunkTrade</h2>
+    <div class ="row">
+      <div class="col-md-8 col-md-offset-2">
+      
+<form name="userForm" class="form-horizontal" method = "POST" action = "index.php/register" onsubmit="return register();" ng-submit="submitForm(userForm.$valid)" novalidate>
+<fieldset>
+
+<!-- Form Name -->
+<legend style="text-align: center">Join JunkTrade</legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="username">Username <span style="color:red">*</span></label>  
+  <div class="col-md-4">
+  <input id="username" name="username" type="text" placeholder="johnDoe123" class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" ng-model="user.username" ng-minlength="3" ng-maxlength="8" required="">
+  <p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
+  <p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
+  
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="firstname">First Name <span style="color:red">*</span></label>  
+  <div class="col-md-4">
+  <input id="firstname" name="firstname" type="text" placeholder="John" class="form-control input-md" ng-model="user.fname" type="text" placeholder="" class="form-control input-md" required="">
+  
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="lastname">Last Name <span style="color:red">*</span></label>  
+  <div class="col-md-4">
+  <input id="lastname" name="lastname" type="text" placeholder="Doe" class="form-control input-md" ng-model="user.lname" type="text" placeholder="" class="form-control input-md" required="">
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="email">Email <span style="color:red">*</span> </label>  
+  <div class="col-md-4">
+  <input id="email" name="email" placeholder="johndoe@email.com" class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" ng-model="user.email" type="email" placeholder="johnDoe@example.com" class="form-control input-md" required="">
+  <p ng-show="userForm.email.$error.email" class="help-block" >Invalid Email Address</p>    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="contact">Contact <span style="color:red">*</span> </label>  
+  <div class="col-md-4">
+  <input id="contact" name="contact" type="number" placeholder="8681234567" class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" ng-model="user.contact" type="text" placeholder="" class="form-control input-md" ng-minlength="10" ng-maxlength="10" required="">
+  <p ng-show="userForm.contact.$error.minlength" class="help-block">Must be 10 digits((areacode)-contact#).</p>
+  <p ng-show="userForm.contact.$error.maxlength" class="help-block">Must be 10 digits((areacode)-contact#).</p>
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="address">Address <span style="color:red">*</span></label>  
+  <div class="col-md-4">
+  <input id="address" name="address" type="text" placeholder="San Jaun" class="form-control input-md" ng-model="user.address" required="">
+    
+  </div>
+</div>
+
+
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="password">Password <span style="color:red">*</span> </label>
+  <div class="col-md-4">
+    <input id="password" name="password" type="password" placeholder="" class="form-control input-md" data-ng-model="user.password" ng-minlength="8" ng-maxlength="25" required="">
+    <p ng-show="userForm.password.$error.minlength" class="help-block">Password is too short.</p>
+  <p ng-show="userForm.password.$error.maxlength" class="help-block">Password is too long.</p>
+  </div>
+</div>
+
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="retypedpassword">Re-enter Password <span style="color:red">*</span> </label>
+  <div class="col-md-4">
+    <input id="retypedpassword" name="retypedpassword" type="password" placeholder="" class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" ng-model="user.retypedpassword" required data-password-verify="user.password" required="">
+  <p ng-show="userForm.retypedpassword.$error.passwordVerify" class="help-block">Passwords do not match </p>
+    
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Submit"></label>
+  <div class="col-md-4">
+    <button id="saveBnt" name="saveBnt" class="btn btn-primary btn-block" type ="submit" ng-disabled="userForm.$invalid">Sign up for FREE</button>
+  </div>
+</div>
+
+</fieldset>
+</form> -->
