@@ -269,12 +269,12 @@ button:active{
           </li>
         </ul>
 
-        <form class="navbar-form navbar-left" role="form">
+<form class="navbar-form navbar-left" role="form" action ="search.php?go">
           <div class="form-group">
-            <input type="text" placeholder="Search for junk" class="form-control">
+            <input type="text" placeholder="Search for junk" class="form-control" name="searchname">
           </div>
             <!--change to icon-->
-          <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true" ></i></button>
+          <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true" name="searchsubmit"></i></button>
         </form>
 
         <ul class="nav navbar-nav navbar-right">
