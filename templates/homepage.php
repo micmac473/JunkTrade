@@ -7,12 +7,11 @@ include "base.php";
     
 <div class="container-fluid">
   <div class="row">
-    
-    
-    <div id = "itemblock" class="col-lg-5 col-lg-offset-3 col-md-4 col-s-4 col-xs-12">
+    <div id = "itemblock" class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-s-4 col-xs-12">
     </div>
   </div>
 </div>
+
 <script type="text/template" id="table_headingh">
   <table class="table table-hover table-condensed col-xs-3">
     <thead class="thead-inverse">
