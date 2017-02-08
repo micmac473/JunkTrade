@@ -77,6 +77,42 @@ function login(){
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
+ // Password Reset functionality
+function reset(){
+    console.log("Hi");
+    var email = $("#user").val();
+    var password = $("#sAnswer").val();
+    //console.log(email + " " + pass);
+    var user = {
+        "user" : user,
+        "sAnswer": sAnswer
+    }
+
+    console.log(user);
+    $.post("../index.php/reset", user, function(res){
+        console.log(res);
+        if(res.loginstatus){
+            //console.log(res);
+            swal({ 
+                title: "reset",
+                text: "You successfully reset your password",
+                type: "success" 
+            },
+                function(){
+                    window.location.href = 'index.phtml';
+            });
+            //window.location.href="homepage.php";
+            //return false;
+        }
+        else{
+            swal("Unsuccesful Reset","Please try again","error")
+            //return false;
+        }
+    },"json");
+    console.log("Password Reset");
+    return false;
+}
+//--------------------------------------------------------------------------------------------------------------------
 // Registration functionality
 function register(){
     //console.log("Hi");

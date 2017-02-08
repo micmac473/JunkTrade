@@ -3,12 +3,13 @@
 
 include "../lib.php";
 session_unset(); 
-if(isset($_POST['email']) && isset($_POST['password'])){
-  $email = $_POST['email'];
-  $password = $_POST['password'];
+if(isset($_POST['user']) && isset($_POST['sAnswer'])){
+  $user = $_POST['user'];
+  $answeer = $_POST['sAnswer'];
   //p($post);
   // print "Name: $name, Price:$price, Country: $countryId";
-  $res = checkLogin($email, $password);
+  //$res = checkLogin($email, $password);
+  $res = checkSecurityAnswer($user,$answer);
   if($res){
     header('Location: homepage.php');  
   }
@@ -96,25 +97,25 @@ form {
     <div class ="row">
       <div class="col-md-8 col-md-offset-2">
         <!-- <form class="form-horizontal" onsubmit="return login();" method ="POST" action="index.php/users"> -->
-          <form class="form-horizontal" method ="POST" action="index.php/login" onsubmit="return login();">
+          <form class="form-horizontal" method ="POST" action="index.php/reset" onsubmit="return reset();">
           <fieldset>
             <!-- Form Name -->
-            <legend style="text-align: center">Sign in to JunkTrade</legend>
+            <legend style="text-align: center">Reset Password</legend>
 
             <!-- Text input-->
             <div class="form-group">
               <label class="col-md-4 control-label" for="email">Username or Email</label>  
               <div class="col-md-4">
-              <input name="email" class="form-control input-md" id="email" required="" type="text" placeholder="johnDoe@example.com">
+              <input name="user" class="form-control input-md" id="user" required="" type="text" placeholder="username / john@example.com">
                 
               </div>
             </div>
 
             <!-- Password input-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="pass">Password</label>
+              <label class="col-md-4 control-label" for="pass">Security Answer</label>
               <div class="col-md-4">
-                <input name="password" class="form-control input-md" id="password" required="" type="password" placeholder="password">
+                <input name="sAnswer" class="form-control input-md" id="sAnswer" required="" type="password" placeholder="Answer">
                 
               </div>
             </div>
@@ -123,9 +124,7 @@ form {
             <div class="form-group">
               <label class="col-md-4 control-label" for="login"></label>
               <div class="col-md-4">
-                <button name="saveBnt" class="btn btn-primary btn-block " id="saveBnt" type ="submit">Sign in</button>
-                <a href ="reset.php" style ="color: blue; text-decoration: none;">Forgot password?</a>
-              </div>
+                <button name="saveBnt" class="btn btn-primary btn-block " id="saveBnt" type ="submit">Submit Password Reset</button>
             </div>
               
           </fieldset>
@@ -138,26 +137,7 @@ form {
 
 </div>
 
-<?php
-//Facebook 
 
-require_once __DIR__ . '/src/Facebook/autoload.php';
-$fb = new Facebook\Facebook([
-  'app_id' => '552065338336275',
-  'app_secret' => 'fed80c20693c796130702fc8f4be751f',
-  'default_graph_version' => 'v2.4',
-  ]);
-$helper = $fb->getRedirectLoginHelper();
-$permissions = ['email']; // optional
-  
-$helper = $fb->getRedirectLoginHelper();
-
-$permissions = ['email']; // Optional permissions
-$loginUrl = $helper->getLoginUrl('http://localhost:8080/junktradeproject/templates/facebookSession.php', $permissions);
-
-
-echo '<a href="' . htmlspecialchars($loginUrl) . '">Log in with Facebook!</a>';
-?>
 <!--footer -->
   <div class="footer">
     <p> &copy; JunkTrade 2016 </p>

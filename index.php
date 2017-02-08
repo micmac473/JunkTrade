@@ -261,6 +261,26 @@ $app->post("/login", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->post("/reset", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	//var_dump($post);
+	$user = $post['user'];
+	$sAnswer = $post['sAnswer'];
+	//print_r($post);
+	// print "Name: $name, Price:$price, Country: $countryId";
+	$res = checkSecurityAnswer($user, $sAnswer);
+	//print_r ($res);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson(array("resetstatus"=> true));
+		
+	} else {
+		$response = $response->withJson(400);
+	}
+	return $response;
+});
+
 $app->post("/register", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	$username = $post['username'];
