@@ -49,6 +49,8 @@ if(isset($_POST['email']) && isset($_POST['password'])){
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <script src="../js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 <style>
 body {
   position: relative;
@@ -79,10 +81,9 @@ form {
       
             <!--this is not rendering the login page as it shoul -->
             <ul class = "nav navbar-nav navbar-right ">
-                <li><a href ="login.php">Login</a></li>
-            </ul>
-            <ul class = "nav navbar-nav navbar-right ">
-                <li><a href ="registration.phtml">Sign up</a></li>
+              <li><a href ="registration.phtml"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+              <li><a href ="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                
             </ul>
            <!--<ul class="nav navbar-nav navbar-right ">
                 <li><button type="button" class="btn btn-primary btn-lg" onclick="window.location='templates/login.html'">login</button></li>
@@ -92,38 +93,45 @@ form {
       </div>
     </nav>
   <div class ="container">
-    <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">JunkTrade</h2>
-    <div class ="row">
-      <div class="col-md-8 col-md-offset-2">
+    <div class="jumbotron" style="text-align:center;">
+    <h1 >Sign in to JunkTrade </h1>
+    <h3> Let the trading begin!</h3>
+  </div>
+    <div class ="row main">
+      <div class="main-login main-center">
         <!-- <form class="form-horizontal" onsubmit="return login();" method ="POST" action="index.php/users"> -->
-          <form class="form-horizontal" method ="POST" action="index.php/login" onsubmit="return login();">
+          <form  role="form" data-toggle="validator" onsubmit="return login();">
           <fieldset>
             <!-- Form Name -->
-            <legend style="text-align: center">Sign in to JunkTrade</legend>
+            <legend style="text-align: center"> <h2> Sign In </h2></legend>
 
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="email">Username or Email</label>  
-              <div class="col-md-4">
-              <input name="email" class="form-control input-md" id="email" required="" type="text" placeholder="johnDoe@example.com">
-                
+            <div class="form-group has-feedback">
+              <label for="username" class="cols-xs-2 control-label">Username or email address</label>
+              <div class="cols-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                  <input type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="email" id="email"  placeholder="Username or email" required="">
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
             </div>
 
-            <!-- Password input-->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="pass">Password</label>
-              <div class="col-md-4">
-                <input name="password" class="form-control input-md" id="password" required="" type="password" placeholder="password">
-                
+            <div class="form-group has-feedback">
+              <label for="password" class="cols-sm-2 control-label">Password</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <input type="password" data-minlength="6" class="form-control" name="password" id="password"  placeholder="Password" required/>
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
             </div>
 
             <!-- Button -->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="login"></label>
-              <div class="col-md-4">
-                <button name="saveBnt" class="btn btn-primary btn-block " id="saveBnt" type ="submit">Sign in</button>
+                <button name="saveBnt" class="btn btn-primary btn-lg btn-block login-button" id="saveBnt" type ="submit">Sign in</button>
                 <a href ="reset.php" style ="color: blue; text-decoration: none;">Forgot password?</a>
               </div>
             </div>

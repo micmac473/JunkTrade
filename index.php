@@ -287,12 +287,14 @@ $app->post("/register", function(Request $request, Response $response){
 	$firstname = $post['firstname'];
 	$lastname = $post['lastname'];
 	$email = $post['email'];
-	$contact = $post['contact'];
-	$address = $post['address'];
+	//$contact = $post['contact'];
+	//$address = $post['address'];
 	$password = $post['password'];
+	$securityQuestion = $post['securityquestion'];
+	$securityAnswer = $post['securityanswer'];
 	//print_r($post);
 	// print "Name: $name, Price:$price, Country: $countryId";
-	$res = saveUser($username, $firstname, $lastname, $email, $contact, $address, $password);
+	$res = saveUser($username, $firstname, $lastname, $email, $password, $securityQuestion, $securityAnswer);
 	//print_r ($res);
 	if ($res){
 		$response = $response->withStatus(201);

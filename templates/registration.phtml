@@ -52,104 +52,7 @@
 body{
   background-color: #f6f6f6;
 }
-.main{
-  margin:10px 15px;
-}
 
-h1.title { 
-  font-size: 100px;
-  font-family: 'Passion One', cursive; 
-  font-weight: 400; 
-}
-
-hr{
-  width: 10%;
-  color: #fff;
-}
-
-.form-group{
-  margin-bottom: 15px;
-}
-
-label{
-  margin-bottom: 5px;
-  font-size: 16px;
-}
-
-input,
-input::-webkit-input-placeholder {
-    font-size: 14px;
-    padding-top: 3px;
-}
-
-.main-login{
-  background-color: #fff;
-    /* shadows and rounded borders */
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-
-}
-.form-control {
-    height: auto!important;
-padding: 8px 12px !important;
-}
-.input-group {
-    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
-    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
-    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
-}
-#button {
-    border: 1px solid #ccc;
-    margin-top: 28px;
-    padding: 6px 12px;
-    color: #666;
-    text-shadow: 0 1px #fff;
-    cursor: pointer;
-    -moz-border-radius: 3px 3px;
-    -webkit-border-radius: 3px 3px;
-    border-radius: 3px 3px;
-    -moz-box-shadow: 0 1px #fff inset, 0 1px #ddd;
-    -webkit-box-shadow: 0 1px #fff inset, 0 1px #ddd;
-    box-shadow: 0 1px #fff inset, 0 1px #ddd;
-    background: #f5f5f5;
-    background: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #eeeeee));
-    background: -webkit-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-    background: -o-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-    background: -ms-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-    background: linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#eeeeee', GradientType=0);
-}
-.main-center{
-  margin-top: 30px;
-  margin: 0 auto;
-  max-width: 600px;
-    padding: 5px 20px;
-  background:white;
-      color: black;
-    text-shadow: none;
-  -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
--moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
-box-shadow: 3px 3px 5px 3px rgba(0,0,0,0.31);
-
-}
-span.input-group-addon i {
-    color: #009edf;
-    font-size: 18px;
-}
-
-.login-button{
-  margin-top: 5px;
-}
-
-.login-register{
-  font-size: 11px;
-  text-align: center;
-}
 </style>
 
     </head>
@@ -193,15 +96,15 @@ span.input-group-addon i {
       <div class="row main">
         <div class="main-login main-center">
           
-          <form class="" method="post" action = "index.php/register" onsubmit="return register();" data-toggle="validator" role="form">
-            <fieldset>
-              <legend style="text-align:center;"> <h2> Sign Up </h2> </legend>
+          <form role="form" data-toggle="validator"  onsubmit="return register();">
+            <legend style="text-align:center;"> <h2> Sign Up </h2> </legend>
+
             <div class="form-group has-feedback">
               <label for="username" class="cols-xs-2 control-label">Username</label>
               <div class="cols-xs-12">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                  <input type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="username" id="username"  placeholder="Enter your Username" required/>
+                  <input type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="username" id="username"  placeholder="Enter your Username" required="">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -276,7 +179,7 @@ span.input-group-addon i {
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-user-secret" aria-hidden="true"></i></span>
-                  <select class="form-control" name="secretquestion" id="secretquestion"  required/>
+                  <select class="form-control" name="securityquestion" id="securityquestion"  required/>
                   <option value="0"> Select a security question</option>
                     <option value="kiss"> What is the first name of the person you first kissed? </option>
                     <option value="mother"> What is your mother's maiden name? </option>
@@ -303,7 +206,7 @@ span.input-group-addon i {
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="password" data-match="#securityanswer" data-match-error="Whoops, these don't match" class="form-control" name="retypedanswer" id="retypedanswer"  placeholder="Confirm your answer" required/>
+                  <input type="password" data-match="#securityanswer" data-match-error="Whoops, these don't match" class="form-control" name="retypedanswer" id="retypedanswer"  placeholder="Confirm your answer" required="">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -311,7 +214,7 @@ span.input-group-addon i {
             </div>
 
             <div class="form-group ">
-              <button type="submit" id="saveBnt" name="saveBnt" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+              <button id="saveBnt" name="saveBnt" type="submit" class="btn btn-primary btn-lg btn-block login-button" data-delay="disable">Register</button>
             </div>
             </fieldset>
           </form>

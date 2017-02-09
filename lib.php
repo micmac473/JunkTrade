@@ -51,9 +51,10 @@ function checkSecurityAnswer($user, $sAnswer){
 }
 
 
-function saveUser($username, $firstname, $lastname, $email, $contact, $address, $password){
+function saveUser($username, $firstname, $lastname, $email, $password, $securityQuestion, $securityAnswer){
 	$password = sha1($password);
-	$sql = "INSERT INTO `users` (`username`, `firstname`, `lastname`, `email`, `contact`, `address`, `password`) VALUES ('$username', '$firstname', '$lastname', '$email', '$contact', '$address', '$password');";
+	$securityAnswer = sha1($securityAnswer);
+	$sql = "INSERT INTO `users` (`username`, `firstname`, `lastname`, `email`, `password`, `securityquestion`, `securityanswer`) VALUES ('$username', '$firstname', '$lastname', '$email', '$password','$securityQuestion','$securityAnswer');";
 	$id = -1;
 	$db = getDBConnection();
 	if ($db != NULL){
@@ -65,6 +66,7 @@ function saveUser($username, $firstname, $lastname, $email, $contact, $address, 
 	}
 	return $id;
 }
+
 function isExist($FBID){
 	$sql = "SELECT * FROM `users` WHERE id = '$FBID';";
 	$db = getDBConnection();

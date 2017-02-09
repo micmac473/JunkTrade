@@ -115,16 +115,17 @@ function reset(){
 //--------------------------------------------------------------------------------------------------------------------
 // Registration functionality
 function register(){
-    //console.log("Hi");
+    console.log("Hi");
     var username = $("#username").val();
     var firstname = $("#firstname").val();
     var lastname = $("#lastname").val();
     var email = $("#email").val();
-    var contact = $("#contact").val();
-    var address = $("#address").val();
+    //var contact = $("#contact").val();
+    //var address = $("#address").val();
     var password = $("#password").val();
     var retypedpassword = $("#retypedpassword").val();
-
+    var securityQuestion = $("#securityquestion").val();
+    var securityAnswer = $("#securityanswer").val();
     /*if(password != retypedpassword){
         alert("Password do not match");
         return false;
@@ -135,9 +136,9 @@ function register(){
         "firstname" : firstname,
         "lastname" : lastname,
         "email" : email,
-        "contact" : contact,
-        "address" : address,
-        "password" : password
+        "password" : password,
+        "securityquestion" : securityQuestion,
+        "securityanswer" : securityAnswer
     };
 
     $.post("../index.php/register", regUser, function(res){
