@@ -44,18 +44,20 @@
     overflow: hidden !important;
     -webkit-overflow-scrolling: touch;
 }
-body, html{
+/* body, html{
      height: 100%;
   
       background-size: cover;
+} */
+body{
+  background-color: #f6f6f6;
 }
-
 .main{
-  margin:50px 15px;
+  margin:10px 15px;
 }
 
 h1.title { 
-  font-size: 50px;
+  font-size: 100px;
   font-family: 'Passion One', cursive; 
   font-weight: 400; 
 }
@@ -70,12 +72,13 @@ hr{
 }
 
 label{
-  margin-bottom: 15px;
+  margin-bottom: 5px;
+  font-size: 16px;
 }
 
 input,
 input::-webkit-input-placeholder {
-    font-size: 11px;
+    font-size: 14px;
     padding-top: 3px;
 }
 
@@ -124,19 +127,19 @@ padding: 8px 12px !important;
 .main-center{
   margin-top: 30px;
   margin: 0 auto;
-  max-width: 400px;
-    padding: 10px 40px;
-  background:lightgrey;
-      color: #FFF;
+  max-width: 600px;
+    padding: 5px 20px;
+  background:white;
+      color: black;
     text-shadow: none;
   -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+box-shadow: 3px 3px 5px 3px rgba(0,0,0,0.31);
 
 }
 span.input-group-addon i {
     color: #009edf;
-    font-size: 17px;
+    font-size: 18px;
 }
 
 .login-button{
@@ -153,7 +156,7 @@ span.input-group-addon i {
 
 
 
-    <body ng-app="validationApp" ng-controller="mainController">
+    <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -171,10 +174,9 @@ span.input-group-addon i {
       
             <!--this is not rendering the login page as it shoul -->
             <ul class = "nav navbar-nav navbar-right ">
-                <li><a href ="login.php">Login</a></li>
-            </ul>
-            <ul class = "nav navbar-nav navbar-right ">
-                <li><a href ="registration.phtml">Sign up</a></li>
+              <li><a href ="registration.phtml"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+              <li><a href ="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                
             </ul>
            <!--<ul class="nav navbar-nav navbar-right ">
                 <li><button type="button" class="btn btn-primary btn-lg" onclick="window.location='templates/login.html'">login</button></li>
@@ -184,79 +186,134 @@ span.input-group-addon i {
       </div>
     </nav>
 <div class="container">
-  <br>
+  <div class="jumbotron" style="text-align:center;">
+    <h1 >Join JunkTrade </h1>
+    <h3> The best way to trade the things you HAVE for the things you WANT</h3>
+  </div>
       <div class="row main">
         <div class="main-login main-center">
-        <h1 style="text-align: center;">Sign Up For JunkTrade</h1>
+          
           <form class="" method="post" action = "index.php/register" onsubmit="return register();" data-toggle="validator" role="form">
-
+            <fieldset>
+              <legend style="text-align:center;"> <h2> Sign Up </h2> </legend>
             <div class="form-group has-feedback">
-              <label for="username" class="cols-sm-2 control-label">Username</label>
-              <div class="cols-sm-10">
+              <label for="username" class="cols-xs-2 control-label">Username</label>
+              <div class="cols-xs-12">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                  <input type="text" pattern="^[_A-z0-9]{1,}$" maxlength="15" class="form-control" name="username" id="username"  placeholder="Enter your Username"/ required=>
+                  <input type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="username" id="username"  placeholder="Enter your Username" required/>
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback">
+              <label for="name" class="cols-sm-2 control-label">First Name</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  <input type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="firstname" id="firstname"  placeholder="Enter your First Name" required/>
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback">
+              <label for="name" class="cols-sm-2 control-label">Last Name</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  <input type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="lastname" id="lastname"  placeholder="Enter your Last Name" required/>
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback">
+              <label for="email" class="cols-sm-2 control-label">Email</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                  <input type="email" class="form-control" name="email" id="email"  placeholder="Enter your Email" required/>
+
+                </div>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            
+
+            <div class="form-group has-feedback">
+              <label for="password" class="cols-sm-2 control-label">Password</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <input type="password" data-minlength="6" class="form-control" name="password" id="password"  placeholder="Enter your Password" required/>
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback">
+              <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <input type="password" data-match="#password" data-match-error="Passwords do not match" class="form-control" name="retypedpassword" id="retypedpassword"  placeholder="Confirm your Password" required/>
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="cols-sm-2 control-label">Security Question</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user-secret" aria-hidden="true"></i></span>
+                  <select class="form-control" name="secretquestion" id="secretquestion"  required/>
+                  <option value="0"> Select a security question</option>
+                    <option value="kiss"> What is the first name of the person you first kissed? </option>
+                    <option value="mother"> What is your mother's maiden name? </option>
+                  </select>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="name" class="cols-sm-2 control-label">First Name</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="name" class="cols-sm-2 control-label">Last Name</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="email" class="cols-sm-2 control-label">Email</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
-                </div>
-              </div>
-            </div>
-
-            
-
-            <div class="form-group">
-              <label for="password" class="cols-sm-2 control-label">Password</label>
+            <div class="form-group has-feedback">
+              <label for="password" class="cols-sm-2 control-label">Security Answer</label>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                  <input type="password" data-minlength="3" class="form-control" name="securityanswer" id="securityanswer"  placeholder="Enter your answer" required/>
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+            <div class="form-group has-feedback">
+              <label for="confirm" class="cols-sm-2 control-label">Confirm Answer</label>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+                  <input type="password" data-match="#securityanswer" data-match-error="Whoops, these don't match" class="form-control" name="retypedanswer" id="retypedanswer"  placeholder="Confirm your answer" required/>
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
             </div>
 
             <div class="form-group ">
-              <button type="submit"  class="btn btn-primary btn-lg btn-block login-button">Register</button>
+              <button type="submit" id="saveBnt" name="saveBnt" class="btn btn-primary btn-lg btn-block login-button">Register</button>
             </div>
-            
+            </fieldset>
           </form>
         </div>
       </div>
