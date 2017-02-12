@@ -155,6 +155,7 @@ table{
         </form>
 
         <ul class="nav navbar-nav navbar-right">
+          <li> <a href="#" data-toggle="tooltip" title="Upload item"> <i class="fa fa-plus fa-lg" aria-hidden="true"></i> </a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true" style="font-size:1.5em"></i><span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -165,6 +166,7 @@ table{
             </ul>
           </li>
           
+
           <li><a href ="homepage.php"><i class="fa fa-home" aria-hidden="true" style="font-size:1.5em"></i></a></li>
 
 
@@ -205,6 +207,9 @@ table{
                     <a href="trade.php"><i class="fa fa-gavel fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Requests</a>
                 </li>
                 <li>
+                    <a href="#"><i class="fa fa-users fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;People</a>
+                </li>
+                <li>
                     <a href="#"><i class="fa fa-users fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Followers</a>
                 </li>
                 <li>
@@ -214,7 +219,7 @@ table{
         </div>
   <div class="jumbotron city">
     <div class="container">
-      <h1 style="color:#096790 ;text-shadow: 4px 4px orange;font-family: 'Bowlby One SC', cursive;">Good Afternoon,  
+      <h1 style="color:#096790 ;text-shadow: 4px 4px orange;font-family: 'Bowlby One SC', cursive; text-align: center;">Good Afternoon,  
           <?php  echo $_SESSION["user"];?></h1>
     </div>
   </div>

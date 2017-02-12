@@ -12,7 +12,7 @@ $(document).ready(function(){
     getUserRequests();
     getDecisions();
     getUserItems();
-    
+    $('[data-toggle="tooltip"]').tooltip();   
     
     //alert($('#requests > li').length);
 });  
@@ -55,10 +55,10 @@ function login(){
     console.log(user);
     $.post("../index.php/login", user, function(res){
         console.log(res);
-        if(res.loginstatus){
+        if(res != 400){
             //console.log(res);
             swal({ 
-                title: "Welcome",
+                title: "Welcome " + res,
                 text: "You have logged in successfully",
                 type: "success" 
             },
@@ -183,12 +183,13 @@ function listAllItems(records){
     records.forEach(function(el){
         htmlStr += "<tr>";
         //htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+"); window.open(this.src)\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
-        itemdiv += "<div class='panel panel-primary'>";
+        itemdiv += "<div class='panel panel-default'>";
+        itemdiv += "<div class='panel-heading'> <a href='trader.php'>"+  el['username'] + "</a></div>"; 
+        itemdiv += "<div class='panel-heading'> Uploaded on: "+  el['uploaddate'] + "</div>"; 
         itemdiv += "<div class='panel-heading'>"+  el['itemname'] + "</div>"; 
         itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
-        itemdiv += "<div class='panel-footer'>"+  el['username'] + "</div>"; 
-        itemdiv += "<div class='panel-footer'>"+  el['itemdescription'] + "</div>"; 
-        itemdiv += "<div class='panel-footer'> <button type='button' class='btn btn-primary' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i></button><button type='button' class='btn btn-success' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-user-plus' aria-hidden='true'></i></button></div>";
+        itemdiv += "<div class='panel-footer'> <a href='item.php' class='btn btn-info btn-block'><span class='glyphicon glyphicon-eye-open'></span> View more....</a> </div>"; 
+        itemdiv += "<div class='panel-footer'> <button type='button' class='btn btn-success btn-lg btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i> Make Request</button></div>";
         itemdiv += "</div>";
 
         htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";

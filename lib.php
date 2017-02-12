@@ -24,7 +24,7 @@ function checkLogin($email, $password){
 			if($row['password'] == $password){
 				$_SESSION["user"] = $row['firstname'];
 				$_SESSION["id"] = $row['id'];
-				return true;
+				return $row['firstname'];
 			}
 				
 		}

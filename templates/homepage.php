@@ -5,9 +5,9 @@ include "base.php";
     <!--Div that will hold the pie chart-->
 
     
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div id = "itemblock" class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-s-4 col-xs-12">
+    <div id = "itemblock" class="col-lg-5 col-lg-offset-3 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-12">
     </div>
   </div>
 </div>

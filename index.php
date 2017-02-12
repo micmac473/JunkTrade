@@ -250,10 +250,10 @@ $app->post("/login", function(Request $request, Response $response){
 	// print "Name: $name, Price:$price, Country: $countryId";
 	$res = checkLogin($email, $password);
 	//print_r ($res);
-	if ($res){
+	if ($res != false){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);
-		$response = $response->withJson(array("loginstatus"=> true));
+		$response = $response->withJson($res);
 		
 	} else {
 		$response = $response->withJson(400);
