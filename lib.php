@@ -207,6 +207,22 @@ function getAllUserItems(){//should be session id here instead of useId
 	return $items;
 }
 
+function getProfileItems($userID){//should be session id here instead of useId
+	//$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `items` where `userid` = $userID ORDER BY `uploaddate` DESC;";
+	$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
 function getAllUserTrade(){//should be session id here instead of useId
 	$userID = $_SESSION["id"];
 	$sql ="SELECT * FROM `requests` r, `items` i, `users` u where r.item = i.itemid AND r.requestee = u.id AND  r.requester = $userID ORDER BY r.timerequested DESC;";
@@ -348,6 +364,20 @@ function getItemId($item){
 	$rec = null;
 	if ($db != NULL){
 		$sql = "SELECT `itemid` FROM `items` WHERE itemname = '$item';";
+		$res = $db->query($sql);
+		if ($res){
+			$rec= $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
+function getItem($itemid){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != NULL){
+		$sql = "SELECT * FROM `items` WHERE itemid = '$itemid';";
 		$res = $db->query($sql);
 		if ($res){
 			$rec= $res->fetch_assoc();

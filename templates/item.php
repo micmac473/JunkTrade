@@ -9,4 +9,6 @@ include "base.php";
     <h1> Item page </h1>
     <h2> Where you get more details about the item </h2>
   </div>
+  <div id="itemblockI">
+  </div>
 </div>

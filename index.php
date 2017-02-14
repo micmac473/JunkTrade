@@ -241,6 +241,15 @@ $app->get("/viewitem/{id}", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/getitem/{id}", function(Request $request, Response $response){
+	$val = $request->getAttribute('id');
+	// Get Record for Specific Country
+	$rec = getItem($val);
+
+	$response = $response->withJson($rec);
+	return $response;
+});
+
 $app->post("/login", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	//var_dump($post);
