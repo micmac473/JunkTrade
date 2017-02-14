@@ -129,7 +129,7 @@ table{
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a id="menu-toggle" href="#" class="navbar-brand glyphicon glyphicon-align-justify btn-menu toggle"> </a>
+        <a id="menu-toggle" href="#" class="navbar-brand glyphicon glyphicon-menu-hamburger btn-menu toggle"> </a>
         <a class="navbar-brand" href="#"><img alt ="logo" width ="30px" height ="30px" src =../img/logo.png></a>
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
       </div>
@@ -215,10 +215,13 @@ table{
                 <li>
                     <a href="#"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
                 </li>
+                <li>
+                    <a href="login.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
+                </li>
             </ul>
         </div>
-  <div class="jumbotron city">
-    <div class="container">
+  <div class="jumbotron">
+    <div class="container-fluid">
       <h1 style="color:#096790 ;text-shadow: 4px 4px orange;font-family: 'Bowlby One SC', cursive; text-align: center;">Good Afternoon,  
           <?php  echo $_SESSION["user"];?></h1>
     </div>

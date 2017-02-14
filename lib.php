@@ -241,7 +241,7 @@ function getAllUserTrade(){//should be session id here instead of useId
 
 function getUserItems($userid){//should be session id here instead of useId
 	//$userID = $_SESSION["id"];
-	$sql ="SELECT * FROM `items` where `userid` = $userid ORDER BY `itemname` ASC;";
+	$sql ="SELECT * FROM `items` i, `users` u where u.id = i.userid AND `userid` = $userid ORDER BY `itemname` ASC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();

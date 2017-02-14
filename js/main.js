@@ -241,7 +241,67 @@ function listUserItems(records){
 } 
 
 //--------------------------------------------------------------------------------------------------------------------
+function viewItem(itemid){
+    var item = itemid;
+    //window.location.href = 'item.php';
 
+    $.get("../index.php/getitem/"+item, processItem,"json");
+}
+
+function processItem(records){
+    console.log(records);
+    displayItem(records);
+    //alert(records.itemname);
+     //$("#itemblockI").html(records.itemname);
+}
+
+function displayItem(records){
+    var htmlStr;
+    //records.forEach(function(item){
+        //$("#description").val(records[0].itemdescription);
+    //});
+    $("#description").val(records.itemdescription);   
+    $('#itemModal').modal('show'); 
+
+    /*var itemdiv = "<div>";
+    //records.forEach(function(el){
+        itemdiv += "<div class='panel panel-default'>";
+        //itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> Uploaded on: "+  el['uploaddate'] +"</span></div>"; 
+        
+        itemdiv += "<div class='panel-heading'>"+  records['itemname'] + "</div>"; 
+        //itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>"; 
+        //itemdiv += "<div class='panel-footer'> <button type='button' class='btn btn-success' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i> Make Request</button> <button type='button' class='btn btn-info' onclick=\"viewItem()\"><i class='fa fa-eye' aria-hidden='true'></i> View more......</button> <button type='button' class='btn btn-warning'><i class='fa fa-question-circle' aria-hidden='true'></i> Do Something!</button></div>";
+        itemdiv += "</div>";
+    //});
+    $("#itemblockI").html(itemdiv); */
+}
+//--------------------------------------------------------------------
+function viewTraderProfile(userid){
+    var traderid = userid;
+    $.get("../index.php/items/"+traderid, processTraderProfile, "json");
+    
+    //window.open('trader.php');
+
+}
+function processTraderProfile(records){
+    console.log(records);
+    //alert(records[0].userid);
+    listProfileItems(records);
+    //window.location.href = 'trader.php';
+
+}
+function listProfileItems(records){
+    //console.log(records);
+    var htmlStr;
+       $("#trader").val(records[0].username);
+        records.forEach(function(item){
+            htmlStr += "<option value='"+item.itemid+"'>"+item.itemname+"</option>";
+
+        });
+        
+        $("#items").html(htmlStr);
+    $('#profileModal').modal('show'); 
+}
 //Dsiplay requests for user items in the notification icon
 function getUserRequests(){
     $.get("../index.php/requests", notifications, "json");  
@@ -573,66 +633,7 @@ function views(itemid){
     getData();
 }
 //--------------------------------------------------------------------------------------------------------------------
-function viewItem(itemid){
-    var item = itemid;
-    window.location.href = 'item.php';
 
-    $.get("../index.php/getitem/"+item, processItem,"json");
-}
-
-function processItem(records){
-    console.log(records);
-    displayItem(records);
-    alert(records.itemname);
-     $("#itemblockI").html(records.itemname);
-}
-
-function displayItem(records){
-    var itemdiv = "<div>";
-    //records.forEach(function(el){
-        itemdiv += "<div class='panel panel-default'>";
-        //itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> Uploaded on: "+  el['uploaddate'] +"</span></div>"; 
-        
-        itemdiv += "<div class='panel-heading'>"+  records['itemname'] + "</div>"; 
-        //itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>"; 
-        //itemdiv += "<div class='panel-footer'> <button type='button' class='btn btn-success' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i> Make Request</button> <button type='button' class='btn btn-info' onclick=\"viewItem()\"><i class='fa fa-eye' aria-hidden='true'></i> View more......</button> <button type='button' class='btn btn-warning'><i class='fa fa-question-circle' aria-hidden='true'></i> Do Something!</button></div>";
-        itemdiv += "</div>";
-    //});
-    $("#itemblockI").html(itemdiv);
-}
-//--------------------------------------------------------------------
-function viewTraderProfile(userid){
-    var traderid = userid;
-    $.get("../index.php/items/"+traderid, processTraderProfile, "json");
-    
-    //window.open('trader.php');
-
-}
-function processTraderProfile(records){
-    console.log(records);
-    alert(records[0].userid);
-    listProfileItems(records);
-    //window.location.href = 'trader.php';
-
-}
-function listProfileItems(records){
-    //console.log(records);
-    var itemdiv = "<div>";
-    records.forEach(function(el){
-       
-        itemdiv += "<div class='panel panel-default'>";
-        //itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> Uploaded on: "+  el['uploaddate'] +"</span></div>"; 
-        
-        itemdiv += "<div class='panel-heading'>"+  el['itemname'] + "</div>"; 
-        itemdiv += "<div class='panel-body'>"+el['itemid']+"</div>";
-        itemdiv += "<div class='panel-footer'>"+el['itemdescription']+"</div>";
-        //itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>"; 
-        //itemdiv += "<div class='panel-footer'> <button type='button' class='btn btn-success' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i> Make Request</button> <button type='button' class='btn btn-info' onclick=\"viewItem()\"><i class='fa fa-eye' aria-hidden='true'></i> View more......</button> <button type='button' class='btn btn-warning'><i class='fa fa-question-circle' aria-hidden='true'></i> Do Something!</button></div>";
-        itemdiv += "</div>";
-    });
-    $("#itemblockP").html(itemdiv);
-    
-}
 //---------------------------------------------------------------
 function viewRequest(requestId){
     console.log(requestId);
