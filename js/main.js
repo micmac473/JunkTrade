@@ -184,7 +184,7 @@ function listAllItems(records){
         itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> <em> Uploaded on: "+  el['uploaddate'] +"</em></span></div>"; 
         //itemdiv += "<div class='panel-heading'> Uploaded on: "+  el['uploaddate'] + "</div>"; 
         itemdiv += "<div class='panel-heading text-center lead'><strong>"+  el['itemname'] + "</strong></div>"; 
-        itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+        itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
         //itemdiv += "<div class='panel-footer'> <a href='item.php' class='btn btn-info btn-block'><span class='glyphicon glyphicon-eye-open'></span> View more....</a> </div>"; 
         itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-4'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-4'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> <div class='col-lg-4'> <button type='button' class='btn btn-warning btn-block'><i class='fa fa-question-circle fa-lg' aria-hidden='true'></i> Unknown</button></div></div></div>";
         itemdiv += "</div>";
@@ -246,6 +246,7 @@ function viewItem(itemid){
     //window.location.href = 'item.php';
 
     $.get("../index.php/getitem/"+item, processItem,"json");
+    views(itemid);
 }
 
 function processItem(records){
@@ -620,8 +621,8 @@ function views(itemid){
         console.log(res);
         var url = res.picture;
         console.log(url);
-        $('.imagepreview').attr('src', url);
-        $('#imagemodal').modal('show'); 
+        //$('.imagepreview').attr('src', url);
+        //$('#imagemodal').modal('show'); 
     }, "json");
     
     $.get("../index.php/viewitem/"+itemid, function(res){
