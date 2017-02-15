@@ -32,17 +32,19 @@ function checkLogin($email, $password){
 	return false;
 }
 
-function checkSecurityAnswer($user, $sAnswer){
-	$sAnswer = sha1($sAnswer);
-	$sql = "SELECT * FROM `users` where `email`='$user' OR `username`='$user'";
+function checkLogin1($email, $password){
+	$password = sha1($password);
+	$sql = "SELECT * FROM `users` where `email`='$email' OR `username`='$email'";
 	//print($email);
 	$db = getDBConnection();
 	//print_r($db);
 	if($db != NULL){
 		$res = $db->query($sql);
 		if ($res && $row = $res->fetch_assoc()){
-			if($row['sAnswer'] == $sAnswer){
-				return true;
+			if($row['password'] == $password){
+				$_SESSION["user"] = $row['firstname'];
+				$_SESSION["id"] = $row['id'];
+				return $row['firstname'];
 			}
 				
 		}

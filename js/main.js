@@ -78,38 +78,38 @@ function login(){
 }
 //--------------------------------------------------------------------------------------------------------------------
  // Password Reset functionality
-function reset(){
+function login1(){
     console.log("Hi");
-    var email = $("#user").val();
-    var password = $("#sAnswer").val();
+    var email = $("#email").val();
+    var password = $("#password").val();
     //console.log(email + " " + pass);
     var user = {
-        "user" : user,
-        "sAnswer": sAnswer
+        "email" : email,
+        "password": password
     }
 
     console.log(user);
-    $.post("../index.php/reset", user, function(res){
+    $.post("../index.php/login1", user, function(res){
         console.log(res);
-        if(res.loginstatus){
+        if(res != 400){
             //console.log(res);
             swal({ 
-                title: "reset",
-                text: "You successfully reset your password",
+                title: "Welcome " + res,
+                text: "You have logged in successfully",
                 type: "success" 
             },
                 function(){
-                    window.location.href = 'index.phtml';
+                    window.location.href = 'homepage.php';
             });
             //window.location.href="homepage.php";
             //return false;
         }
         else{
-            swal("Unsuccesful Reset","Please try again","error")
+            swal("Incorrect Login","Please try again","error")
             //return false;
         }
     },"json");
-    console.log("Password Reset");
+    console.log("Logged In");
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------

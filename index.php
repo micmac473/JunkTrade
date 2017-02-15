@@ -270,19 +270,19 @@ $app->post("/login", function(Request $request, Response $response){
 	return $response;
 });
 
-$app->post("/reset", function(Request $request, Response $response){
+$app->post("/login1", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	//var_dump($post);
-	$user = $post['user'];
-	$sAnswer = $post['sAnswer'];
+	$email = $post['email'];
+	$password = $post['password'];
 	//print_r($post);
 	// print "Name: $name, Price:$price, Country: $countryId";
-	$res = checkSecurityAnswer($user, $sAnswer);
+	$res = checkLogin1($email, $password);
 	//print_r ($res);
-	if ($res){
+	if ($res != false){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);
-		$response = $response->withJson(array("resetstatus"=> true));
+		$response = $response->withJson($res);
 		
 	} else {
 		$response = $response->withJson(400);

@@ -122,7 +122,7 @@ form {
             <!-- Button -->
             <div class="form-group">
                 <button name="saveBnt" class="btn btn-primary btn-lg btn-block login-button" id="saveBnt" type ="submit">Sign in</button>
-                <a href ="reset.php" style ="color: blue; text-decoration: none;">Forgot password?</a>
+                <a href ="login1.php" style ="color: blue; text-decoration: none;">Forgot password?</a>
               </div>
             </div>
               
