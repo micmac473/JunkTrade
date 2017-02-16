@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2016 at 07:12 AM
+-- Generation Time: Feb 16, 2017 at 06:58 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `peertrading`
 --
-CREATE DATABASE IF NOT EXISTS `peertrading` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `peertrading`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +26,6 @@ USE `peertrading`;
 -- Table structure for table `items`
 --
 
-DROP TABLE IF EXISTS `items`;
 CREATE TABLE `items` (
   `itemid` int(11) NOT NULL,
   `itemname` varchar(50) NOT NULL,
@@ -68,7 +65,6 @@ INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `upload
 -- Table structure for table `profile`
 --
 
-DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
   `interests` varchar(100) DEFAULT NULL,
   `tradables` varchar(1000) DEFAULT NULL
@@ -80,7 +76,6 @@ CREATE TABLE `profile` (
 -- Table structure for table `ratings`
 --
 
-DROP TABLE IF EXISTS `ratings`;
 CREATE TABLE `ratings` (
   `ratingNumber` int(11) NOT NULL,
   `UserId` int(11) NOT NULL,
@@ -93,7 +88,6 @@ CREATE TABLE `ratings` (
 -- Table structure for table `requests`
 --
 
-DROP TABLE IF EXISTS `requests`;
 CREATE TABLE `requests` (
   `id` int(11) NOT NULL,
   `requester` int(11) NOT NULL,
@@ -138,7 +132,6 @@ INSERT INTO `requests` (`id`, `requester`, `item2`, `requestee`, `item`, `decisi
 -- Table structure for table `transaction`
 --
 
-DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction` (
   `TransactionId` int(11) NOT NULL,
   `User1` int(11) NOT NULL,
@@ -152,7 +145,6 @@ CREATE TABLE `transaction` (
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(30) NOT NULL,
@@ -161,25 +153,26 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `contact` varchar(30) NOT NULL,
   `address` varchar(300) NOT NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(100) NOT NULL,
+  `sAnswer` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `contact`, `address`, `password`) VALUES
-(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@email.com', '1234567', 'Milner', '6918950f89321712a8641620423d8c7d25951c0c'),
-(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '9876543', 'Diego Martin', '16331e4442209ff309047eaec83430646490f038'),
-(6, 'jamtart', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '4517889', 'Tobago', '0942897430e12d98c4acafc63d50b91fda44ca38'),
-(7, 'fesean', 'Shamar', 'Culzuc', 'shamarculzac@email.com', '485566', 'St.Vincent', '825cce7a7af23134328ca7a872a142337e0a07fc'),
-(8, 'pinky', 'Justin', 'Cadougan', 'justincadougan@email.com', '7894686', 'St.Vincent', 'f1412f80e25ec11bef07414c2cfa8c84ce3fdf23'),
-(9, 'kyledef', 'Kyle', 'DeFreitas', 'kyledefreitas@email.com', '455454', 'St.Vincent', '7103a38d7b345ad9dc1e25dd3b7dd606f84d2c0c'),
-(10, 'shiva', 'Shiva', 'Ramoudith', 'shiveramoudith@email.com', '47558', 'Trinidad', '848b186485107266a3807096d328690f86a22c05'),
-(34, 'franny', 'Francis', 'Darius', 'francis@email.com', '1234567899', 'Florida', '63ab89682d9a027b1f5c91f6b0ed347ef7dc9ac7'),
-(38, 'kieu', 'Duc', 'Kieu', 'kieu@email.com', '1111111111', 'Lady Young', '2c27c22226e3fc5c109ebb4cbc4c972e02bce8f8'),
-(39, 'kyledef', 'Kyle', 'De Freitas', 'kyle@email.com', '1234567890', 'St. Vincent', '6233de5df38c206a8bde5ae6f8be9c6949740c1f'),
-(40, 'rastaman', 'Kadem', 'McGillivary', 'rasta@email.com', '1111111111', 'Carriacou', 'f9c897117a284ec37d408472be98de935b93f83f');
+INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `contact`, `address`, `password`, `sAnswer`) VALUES
+(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@email.com', '1234567', 'Milner', '6918950f89321712a8641620423d8c7d25951c0c', ''),
+(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '9876543', 'Diego Martin', '16331e4442209ff309047eaec83430646490f038', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8'),
+(6, 'jamtart', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '4517889', 'Tobago', '0942897430e12d98c4acafc63d50b91fda44ca38', ''),
+(7, 'fesean', 'Shamar', 'Culzuc', 'shamarculzac@email.com', '485566', 'St.Vincent', '825cce7a7af23134328ca7a872a142337e0a07fc', ''),
+(8, 'pinky', 'Justin', 'Cadougan', 'justincadougan@email.com', '7894686', 'St.Vincent', 'f1412f80e25ec11bef07414c2cfa8c84ce3fdf23', ''),
+(9, 'kyledef', 'Kyle', 'DeFreitas', 'kyledefreitas@email.com', '455454', 'St.Vincent', '7103a38d7b345ad9dc1e25dd3b7dd606f84d2c0c', ''),
+(10, 'shiva', 'Shiva', 'Ramoudith', 'shiveramoudith@email.com', '47558', 'Trinidad', '848b186485107266a3807096d328690f86a22c05', ''),
+(34, 'franny', 'Francis', 'Darius', 'francis@email.com', '1234567899', 'Florida', '63ab89682d9a027b1f5c91f6b0ed347ef7dc9ac7', ''),
+(38, 'kieu', 'Duc', 'Kieu', 'kieu@email.com', '1111111111', 'Lady Young', '2c27c22226e3fc5c109ebb4cbc4c972e02bce8f8', ''),
+(39, 'kyledef', 'Kyle', 'De Freitas', 'kyle@email.com', '1234567890', 'St. Vincent', '6233de5df38c206a8bde5ae6f8be9c6949740c1f', ''),
+(40, 'rastaman', 'Kadem', 'McGillivary', 'rasta@email.com', '1111111111', 'Carriacou', 'f9c897117a284ec37d408472be98de935b93f83f', '');
 
 --
 -- Indexes for dumped tables
