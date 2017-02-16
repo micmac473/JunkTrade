@@ -81,11 +81,11 @@ function login(){
 function login1(){
     console.log("Hi");
     var email = $("#email").val();
-    var password = $("#password").val();
+    var sAnswer = $("#sAnswer").val();
     //console.log(email + " " + pass);
     var user = {
         "email" : email,
-        "password": password
+        "sAnswer": sAnswer
     }
 
     console.log(user);
@@ -94,22 +94,22 @@ function login1(){
         if(res != 400){
             //console.log(res);
             swal({ 
-                title: "Welcome " + res,
-                text: "You have logged in successfully",
-                type: "success" 
+                title: "Success " + res,
+                text: "You have reset your password",
+                type: "" 
             },
                 function(){
-                    window.location.href = 'homepage.php';
+                    window.location.href = 'login.php';
             });
             //window.location.href="homepage.php";
             //return false;
         }
         else{
-            swal("Incorrect Login","Please try again","error")
+            swal("Incorrect Security Answer","Please try again","error")
             //return false;
         }
     },"json");
-    console.log("Logged In");
+    console.log("Password Reset");
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------

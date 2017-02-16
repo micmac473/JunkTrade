@@ -84,8 +84,8 @@ form {
     </nav>
   <div class ="container">
     <div class="jumbotron" style="text-align:center;">
-    <h1 >Sign in to JunkTrade </h1>
-    <h3> Let the trading begin!</h3>
+    <h1 >JunkTrade </h1>
+    <h3> Oops you forgot your password :'(</h3>
   </div>
     <div class ="row main">
       <div class="main-login main-center">
@@ -93,7 +93,7 @@ form {
           <form  role="form" data-toggle="validator" onsubmit="return login1();">
           <fieldset>
             <!-- Form Name -->
-            <legend style="text-align: center"> <h2> Sign In </h2></legend>
+            <legend style="text-align: center"> <h2> Forget Password </h2></legend>
 
             <div class="form-group has-feedback">
               <label for="username" class="cols-xs-2 control-label">Username or email address</label>
@@ -108,11 +108,11 @@ form {
             </div>
 
             <div class="form-group has-feedback">
-              <label for="password" class="cols-sm-2 control-label">Password</label>
+              <label for="password" class="cols-sm-2 control-label">Security Answer</label>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="password" data-minlength="6" class="form-control" name="password" id="password"  placeholder="Password" required/>
+                  <input type="password" data-minlength="6" class="form-control" name="sAnswer" id="sAnswer"  placeholder="Security Answer" required/>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -122,7 +122,6 @@ form {
             <!-- Button -->
             <div class="form-group">
                 <button name="saveBnt" class="btn btn-primary btn-lg btn-block login-button" id="saveBnt" type ="submit">Sign in</button>
-                <a href ="login1.php" style ="color: blue; text-decoration: none;">Forgot password?</a>
               </div>
             </div>
               
