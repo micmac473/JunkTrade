@@ -219,6 +219,9 @@ table{
                     <a href="login.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
                 </li>
             </ul>
+            <div class="footer">
+              <p> &copy; JunkTrade 2016. All rights reserved </p>
+            </div>
         </div>
   <div class="jumbotron">
     <div class="container-fluid">
@@ -228,9 +231,7 @@ table{
   </div>
 
   <!--footer -->
-  <div class="footer">
-    <p> &copy; JunkTrade 2016 </p>
-  </div>
+  
 
 
 <script>
