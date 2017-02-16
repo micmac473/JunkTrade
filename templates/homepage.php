@@ -85,7 +85,7 @@ include "base.php";
   </div>
 </div>
 
-<!-- Trade items Modal -->
+<!-- Trader items Modal -->
   <div class="modal fade" id="profileModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -111,7 +111,7 @@ include "base.php";
             </div>
             <div class="form-group">
               <div class="">
-                <button  class="btn btn-success btn-block" type="submit">View item</button>
+                <button class="btn btn-success btn-block" type="submit">View item</button>
               </div>
             </div>
             </fieldset>
