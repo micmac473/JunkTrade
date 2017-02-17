@@ -181,7 +181,7 @@ function listAllItems(records){
         //htmlStr += "<tr>";
         //htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+"); window.open(this.src)\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
         itemdiv += "<div class='panel panel-default'>";
-        itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> <em> Uploaded on: "+  el['uploaddate'] +"</em></span></div>"; 
+        itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> <em> Uploaded on: "+  el['uploaddate'] +"</em></span></div>"; 
         //itemdiv += "<div class='panel-heading'> Uploaded on: "+  el['uploaddate'] + "</div>"; 
         itemdiv += "<div class='panel-heading text-center lead'><strong>"+  el['itemname'] + "</strong></div>"; 
         itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
@@ -336,7 +336,13 @@ function displayRequests(records){
 //--------------------------------------------------------------------------------------------------------------------
 // Add the item clicked to the user's saved items
 function addToSavedItems(itemid){
-    swal("Item Saved!", "You can view item in saved items!", "success")
+    swal("Item Saved!", "You can view item in Saved Items!", "success")
+}
+//--------------------------------------------------------------------------------------------------------------------
+// Adds the trader clicked to the user's followers
+function followTrader(userid){
+    alert(userid);
+    swal("Trader Followed!", "You can view followed trader in People!", "success")
 }
 
 //--------------------------------------------------------------------------------------------------------------------

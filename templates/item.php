@@ -20,10 +20,15 @@ if(isset($_GET['item'])){
   			<img src=\"" . $itemDetails['picture'] . "\"  style='width:100%; class='img-responsive img-thumbnail mx-auto'>
   		</div>";
   	echo "<div class='col-lg-4'>
-  			<button type='button' class='btn btn-default' onclick=\"viewTraderProfile(".$itemDetails['userid'].")\">Owner: " . $username['username'] . "</button>
+  			<button type='button' class='btn btn-default btn-block' onclick=\"viewTraderProfile(".$itemDetails['userid'].")\">Owner: " . $username['username'] . "</button>
   			<h1><u>" . $itemDetails['itemname'] . "</u></h1>
   			<p>" . $itemDetails['itemdescription'] . "</p>
-  			<button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i> Make Request</button>
+  			
+  				<button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i> Make Request</button> 
+  			
+  			
+  			<button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button> 
+  			
 
   		</div>";
   ?>

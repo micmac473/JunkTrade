@@ -24,7 +24,7 @@ if(isset($_GET['trader'])){
         ?>
       </div>
       <div class="col-lg-2">
-        <a href="#" class="btn btn-default btn-block"><span class="glyphicon glyphicon-plus"></span> Follow</a>
+        <button type="button" class="btn btn-default btn-block" onClick="followTrader('$val.userid')"><i class='fa fa-plus fa-lg' aria-hidden='true'></i> Follow</button>
       </div>
     </div>
   </div>
@@ -38,8 +38,8 @@ if(isset($_GET['trader'])){
           echo "<div class='panel panel-default'>";
           echo "<div class='panel-heading' style='text-align: right'> <em> Uploaded on: ".  $val['uploaddate']."</em></div>";
           echo "<div class='panel-heading text-center lead'><strong>".  $val['itemname'] . "</strong></div>";
-          echo "<div class='panel-body'> <img style='cursor: pointer;width:100%;' src=\"" . $val['picture']  ."\"  class='img-responsive img-thumbnail mx-auto'> </div>";
-          echo "<div class='panel-footer'> <div class='row'><div class='col-lg-4'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-4'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem(".$val['itemid'].")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> <div class='col-lg-4'> <button type='button' class='btn btn-warning btn-block'><i class='fa fa-question-circle fa-lg' aria-hidden='true'></i> Unknown</button></div></div></div>";
+          echo "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture']  ."\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+          echo "<div class='panel-footer'> <div class='row'><div class='col-lg-4'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-4'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem(".$val['itemid'].")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> <div class='col-lg-4'> <button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button></div></div></div>";
           echo "</div>";
         }
       ?>
