@@ -34,6 +34,7 @@ if(!isset($_SESSION)){
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet">
     <link href ="../css/main.css" rel ="stylesheet">
+    <link href ="../css/weather-icons.min.css" rel ="stylesheet">
     <!-- AngularJS JavaScript file  -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
@@ -47,6 +48,7 @@ if(!isset($_SESSION)){
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
 
     <script src="../js/main.js"></script>
     <style>
@@ -200,7 +202,7 @@ table{
                     <a href="#"><i class="fa fa-users fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;People</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Saved Items</a>
+                    <a href="#"><i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saved Items</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
@@ -218,23 +220,37 @@ table{
       <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive; text-align: center;"> 
           <?php  
             date_default_timezone_set("America/Grenada");
-            $hour = date("H");
-            //$hour = 23;
+            $hour = date("H") - 1;
+            //echo $hour;
+            //$hour = 7;
             if($hour >= 0 && $hour < 12){
-              echo "Good Morning, ".$_SESSION["user"]." <i class='fa fa-sun-o' aria-hidden='true'></i>";
+              if($hour < 6){
+                echo "Good Morning, ".$_SESSION["user"]." <i class='wi wi-moonset'></i>";
+              }
+              else if ($hour >=6 && $hour <=7){
+                echo "Good Morning, ".$_SESSION["user"]." <i class='wi wi-sunrise'></i>";
+              }
+              else{
+                echo "Good Morning, ".$_SESSION["user"]." <i class='wi wi-day-sunny'></i>";
+              }
+              
             }
             else if($hour >= 12 && $hour < 18){
-              echo "Good Afternoon, ". $_SESSION["user"]. " <i class='fa fa-sun-o' aria-hidden='true'></i>";
+              echo "Good Afternoon, ". $_SESSION["user"]. " <i class='wi wi-day-sunny'></i>";
             }
             else{
-              echo "Good Evening, ". $_SESSION["user"]. " <i class='fa fa-moon-o' aria-hidden='true'></i>";
+              if($hour == 18){
+                echo "Good Evening, ". $_SESSION["user"]. " <i class='wi wi-sunset'></i>";
+              }
+              else{
+                echo "Good Evening, ". $_SESSION["user"]. " <i class='wi wi-night-clear'></i>";
+              }
+              
             }
           ?>
       </h1>
     </div>
   </div>
-
-  
 
 
 <script>
