@@ -1,6 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
+ <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -17,31 +19,13 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet">
+      <!-- Custom CSS -->
+    <link href="css/half-slider.css" rel="stylesheet">
     <link href ="css/main.css" rel ="stylesheet">
 
     <!-- google font  -->
     <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet"> 
-    <style>
-      .jumbotron {
-          background-image: url(img/jombopic.jpg);
-          height:100%;
-          padding-top: 20%;
-      }
-      .jid{
-        background-color: orange;
-        text-align:center;
-        margin-bottom:0;
-        padding-bottom: 3%;
-      }
-      nav{
-        height:10%;
-      }
-      .logo{
-        padding-top:3px;
-      }
-
-    </style>
     
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
@@ -51,9 +35,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <!-- <script src="js/main.js"></script> -->
 
+    <style>
+        .firstRow{
+            margin-top: 10%;
+            text-align: center;
+        }
+        .theRows{
+
+        padding:3%;
+        /*text-align: center;*/
+        margin-top: 8%;
+        text-align: justify;
+
+      }
+      .theRows h1{
+        font-size: 320%;
+      }
+      .theRows p{
+        font-size: 150%;
+      }
+    </style>
 </head>
+
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+    <!-- Navigation -->
+          <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -62,34 +69,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a id ="logo" class="navbar-brand" href="#"><img alt ="logo" width ="100px" height ="100px" src ="img/logo.png"></a>
-          <!-- to be removed <a class ="navbar-brand" href ="index.phtml">junkTrade</a>-->
+          <a class="navbar-brand" href="#"><img alt ="logo" width ="30px" height ="30px" src ="img/logo.png"></a>
+          <a class ="navbar-brand" href ="#">junkTrade</a>
         </div>
-        <!-- to be removed <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Electronics</a></li>
-            <li><a href="#">Furniture</a></li>
-            <li><a href="#">Books & Magazines</a></li>
-            <li><a href="#">Clothes</a></li>
-          </ul>
-        </li>
-      </ul>-->
-          <!-- to be removed <form class="navbar-form navbar-left" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="search for junk" class="form-control">
-            </div> -->
-            <!--change to icon
-            <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
-          </form> -->
+        <div id="navbar" class="navbar-collapse collapse">
+      
             <!--this is not rendering the login page as it shoul -->
             <ul class = "nav navbar-nav navbar-right ">
-                <li><a href ="templates/login.php">Login</a></li>
-            </ul>
-            <ul class = "nav navbar-nav navbar-right ">
-                <li><a href ="templates/registration.phtml">Sign up</a></li>
+              <li><a href ="templates/registration.phtml"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+              <li><a href ="templates/login.php"><span class="glyphicon glyphicon-log-in"></span> Signin</a></li>
+                
             </ul>
            <!--<ul class="nav navbar-nav navbar-right ">
                 <li><button type="button" class="btn btn-primary btn-lg" onclick="window.location='templates/login.html'">login</button></li>
@@ -99,61 +88,133 @@
       </div>
     </nav>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1 style="color:#096790 ;text-shadow: 4px 4px orange;font-family: 'Bowlby One SC', cursive;">Trade Your Junk Now!</h1>
-        <h2 style="color:orange ;text-shadow: 4px 4px #096790;font-family: 'Bowlby One SC', cursive;"> Your junk can become someone's Treasure </h2></br>
-            <a href ="templates/registration.phtml"><p><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-            Start Trading Now
-            </button></p></a>
+    <!-- Half Page Image Background Carousel Header -->
+    <header id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
 
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!-- Set the first background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('img/slide1.jpg');"></div>
+                <div class="carousel-caption">
+                    <h1>Get all that you ever dreamed of</h1>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('img/slide2.jpg');"></div>
+                <div class="carousel-caption">
+                    <h1>Help others while helping yourself</h1>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('img/jombopic.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2>A complete platform dedicated to trading</h2>
+                </div>
+            </div>
+        </div>
 
-        <!--<a class="btn btn-primary btn-lg" href="#" role="button">start trading now &raquo;</a></p>-->
-      </div>
-    </div>
-    <div class="container-fluid">
-      <!-- Example row of columns -->
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+
+    </header>
+
+    <!-- Page Content -->
+     <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container ">
+
+      <!-- Three columns of text below the carousel -->
       <div class="row">
-        <div class="col-md-4">
-          <h2>Its Simple and easy</h2>
+        <div class="col-lg-4 firstRow">
+          <p><img class="img-circle" src="img/circle1.jpg" alt="Generic placeholder image" width="140" height="140"></p>
+          <h2>Trade some books</h2>
+         <p> Do you have books that you no longer need? Don't worry, you're in the right place. Trade them for something you need. You deserve it.</p>
+          <p><a class="btn btn-default" href="templates/registration.phtml" role="button">sign me up now &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4 firstRow">
+          <p><img class="img-circle" src="img/circle2.jpg" alt="Generic placeholder image" width="140" height="140"></p>
+          <h2>Trade a bag </h2>
+         <p>Are you looking for a bag to match your new shoes? Maybe you spent all your money on the shoes and can't afford a new bag. Despair no more, we got you covered!</p>
+          <p><a class="btn btn-default" href="templates/registration.phtml" role="button">start trading  &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4 firstRow">
+          <p><img class="img-circle" src="img/circle3.png" alt="Generic placeholder image" width="140" height="140"></p>
+          <h2>Trade anything</h2>
+         <p>If you can hold it, you can trade it for something better and more useful to you.Don't wait, join this exciting world of trade. Find that thing you always wanted.</p>
+          <p><a class="btn btn-default" href="templates/registration.phtml" role="button">im excited &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        
+      </div><!-- /.row -->
+
+
+    <!-- end of first row -->
+      <div style="background-color: lightblue;" class ="theRows row">
+         <div class="col-md-8">
+          <h1 style="color: #00BFFF;">Its Simple and easy</h1>
           <p>Trading on JunkTrade could not be more Easy. Simply Register, Login, Upload and ...voilà!! you can start Trading items with other Users. It sure is easy, peasy. Your Gradmad can trade, your Aunty can Trade and even your pet Dog. </p>
-
-          <p><img src ="img/easy.png" alt ="easy image" style ="width:30%; height: 30%;"></p>
         </div>
         <div class="col-md-4">
-          <h2>No Money? No problem!</h2>
+          <p><img src ="img/easy.png" alt ="easy image" style ="width:70%; height: 70%;"></p>
+        </div>
+      </div> 
+
+
+      <!--                    -->
+      <div style="background-color: #E2A7BF;" class="row theRows">
+       <div class="col-md-4">
+        <p><img src ="img/nomoney.png" alt ="no money" style ="width:50%; height: 50%;"></p>
+          </div>  
+        <div class="col-md-8">
+          <h1 style="color: #FF6347;">No Money? No problem!</h1>
           <p>At JunkTrade we never make money an Issue. As a matter of fact the entire design of the application is based on the concept of "No Money". This makes it easy for students or individuals interested in "saving a Buck" to gain almost any item needed. Isn't that awesome?!?! </p>
-          <p><img src ="img/nomoney.png" alt ="no money" style ="width:30%; height: 30%;"></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Find Trading Buddies</h2>
-          <p>At JunkTrade Our goal is to form a strong community were people can not only share their "junk" but share freindship. We encourage you to find buddies who may have all the junk you need.It truely makes your trading experience a great one!</p>
-           <p><img src ="img/buddy.png" alt ="buddy up" style ="width:30%; height: 30%;"></p>
+          </div>
+         
         </div>
-      </div>
 
-      <div class ="row jid">
-      	<div class ="col-md-12">
-      		<h2>Welcome Home Junkies</h2>
-      		<p>JunkTrade is a site dedicated to bringing you opportunities to acquire all the items you may need without the need for any monetary transactions. Simply sign up, upload an image and start trading. Its free and Easy.</p>
-          <p>The application was built by 5 UWI students who had a desire to facilitate the trading of items among the UWI community without the need for money.As a result JunkTrade was built and has now expanded to serve not only UWI studnts but the whole of Trinidad. Anyone within Trinidad now has the opportunity to to sign up and start trading with others who live here. Developers at Junk Trade are currenly working towards making this application Internationally Available. Thanks for Stopping by, and dont forget to sign up and start trading.</p>
-          <a href ="templates/registration.phtml"><button type="button" class="btn btn-primary btn-lg">
-            Sign up for JunkTrade
-            </button></a>
-  
-      </div>
-
-      </div>
- 
+        <div style ="background-color: #BCA7E2;" class="row theRows">
+      
+        <div class="col-md-8">
+          <h1 style="color:#663399;">Find Trading Buddies</h1>
+          <p>At JunkTrade Our goal is to form a strong community were people can not only share their "junk" but share freindship. We encourage you to find buddies who may have all the junk you need.It truely makes your trading experience a great one!</p>
+          </div>
+            <div class="col-md-4">
+           <p><img src ="img/buddy.png" alt ="buddy up" style ="width:70%; height: 70%;"></p>
+        </div>
+        </div> 
 
 
-  <!--footer -->
-  <div class="footer">
-    <p> &copy; JunkTrade 2016 </p>
-  </div>
-    </div> <!-- /container -->        
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+
 </body>
-
 
 </html>
