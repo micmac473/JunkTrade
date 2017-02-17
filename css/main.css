@@ -80,14 +80,11 @@ body {
  */
 
 .footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   padding: 1rem;
   background-color:black;
   text-align: center;
   color:white;
+  font-size: 13px;
 }
 th {
     background-color: grey;
@@ -159,23 +156,23 @@ button:active{
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
+    text-indent: 10px;
     line-height: 40px;
 }
 
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    color: grey;
+    padding-top: 18px;
+    padding-bottom: 18px;
     font-size: 15px;
 }
 
 .sidebar-nav li a:hover {
     text-decoration: none;
-    color: white;
-    background: lightgray;
+    color: grey; 
+    background: #DCDCDC;
 }
 
 .sidebar-nav li a:active,

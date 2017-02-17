@@ -95,15 +95,9 @@ body {
  */
 
 .footer {
-  z-index: 1001;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color:black;
+  background-color:#f6f6f6;
   text-align: center;
-  color:white;
+  color:grey;
 }
 th {
     background-color: grey;
@@ -175,7 +169,7 @@ table{
 
           </li>
           <li class="">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel fa-2x" aria-hidden="true" ></i><span class="label label-danger label-as-badge" style="vertical-align:top" id ="decisionsNotify"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel fa-2x" aria-hidden="true" ></i><span class="label label-danger label-as-badge" style="vertical-align:top;" id ="decisionsNotify"></span></a>
             <ul class="dropdown-menu" id="decisions">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
@@ -206,18 +200,18 @@ table{
                     <a href="#"><i class="fa fa-users fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;People</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-users fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Followers</a>
+                    <a href="#"><i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Saved Items</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
+                    <a href="#"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
                 </li>
                 <li>
-                    <a href="login.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
+                    <a href="login.php"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
+                </li>
+                <li class="footer">
+                  <p> &copy; JunkTrade 2016. <br>All rights reserved </p>
                 </li>
             </ul>
-            <div class="footer">
-              <p> &copy; JunkTrade 2016. All rights reserved </p>
-            </div>
         </div>
   <div class="jumbotron">
     <div class="container-fluid">

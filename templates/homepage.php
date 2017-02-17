@@ -22,7 +22,7 @@ include "base.php";
     <tbody>
 </script>
 
-<!-- Modal -->
+<!-- Item Request Modal -->
   <div class="modal fade" id="requestModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
