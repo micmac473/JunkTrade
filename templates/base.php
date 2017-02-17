@@ -129,7 +129,7 @@ table{
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a id="menu-toggle" href="#" class="navbar-brand glyphicon glyphicon-align-justify btn-menu toggle"> </a>
+        <a id="menu-toggle" href="#" class="navbar-brand glyphicon glyphicon-menu-hamburger btn-menu toggle"> </a>
         <a class="navbar-brand" href="#"><img alt ="logo" width ="30px" height ="30px" src =../img/logo.png></a>
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
       </div>
@@ -146,17 +146,18 @@ table{
           </li>
         </ul>
 
-<form class="navbar-form navbar-left" role="form" action ="search.php?go">
-          <div class="form-group">
-            <input type="text" placeholder="Search for junk" class="form-control" name="searchname">
+        <form class="navbar-form navbar-left" role="form" action ="search.php?go">
+          <div class="form-group ">
+            <input type="text" placeholder="Search for Junk" class="form-control" name="searchname">
           </div>
             <!--change to icon-->
           <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true" name="searchsubmit"></i></button>
         </form>
 
         <ul class="nav navbar-nav navbar-right">
+          <li data-toggle="modal" data-target="#requestModal"> <a href="#" data-toggle="tooltip" title="Upload item"> <i class="fa fa-plus fa-2x" aria-hidden="true"></i> </a></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true" style="font-size:1.5em"></i><span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-2x" aria-hidden="true" ></i><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="profile.php">My Profile</a></li>
               <li><a href="trade.php">My Requests</a></li>
@@ -165,19 +166,16 @@ table{
             </ul>
           </li>
           
-          <li><a href ="homepage.php"><i class="fa fa-home" aria-hidden="true" style="font-size:1.5em"></i></a></li>
-
-
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true" style="font-size:1.5em"></i><span class="label label-danger label-as-badge" style="vertical-align:top" id ="requestsNotify"></span><span class="caret" style="vertical-align:"></span></a>
+          <li class="">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell fa-2x" aria-hidden="true" ></i><span class="label label-danger label-as-badge" style="vertical-align:top" id ="requestsNotify"></span></a>
             <ul class="dropdown-menu" id="requests">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
             </ul>
 
           </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel" aria-hidden="true" style="font-size:1.5em"></i><span class="label label-danger label-as-badge" style="vertical-align:top" id ="decisionsNotify"></span><span class="caret" style="vertical-align:"></span></a>
+          <li class="">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel fa-2x" aria-hidden="true" ></i><span class="label label-danger label-as-badge" style="vertical-align:top" id ="decisionsNotify"></span></a>
             <ul class="dropdown-menu" id="decisions">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
@@ -205,24 +203,44 @@ table{
                     <a href="trade.php"><i class="fa fa-gavel fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Requests</a>
                 </li>
                 <li>
+                    <a href="#"><i class="fa fa-users fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;People</a>
+                </li>
+                <li>
                     <a href="#"><i class="fa fa-users fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Followers</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
                 </li>
+                <li>
+                    <a href="login.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
+                </li>
             </ul>
+            <div class="footer">
+              <p> &copy; JunkTrade 2016. All rights reserved </p>
+            </div>
         </div>
-  <div class="jumbotron city">
-    <div class="container">
-      <h1 style="color:#096790 ;text-shadow: 4px 4px orange;font-family: 'Bowlby One SC', cursive;">Good Afternoon,  
-          <?php  echo $_SESSION["user"];?></h1>
+  <div class="jumbotron">
+    <div class="container-fluid">
+      <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive; text-align: center;"> 
+          <?php  
+            date_default_timezone_set("America/Grenada");
+            $hour = date("H");
+            //$hour = 23;
+            if($hour >= 0 && $hour < 12){
+              echo "Good Morning, ".$_SESSION["user"]." <i class='fa fa-sun-o' aria-hidden='true'></i>";
+            }
+            else if($hour >= 12 && $hour < 18){
+              echo "Good Afternoon, ". $_SESSION["user"]. " <i class='fa fa-sun-o' aria-hidden='true'></i>";
+            }
+            else{
+              echo "Good Evening, ". $_SESSION["user"]. " <i class='fa fa-moon-o' aria-hidden='true'></i>";
+            }
+          ?>
+      </h1>
     </div>
   </div>
 
-  <!--footer -->
-  <div class="footer">
-    <p> &copy; JunkTrade 2016 </p>
-  </div>
+  
 
 
 <script>

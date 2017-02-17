@@ -7,7 +7,7 @@ include "base.php";
     
 <div class="container-fluid">
   <div class="row">
-    <div id = "itemblock" class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-s-4 col-xs-12">
+    <div id = "itemblock" class="col-lg-6 col-lg-offset-3 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-12">
     </div>
   </div>
 </div>
@@ -24,34 +24,34 @@ include "base.php";
 
 <!-- Modal -->
   <div class="modal fade" id="requestModal" role="dialog">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title" style="text-align: center">Request Transaction</h4>
         </div>
         <div class="modal-body">
-          <form class="form-horizontal" onsubmit="return sendRequest();">
+          <form class="" onsubmit="return sendRequest();">
             <fieldset>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="name">Item Owner</label>
-              <div class="col-md-8">
+              <label class="control-label" for="name">Item Owner</label>
+              <div class="">
                 <input id="requestee" name="requestee" type="text" disabled placeholder="Item Owner" class="form-control input-md" required="">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="name">Item</label>
-              <div class="col-md-8">
+              <label class="control-label" for="name">Item</label>
+              <div class="">
                 <input id="requesteditem" name="requesteditem" type="text" disabled placeholder="Requested Item" class="form-control input-md" required="">
               </div>
             </div>
 
             <!-- Select Basic -->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="selectbasic">Your Item</label>
-              <div class="col-md-8">
+              <label class="control-label" for="selectbasic">Your Item</label>
+              <div class="">
                 <select id="myitems" name="myitems" class="form-control" required="">
                   
                 </select>
@@ -59,9 +59,9 @@ include "base.php";
             </div>
 
             <div class="form-group">
-              <div class="col-md-12">
-                <button  class="btn btn-success" type="submit">Send Request</button>
-                <button  class="btn btn-danger" data-dismiss="modal">Cancel Request</button>
+              <div class="">
+                <button  class="btn btn-success btn-block" type="submit">Send Request</button>
+                <button  class="btn btn-danger btn-block" data-dismiss="modal">Cancel Request</button>
 
               </div>
             </div>
@@ -84,3 +84,61 @@ include "base.php";
     </div>
   </div>
 </div>
+
+<!-- Trader items Modal -->
+  <div class="modal fade" id="profileModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="">
+            <fieldset>
+
+            <div class="form-group">
+              <label class="control-label" for="name">Trader</label>
+              <div class="">
+                <input id="trader" name="trader" type="text" disabled placeholder="Requested Item" class="form-control input-md" required="">
+              </div>
+            </div>
+
+            <!-- Select Basic -->
+            <div class="form-group">
+              <label class="control-label" for="selectbasic">Items</label>
+              <div class="">
+                <select id="items" name="items" class="form-control" required="">
+                  
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="">
+                <button class="btn btn-success btn-block" type="submit">View item</button>
+              </div>
+            </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Item description Modal -->
+  <div class="modal fade" id="itemModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="">
+            <fieldset>
+            <!-- Select Basic -->
+            <div class="form-group">
+              <label class="control-label" for="textarea">Description</label>
+              <div class="">                     
+                <textarea class="form-control" disabled id="description" rows="10" name="description">Description....</textarea>
+              </div>
+            </div>
+
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

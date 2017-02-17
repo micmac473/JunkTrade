@@ -241,6 +241,15 @@ $app->get("/viewitem/{id}", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/getitem/{id}", function(Request $request, Response $response){
+	$val = $request->getAttribute('id');
+	// Get Record for Specific Country
+	$rec = getItem($val);
+
+	$response = $response->withJson($rec);
+	return $response;
+});
+
 $app->post("/login", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	//var_dump($post);
@@ -250,10 +259,10 @@ $app->post("/login", function(Request $request, Response $response){
 	// print "Name: $name, Price:$price, Country: $countryId";
 	$res = checkLogin($email, $password);
 	//print_r ($res);
-	if ($res){
+	if ($res != false){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);
-		$response = $response->withJson(array("loginstatus"=> true));
+		$response = $response->withJson($res);
 		
 	} else {
 		$response = $response->withJson(400);
@@ -261,19 +270,19 @@ $app->post("/login", function(Request $request, Response $response){
 	return $response;
 });
 
-$app->post("/reset", function(Request $request, Response $response){
+$app->post("/login1", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	//var_dump($post);
-	$user = $post['user'];
+	$email = $post['email'];
 	$sAnswer = $post['sAnswer'];
 	//print_r($post);
 	// print "Name: $name, Price:$price, Country: $countryId";
-	$res = checkSecurityAnswer($user, $sAnswer);
+	$res = checkLogin1($email, $sAnswer);
 	//print_r ($res);
-	if ($res){
+	if ($res != false){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);
-		$response = $response->withJson(array("resetstatus"=> true));
+		$response = $response->withJson($res);
 		
 	} else {
 		$response = $response->withJson(400);

@@ -52,7 +52,7 @@ $(document).ready(function(){
     getUserRequests();
     getDecisions();
     getUserItems();
-    
+    $('[data-toggle="tooltip"]').tooltip();   
     
     //alert($('#requests > li').length);
 });  
@@ -95,10 +95,10 @@ function login(){
     console.log(user);
     $.post("../index.php/login", user, function(res){
         console.log(res);
-        if(res.loginstatus){
+        if(res != 400){
             //console.log(res);
             swal({ 
-                title: "Welcome",
+                title: "Welcome " + res,
                 text: "You have logged in successfully",
                 type: "success" 
             },
@@ -118,34 +118,34 @@ function login(){
 }
 //--------------------------------------------------------------------------------------------------------------------
  // Password Reset functionality
-function reset(){
+function login1(){
     console.log("Hi");
-    var email = $("#user").val();
-    var password = $("#sAnswer").val();
+    var email = $("#email").val();
+    var sAnswer = $("#sAnswer").val();
     //console.log(email + " " + pass);
     var user = {
-        "user" : user,
+        "email" : email,
         "sAnswer": sAnswer
     }
 
     console.log(user);
-    $.post("../index.php/reset", user, function(res){
+    $.post("../index.php/login1", user, function(res){
         console.log(res);
-        if(res.loginstatus){
+        if(res != 400){
             //console.log(res);
             swal({ 
-                title: "reset",
-                text: "You successfully reset your password",
-                type: "success" 
+                title: "Success " + res,
+                text: "You have reset your password",
+                type: "" 
             },
                 function(){
-                    window.location.href = 'index.phtml';
+                    window.location.href = 'login.php';
             });
             //window.location.href="homepage.php";
             //return false;
         }
         else{
-            swal("Unsuccesful Reset","Please try again","error")
+            swal("Incorrect Security Answer","Please try again","error")
             //return false;
         }
     },"json");
@@ -216,21 +216,19 @@ function processAllItems(records){
 }
 
 function listAllItems(records){
-    var key;
-    var sec_id = "#table_sech";
-    var htmlStr = $("#table_headingh").html(); //Includes all the table, thead and tbody declarations
     var itemdiv = "<div>";
     records.forEach(function(el){
-        htmlStr += "<tr>";
+        //htmlStr += "<tr>";
         //htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+"); window.open(this.src)\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
-        itemdiv += "<div class='panel panel-primary'>";
-        itemdiv += "<div class='panel-heading'>"+  el['itemname'] + "</div>"; 
-        itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
-        itemdiv += "<div class='panel-footer'>"+  el['username'] + "</div>"; 
-        itemdiv += "<div class='panel-footer'>"+  el['itemdescription'] + "</div>"; 
-        itemdiv += "<div class='panel-footer'> <button type='button' class='btn btn-primary' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i></button><button type='button' class='btn btn-success' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-user-plus' aria-hidden='true'></i></button></div>";
+        itemdiv += "<div class='panel panel-default'>";
+        itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> <em> Uploaded on: "+  el['uploaddate'] +"</em></span></div>"; 
+        //itemdiv += "<div class='panel-heading'> Uploaded on: "+  el['uploaddate'] + "</div>"; 
+        itemdiv += "<div class='panel-heading text-center lead'><strong>"+  el['itemname'] + "</strong></div>"; 
+        itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+        //itemdiv += "<div class='panel-footer'> <a href='item.php' class='btn btn-info btn-block'><span class='glyphicon glyphicon-eye-open'></span> View more....</a> </div>"; 
+        itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-4'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-4'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> <div class='col-lg-4'> <button type='button' class='btn btn-warning btn-block'><i class='fa fa-question-circle fa-lg' aria-hidden='true'></i> Unknown</button></div></div></div>";
         itemdiv += "</div>";
-
+        /*
         htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
         htmlStr += "<td>"+ el['itemname'] +"</td>";
         htmlStr += "<td>"+ el['views'] +"</td>";
@@ -240,13 +238,13 @@ function listAllItems(records){
         htmlStr += "<td><button type='button' class='btn btn-primary' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i></button>";
         //htmlStr += "<button type='button' class='btn btn-info' ><i class='fa fa-eye' aria-hidden='true'></i></button></td>";
         htmlStr += "<td>" + el['uploaddate'] + "</td>";
-        htmlStr +=" </tr>" ;
+        htmlStr +=" </tr>" ; */
         
         
     });
     $("#itemblock").html(itemdiv);
-    htmlStr += "</tbody></table>";
-    $(sec_id).html(htmlStr);
+    //htmlStr += "</tbody></table>";
+    //$(sec_id).html(htmlStr);
     
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -283,7 +281,68 @@ function listUserItems(records){
 } 
 
 //--------------------------------------------------------------------------------------------------------------------
+function viewItem(itemid){
+    var item = itemid;
+    //window.location.href = 'item.php';
 
+    $.get("../index.php/getitem/"+item, processItem,"json");
+    views(itemid);
+}
+
+function processItem(records){
+    console.log(records);
+    displayItem(records);
+    //alert(records.itemname);
+     //$("#itemblockI").html(records.itemname);
+}
+
+function displayItem(records){
+    var htmlStr;
+    //records.forEach(function(item){
+        //$("#description").val(records[0].itemdescription);
+    //});
+    $("#description").val(records.itemdescription);   
+    $('#itemModal').modal('show'); 
+
+    /*var itemdiv = "<div>";
+    //records.forEach(function(el){
+        itemdiv += "<div class='panel panel-default'>";
+        //itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> Uploaded on: "+  el['uploaddate'] +"</span></div>"; 
+        
+        itemdiv += "<div class='panel-heading'>"+  records['itemname'] + "</div>"; 
+        //itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>"; 
+        //itemdiv += "<div class='panel-footer'> <button type='button' class='btn btn-success' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i> Make Request</button> <button type='button' class='btn btn-info' onclick=\"viewItem()\"><i class='fa fa-eye' aria-hidden='true'></i> View more......</button> <button type='button' class='btn btn-warning'><i class='fa fa-question-circle' aria-hidden='true'></i> Do Something!</button></div>";
+        itemdiv += "</div>";
+    //});
+    $("#itemblockI").html(itemdiv); */
+}
+//--------------------------------------------------------------------
+function viewTraderProfile(userid){
+    var traderid = userid;
+    $.get("../index.php/items/"+traderid, processTraderProfile, "json");
+    
+    //window.open('trader.php');
+
+}
+function processTraderProfile(records){
+    console.log(records);
+    //alert(records[0].userid);
+    listProfileItems(records);
+    //window.location.href = 'trader.php';
+
+}
+function listProfileItems(records){
+    //console.log(records);
+    var htmlStr;
+       $("#trader").val(records[0].username);
+        records.forEach(function(item){
+            htmlStr += "<option value='"+item.itemid+"'>"+item.itemname+"</option>";
+
+        });
+        
+        $("#items").html(htmlStr);
+    $('#profileModal').modal('show'); 
+}
 //Dsiplay requests for user items in the notification icon
 function getUserRequests(){
     $.get("../index.php/requests", notifications, "json");  
@@ -602,8 +661,8 @@ function views(itemid){
         console.log(res);
         var url = res.picture;
         console.log(url);
-        $('.imagepreview').attr('src', url);
-        $('#imagemodal').modal('show'); 
+        //$('.imagepreview').attr('src', url);
+        //$('#imagemodal').modal('show'); 
     }, "json");
     
     $.get("../index.php/viewitem/"+itemid, function(res){
@@ -615,6 +674,8 @@ function views(itemid){
     getData();
 }
 //--------------------------------------------------------------------------------------------------------------------
+
+//---------------------------------------------------------------
 function viewRequest(requestId){
     console.log(requestId);
     $.get("../index.php/requestdetails/"+requestId, function(res){

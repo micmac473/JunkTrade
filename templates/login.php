@@ -3,17 +3,7 @@
 
 include "../lib.php";
 session_unset(); 
-if(isset($_POST['email']) && isset($_POST['password'])){
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  //p($post);
-  // print "Name: $name, Price:$price, Country: $countryId";
-  $res = checkLogin($email, $password);
-  if($res){
-    header('Location: homepage.php');  
-  }
 
-}
 
 
 ?>
