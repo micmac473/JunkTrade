@@ -287,6 +287,20 @@ function getUserItem($val){
 	return $rec;
 }
 
+function getUsername($val){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$sql = "SELECT `username` FROM `users` WHERE id = $val;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
 function getRequests(){
 	$user = $_SESSION["id"];
 	$db = getDBConnection();

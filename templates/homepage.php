@@ -7,7 +7,7 @@ include "base.php";
     
 <div class="container-fluid">
   <div class="row">
-    <div id = "itemblock" class="col-lg-6 col-lg-offset-3 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-12">
+    <div id = "itemblock" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
     </div>
   </div>
 </div>
@@ -22,7 +22,7 @@ include "base.php";
     <tbody>
 </script>
 
-<!-- Modal -->
+<!-- Item Request Modal -->
   <div class="modal fade" id="requestModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">

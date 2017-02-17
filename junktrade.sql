@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2017 at 06:58 AM
--- Server version: 10.1.16-MariaDB
--- PHP Version: 5.6.24
+-- Generation Time: Feb 17, 2017 at 02:46 PM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `peertrading`
 --
+CREATE DATABASE IF NOT EXISTS `peertrading` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `peertrading`;
 
 -- --------------------------------------------------------
 
@@ -26,6 +28,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `items`
 --
 
+DROP TABLE IF EXISTS `items`;
 CREATE TABLE `items` (
   `itemid` int(11) NOT NULL,
   `itemname` varchar(50) NOT NULL,
@@ -42,10 +45,10 @@ CREATE TABLE `items` (
 
 INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `uploaddate`, `userid`, `views`) VALUES
 (1, 'House', 'This is my house item', '../img/house.jpg', '2016-11-26 03:38:21', 1, 0),
-(2, 'Peas', 'This is my easy peasy item', '../img/easy.png', '2016-11-26 03:38:21', 2, 0),
-(3, 'Money', 'This is my money item', '../img/nomoney.png', '2016-11-26 03:38:42', 2, 0),
+(2, 'Peas', 'This is my easy peasy item', '../img/easy.png', '2016-11-26 03:38:21', 2, 2),
+(3, 'Money', 'This is my money item', '../img/nomoney.png', '2016-11-26 03:38:42', 2, 1),
 (4, 'Friends', 'This is my friends item', '../img/buddy.png', '2016-11-26 03:38:42', 6, 0),
-(25, 'Dell XPS', 'Processor: i7 3.5 Ghz Quad Core\r\nRam: 12 GB\r\nGraphics: GeForce GTX 980', '../img/xps.png', '2016-11-26 15:54:19', 6, 1),
+(25, 'Dell XPS', 'Processor: i7 3.5 Ghz Quad Core\r\nRam: 12 GB\r\nGraphics: GeForce GTX 980', '../img/xps.png', '2016-11-26 15:54:19', 6, 2),
 (26, 'Logo', 'This is my logo item', '../img/logo.png', '2016-11-26 15:55:07', 6, 1),
 (27, 'HP Laptop', 'Processor: i5 2.5 Ghz Dual Core\r\nRam: 8 GB\r\nGraphics: Intel ', '../img/hp.jpg', '2016-11-26 15:57:48', 1, 0),
 (29, 'SVG Flag', 'This the flag of St. Vincent and the Grenadines, West Indies', '../img/svgflag.png', '2016-11-27 15:21:11', 39, 1),
@@ -53,7 +56,7 @@ INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `upload
 (34, 'Hydrangeas', 'Hydrangeas', '../img/Hydrangeas.jpg', '2016-11-30 13:42:30', 1, 0),
 (36, 'Jellyfish', 'Jellyfish', '../img/Jellyfish.jpg', '2016-11-30 13:45:11', 1, 0),
 (38, 'Nike', 'Color: Red and black\r\nSize: 12\r\nCondition: New\r\nComes with box', '../img/airjordans.jpe', '2016-11-30 19:11:47', 40, 1),
-(39, 'Gucci Watch', 'This is real Gucci', '../img/gucciwatch.jpe', '2016-11-30 19:54:55', 40, 1),
+(39, 'Gucci Watch', 'This is real Gucci', '../img/gucciwatch.jpe', '2016-11-30 19:54:55', 40, 3),
 (42, 'Piano Keyboard', 'Brand: Yamaha\r\nCondition: Used\r\nComes with everything', '../img/pianokeyboard.jpe', '2016-12-01 15:10:04', 1, 0),
 (44, 'iPhone 6', 'Capacity: 68 GB\r\nRAM: 4 GB\r\nDisplay: Retina\r\nCondition: New', '../img/iphone.jpg', '2016-12-01 23:40:35', 1, 0),
 (45, 'Gucci Belt', 'Genuine Leather,\r\nCondition: New', '../img/guccibelt.jpg', '2016-12-02 00:36:38', 1, 0),
@@ -65,6 +68,7 @@ INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `upload
 -- Table structure for table `profile`
 --
 
+DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
   `interests` varchar(100) DEFAULT NULL,
   `tradables` varchar(1000) DEFAULT NULL
@@ -76,6 +80,7 @@ CREATE TABLE `profile` (
 -- Table structure for table `ratings`
 --
 
+DROP TABLE IF EXISTS `ratings`;
 CREATE TABLE `ratings` (
   `ratingNumber` int(11) NOT NULL,
   `UserId` int(11) NOT NULL,
@@ -88,6 +93,7 @@ CREATE TABLE `ratings` (
 -- Table structure for table `requests`
 --
 
+DROP TABLE IF EXISTS `requests`;
 CREATE TABLE `requests` (
   `id` int(11) NOT NULL,
   `requester` int(11) NOT NULL,
@@ -129,9 +135,22 @@ INSERT INTO `requests` (`id`, `requester`, `item2`, `requestee`, `item`, `decisi
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `trade`
+--
+
+DROP TABLE IF EXISTS `trade`;
+CREATE TABLE `trade` (
+  `tradeid` int(11) NOT NULL,
+  `requestid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `transaction`
 --
 
+DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction` (
   `TransactionId` int(11) NOT NULL,
   `User1` int(11) NOT NULL,
@@ -145,34 +164,35 @@ CREATE TABLE `transaction` (
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(30) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `contact` varchar(30) NOT NULL,
-  `address` varchar(300) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `sAnswer` varchar(100) NOT NULL
+  `sQuestion` varchar(100) NOT NULL,
+  `sAnswer` varchar(100) NOT NULL,
+  `profilepicture` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `contact`, `address`, `password`, `sAnswer`) VALUES
-(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@email.com', '1234567', 'Milner', '6918950f89321712a8641620423d8c7d25951c0c', ''),
-(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '9876543', 'Diego Martin', '16331e4442209ff309047eaec83430646490f038', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8'),
-(6, 'jamtart', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '4517889', 'Tobago', '0942897430e12d98c4acafc63d50b91fda44ca38', ''),
-(7, 'fesean', 'Shamar', 'Culzuc', 'shamarculzac@email.com', '485566', 'St.Vincent', '825cce7a7af23134328ca7a872a142337e0a07fc', ''),
-(8, 'pinky', 'Justin', 'Cadougan', 'justincadougan@email.com', '7894686', 'St.Vincent', 'f1412f80e25ec11bef07414c2cfa8c84ce3fdf23', ''),
-(9, 'kyledef', 'Kyle', 'DeFreitas', 'kyledefreitas@email.com', '455454', 'St.Vincent', '7103a38d7b345ad9dc1e25dd3b7dd606f84d2c0c', ''),
-(10, 'shiva', 'Shiva', 'Ramoudith', 'shiveramoudith@email.com', '47558', 'Trinidad', '848b186485107266a3807096d328690f86a22c05', ''),
-(34, 'franny', 'Francis', 'Darius', 'francis@email.com', '1234567899', 'Florida', '63ab89682d9a027b1f5c91f6b0ed347ef7dc9ac7', ''),
-(38, 'kieu', 'Duc', 'Kieu', 'kieu@email.com', '1111111111', 'Lady Young', '2c27c22226e3fc5c109ebb4cbc4c972e02bce8f8', ''),
-(39, 'kyledef', 'Kyle', 'De Freitas', 'kyle@email.com', '1234567890', 'St. Vincent', '6233de5df38c206a8bde5ae6f8be9c6949740c1f', ''),
-(40, 'rastaman', 'Kadem', 'McGillivary', 'rasta@email.com', '1111111111', 'Carriacou', 'f9c897117a284ec37d408472be98de935b93f83f', '');
+INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `password`, `sQuestion`, `sAnswer`, `profilepicture`) VALUES
+(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@email.com', '6918950f89321712a8641620423d8c7d25951c0c', '', '', ''),
+(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '16331e4442209ff309047eaec83430646490f038', '', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8', ''),
+(6, 'jamtart', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '0942897430e12d98c4acafc63d50b91fda44ca38', '', '', ''),
+(7, 'fesean', 'Shamar', 'Culzuc', 'shamarculzac@email.com', '825cce7a7af23134328ca7a872a142337e0a07fc', '', '', ''),
+(8, 'pinky', 'Justin', 'Cadougan', 'justincadougan@email.com', 'f1412f80e25ec11bef07414c2cfa8c84ce3fdf23', '', '', ''),
+(9, 'kyledef', 'Kyle', 'DeFreitas', 'kyledefreitas@email.com', '7103a38d7b345ad9dc1e25dd3b7dd606f84d2c0c', '', '', ''),
+(10, 'shiva', 'Shiva', 'Ramoudith', 'shiveramoudith@email.com', '848b186485107266a3807096d328690f86a22c05', '', '', ''),
+(34, 'franny', 'Francis', 'Darius', 'francis@email.com', '63ab89682d9a027b1f5c91f6b0ed347ef7dc9ac7', '', '', ''),
+(38, 'kieu', 'Duc', 'Kieu', 'kieu@email.com', '2c27c22226e3fc5c109ebb4cbc4c972e02bce8f8', '', '', ''),
+(39, 'kyledef', 'Kyle', 'De Freitas', 'kyle@email.com', '6233de5df38c206a8bde5ae6f8be9c6949740c1f', '', '', ''),
+(40, 'rastaman', 'Kadem', 'McGillivary', 'rasta@email.com', 'f9c897117a284ec37d408472be98de935b93f83f', '', '', '');
 
 --
 -- Indexes for dumped tables

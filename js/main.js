@@ -221,12 +221,12 @@ function listAllItems(records){
         //htmlStr += "<tr>";
         //htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+"); window.open(this.src)\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
         itemdiv += "<div class='panel panel-default'>";
-        itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> <em> Uploaded on: "+  el['uploaddate'] +"</em></span></div>"; 
+        itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> <em> Uploaded on: "+  el['uploaddate'] +"</em></span></div>"; 
         //itemdiv += "<div class='panel-heading'> Uploaded on: "+  el['uploaddate'] + "</div>"; 
         itemdiv += "<div class='panel-heading text-center lead'><strong>"+  el['itemname'] + "</strong></div>"; 
-        itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+        itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
         //itemdiv += "<div class='panel-footer'> <a href='item.php' class='btn btn-info btn-block'><span class='glyphicon glyphicon-eye-open'></span> View more....</a> </div>"; 
-        itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-4'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-4'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> <div class='col-lg-4'> <button type='button' class='btn btn-warning btn-block'><i class='fa fa-question-circle fa-lg' aria-hidden='true'></i> Unknown</button></div></div></div>";
+        itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-4'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-4'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> <div class='col-lg-4'> <button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems("+el.itemid+")\"><i class='fa fa-bookmark fa-lg' aria-hidden='true'></i> Save</button></div></div></div>";
         itemdiv += "</div>";
         /*
         htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
@@ -282,67 +282,60 @@ function listUserItems(records){
 
 //--------------------------------------------------------------------------------------------------------------------
 function viewItem(itemid){
-    var item = itemid;
-    //window.location.href = 'item.php';
-
-    $.get("../index.php/getitem/"+item, processItem,"json");
+    $.get("../index.php/getitem/"+itemid, processItem,"json");
     views(itemid);
 }
 
 function processItem(records){
     console.log(records);
-    displayItem(records);
-    //alert(records.itemname);
-     //$("#itemblockI").html(records.itemname);
+    //displayItem(records);
+    window.location.href = "item.php?item="+records.itemid;
+    return false;
 }
 
 function displayItem(records){
-    var htmlStr;
-    //records.forEach(function(item){
-        //$("#description").val(records[0].itemdescription);
-    //});
-    $("#description").val(records.itemdescription);   
-    $('#itemModal').modal('show'); 
-
-    /*var itemdiv = "<div>";
-    //records.forEach(function(el){
-        itemdiv += "<div class='panel panel-default'>";
-        //itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> Uploaded on: "+  el['uploaddate'] +"</span></div>"; 
-        
-        itemdiv += "<div class='panel-heading'>"+  records['itemname'] + "</div>"; 
-        //itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>"; 
-        //itemdiv += "<div class='panel-footer'> <button type='button' class='btn btn-success' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i> Make Request</button> <button type='button' class='btn btn-info' onclick=\"viewItem()\"><i class='fa fa-eye' aria-hidden='true'></i> View more......</button> <button type='button' class='btn btn-warning'><i class='fa fa-question-circle' aria-hidden='true'></i> Do Something!</button></div>";
-        itemdiv += "</div>";
-    //});
-    $("#itemblockI").html(itemdiv); */
+    
+    // Display item description in modal when "view more" is clicked
+    /*$("#description").val(records.itemdescription);   
+    $('#itemModal').modal('show'); */
 }
 //--------------------------------------------------------------------
+//Redirects to trader.php and displays the items and other items of the trader clicked
 function viewTraderProfile(userid){
-    var traderid = userid;
-    $.get("../index.php/items/"+traderid, processTraderProfile, "json");
-    
-    //window.open('trader.php');
-
+    $.get("../index.php/items/"+userid, processTraderProfile, "json");
 }
+
 function processTraderProfile(records){
     console.log(records);
     //alert(records[0].userid);
-    listProfileItems(records);
-    //window.location.href = 'trader.php';
+    window.location.href = 'trader.php?trader='+records[0].userid;
+    //listProfileItems(records);
+    return false;
 
 }
 function listProfileItems(records){
-    //console.log(records);
-    var htmlStr;
+    // Display user and their items in a modal
+    /*var htmlStr;
        $("#trader").val(records[0].username);
-        records.forEach(function(item){
-            htmlStr += "<option value='"+item.itemid+"'>"+item.itemname+"</option>";
-
+        records.forEach(function(el){
+            htmlStr += "<option value='"+el.itemid+"''>" +el.itemname + "</option>";
         });
-        
         $("#items").html(htmlStr);
-    $('#profileModal').modal('show'); 
+    $('#profileModal').modal('show'); */
+
+    var itemdiv = "<div>";
+    $("#itemP").val(records[0].username);
+    console.log(records[0].username);
+    records.forEach(function(el){
+        itemdiv += "<div class='panel panel-default'>";
+        itemdiv += "<div class='panel-heading'>"+  el['itemname'] + "</div>"; 
+        itemdiv += "</div>";
+    });
+    $("#itemblockP").html(itemdiv);
+    window.location.href = 'trader.php';
+    return false;
 }
+//---------------------------------------------------------------------------------
 //Dsiplay requests for user items in the notification icon
 function getUserRequests(){
     $.get("../index.php/requests", notifications, "json");  
@@ -381,7 +374,18 @@ function displayRequests(records){
     $(sec_id).html(htmlStr);
 }
 //--------------------------------------------------------------------------------------------------------------------
+// Add the item clicked to the user's saved items
+function addToSavedItems(itemid){
+    swal("Item Saved!", "You can view item in Saved Items!", "success")
+}
+//--------------------------------------------------------------------------------------------------------------------
+// Adds the trader clicked to the user's followers
+function followTrader(userid){
+    alert(userid);
+    swal("Trader Followed!", "You can view followed trader in People!", "success")
+}
 
+//--------------------------------------------------------------------------------------------------------------------
 //Dsiplay decisions for requests made by user
 function getDecisions(){
     $.get("../index.php/decisions", decisions, "json");  
