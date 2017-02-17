@@ -222,7 +222,7 @@ table{
             date_default_timezone_set("America/Grenada");
             $hour = date("H") - 1;
             //echo $hour;
-            //$hour = 7;
+            //$hour = 6;
             if($hour >= 0 && $hour < 12){
               if($hour < 6){
                 echo "Good Morning, ".$_SESSION["user"]." <i class='wi wi-moonset'></i>";
