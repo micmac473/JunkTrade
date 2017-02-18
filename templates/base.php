@@ -16,12 +16,6 @@ if(!isset($_SESSION)){
     <meta name="author" content="">
     
     <title>JunkTrade</title>
-    
-    <!-- Bootstrap core CSS -->
-    <!-- <link href="../css/bootstrap.css" rel="stylesheet"> -->
-    <!-- <link rel ="stylesheet" href ="../css/bootstrap-theme.css" > -->
-    <!-- <link href ="../css/main.css" rel ="stylesheet"> -->
-    <!--<script src="../bower_components/jquery/dist/jquery.js"></script> -->
 
     <!-- google font  -->
     <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
@@ -29,12 +23,18 @@ if(!isset($_SESSION)){
 
     <!-- Latest compiled and minified CSS Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
+    <!-- Sweetalert CSS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet">
+
+    <!-- Main CSS -->
     <link href ="../css/main.css" rel ="stylesheet">
+
+    <!-- Weather Icons CSS -->
     <link href ="../css/weather-icons.min.css" rel ="stylesheet">
+
+    <!-- Scripts-->
     <!-- AngularJS JavaScript file  -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
@@ -47,72 +47,18 @@ if(!isset($_SESSION)){
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
+    <!-- Sweetalert JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
-
+    <!-- Main JS file-->
     <script src="../js/main.js"></script>
+
     <style>
-      .city{
+      ./*city{
         background-image:url(http://www.buyandsellnow.ca/wp-content/uploads/2016/06/3d_banner_background.png);
         
-      }
-      /**
- * Demo Styles
- */
-
-html {
-  height: 100%;
-  box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
-body {
-  position: relative;
-  margin: 0;
-  padding-bottom: 6rem;
-  min-height: 100%;
-  background-color: #f6f6f6;
-   overflow-x: hidden;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-}
-
-.demo {
-  margin: 0 auto;
-  padding-top: 64px;
-  max-width: 640px;
-  width: 94%;
-}
-
-.demo h1 {
-  margin-top: 0;
-}
-
-/**
- * Footer Styles
- */
-
-.footer {
-  background-color:#f6f6f6;
-  text-align: center;
-  color:grey;
-}
-th {
-    background-color: grey;
-    color: white;
-} 
-table{
-  background-color: #FFFFFF;
-}
-
+      } */
     </style>
-
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
   <div id="wrapper">
@@ -127,6 +73,7 @@ table{
         </button>
         <a id="menu-toggle" href="#" class="navbar-brand glyphicon glyphicon-menu-hamburger btn-menu toggle"> </a>
         <a class="navbar-brand" href="#"><img alt ="logo" width ="30px" height ="30px" src =../img/logo.png></a>
+        <a class ="navbar-brand" href ="homepage.php">JunkTrade</a>
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
       </div>
       <div id="navbar" class="navbar-collapse collapse">
@@ -210,8 +157,8 @@ table{
                 <li>
                     <a href="login.php"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
                 </li>
-                <li class="footer">
-                  <p> &copy; JunkTrade 2016. <br>All rights reserved </p>
+                <li class="footerHome">
+                  <p> &copy; JunkTrade 2016. All rights reserved </p>
                 </li>
             </ul>
         </div>
@@ -225,25 +172,25 @@ table{
             //$hour = 6;
             if($hour >= 0 && $hour < 12){
               if($hour < 6){
-                echo "Good Morning, ".$_SESSION["user"]." <i class='wi wi-moonset'></i>";
+                echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-moonset'></i>";
               }
               else if ($hour >=6 && $hour <=7){
-                echo "Good Morning, ".$_SESSION["user"]." <i class='wi wi-sunrise'></i>";
+                echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-sunrise'></i>";
               }
               else{
-                echo "Good Morning, ".$_SESSION["user"]." <i class='wi wi-day-sunny'></i>";
+                echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-day-sunny'></i>";
               }
               
             }
             else if($hour >= 12 && $hour < 18){
-              echo "Good Afternoon, ". $_SESSION["user"]. " <i class='wi wi-day-sunny'></i>";
+              echo "Good Afternoon, ". $_SESSION["user"]. "! <i class='wi wi-day-sunny'></i>";
             }
             else{
               if($hour == 18){
-                echo "Good Evening, ". $_SESSION["user"]. " <i class='wi wi-sunset'></i>";
+                echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-sunset'></i>";
               }
               else{
-                echo "Good Evening, ". $_SESSION["user"]. " <i class='wi wi-night-clear'></i>";
+                echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-night-clear'></i>";
               }
               
             }

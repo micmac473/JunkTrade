@@ -47,7 +47,6 @@ console.log("hello I'm connected to the world");
 $(document).ready(function(){
     console.log("All Elements in the Page was successfully loaded, we can begin our application logic");
     getTrade();
-    getData();
     getAllItems();
     getUserRequests();
     getDecisions();
@@ -57,28 +56,6 @@ $(document).ready(function(){
     //alert($('#requests > li').length);
 });  
 // this acts as the main function in Java
-
-
-
-// Angular App
-var app = angular.module("myapp", ['ngRoute']);
-app.config(["$routeProvider",function($routeProvider) {
-    $routeProvider
-        .when("/", {
-            templateUrl : "main.html",
-        })// no semicolon, this is called method chaining. 
-        .when("/addItem",{
-            templateUrl : "views/addItem.html",
-            controller: "addController"
-        })
-
-}]);
-
-app.controller('mainController', ['$scope', 
-    function($scope){
-    console.log("Main Controller Executed");
-}]);
-// takkes two parameters name of conteroller and behaviour of the conteroller
  
  //--------------------------------------------------------------------------------------------------------------------
  // Log in functionality
@@ -221,7 +198,7 @@ function listAllItems(records){
         //htmlStr += "<tr>";
         //htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+"); window.open(this.src)\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
         itemdiv += "<div class='panel panel-default'>";
-        itemdiv += "<div class='panel-heading'> <button type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  el['username'] + "</button> <span style='float:right'> <em> Uploaded on: "+  el['uploaddate'] +"</em></span></div>"; 
+        itemdiv += "<div class='panel-heading'> <button style='color:black;text-decoration:none' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button> <span style='float:right; font-size:12px'> <em> Uploaded: "+  el['uploaddate'] +"</em></span></div>"; 
         //itemdiv += "<div class='panel-heading'> Uploaded on: "+  el['uploaddate'] + "</div>"; 
         itemdiv += "<div class='panel-heading text-center lead'><strong>"+  el['itemname'] + "</strong></div>"; 
         itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
@@ -447,7 +424,7 @@ function getTrade(){//alter for slim
 function processUserTrade(records){
     console.log(records);
     listUserTrade(records);
-    showRequestData(records);
+    //showRequestData(records);
 }
 
 function listUserTrade(records){
@@ -675,7 +652,7 @@ function views(itemid){
     }, "json");
 
     getAllItems();
-    getData();
+    //getData();
 }
 //--------------------------------------------------------------------------------------------------------------------
 
@@ -747,112 +724,5 @@ function denyRequest(requestId){
 }
 
 //--------------------------------------------------------------------------------------------------------------------
-function getData(){//alter for slim 
-    $.get("../index.php/data", processData, "json");
-}
-
-function processData(records){
-    console.log(records);
-    showData(records);
-}
-
-
-function showRequestData(records){
-      // Load the Visualization API and the corechart package.
-      //google.charts.load('current', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      //google.charts.setOnLoadCallback(drawChart2);
-
-        var accept =0;
-        var deny =0;
-        var pending =0;
-
-      records.forEach(function(el){
-
-        if(el['decision'] == true)
-            accept++;
-        else if (el['decision'] == false)
-            deny++;
-        else 
-            pending++;
-
-      });
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart2() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'decision');
-        data.addColumn('number', 'count');
-        data.addRows([
-          ['Accepted', accept],
-          ['Denied', deny],
-          ['Pending', pending]
-        ]);
-
-        // Set chart options
-        var options = {'title':'Requests Status',
-                        is3D: true,
-                       'width':430,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('trades_chart_div'));
-        //var chart = new google.visualization.PieChart($('#trades_chart_div')[0]);
-
-        chart.draw(data, options);
-      }
-}
-
-function showData(records){
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-     // google.charts.setOnLoadCallback(drawChart);
-      var itemname1 = records[0]['itemname'];
-      var itemname2 = records[1]['itemname'];
-      var itemname3 = records[2]['itemname'];
-      var itemname4 = records[3]['itemname'];
-      var itemname5 = records[4]['itemname'];
-      var itemviews1 = parseInt(records[0]['views']);
-      var itemviews2 = parseInt(records[1]['views']);
-      var itemviews3 = parseInt(records[2]['views']);
-      var itemviews4 = parseInt(records[3]['views']);
-      var itemviews5 = parseInt(records[4]['views']);
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Items');
-        data.addColumn('number', 'Views');
-        data.addRows([
-          [itemname1, itemviews1],
-          [itemname2, itemviews2],
-          [itemname3, itemviews3],
-          [itemname4, itemviews4],
-          [itemname5, itemviews5]
-        ]);
-
-        // Set chart options
-        var options = {'title':'Top 5 Viewed Items',
-                        is3D: true,
-                       'width':320,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        //var chart = new google.visualization.PieChart($('#chart_div')[0]);
-
-        chart.draw(data, options);
-      }
-}
-
 
 console.log("JavaScript file was successfully loaded in the page");

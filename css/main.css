@@ -16,6 +16,8 @@
     text-align:center;
 	}
 
+/* Search bar on profile*/
+
 #custom-search-input{
     padding: 3px;
     border: solid 1px #E4E4E4;
@@ -48,6 +50,7 @@
     font-size: 23px;
 }
 
+/*-------------------------------------------------------------*/
 html {
   height: 100%;
   box-sizing: border-box;
@@ -92,10 +95,20 @@ body {
   color:white;
   font-size: 13px;
 }
+
+.footerHome {
+  background-color:#f6f6f6;
+  text-align: left;
+  color:grey;
+  font-size: 13px;
+   border-top: solid 1px #ccc;
+}
+
 th {
     background-color: grey;
     color: white;
 } 
+
 button:active{
     background:red;
 }
@@ -103,11 +116,16 @@ button:active{
 button:active{
     background:red;
 }
+
+/* Item panel on homepage*/
 .panel{
   background-color: #FFFFFF;
-  box-shadow: 3px 3px 5px 3px #888888;
+  box-shadow: 2px 2px 2px #888888;
 }
 
+
+
+/*Collapsible side bar*/
 #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
@@ -228,6 +246,9 @@ button:active{
         margin-right: 0;
     }
 }
+/*------------------------------------------------------------*/
+
+
 
 .main{
   margin:10px 15px;
@@ -253,6 +274,8 @@ label{
   font-size: 16px;
 }
 
+
+/* Registration, login and forget password forms*/
 input,
 input::-webkit-input-placeholder {
     font-size: 14px;
@@ -327,3 +350,23 @@ span.input-group-addon i {
   font-size: 11px;
   text-align: center;
 }
+
+/* Index.phtml*/
+.firstRow{
+            margin-top: 10%;
+            text-align: center;
+        }
+        .theRows{
+
+        padding:3%;
+        /*text-align: center;*/
+        margin-top: 8%;
+        text-align: justify;
+
+      }
+      .theRows h1{
+        font-size: 320%;
+      }
+      .theRows p{
+        font-size: 150%;
+      }

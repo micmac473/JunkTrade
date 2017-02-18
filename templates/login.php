@@ -16,29 +16,35 @@ session_unset();
     <meta name="description" content="">
     <meta name="author" content="">
     
-    <title>junkTrade Login</title>
+    <title>JunkTrade Login</title>
     
-    <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
-    <link rel ="stylesheet" href ="../css/bootstrap-theme.css" >
+    <!-- Latest compiled and minified CSS Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
+    <!-- Sweetalert CSS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet">
+
+    <!-- Main CSS -->
     <link href ="../css/main.css" rel ="stylesheet">
 
-    <!-- google font  -->
-    <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
+    <!-- Bootstrap validator -->
+    <link href="https://cdnjs.com/libraries/1000hz-bootstrap-validator" rel="styleshet">
 
-    <script src="../bower_components/angular/angular.min.js"></script>
-    <script src="../bower_components/angular-route/angular-route.min.js"></script>
-    <script src ="../js/jquery-3.1.1.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <!-- Scripts-->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <!-- Sweetalert JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <!-- Main JS file-->
     <script src="../js/main.js"></script>
+
+    <!-- Bootstrap validator -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 <style>
@@ -49,6 +55,11 @@ body {
   min-height: 100%;
   background-color: #f6f6f6;
 }
+body, html{
+     height: 100%;
+  
+      background-size: cover;
+} 
 form {
   background-color: #FFFFFF;
 }
@@ -65,7 +76,7 @@ form {
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#"><img alt ="logo" width ="30px" height ="30px" src ="../img/logo.png"></a>
-          <a class ="navbar-brand" href ="../">junkTrade</a>
+          <a class ="navbar-brand" href ="../">JunkTrade</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
       

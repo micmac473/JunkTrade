@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2017 at 02:46 PM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 7.0.8
+-- Generation Time: Feb 18, 2017 at 06:23 AM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -25,6 +25,19 @@ USE `peertrading`;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `followers`
+--
+
+DROP TABLE IF EXISTS `followers`;
+CREATE TABLE `followers` (
+  `follower` int(11) NOT NULL,
+  `followee` int(11) NOT NULL,
+  `followedindicator` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `items`
 --
 
@@ -34,6 +47,8 @@ CREATE TABLE `items` (
   `itemname` varchar(50) NOT NULL,
   `itemdescription` varchar(500) NOT NULL,
   `picture` varchar(1000) NOT NULL,
+  `picture2` varchar(1000) NOT NULL,
+  `picture3` varchar(1000) NOT NULL,
   `uploaddate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `userid` int(11) NOT NULL,
   `views` int(11) NOT NULL DEFAULT '0'
@@ -43,49 +58,24 @@ CREATE TABLE `items` (
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `uploaddate`, `userid`, `views`) VALUES
-(1, 'House', 'This is my house item', '../img/house.jpg', '2016-11-26 03:38:21', 1, 0),
-(2, 'Peas', 'This is my easy peasy item', '../img/easy.png', '2016-11-26 03:38:21', 2, 2),
-(3, 'Money', 'This is my money item', '../img/nomoney.png', '2016-11-26 03:38:42', 2, 1),
-(4, 'Friends', 'This is my friends item', '../img/buddy.png', '2016-11-26 03:38:42', 6, 0),
-(25, 'Dell XPS', 'Processor: i7 3.5 Ghz Quad Core\r\nRam: 12 GB\r\nGraphics: GeForce GTX 980', '../img/xps.png', '2016-11-26 15:54:19', 6, 2),
-(26, 'Logo', 'This is my logo item', '../img/logo.png', '2016-11-26 15:55:07', 6, 1),
-(27, 'HP Laptop', 'Processor: i5 2.5 Ghz Dual Core\r\nRam: 8 GB\r\nGraphics: Intel ', '../img/hp.jpg', '2016-11-26 15:57:48', 1, 0),
-(29, 'SVG Flag', 'This the flag of St. Vincent and the Grenadines, West Indies', '../img/svgflag.png', '2016-11-27 15:21:11', 39, 1),
-(30, 'Cloud Server', 'Heroku cloud server', '../img/cloudserver.jpg', '2016-11-27 22:57:00', 40, 2),
-(34, 'Hydrangeas', 'Hydrangeas', '../img/Hydrangeas.jpg', '2016-11-30 13:42:30', 1, 0),
-(36, 'Jellyfish', 'Jellyfish', '../img/Jellyfish.jpg', '2016-11-30 13:45:11', 1, 0),
-(38, 'Nike', 'Color: Red and black\r\nSize: 12\r\nCondition: New\r\nComes with box', '../img/airjordans.jpe', '2016-11-30 19:11:47', 40, 1),
-(39, 'Gucci Watch', 'This is real Gucci', '../img/gucciwatch.jpe', '2016-11-30 19:54:55', 40, 3),
-(42, 'Piano Keyboard', 'Brand: Yamaha\r\nCondition: Used\r\nComes with everything', '../img/pianokeyboard.jpe', '2016-12-01 15:10:04', 1, 0),
-(44, 'iPhone 6', 'Capacity: 68 GB\r\nRAM: 4 GB\r\nDisplay: Retina\r\nCondition: New', '../img/iphone.jpg', '2016-12-01 23:40:35', 1, 0),
-(45, 'Gucci Belt', 'Genuine Leather,\r\nCondition: New', '../img/guccibelt.jpg', '2016-12-02 00:36:38', 1, 0),
-(46, 'New Era Hat', 'Snapback\r\nColor: Black\r\nSize: 7 1/2', '../img/snapback.jpg', '2016-12-02 00:38:16', 1, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `profile`
---
-
-DROP TABLE IF EXISTS `profile`;
-CREATE TABLE `profile` (
-  `interests` varchar(100) DEFAULT NULL,
-  `tradables` varchar(1000) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ratings`
---
-
-DROP TABLE IF EXISTS `ratings`;
-CREATE TABLE `ratings` (
-  `ratingNumber` int(11) NOT NULL,
-  `UserId` int(11) NOT NULL,
-  `rating` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `picture2`, `picture3`, `uploaddate`, `userid`, `views`) VALUES
+(1, 'House', 'This is my house item', '../img/house.jpg', '', '', '2016-11-26 03:38:21', 1, 0),
+(2, 'Peas', 'This is my easy peasy item', '../img/easy.png', '', '', '2016-11-26 03:38:21', 2, 2),
+(3, 'Money', 'This is my money item', '../img/nomoney.png', '', '', '2016-11-26 03:38:42', 2, 1),
+(4, 'Friends', 'This is my friends item', '../img/buddy.png', '', '', '2016-11-26 03:38:42', 6, 0),
+(25, 'Dell XPS', 'Processor: i7 3.5 Ghz Quad Core\r\nRam: 12 GB\r\nGraphics: GeForce GTX 980', '../img/xps.png', '', '', '2016-11-26 15:54:19', 6, 2),
+(26, 'Logo', 'This is my logo item', '../img/logo.png', '', '', '2016-11-26 15:55:07', 6, 1),
+(27, 'HP Laptop', 'Processor: i5 2.5 Ghz Dual Core\r\nRam: 8 GB\r\nGraphics: Intel ', '../img/hp.jpg', '', '', '2016-11-26 15:57:48', 1, 1),
+(29, 'SVG Flag', 'This the flag of St. Vincent and the Grenadines, West Indies', '../img/svgflag.png', '', '', '2016-11-27 15:21:11', 39, 1),
+(30, 'Cloud Server', 'Heroku cloud server', '../img/cloudserver.jpg', '', '', '2016-11-27 22:57:00', 40, 2),
+(34, 'Hydrangeas', 'Hydrangeas', '../img/Hydrangeas.jpg', '', '', '2016-11-30 13:42:30', 1, 0),
+(36, 'Jellyfish', 'Jellyfish', '../img/Jellyfish.jpg', '', '', '2016-11-30 13:45:11', 1, 0),
+(38, 'Nike', 'Color: Red and black\r\nSize: 12\r\nCondition: New\r\nComes with box', '../img/airjordans.jpe', '', '', '2016-11-30 19:11:47', 40, 1),
+(39, 'Gucci Watch', 'This is real Gucci', '../img/gucciwatch.jpe', '', '', '2016-11-30 19:54:55', 40, 3),
+(42, 'Piano Keyboard', 'Brand: Yamaha\r\nCondition: Used\r\nComes with everything', '../img/pianokeyboard.jpe', '', '', '2016-12-01 15:10:04', 1, 0),
+(44, 'iPhone 6', 'Capacity: 68 GB\r\nRAM: 4 GB\r\nDisplay: Retina\r\nCondition: New', '../img/iphone.jpg', '', '', '2016-12-01 23:40:35', 1, 0),
+(45, 'Gucci Belt', 'Genuine Leather,\r\nCondition: New', '../img/guccibelt.jpg', '', '', '2016-12-02 00:36:38', 1, 0),
+(46, 'New Era Hat', 'Snapback\r\nColor: Black\r\nSize: 7 1/2', '../img/snapback.jpg', '', '', '2016-12-02 00:38:16', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -147,20 +137,6 @@ CREATE TABLE `trade` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaction`
---
-
-DROP TABLE IF EXISTS `transaction`;
-CREATE TABLE `transaction` (
-  `TransactionId` int(11) NOT NULL,
-  `User1` int(11) NOT NULL,
-  `User2` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `users`
 --
 
@@ -205,22 +181,10 @@ ALTER TABLE `items`
   ADD PRIMARY KEY (`itemid`);
 
 --
--- Indexes for table `ratings`
---
-ALTER TABLE `ratings`
-  ADD PRIMARY KEY (`ratingNumber`);
-
---
 -- Indexes for table `requests`
 --
 ALTER TABLE `requests`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `transaction`
---
-ALTER TABLE `transaction`
-  ADD PRIMARY KEY (`TransactionId`);
 
 --
 -- Indexes for table `users`
@@ -238,20 +202,10 @@ ALTER TABLE `users`
 ALTER TABLE `items`
   MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 --
--- AUTO_INCREMENT for table `ratings`
---
-ALTER TABLE `ratings`
-  MODIFY `ratingNumber` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
---
--- AUTO_INCREMENT for table `transaction`
---
-ALTER TABLE `transaction`
-  MODIFY `TransactionId` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
