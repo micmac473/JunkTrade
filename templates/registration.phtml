@@ -176,15 +176,15 @@ body{
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group has-feedback">
               <label for="name" class="cols-sm-2 control-label">Security Question</label>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-user-secret" aria-hidden="true"></i></span>
-                  <select class="form-control" name="securityquestion" id="securityquestion"  required/>
-                  <option value="0"> Select a security question</option>
-                    <option value="kiss"> What is the first name of the person you first kissed? </option>
-                    <option value="mother"> What is your mother's maiden name? </option>
+                  <select class="form-control" name="securityquestion" id="securityquestion" placeholder="Confirm your Password" required/>
+                  <option value="" disabled selected> Select a security question</option>
+                    <option value="sport"> What is your favorite sport? </option>
+                    <option value="food"> What is your favorite food? </option>
                   </select>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>

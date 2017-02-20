@@ -198,12 +198,14 @@ function listAllItems(records){
         //htmlStr += "<tr>";
         //htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+"); window.open(this.src)\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
         itemdiv += "<div class='panel panel-default'>";
-        itemdiv += "<div class='panel-heading'> <button style='color:black;text-decoration:none' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button> <span style='float:right; font-size:12px'> <em> Uploaded: "+  el['uploaddate'] +"</em></span></div>"; 
+        //itemdiv += "<div class='panel-heading'> </div>"; 
+        //<span style='float:right; font-size:12px'> <em> Uploaded: "+  el['uploaddate'] +"</em></span>
         //itemdiv += "<div class='panel-heading'> Uploaded on: "+  el['uploaddate'] + "</div>"; 
-        itemdiv += "<div class='panel-heading text-center lead'><strong>"+  el['itemname'] + "</strong></div>"; 
-        itemdiv += "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+        itemdiv += "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button></div>"; 
+
+        itemdiv += "<div class='panel-body'> <div class='text-center lead'> <strong>"+  el['itemname'] + "</strong> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
         //itemdiv += "<div class='panel-footer'> <a href='item.php' class='btn btn-info btn-block'><span class='glyphicon glyphicon-eye-open'></span> View more....</a> </div>"; 
-        itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-4'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-4'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> <div class='col-lg-4'> <button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems("+el.itemid+")\"><i class='fa fa-bookmark fa-lg' aria-hidden='true'></i> Save</button></div></div></div>";
+        itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
         itemdiv += "</div>";
         /*
         htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";

@@ -56,7 +56,7 @@ function checkLogin1($email, $sAnswer){
 function saveUser($username, $firstname, $lastname, $email, $password, $securityQuestion, $securityAnswer){
 	$password = sha1($password);
 	$securityAnswer = sha1($securityAnswer);
-	$sql = "INSERT INTO `users` (`username`, `firstname`, `lastname`, `email`, `password`, `securityquestion`, `securityanswer`) VALUES ('$username', '$firstname', '$lastname', '$email', '$password','$securityQuestion','$securityAnswer');";
+	$sql = "INSERT INTO `users` (`username`, `firstname`, `lastname`, `email`, `password`, `sQuestion`, `sAnswer`) VALUES ('$username', '$firstname', '$lastname', '$email', '$password','$securityQuestion','$securityAnswer');";
 	$id = -1;
 	$db = getDBConnection();
 	if ($db != NULL){

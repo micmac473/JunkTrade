@@ -4,13 +4,8 @@ include "base.php";
 
 <div class="container-fluid">
   <div class="row">
-    
 
-
-    <div class="col-xs-2">
-    </div>
-
-    <div id = "searchitemblock" class="col-lg-4- col-md-4 col-s-4 col-xs-12">
+    <div id = "searchitemblock" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
     	<p>
 	    <h3>Search For An Item</h3> 
 	    <p>You may enter any key word</p> 
@@ -23,14 +18,14 @@ include "base.php";
 <?php
 
 $item = null;
-
+		$user = $_SESSION["id"];
 	  if(isset($_POST['searchsubmit'])){ 
 	  if(isset($_GET['go'])){ 
 	  if(preg_match("/^[  a-zA-Z]+/", $_POST['searchname'])){ 
 	  $name=$_POST['searchname']; 
 	  //-query  the database table
 	  $db=mysqli_connect("localhost","root","","peertrading")or die("cannot connect to server"); 
-	  $sql="SELECT  itemid, itemname, itemdescription, userid, picture, username FROM items, users WHERE itemname LIKE '%" . $name .  "%' && items.userid = users.id"; 
+	  $sql="SELECT  itemid, itemname, itemdescription, userid, picture, username FROM items, users WHERE $user <> `userid` AND itemname LIKE '%" . $name .  "%' && items.userid = users.id"; 
 	  //-run  the query against the mysql query function 
 	  $result=$db->query($sql); 
 	  //-create  while loop and loop through result set 
@@ -43,13 +38,12 @@ $item = null;
 	  //-display the result of the array 
 	   	$ID = $val['userid'];
 
-	   	echo "<div class='panel panel-primary'>";
-        echo "<div class='panel-heading'>".  $val['itemname'] . "</div>"; 
-        echo "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"views(".$val['itemid'].")\" src=\"" . $val['picture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
-        echo "<div class='panel-footer'>".  $val['username'] . "</div>"; 
-        echo "<div class='panel-footer'>".  $val['itemdescription'] . "</div>"; 
-        echo "<div class='panel-footer'> <button type='button' class='btn btn-primary' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i></button><button type='button' class='btn btn-success' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-user-plus' aria-hidden='true'></i></button></div>";
-        echo "</div>";
+	   	echo "<div class='panel panel-default'>";
+          //echo "<div class='panel-heading' style='text-align: right'> <em> Uploaded on: ".  $val['uploaddate']."</em></div>";
+          echo "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile(".$val['userid'].")\">" .  "<strong>" . $val['username'] . "</strong></button></div>";
+          echo "<div class='panel-body'> <div class='text-center lead'> <strong>".  $val['itemname'] . "</strong> </div> <img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture']  ."\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+          echo "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem(".$val['itemid'].")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div></div></div>";
+          echo "</div>";
     }
 	  } 
 	  } 

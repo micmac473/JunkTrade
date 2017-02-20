@@ -71,9 +71,10 @@ if(!isset($_SESSION)){
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+
         <a id="menu-toggle" href="#" class="navbar-brand glyphicon glyphicon-menu-hamburger btn-menu toggle"> </a>
-        <a class="navbar-brand" href="#"><img alt ="logo" width ="30px" height ="30px" src =../img/logo.png></a>
-        <a class ="navbar-brand" href ="homepage.php">JunkTrade</a>
+        <a class="navbar-brand" href="homepage.php"><img alt ="logo" width ="30px" height ="30px" src =../img/logo.png></a>
+        <!--<a class="navbar-brand" href ="homepage.php">JunkTrade</a> -->
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
       </div>
       <div id="navbar" class="navbar-collapse collapse">
@@ -89,13 +90,12 @@ if(!isset($_SESSION)){
           </li>
         </ul>
 
-        <form class="navbar-form navbar-left" role="form" action ="search.php?go">
-          <div class="form-group ">
+        <!--<form class="navbar-form navbar-left" role="form" action ="search.php?go">
+          <div class="form-group">
             <input type="text" placeholder="Search for Junk" class="form-control" name="searchname">
           </div>
-            <!--change to icon-->
           <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true" name="searchsubmit"></i></button>
-        </form>
+        </form> -->
 
         <ul class="nav navbar-nav navbar-right">
           <li data-toggle="modal" data-target="#requestModal"> <a href="#" data-toggle="tooltip" title="Upload item"> <i class="fa fa-plus fa-2x" aria-hidden="true"></i> </a></li>
@@ -127,6 +127,16 @@ if(!isset($_SESSION)){
           </li>
           
         </ul>
+        <form class="navbar-form" role="form" action ="search.php?go">
+        <div class="form-group" style="display:inline;">
+          <div class="input-group" style="display:table;">
+            <input class="form-control" name="searchname" placeholder="Search for Junk" autocomplete="off" autofocus="autofocus" type="text">
+            <span class="input-group-addon" class="btn btn-default" style="width:1%;" name="searchsubmit">
+              <a href="search.php?go"><span class="glyphicon glyphicon-search"></span> </a>
+            </span>
+          </div>
+        </div>
+      </form>
       </div><!--/.navbar-collapse -->
     </div>
   </nav>

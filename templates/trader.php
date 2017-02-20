@@ -36,10 +36,10 @@ if(isset($_GET['trader'])){
         for($i = 0; $i < count($userDetails); $i++){
           $val = $userDetails[$i];
           echo "<div class='panel panel-default'>";
-          echo "<div class='panel-heading' style='text-align: right'> <em> Uploaded on: ".  $val['uploaddate']."</em></div>";
+          //echo "<div class='panel-heading' style='text-align: right'> <em> Uploaded on: ".  $val['uploaddate']."</em></div>";
           echo "<div class='panel-heading text-center lead'><strong>".  $val['itemname'] . "</strong></div>";
           echo "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture']  ."\"  class='img-responsive img-thumbnail mx-auto'> </div>";
-          echo "<div class='panel-footer'> <div class='row'><div class='col-lg-4'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-4'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem(".$val['itemid'].")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> <div class='col-lg-4'> <button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button></div></div></div>";
+          echo "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem(".$val['itemid'].")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div></div></div>";
           echo "</div>";
         }
       ?>
