@@ -116,7 +116,7 @@ function login1(){
                 type: "" 
             },
                 function(){
-                    window.location.href = 'login.php';
+                    window.location.href = 'updatePassword.php';
             });
             //window.location.href="homepage.php";
             //return false;
@@ -175,6 +175,39 @@ function register(){
         else{
             swal("Incorrect Login","Please try again","error")
             //return false;
+        }
+    },"json");
+
+    return false;
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// Registration functionality
+function updatePassword(){
+    console.log("Hi");
+    var password = $("#password").val();
+    var retypedpassword = $("#retypedpassword").val();
+
+    var regUser = {
+        "password" : password
+    };
+
+    console.log(regUser)
+
+    $.post("../index.php/update", regUser, function(res){
+        if(res){
+            console.log(res);
+            swal({ 
+                title: "Password Update Complete!",
+                text: "Proceed to login",
+                type: "success" 
+            },
+                function(){
+                    window.location.href = 'login.php';
+            });
+        }
+        else{
+            swal("An error has occured","Please try again","error")
         }
     },"json");
 

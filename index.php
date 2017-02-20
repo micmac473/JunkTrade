@@ -236,7 +236,7 @@ $app->get("/viewitem/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country
 	$rec = productViews($val);
-
+	echo $rec;
 	$response = $response->withJson($rec);
 	return $response;
 });
@@ -308,6 +308,22 @@ $app->post("/register", function(Request $request, Response $response){
 	if ($res){
 		$response = $response->withStatus(201);
 		$response = $response->withJson(array( "id" => $res));
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+	//return $this->renderer->render($response, "/login.html");
+});
+
+$app->post("/update", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$password = $post['password'];
+	
+	$res = updatePassword($password);
+	//var_dump($res);
+	if ($res == 1){
+		$response = $response->withStatus(201);
+		$response = $response->withJson(array(true));
 	} else {
 		$response = $response->withStatus(400);
 	}

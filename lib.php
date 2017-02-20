@@ -42,8 +42,7 @@ function checkLogin1($email, $sAnswer){
 		$res = $db->query($sql);
 		if ($res && $row = $res->fetch_assoc()){
 			if($row['sAnswer'] == $sAnswer){
-				$_SESSION["user"] = $row['firstname'];
-				$_SESSION["id"] = $row['id'];
+				$_SESSION["user"] = $row['username'];
 				return $row['firstname'];
 			}
 				
@@ -510,6 +509,21 @@ function productViews($itemid){
       $res = $db->query($sql);
       $db->close();
     }
+  	return $res;
+}
+
+function updatePassword($password){
+	$password = sha1($password);
+	$user = $_SESSION["user"];
+	$sql = "UPDATE `users` SET `password` = '$password' WHERE `username` = '$user' OR `email` = '$user'";
+    $res = null;
+    $db = getDBConnection();
+    if ($db != NULL){
+		
+      $res = $db->query($sql);
+      $db->close();
+    }
+	//echo $res;
   	return $res;
 }
 

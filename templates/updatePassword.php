@@ -1,5 +1,5 @@
 
-<?php
+<?php 
 include "../lib.php";
 
 
@@ -89,22 +89,22 @@ form {
   <div class ="container">
     <div class="jumbotron" style="text-align:center;">
     <h1 >JunkTrade </h1>
-    <h3> Oops you forgot your password :'(</h3>
+    <h3> Enter new passsword Details :)</h3>
   </div>
     <div class ="row main">
       <div class="main-login main-center">
         <!-- <form class="form-horizontal" onsubmit="return login();" method ="POST" action="index.php/users"> -->
-          <form  role="form" data-toggle="validator" onsubmit="return login1() ;">
+          <form  role="form" data-toggle="validator" onsubmit="return updatePassword();">
           <fieldset>
             <!-- Form Name -->
-            <legend style="text-align: center"> <h2> Forget Password </h2></legend>
+            <legend style="text-align: center"> <h2> Update Password </h2></legend>
 
             <div class="form-group has-feedback">
-              <label for="username" class="cols-xs-2 control-label">Username or email address</label>
-              <div class="cols-xs-12">
+              <label for="password" class="cols-sm-2 control-label">Password</label>
+              <div class="cols-sm-10">
                 <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-                  <input type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="email" id="email"  placeholder="Username or email" required="">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <input type="password" data-minlength="6" class="form-control" name="password" id="password"  placeholder="Enter your Password" required/>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -112,26 +112,11 @@ form {
             </div>
 
             <div class="form-group has-feedback">
-              <label for="name" class="cols-sm-2 control-label">Security Question</label>
-              <div class="cols-sm-10">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user-secret" aria-hidden="true"></i></span>
-                  <select class="form-control" name="securityquestion" id="securityquestion" placeholder="Confirm your Password" required/>
-                  <option value="" disabled selected> Select a security question</option>
-                    <option value="sport"> What is your favorite sport? </option>
-                    <option value="food"> What is your favorite food? </option>
-                  </select>
-                </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-              </div>
-            </div>
-
-            <div class="form-group has-feedback">
-              <label for="password" class="cols-sm-2 control-label">Security Answer</label>
+              <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <input type="password" data-minlength="6" class="form-control" name="sAnswer" id="sAnswer"  placeholder="Security Answer" required/>
+                  <input type="password" data-match="#password" data-match-error="Passwords do not match" class="form-control" name="retypedpassword" id="retypedpassword"  placeholder="Confirm your Password" required/>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
