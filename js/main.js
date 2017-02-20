@@ -474,12 +474,16 @@ function listUserTrade(records){
         htmlStr += "<td>" + el['timerequested'] + "</td>";
         if(el['decision'] == null){
             htmlStr += "<td> Pending </td>";
+            htmlStr += "<td></td>";
         }
         else if(el['decision'] == true){
             htmlStr += "<td> Accepted </td>";
+            htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"meetUp("+el.rid+")\"><i class='fa fa-map-marker' aria-hidden='true'></i></button></td>";
         }
         else{
             htmlStr += "<td> Denied </td>";
+            htmlStr += "<td></td>";
+
         }
         htmlStr +=" </tr>" ;
     });
@@ -487,6 +491,11 @@ function listUserTrade(records){
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr);
 } 
+
+function meetUp(requestid){
+    //swal("Working!", "", "success");
+    window.location.href = "meetup.php";
+}
 
 //--------------------------------------------------------------------------------------------------------------------
 // Show and hide add item form

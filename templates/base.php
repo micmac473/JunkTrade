@@ -162,13 +162,13 @@ if(!isset($_SESSION)){
                     <a href="#"><i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saved Items</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
+                    <a href="#"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
                 </li>
                 <li>
                     <a href="login.php"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
                 </li>
                 <li class="footerHome">
-                  <p> &copy; JunkTrade 2016. All rights reserved </p>
+                  <p><strong> &copy;2017 JunkTrade </strong></p>
                 </li>
             </ul>
         </div>

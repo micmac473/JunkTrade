@@ -5,7 +5,7 @@ include "base.php";
 <div class ="container-fluid">
 
   <div class="row">
-    <div class="col-md-8 table-responsive">
+    <div class="col-xs-12 table-responsive">
       <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">My Requests</h2>
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->
@@ -29,6 +29,7 @@ include "base.php";
       <th>For</th>
       <th>Date Requested</th>
       <th>Status</th>
+      <th>Meet Up </th>
     </tr>
     </thead>
     <tbody>

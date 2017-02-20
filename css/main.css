@@ -99,9 +99,9 @@ body {
 .footerHome {
   background-color:#f6f6f6;
   text-align: left;
-  color:grey;
+  color:lightgrey;
   font-size: 13px;
-   border-top: solid 1px #ccc;
+  border-top: solid 1px #ccc;
 }
 
 th {
