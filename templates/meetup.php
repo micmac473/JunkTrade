@@ -7,14 +7,14 @@ include "base.php";
 <div class ="container-fluid">
   <div class ="row">
     <div class="col-xs-12 table-responsive">
-      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Requesting Items Meetup</h2>
+      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Requested items Meetup</h2>
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->
       <div id="table_sec_requesting"></div>
     </div>
 
     <div class ="col-xs-12 table-responsive">
-      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Requested Items Meetup</h2>
+      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Requests for items Meetup</h2>
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->
       <div id="table_sec_requested"></div>
