@@ -6,62 +6,38 @@ include "base.php";
 
 <div class ="container-fluid">
   <div class ="row">
-    <h1> Arrange Meet Up </h1>
+    <div class="col-xs-12 table-responsive">
+      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Requesting Items Meetup</h2>
+    <!--<h4>Products</h4>
+    <p>A table highlighting the available products</p> -->
+      <div id="table_sec_requesting"></div>
+    </div>
 
-    <form class="form-horizontal col-xs-6 col-xs-offset-3" >
-<fieldset>
-
-<!-- Form Name -->
-<legend>Form Name</legend>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Requestee</label>  
-  <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md" required="">
-    
-  </div>
+    <div class ="col-xs-12 table-responsive">
+      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Requested Items Meetup</h2>
+    <!--<h4>Products</h4>
+    <p>A table highlighting the available products</p> -->
+      <div id="table_sec_requested"></div>
+    </div>
+  </div>  
 </div>
 
-<!-- Multiple Radios -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="location">UWI Location</label>
-  <div class="col-md-4">
-  <div class="radio">
-    <label for="location-0">
-      <input type="radio" name="location" id="location-0" value="1" checked="checked">
-      Food Court
-    </label>
-  </div>
-  <div class="radio">
-    <label for="location-1">
-      <input type="radio" name="location" id="location-1" value="2">
-      JFK
-    </label>
-  </div>
-  <div class="radio">
-    <label for="location-2">
-      <input type="radio" name="location" id="location-2" value="">
-      DAAGA
-    </label>
-  </div>
-  <div class="radio">
-    <label for="location-3">
-      <input type="radio" name="location" id="location-3" value="">
-      Student Admin
-    </label>
-  </div>
-  <div class="radio">
-    <label for="location-4">
-      <input type="radio" name="location" id="location-4" value="">
-      Alma Jordan Library
-    </label>
-  </div>
-  </div>
-</div>
+<script type="text/template" id="table_heading_requesting">
+  <table class="table table-hover table-condensed">
+    <thead>
+    <tr>
+      <th>My Item</th><th>Their Item</th><th>Requestee</th><th>Contact</th><th>Date</th><th>Location</th><th>Options</th>
+    </tr>
+    </thead>
+    <tbody>
+</script>
 
-</fieldset>
-</form>
-
-  </div>
-</div>
+<script type="text/template" id="table_heading_requested">
+  <table class="table table-hover table-condensed">
+    <thead>
+    <tr>
+      <th>My Item</th><th>Their Item</th><th>Requester</th><th>Contact</th><th>Date</th><th>Location</th><th>Options</th>
+    </tr>
+    </thead>
+    <tbody>
+</script>

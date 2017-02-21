@@ -179,6 +179,20 @@ $app->get("/request", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/requestingmeetup", function(Request $request, Response $response){
+	$items = getRequestingMeetup();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
+
+$app->get("/requestedmeetup", function(Request $request, Response $response){
+	$items = getRequestedMeetup();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
+
 $app->get("/request/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country
@@ -373,6 +387,23 @@ $app->post("/request", function(Request $request, Response $response){
 		
 	} else {
 		$response = $response->withJson(400);
+	}
+	return $response;
+});
+
+$app->post("/tradearrangement", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$requestId = $post['requestid'];
+	$tradeDate = $post['tradedate'];
+	$tradeLocation = $post['tradelocation'];
+	$res = saveTradeArrangement($requestId, $tradeDate, $tradeLocation);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
 	}
 	return $response;
 });

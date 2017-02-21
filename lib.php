@@ -67,6 +67,49 @@ function saveUser($username, $firstname, $lastname, $email, $password, $security
 	}
 	return $id;
 }
+function saveTradeArrangement($requestId, $tradeDate, $tradeLocation){
+	$sql = "INSERT INTO `trade` (`requestid`, `tradedate`, `tradelocation`) VALUES ($requestId, '$tradeDate', '$tradeLocation');";
+	$id = -1;
+	$db = getDBConnection();
+	if ($db != NULL){
+		$res = $db->query($sql);
+		if ($res && $db->insert_id > 0){
+			$id = $db->insert_id;
+		}
+		$db->close();
+	}
+	return $id;
+}
+
+function getRequestingMeetup(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `requests` r, `trade` t where r.requester = '$userid' and r.id = t.requestid";
+	$items =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getRequestedMeetup(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `requests` r, `trade` t where r.requestee = '$userid' AND r.id = t.requestid";
+	$items =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
 
 function isExist($FBID){
 	$sql = "SELECT * FROM `users` WHERE id = '$FBID';";

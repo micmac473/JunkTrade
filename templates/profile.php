@@ -234,9 +234,9 @@ unset($_POST);
     <tbody>
 </script>
 
-<!-- Modal -->
+<!-- View Modal -->
   <div class="modal fade" id="requestModalP" role="dialog">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
           <form class="form">
@@ -268,3 +268,67 @@ unset($_POST);
       </div>
     </div>
   </div>
+
+  <!-- Meet up Modal -->
+  <div class="modal fade" id="meetUpModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form" onsubmit="return arrangement();">
+            <fieldset>
+              
+              <input id="requestid" name="requestid" type="hidden" disabled placeholder="Requested Item" class="form-control input-md">
+              
+              <div class="form-group"> <!-- Date input -->
+                <label class="control-label" for="date">Date</label>
+                <div class="">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                  <input class="form-control" id="tradedate" name="tradedate" placeholder="MM/DD/YYY" type="text" required/>
+                </div>
+              </div>
+              </div> 
+
+              <div class="form-group">
+                <label class="control-label" for="selectbasic">UWI Location</label>
+                <div class="">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                  <select id="tradelocation" name="tradelocation" class="form-control" required>
+                    <option value="" disabled selected> Select a campus location</option>
+                    <option value="foodcourt">Food Court</option>
+                    <option value="jfk">JFK Quadrangle</option>
+                    <option value="lrcgreens">LRC Greens</option>
+                  </select>
+                </div>
+              </div>
+              </div>
+
+              <div class="form-group">
+                <div class="">
+                  <button  class="btn btn-success btn-block" type="submit">Send arrangement</button>
+                  <button  class="btn btn-danger btn-block" data-dismiss="modal">Cancel arrangement</button>
+                </div>
+              </div>
+
+            </fieldset>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+      var date_input=$('input[name="tradedate"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+</script>

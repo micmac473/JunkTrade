@@ -52,6 +52,8 @@ $(document).ready(function(){
     getDecisions();
     getUserItems();
     $('[data-toggle="tooltip"]').tooltip();   
+    getRequestingMeetUp();
+    getRequestedMeetUp();
     
     //alert($('#requests > li').length);
 });  
@@ -715,6 +717,8 @@ function viewRequest(requestId){
 
 //--------------------------------------------------------------------------------------------------------------------
 function acceptRequest(requestId){
+    $("#requestid").val(requestId);
+    $("#meetUpModal").modal('show');
     swal({
         title: "Accept Request?",
         //text: "You will not be able to undo this operation!",
@@ -731,7 +735,8 @@ function acceptRequest(requestId){
         if (isConfirm) {
             $.get("../index.php/acceptrequest/"+requestId, function(res){
                 swal("Accepted!", "The user will be notified", "success");
-                getUserRequests();
+
+                //getUserRequests();
             }, "json");
             
         } else {
@@ -769,4 +774,71 @@ function denyRequest(requestId){
 
 //--------------------------------------------------------------------------------------------------------------------
 
+function arrangement(){
+    var requestId = $("#requestid").val();
+    var tradeDate = $("#tradedate").val();
+    var tradeLocation = $("#tradelocation").val();
+
+    var trade = {
+        "requestid" : requestId,
+        "tradedate" : tradeDate,
+        "tradelocation" : tradeLocation
+    };
+
+    console.log(trade);
+    $.post("../index.php/tradearrangement", trade,function(res){
+        console.log(res);
+    },"json");
+    return false;
+}
+
+function getRequestingMeetUp(){
+    $.get("../index.php/requestingmeetup", processRequestingMeetUp,"json");
+} 
+
+function processRequestingMeetUp(records){
+    console.log(records);
+    var sec_id = "#table_sec_requesting";
+    var htmlStr = $("#table_heading_requesting").html(); //Includes all the table, thead and tbody declarations
+
+    records.forEach(function(el){
+        htmlStr += "<tr>";
+        htmlStr += "<td></td>";
+        htmlStr += "<td></td>"
+        htmlStr += "<td>"+el['requestee']+"</td>"
+        htmlStr += "<td>"+el['requesteecontact']+"</td>"
+        htmlStr += "<td>" + el['tradedate'] + "</td>";
+        htmlStr += "<td>" + el['tradelocation'] + "</td>";
+        htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button> ";
+        htmlStr +=" </tr>" ;
+    });
+    //count = $("#mylist li").size();
+    htmlStr += "</tbody></table>";
+    $(sec_id).html(htmlStr); 
+}
+//---------------------------------------------------------------------------------//
+function getRequestedMeetUp(){
+     $.get("../index.php/requestedmeetup", processRequestedMeetUp,"json");
+}
+
+function processRequestedMeetUp(records){
+    console.log(records);
+    var sec_id = "#table_sec_requested";
+    var htmlStr = $("#table_heading_requested").html(); //Includes all the table, thead and tbody declarations
+
+    records.forEach(function(el){
+        htmlStr += "<tr>";
+        htmlStr += "<td></td>";
+        htmlStr += "<td></td>"
+        htmlStr += "<td>"+el['requester']+"</td>"
+        htmlStr += "<td></td>"
+        htmlStr += "<td>" + el['tradedate'] + "</td>";
+        htmlStr += "<td>" + el['tradelocation'] + "</td>";
+        htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button> ";
+        htmlStr +=" </tr>" ;
+    });
+    //count = $("#mylist li").size();
+    htmlStr += "</tbody></table>";
+    $(sec_id).html(htmlStr); 
+}
 console.log("JavaScript file was successfully loaded in the page");

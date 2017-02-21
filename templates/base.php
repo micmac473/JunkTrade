@@ -34,6 +34,8 @@ if(!isset($_SESSION)){
     <!-- Weather Icons CSS -->
     <link href ="../css/weather-icons.min.css" rel ="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    
     <!-- Scripts-->
     <!-- AngularJS JavaScript file  -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -52,6 +54,8 @@ if(!isset($_SESSION)){
 
     <!-- Main JS file-->
     <script src="../js/main.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 
     <style>
       ./*city{
@@ -162,7 +166,7 @@ if(!isset($_SESSION)){
                     <a href="#"><i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saved Items</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
+                    <a href="meetup.php"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
                 </li>
                 <li>
                     <a href="login.php"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
