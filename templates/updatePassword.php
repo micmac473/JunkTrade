@@ -15,7 +15,7 @@ include "../lib.php";
     <meta name="author" content="">
     
     <title>junkTrade Login</title>
-    
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <!-- Latest compiled and minified CSS Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -89,7 +89,7 @@ form {
   <div class ="container">
     <div class="jumbotron" style="text-align:center;">
     <h1 >JunkTrade </h1>
-    <h3> Enter new passsword Details :)</h3>
+    <h3> Enter new passsword Details <i class="em em-grin"></i> <span class="glyphicon glyphicon-thumbs-up"></span></h3>
   </div>
     <div class ="row main">
       <div class="main-login main-center">

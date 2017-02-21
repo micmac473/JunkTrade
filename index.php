@@ -288,10 +288,11 @@ $app->post("/login1", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	//var_dump($post);
 	$email = $post['email'];
+	$securityQuestion = $post['securityquestion'];
 	$sAnswer = $post['sAnswer'];
 	//print_r($post);
 	// print "Name: $name, Price:$price, Country: $countryId";
-	$res = checkLogin1($email, $sAnswer);
+	$res = checkLogin1($email, $securityQuestion, $sAnswer);
 	//print_r ($res);
 	if ($res != false){
 		//$name = $_SESSION["name"];

@@ -100,10 +100,12 @@ function login(){
 function login1(){
     console.log("Hi");
     var email = $("#email").val();
+    var securityQuestion = $("#securityquestion").val();
     var sAnswer = $("#sAnswer").val();
     //console.log(email + " " + pass);
     var user = {
         "email" : email,
+        "securityquestion" : securityQuestion,
         "sAnswer": sAnswer
     }
 

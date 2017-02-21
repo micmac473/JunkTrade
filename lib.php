@@ -32,9 +32,9 @@ function checkLogin($email, $password){
 	return false;
 }
 
-function checkLogin1($email, $sAnswer){
+function checkLogin1($email, $securityQuestion, $sAnswer){
 	$sAnswer = sha1($sAnswer);
-	$sql = "SELECT * FROM `users` where `email`='$email' OR `username`='$email'";
+	$sql = "SELECT * FROM `users` where `email`='$email' OR `username`='$email' AND `sQuestion` = '$securityQuestion' ";
 	//print($email);
 	$db = getDBConnection();
 	//print_r($db);
