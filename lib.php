@@ -81,7 +81,7 @@ function saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requestee
 	return $id;
 }
 
-function getRequestingMeetupRequestee(){
+function getRequestedMeetupRequestee(){
 	$userid = $_SESSION['id'];
 	$sql = "SELECT * FROM `requests` r, `trade` t, `users` u, `items` i where r.id = t.requestid and r.requestee = u.id and r.item = i.itemid and r.requester = '$userid';";
 	$items =[];
@@ -96,9 +96,9 @@ function getRequestingMeetupRequestee(){
 	return $items;
 }
 
-function getRequestingMeetupRequester(){
+function getRequestedMeetupRequester(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `requests` r, `trade` t, `users` u, `items` i where r.requester = '$userid' and r.id = t.requestid and r.item2 = i.itemid and r.requester = u.id;";
+	$sql = "SELECT `itemname` FROM `requests` r, `trade` t, `users` u, `items` i where r.requester = '$userid' and r.id = t.requestid and r.item2 = i.itemid and r.requester = u.id;";
 	$items =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -111,9 +111,24 @@ function getRequestingMeetupRequester(){
 	return $items;
 }
 
-function getRequestedMeetup(){
+function getRequestsMeetupRequestee(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `requests` r, `trade` t where r.requestee = '$userid' AND r.id = t.requestid";
+	$sql = "SELECT * FROM `requests` r, `trade` t, `items` i, `users` u where r.requestee = '$userid' and r.id = t.requestid and r.item = i.itemid and r.requestee = u.id;";
+	$items =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getRequestsMeetupRequester(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `requests` r, `trade` t, `items` i, `users` u where r.requestee = '$userid' and r.id = t.requestid and r.item2 = i.itemid and r.requester = u.id;";
 	$items =[];
 	$db = getDBConnection();
 		if ($db != NULL){

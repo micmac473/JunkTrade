@@ -188,22 +188,29 @@ $app->get("/request", function(Request $request, Response $response){
 	return $response;
 });
 
-$app->get("/requestingmeetuprequestee", function(Request $request, Response $response){
-	$items = getRequestingMeetupRequestee();
+$app->get("/requestedmeetuprequestee", function(Request $request, Response $response){
+	$items = getRequestedMeetupRequestee();
 	
 	$response = $response->withJson($items);
 	return $response;
 });
 
-$app->get("/requestingmeetuprequester", function(Request $request, Response $response){
-	$items = getRequestingMeetupRequester();
+$app->get("/requestedmeetuprequester", function(Request $request, Response $response){
+	$items = getRequestedMeetupRequester();
 	
 	$response = $response->withJson($items);
 	return $response;
 });
 
-$app->get("/requestedmeetup", function(Request $request, Response $response){
-	$items = getRequestedMeetup();
+$app->get("/requestsmeetuprequestee", function(Request $request, Response $response){
+	$items = getRequestsMeetupRequestee();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
+
+$app->get("/requestsmeetuprequester", function(Request $request, Response $response){
+	$items = getRequestsMeetupRequester();
 	
 	$response = $response->withJson($items);
 	return $response;

@@ -52,8 +52,8 @@ $(document).ready(function(){
     getDecisions();
     getUserItems();
     $('[data-toggle="tooltip"]').tooltip();   
-    getRequestingMeetUp();
     getRequestedMeetUp();
+    getRequestsMeetUp();
     
     //alert($('#requests > li').length);
 });  
@@ -750,7 +750,7 @@ function sendArrangement(){
             $.get("../index.php/acceptrequest/"+requestId, function(res){
                 swal("Request Accepted and Arrangment Sent!", "The user will be notified", "success");
 
-                //getUserRequests();
+                getUserRequests();
             }, "json");
             
         } else {
@@ -793,7 +793,7 @@ function denyRequest(requestId){
 }
 
 //--------------------------------------------------------------------------------------------------------------------
-
+//
 function arrangement(){
     var requestId = $("#meetupform #requestid").val();
     var tradeDate = $("#meetupform #tradedate").val();
@@ -815,62 +815,131 @@ function arrangement(){
     return false;
 }
 
-
-function getRequestingMeetUp(){
-    $.get("../index.php/requestingmeetuprequestee", function(res1){
+//-------------------------------------------------------------------------//
+// Gets the information for the items that the user requested
+function getRequestedMeetUp(){
+    $.get("../index.php/requestedmeetuprequestee", function(res1){
         console.log(res1);
-        $.get("../index.php/requestingmeetuprequester",function(res2){
+        $.get("../index.php/requestedmeetuprequester",function(res2){
             console.log(res2);
-            processRequestingMeetUp(res1, res2)
+            processRequestedMeetUp(res1,res2);
         },"json");
     },"json");
 
 } 
 
-function processRequestingMeetUp(recordsRequestee, recordsRequester){
-    console.log(recordsRequestee);
-    var sec_id = "#table_sec_requested";
-    var htmlStr = $("#table_heading_requested").html(); //Includes all the table, thead and tbody declarations
-
-    recordsRequestee.forEach(function(el){
-        // do get request with request id to get my item and contact
-        htmlStr += "<tr>";
-        htmlStr += "<td></td>";
-        htmlStr += "<td>"+el['itemname']+"</td>"
-        htmlStr += "<td>"+el['username']+"</td>"
-        htmlStr += "<td>"+el['requesteecontact']+"</td>"
-        htmlStr += "<td>" + el['tradedate'] + "</td>";
-        htmlStr += "<td>" + el['tradelocation'] + "</td>";
-        htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button> ";
-        htmlStr +=" </tr>" ;
-    });
-    //count = $("#mylist li").size();
-    htmlStr += "</tbody></table>";
-    $(sec_id).html(htmlStr); 
-}
-//---------------------------------------------------------------------------------//
-function getRequestedMeetUp(){
-     $.get("../index.php/requestedmeetup", processRequestedMeetUp,"json");
-}
-
-function processRequestedMeetUp(records){
+function processRequestedMeetUp(records, records2){
     console.log(records);
     var sec_id = "#table_sec_requested";
     var htmlStr = $("#table_heading_requested").html(); //Includes all the table, thead and tbody declarations
-
+    var i = 0, size = records2.length -1;
+    //console.log(size);
+    //console.log(records[1][0]);
     records.forEach(function(el){
+        // do get request with request id to get my item and contact
         htmlStr += "<tr>";
-        htmlStr += "<td></td>";
-        htmlStr += "<td></td>"
-        htmlStr += "<td>"+el['requester']+"</td>"
-        htmlStr += "<td></td>"
+        htmlStr += "<td>"+el['username']+"</td>"
+        htmlStr += "<td>"+el['requesteecontact']+"</td>"
+        htmlStr += "<td>"+el['itemname']+"</td>"
+        htmlStr += "<td>"+records2[i]['itemname']+"</td>";
         htmlStr += "<td>" + el['tradedate'] + "</td>";
         htmlStr += "<td>" + el['tradelocation'] + "</td>";
-        htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button> ";
+        htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-success' onclick =\"locationDecision("+el.tradeid+")\"><i class='fa fa-question-circle' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-warning' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
+        i++;
     });
     //count = $("#mylist li").size();
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr); 
+}
+
+
+//---------------------------------------------------------------------------------//
+// Gets requests for the requests made for the users' items
+
+function getRequestsMeetUp(){
+     $.get("../index.php/requestsmeetuprequestee", function(res1){
+        console.log(res1);
+        $.get("../index.php/requestsmeetuprequester",function(res2){
+            console.log(res2);
+            processRequestsMeetUp(res1, res2);
+        },"json");
+    },"json");
+}
+
+function processRequestsMeetUp(records, records2){
+    console.log(records);
+    var sec_id = "#table_sec_requests";
+    var htmlStr = $("#table_heading_requests").html(); //Includes all the table, thead and tbody declarations
+    var i = 0;
+
+    records2.forEach(function(el){
+        // do get request with request id to get my item and contact
+        htmlStr += "<tr>";
+        htmlStr += "<td>"+el['username']+"</td>"
+        htmlStr += "<td>"+el['requestercontact']+"</td>"
+        htmlStr += "<td>"+el['itemname']+"</td>"
+        htmlStr += "<td>"+records[i]['itemname']+"</td>";
+        htmlStr += "<td>" + el['tradedate'] + "</td>";
+        htmlStr += "<td>" + el['tradelocation'] + "</td>";
+        htmlStr += "<td> </td>";
+        htmlStr += "<td><button type='button' class='btn btn-warning' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        htmlStr +=" </tr>" ;
+        i++;
+    });
+    //count = $("#mylist li").size();
+    htmlStr += "</tbody></table>";
+    $(sec_id).html(htmlStr); 
+}
+
+//------------------------------------------------------------------------------//
+// Decides on the location given by the requestee
+function locationDecision(tradeid){
+    swal({
+            title: "Accept Location?",
+            text: tradeid,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, accept it!",
+            cancelButtonText: "No, deny it!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                swal("Accepted!", "You have confirmed meetup location!", "success");
+            } 
+            else {
+                swal("Denied!", "Location rejected!", "error");
+            }
+        }
+    );
+}
+
+//------------------------------------------------------------------------------//
+function suggestLocation(tradeid){
+    swal({
+          title: "Suggest a meet up location",
+          text: "Write something interesting:",
+          type: "input",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          animation: "slide-from-top",
+          inputPlaceholder: "E.g. DAAGA"
+        },
+        function(inputValue){
+          if (inputValue === false) return false;
+          
+          if (inputValue === "") {
+            swal.showInputError("You need to write something!");
+            return false
+          }
+          
+          swal("Nice!", "Your suggested locationn is: " + inputValue, "success");
+        }
+    );
 }
 console.log("JavaScript file was successfully loaded in the page");

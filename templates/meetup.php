@@ -5,16 +5,19 @@ include "base.php";
 ?>
 
 <div class ="container-fluid">
+  <div class="header text-center">
+    <h1> Meet Up </h1>
+  </div>
   <div class ="row">
     <div class="col-xs-12 table-responsive">
-      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Requested items Meetup</h2>
+      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Items you requested</h2>
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->
       <div id="table_sec_requested"></div>
     </div>
 
     <div class ="col-xs-12 table-responsive">
-      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Requests for items Meetup</h2>
+      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Requests for your items</h2>
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->
       <div id="table_sec_requests"></div>
@@ -26,7 +29,7 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
     <tr>
-      <th>My Item</th><th>Their Item</th><th>Requestee</th><th>Contact</th><th>Date</th><th>Location</th><th>Suggested Location</th>
+      <th>From</th><th>Contact</th><th>With</th><th>For</th><th>Date</th><th>Location</th><th>Suggest Location</th><th>Decision</th><th>Feedback</th>
     </tr>
     </thead>
     <tbody>
@@ -36,7 +39,7 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
     <tr>
-      <th>My Item</th><th>Their Item</th><th>Requester</th><th>Contact</th><th>Date</th><th>Location</th><th>Options</th>
+      <th>From</th><th>Contact</th><th>With</th><th>For</th><th>Date</th><th>Location</th><th>Suggested Location</th><th>Feedback</th>
     </tr>
     </thead>
     <tbody>
