@@ -172,7 +172,7 @@ if(!isset($_SESSION)){
                     <a href="login.php"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
                 </li>
                 <li class="footerHome">
-                  <p><strong> &copy;2017 JunkTrade </strong></p>
+                  <p><strong> &copy;2017 JunkTrade. All rights reserved</strong></p>
                 </li>
             </ul>
         </div>
