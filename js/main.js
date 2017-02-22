@@ -499,6 +499,10 @@ function hideForm(){
     $('#uploadItem').hide("slow");
 
 }
+function showForm1(){
+    $('#uploadItem').show("slow");
+
+}
 //----------------------------------------------------------------------------------------------------------------------
 //show and hide search bar 
 function showSearch(){

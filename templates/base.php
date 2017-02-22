@@ -177,6 +177,11 @@ if(!isset($_SESSION)){
             </ul>
         </div>
   <div class="jumbotron">
+  <div class="col-lg-2">
+        <?php
+          echo "<img src=../img/logo.png  style='width:60%; class='img-responsive img-thumbnail mx-auto'>";
+        ?>
+      </div>
     <div class="container-fluid">
       <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive; text-align: center;"> 
           <?php  

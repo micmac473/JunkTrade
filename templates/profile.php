@@ -59,11 +59,41 @@ unset($_POST);
 
 }
 
+if (isset($_POST['uploadPic'])) {
+$filetmp = $_FILES["imagePic"]["tmp_name"];
+  $filename = $_FILES["imagePic"]["name"];
+  $filetype = $_FILES["imagePic"]["type"];
+  $filepath = "../img/".$filename;
+  
+  move_uploaded_file($filetmp,$filepath);
+try{
+$id = $_SESSION["id"];
+
+echo $id;
+$db = getDBConnection();
+
+$sql = "UPDATE users SET profilepicture='{$filepath}' WHERE id=$id;";
+
+ $db->query($sql);
+unset($_POST);
+ /*if ($db->query($sql) === TRUE) {
+       echo "Record updated successfully";
+   } else {
+       echo "Error updating record: " . $db->error;
+   }
+   */
+   $db->close();
+ }catch(Exception $e){
+  print( $e->getMessage());
+ }
+
+}
 ?>
 
 <div class ="container-fluid">
   <div class ="row">
     <div class ="col-md-8 col-md-offset-2">
+    <button type="button" onclick ="showForm1();" class="btn btn-info">Update Profile Pic</button>
       <button type="button" onclick ="showForm();" class="btn btn-info">Add Item</button>
       <button type="button" onclick ="showSearch();" class="btn btn-info">Find Item</button>
     </div>
@@ -86,6 +116,35 @@ unset($_POST);
         </div>
   </div>
 </div>
+
+  <!-- Update Profile Pic -->
+  <div class ="row" style ="display:none" id ="uploadItem">
+    <div class ="col-md-6">
+      <form class="form-horizontal" action ="profile.php" enctype="multipart/form-data" method ="POST">
+      <!-- <form class="form-horizontal" action ="index.php/additem" enctype="multipart/form-data" method ="POST" onsubmit="return addItem();"> -->
+        <fieldset>
+          <legend style="text-align:center">Change Profile Pic</legend>
+            <!-- File Button --> 
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="uppic">Choose an Image </label>
+              <div class="col-md-6">
+                <input name="imagePic" class="input-file" id="imagePic" type="file" accept="image/*" required="">
+              </div>
+            </div>
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="upload"></label>
+              <div class="col-md-4">
+                <button type ="submit" name="uploadPic" class="btn btn-success" id="uploadPic">Add</button>
+                  <button type="button"onclick ="hideForm();" class="btn btn-warning" ></a>Cancel
+                </button>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+    </div>
+  </div>
 
   <!-- Add Item -->
   <div class ="row" style ="display:none" id ="uploadItem">
