@@ -179,7 +179,7 @@ if(!isset($_SESSION)){
   <div class="jumbotron">
   <div class="col-lg-2">
         <?php
-          echo "<img src=../img/logo.png  style='width:60%; class='img-responsive img-thumbnail mx-auto'>";
+          echo getProfileImage();          
         ?>
       </div>
     <div class="container-fluid">

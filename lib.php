@@ -517,6 +517,37 @@ function getItemImage($item){
 	return $rec;
 }
 
+function getProfileImage(){
+  $db = getDBConnection();
+  $rec = null;
+  $ppid = $_SESSION["id"];
+  if ($db != NULL){
+    $sql = "SELECT `profilepicture` FROM `users` WHERE id = '$ppid';";
+    $res = $db->query($sql);
+    if ($res){
+      $rec= $res->fetch_assoc();
+    }
+    $db->close();
+  }
+  $pp =  json_encode($rec['profilepicture']);
+
+	return "<img src= $pp style='width:80%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
+}
+function getuserProfileImage($userid){
+  $db = getDBConnection();
+  $rec = null;
+  if ($db != NULL){
+    $sql = "SELECT `profilepicture` FROM `users` WHERE id = '$userid';";
+    $res = $db->query($sql);
+    if ($res){
+      $rec= $res->fetch_assoc();
+    }
+    $db->close();
+  }
+  $pp =  json_encode($rec['profilepicture']);
+
+	return "<img src= $pp style='width:80%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
+}
 
 function saveRequest($myItem, $requestee, $requestedItem){
 	//$owner = getItemOwner($itemid);

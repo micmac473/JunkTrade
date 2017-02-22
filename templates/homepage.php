@@ -1,5 +1,7 @@
 <?php
+include "../lib.php";
 include "base.php";
+
 ?>
 
     <!--Div that will hold the pie chart-->

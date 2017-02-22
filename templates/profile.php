@@ -68,8 +68,6 @@ $filetmp = $_FILES["imagePic"]["tmp_name"];
   move_uploaded_file($filetmp,$filepath);
 try{
 $id = $_SESSION["id"];
-
-echo $id;
 $db = getDBConnection();
 
 $sql = "UPDATE users SET profilepicture='{$filepath}' WHERE id=$id;";

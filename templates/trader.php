@@ -15,7 +15,7 @@ if(isset($_GET['trader'])){
     <div class="row">
       <div class="col-lg-2">
         <?php
-          echo "<img src=../img/logo.png  style='width:100%; class='img-responsive img-thumbnail mx-auto'>";
+          echo getuserProfileImage($userID);
         ?>
       </div>
       <div class="col-lg-8">
