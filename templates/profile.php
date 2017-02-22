@@ -239,7 +239,7 @@ unset($_POST);
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          <form class="form">
+          <form class="form" id="viewrequestform">
             <fieldset>
 
             <div class="form-group">
@@ -267,26 +267,63 @@ unset($_POST);
         </div>
       </div>
     </div>
-  </div>
+  </div> 
 
   <!-- Meet up Modal -->
   <div class="modal fade" id="meetUpModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          <form class="form" onsubmit="return arrangement();">
+          <form class="form" id="meetupform" onsubmit="return sendArrangement();">
             <fieldset>
-              
+
+              <div class="modal-header">
+                <h2 class="modal-title" style="text-align: center">Request Details</h2>
+             </div>
               <input id="requestid" name="requestid" type="hidden" disabled placeholder="Requested Item" class="form-control input-md">
-              
+
+              <div class="form-group"> <!-- Date input -->
+                <label class="control-label" for="date">Requester</label>
+                <div class="">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                    <input class="form-control" id="requester" name="requester" type="text" required disabled/>
+                  </div>
+                </div>
+              </div> 
+
+              <div class="form-group"> <!-- Date input -->
+                <label class="control-label" for="date">Requester Item</label>
+                <div class="">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-gift" aria-hidden="true"></i></span>
+                    <input class="form-control" id="requesteritem" name="requesteritem" type="text" required disabled/>
+                  </div>
+                </div>
+              </div> 
+
+              <div class="form-group"> <!-- Date input -->
+                <label class="control-label" for="date">Your Item</label>
+                <div class="">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-gift" aria-hidden="true"></i></span>
+                    <input class="form-control" id="requesteeitem" name="requesteeitem" type="text" required disabled/>
+                  </div>
+                </div>
+              </div> 
+
+              <div class="modal-header">
+                <h2 class="modal-title" style="text-align: center">Meetup Details</h2>
+              </div>
+
               <div class="form-group"> <!-- Date input -->
                 <label class="control-label" for="date">Date</label>
                 <div class="">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                  <input class="form-control" id="tradedate" name="tradedate" placeholder="MM/DD/YYY" type="text" required/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    <input class="form-control" id="tradedate" name="tradedate" placeholder="MM/DD/YYY" type="text" required/>
+                  </div>
                 </div>
-              </div>
               </div> 
 
               <div class="form-group">
@@ -296,18 +333,31 @@ unset($_POST);
                   <span class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
                   <select id="tradelocation" name="tradelocation" class="form-control" required>
                     <option value="" disabled selected> Select a campus location</option>
-                    <option value="foodcourt">Food Court</option>
-                    <option value="jfk">JFK Quadrangle</option>
-                    <option value="lrcgreens">LRC Greens</option>
+                    <option value="Food Court">Food Court</option>
+                    <option value="JFK Quadrangle">JFK Quadrangle</option>
+                    <option value="LRC Greens">LRC Greens</option>
+                    <option value="DAAGA">DAAGA</option>
+                    <option value="Student Admin">Student Admin</option>
+                    <option value="Bookstore">Bookstore</option>
                   </select>
                 </div>
               </div>
               </div>
 
+              <div class="form-group"> <!-- Date input -->
+                <label class="control-label" for="date">Contact</label>
+                <div class="">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
+                    <input class="form-control" id="requesteecontact" name="requesteecontact" type="tel" required/>
+                  </div>
+                </div>
+              </div> 
+
               <div class="form-group">
                 <div class="">
-                  <button  class="btn btn-success btn-block" type="submit">Send arrangement</button>
-                  <button  class="btn btn-danger btn-block" data-dismiss="modal">Cancel arrangement</button>
+                  <button  class="btn btn-success btn-block" type="submit">Send Arrangement</button>
+                  <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelArrangement()">Cancel Arrangement</button>
                 </div>
               </div>
 

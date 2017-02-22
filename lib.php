@@ -67,8 +67,8 @@ function saveUser($username, $firstname, $lastname, $email, $password, $security
 	}
 	return $id;
 }
-function saveTradeArrangement($requestId, $tradeDate, $tradeLocation){
-	$sql = "INSERT INTO `trade` (`requestid`, `tradedate`, `tradelocation`) VALUES ($requestId, '$tradeDate', '$tradeLocation');";
+function saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requesteeContact){
+	$sql = "INSERT INTO `trade` (`requestid`, `tradedate`, `tradelocation`,`requesteecontact`) VALUES ($requestId, '$tradeDate', '$tradeLocation','$requesteeContact');";
 	$id = -1;
 	$db = getDBConnection();
 	if ($db != NULL){
@@ -81,9 +81,24 @@ function saveTradeArrangement($requestId, $tradeDate, $tradeLocation){
 	return $id;
 }
 
-function getRequestingMeetup(){
+function getRequestingMeetupRequestee(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `requests` r, `trade` t where r.requester = '$userid' and r.id = t.requestid";
+	$sql = "SELECT * FROM `requests` r, `trade` t, `users` u, `items` i where r.id = t.requestid and r.requestee = u.id and r.item = i.itemid and r.requester = '$userid';";
+	$items =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getRequestingMeetupRequester(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `requests` r, `trade` t, `users` u, `items` i where r.requester = '$userid' and r.id = t.requestid and r.item2 = i.itemid and r.requester = u.id;";
 	$items =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -320,6 +335,34 @@ function getUserItem($val){
 	$rec = null;
 	if ($db != null){
 		$sql = "SELECT * FROM items WHERE itemid = $val;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
+function getRequesterInfo($requestId){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$sql = "SELECT `username`, `itemname` FROM `requests` r, `items` i, `users` u WHERE r.id = $requestId AND r.requester = u.id AND r.item2 = i.itemid;" ;
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
+function getRequesteeInfo($requestId){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$sql = "SELECT `itemname` FROM `requests` r, `items` i, `users` u WHERE r.id = $requestId AND r.requestee = u.id AND r.item = i.itemid;" ;
 		$res = $db->query($sql);
 		if ($res){
 			$rec = $res->fetch_assoc();

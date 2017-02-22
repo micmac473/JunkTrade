@@ -98,8 +98,17 @@ $app->get("/decisions", function(Request $request, Response $response){
 	return $response;
 });
 
-$app->get("/requestee", function(Request $request, Response $response){
-	$requests = getRequesteeId("jamtart");
+$app->get("/requester/{id}", function(Request $request, Response $response){
+	$val = $request->getAttribute('id');
+	$requests = getRequesterInfo($val);
+	
+	$response = $response->withJson($requests);
+	return $response;
+});
+
+$app->get("/requestee/{id}", function(Request $request, Response $response){
+	$val = $request->getAttribute('id');
+	$requests = getRequesteeInfo($val);
 	
 	$response = $response->withJson($requests);
 	return $response;
@@ -179,8 +188,15 @@ $app->get("/request", function(Request $request, Response $response){
 	return $response;
 });
 
-$app->get("/requestingmeetup", function(Request $request, Response $response){
-	$items = getRequestingMeetup();
+$app->get("/requestingmeetuprequestee", function(Request $request, Response $response){
+	$items = getRequestingMeetupRequestee();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
+
+$app->get("/requestingmeetuprequester", function(Request $request, Response $response){
+	$items = getRequestingMeetupRequester();
 	
 	$response = $response->withJson($items);
 	return $response;
@@ -397,7 +413,8 @@ $app->post("/tradearrangement", function(Request $request, Response $response){
 	$requestId = $post['requestid'];
 	$tradeDate = $post['tradedate'];
 	$tradeLocation = $post['tradelocation'];
-	$res = saveTradeArrangement($requestId, $tradeDate, $tradeLocation);
+	$requesteeContact = $post['requesteecontact'];
+	$res = saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requesteeContact);
 	if ($res){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);

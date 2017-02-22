@@ -181,7 +181,7 @@ if(!isset($_SESSION)){
       <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive; text-align: center;"> 
           <?php  
             date_default_timezone_set("America/Grenada");
-            $hour = date("H") - 1;
+            $hour = date("H");
             //echo $hour;
             //$hour = 6;
             if($hour >= 0 && $hour < 12){

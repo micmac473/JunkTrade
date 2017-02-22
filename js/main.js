@@ -243,20 +243,7 @@ function listAllItems(records){
         itemdiv += "<div class='panel-body'> <div class='text-center lead'> <strong>"+  el['itemname'] + "</strong> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
         //itemdiv += "<div class='panel-footer'> <a href='item.php' class='btn btn-info btn-block'><span class='glyphicon glyphicon-eye-open'></span> View more....</a> </div>"; 
         itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
-        itemdiv += "</div>";
-        /*
-        htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
-        htmlStr += "<td>"+ el['itemname'] +"</td>";
-        htmlStr += "<td>"+ el['views'] +"</td>";
-        htmlStr += "<td>"+ el['itemdescription'] +"</td>";
-        htmlStr += "<td>"+ el['username'] +"</td>";
-        //htmlStr += "<td><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#requestModal' id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-primary' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i></button>";
-        //htmlStr += "<button type='button' class='btn btn-info' ><i class='fa fa-eye' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td>" + el['uploaddate'] + "</td>";
-        htmlStr +=" </tr>" ; */
-        
-        
+        itemdiv += "</div>"; 
     });
     $("#itemblock").html(itemdiv);
     //htmlStr += "</tbody></table>";
@@ -374,6 +361,7 @@ function displayRequests(records){
     var sec_id = "#table_secr";
     var htmlStr = $("#table_headingr").html(); //Includes all the table, thead and tbody declarations
     var pic;
+    console.log(records);
     records.forEach(function(el){
         htmlStr += "<tr>";
         htmlStr += "<td style='display:none;'>"+ el['id'] +"</td>";
@@ -710,9 +698,9 @@ function viewRequest(requestId){
     $.get("../index.php/requestdetails/"+requestId, function(res){
             console.log(res);
             
-            $("#requester").val(res.username);
-            $("#requesteritem").val(res.itemname);
-            $('#imagepreview').attr('src', res.picture);
+            $("#viewrequestform #requester").val(res.username);
+            $("#viewrequestform #requesteritem").val(res.itemname);
+            $('#viewrequestform #imagepreview').attr('src', res.picture);
             $("#requestModalP").modal();
         }, "json");
 }
@@ -720,9 +708,28 @@ function viewRequest(requestId){
 //--------------------------------------------------------------------------------------------------------------------
 function acceptRequest(requestId){
     $("#requestid").val(requestId);
+    $.get("../index.php/requester/"+requestId, function(res){
+        console.log(res);
+
+        $("#meetupform #requester").val(res.username);
+        $("#meetupform #requesteritem").val(res.itemname);
+
+        $.get("../index.php/requestee/"+requestId, function(res){
+            console.log(res);
+            $("#meetupform #requesteeitem").val(res.itemname);
+        }, "json");
+        
+        console.log(res);
+
+    },"json");
     $("#meetUpModal").modal('show');
+}
+
+function sendArrangement(){
+    var requestId = $("#meetupform #requestid").val();
+    $("#meetUpModal").modal('hide');
     swal({
-        title: "Accept Request?",
+        title: "Accept Request and Send Arrangement?",
         //text: "You will not be able to undo this operation!",
         type: "info",
         showCancelButton: true,
@@ -735,16 +742,23 @@ function acceptRequest(requestId){
     function(isConfirm){
         
         if (isConfirm) {
+            arrangement();
             $.get("../index.php/acceptrequest/"+requestId, function(res){
-                swal("Accepted!", "The user will be notified", "success");
+                swal("Request Accepted and Arrangment Sent!", "The user will be notified", "success");
 
                 //getUserRequests();
             }, "json");
             
         } else {
-            swal("Cancelled", "The item is still pending", "error");
+            swal("Cancelled", "Request and Arrangement still Pending", "error");
         }
     });
+    return false;
+}
+
+
+function cancelArrangement(){
+    sweetAlert("Cancelled", "Request and Arrangement still Pending", "error");
     return false;
 }
 
@@ -777,37 +791,49 @@ function denyRequest(requestId){
 //--------------------------------------------------------------------------------------------------------------------
 
 function arrangement(){
-    var requestId = $("#requestid").val();
-    var tradeDate = $("#tradedate").val();
-    var tradeLocation = $("#tradelocation").val();
+    var requestId = $("#meetupform #requestid").val();
+    var tradeDate = $("#meetupform #tradedate").val();
+    var tradeLocation = $("#meetupform #tradelocation").val();
+    var requesteeContact = $("#meetupform #requesteecontact").val();
 
     var trade = {
         "requestid" : requestId,
         "tradedate" : tradeDate,
-        "tradelocation" : tradeLocation
+        "tradelocation" : tradeLocation,
+        "requesteecontact" : requesteeContact
     };
 
     console.log(trade);
     $.post("../index.php/tradearrangement", trade,function(res){
         console.log(res);
+        swal("Arrangement Sent!", "Good stuff!", "success")
     },"json");
     return false;
 }
 
+
 function getRequestingMeetUp(){
-    $.get("../index.php/requestingmeetup", processRequestingMeetUp,"json");
+    $.get("../index.php/requestingmeetuprequestee", function(res1){
+        console.log(res1);
+        $.get("../index.php/requestingmeetuprequester",function(res2){
+            console.log(res2);
+            processRequestingMeetUp(res1, res2)
+        },"json");
+    },"json");
+
 } 
 
-function processRequestingMeetUp(records){
-    console.log(records);
-    var sec_id = "#table_sec_requesting";
-    var htmlStr = $("#table_heading_requesting").html(); //Includes all the table, thead and tbody declarations
+function processRequestingMeetUp(recordsRequestee, recordsRequester){
+    console.log(recordsRequestee);
+    var sec_id = "#table_sec_requested";
+    var htmlStr = $("#table_heading_requested").html(); //Includes all the table, thead and tbody declarations
 
-    records.forEach(function(el){
+    recordsRequestee.forEach(function(el){
+        // do get request with request id to get my item and contact
         htmlStr += "<tr>";
         htmlStr += "<td></td>";
-        htmlStr += "<td></td>"
-        htmlStr += "<td>"+el['requestee']+"</td>"
+        htmlStr += "<td>"+el['itemname']+"</td>"
+        htmlStr += "<td>"+el['username']+"</td>"
         htmlStr += "<td>"+el['requesteecontact']+"</td>"
         htmlStr += "<td>" + el['tradedate'] + "</td>";
         htmlStr += "<td>" + el['tradelocation'] + "</td>";
