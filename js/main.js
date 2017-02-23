@@ -54,6 +54,7 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
     getRequestedMeetUp();
     getRequestsMeetUp();
+    getUserSavedItems();
     
     //alert($('#requests > li').length);
 });  
@@ -285,14 +286,9 @@ function listUserItems(records){
 
 //--------------------------------------------------------------------------------------------------------------------
 function viewItem(itemid){
-    $.get("../index.php/getitem/"+itemid, processItem,"json");
-    views(itemid);
-}
-
-function processItem(records){
-    console.log(records);
-    //displayItem(records);
-    window.location.href = "item.php?item="+records.itemid;
+    /*$.get("../index.php/getitem/"+itemid, processItem,"json");
+    views(itemid); */
+    window.location.href = "item.php?item="+itemid;
     return false;
 }
 
@@ -380,7 +376,61 @@ function displayRequests(records){
 //--------------------------------------------------------------------------------------------------------------------
 // Add the item clicked to the user's saved items
 function addToSavedItems(itemid){
-    swal("Item Saved!", "You can view item in Saved Items!", "success")
+    $.get("../index.php/owner/"+itemid, function(res){
+        console.log(res.id);
+        var itemOwner = res.id;
+        var item= {
+            "itemid": itemid,
+            "itemowner": itemOwner
+        };
+
+        console.log(item);
+        $.post("../index.php/saveitem", item, function(res){
+            console.log(res);
+            if(res){
+                swal("Item Saved!", "You can view item in Saved Items!", "success");
+                //processUserSavedItems();
+            }
+            else{
+                swal("Item Not Saved!", "Sorry, try again", "error");
+            }
+        },"json"); 
+    }, "json");   
+}
+
+function getUserSavedItems(){
+    $.get("../index.php/getsaveditems", processUserSavedItems, "json");
+}
+
+function processUserSavedItems(records){
+    console.log(records);
+    var sec_id = "#table_sec_saveditems";
+    var htmlStr = $("#table_heading_saveditems").html(); //Includes all the table, thead and tbody declarations
+    var pic;
+    records.forEach(function(el){
+        htmlStr += "<tr>";
+        htmlStr += "<td><img src=\"" + el.picture + "\" width=\"150\" height=\"128\"></td>";
+        htmlStr += "<td>"+ el['itemname'] +"</td>";
+        htmlStr += "<td>"+ el['username'] +"</td>";
+        htmlStr += "<td>"+ el['saveddate'] +"</td>";      
+        htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button> ";
+        htmlStr +=" </tr>" ;
+    });
+
+    htmlStr += "</tbody></table>";
+    $(sec_id).html(htmlStr);
+    return false;
+}
+
+
+function removeSavedItem(savedid){
+
+    $.post("../index.php/removedsaveditem/"+savedid, function(res){
+
+    }, "json");
+    swal("Item removed!", "You can saved the item again", "error")
+    getUserSavedItems();
+    return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
 // Adds the trader clicked to the user's followers
@@ -499,8 +549,16 @@ function hideForm(){
     $('#uploadItem').hide("slow");
 
 }
-function showForm1(){
-    $('#uploadItem').show("slow");
+//-------------------------------------------------------------------------------------------
+//Shows the upload profile picture form when the "Update Profile Pic" button is clicked
+function showProfilePictureForm(){
+    $('#uploadProfilePic').show("slow");
+
+}
+
+//Hides the upload profile picture form when the "Cancel" button is clicked
+function hideProfilePictureForm(){
+    $('#uploadProfilePic').hide("slow");
 
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -751,13 +809,14 @@ function sendArrangement(){
                 swal("Request Accepted and Arrangment Sent!", "The user will be notified", "success");
 
                 getUserRequests();
+                return false;
             }, "json");
             
         } else {
             swal("Cancelled", "Request and Arrangement still Pending", "error");
         }
     });
-    return false;
+    
 }
 
 

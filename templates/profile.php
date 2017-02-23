@@ -85,7 +85,7 @@ unset($_POST);
 <div class ="container-fluid">
   <div class ="row">
     <div class ="col-md-8 col-md-offset-2">
-    <button type="button" onclick ="showForm1();" class="btn btn-info">Update Profile Pic</button>
+    <button type="button" onclick ="showProfilePictureForm();" class="btn btn-info">Update Profile Pic</button>
       <button type="button" onclick ="showForm();" class="btn btn-info">Add Item</button>
       <button type="button" onclick ="showSearch();" class="btn btn-info">Find Item</button>
     </div>
@@ -110,7 +110,7 @@ unset($_POST);
 </div>
 
   <!-- Update Profile Pic -->
-  <div class ="row" style ="display:none" id ="uploadItem">
+  <div class ="row" style ="display:none" id ="uploadProfilePic">
     <div class ="col-md-6">
       <form class="form-horizontal" action ="profile.php" enctype="multipart/form-data" method ="POST">
       <!-- <form class="form-horizontal" action ="index.php/additem" enctype="multipart/form-data" method ="POST" onsubmit="return addItem();"> -->
@@ -128,7 +128,7 @@ unset($_POST);
               <label class="col-md-4 control-label" for="upload"></label>
               <div class="col-md-4">
                 <button type ="submit" name="uploadPic" class="btn btn-success" id="uploadPic">Add</button>
-                  <button type="button"onclick ="hideForm();" class="btn btn-warning" ></a>Cancel
+                  <button type="button"onclick ="hideProfilePictureForm();" class="btn btn-warning" ></a>Cancel
                 </button>
               </div>
             </div>

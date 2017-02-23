@@ -167,6 +167,14 @@ $app->get("/profile", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/getsaveditems", function(Request $request, Response $response){
+	$items = getUserSavedItems();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
+
+
 $app->get("/trade", function(Request $request, Response $response){
 	$items = getAllUserTrade();
 	
@@ -286,6 +294,12 @@ $app->get("/getitem/{id}", function(Request $request, Response $response){
 	$response = $response->withJson($rec);
 	return $response;
 });
+
+
+
+
+
+
 
 $app->post("/login", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
@@ -422,6 +436,22 @@ $app->post("/tradearrangement", function(Request $request, Response $response){
 	$tradeLocation = $post['tradelocation'];
 	$requesteeContact = $post['requesteecontact'];
 	$res = saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requesteeContact);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+$app->post("/saveitem", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$itemId = $post['itemid'];
+	$itemOwner = $post['itemowner'];
+	$res = addItemToSaved($itemId, $itemOwner);
 	if ($res){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);

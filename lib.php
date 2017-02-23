@@ -67,6 +67,22 @@ function saveUser($username, $firstname, $lastname, $email, $password, $security
 	}
 	return $id;
 }
+
+function addItemToSaved($itemId, $itemOwner){
+	$userId = $_SESSION['id'];
+	$sql = "INSERT INTO `saved` (`itemid`, `userid`, `itemowner`, `savedindicator`) VALUES ($itemId, $userId, $itemOwner, true);";
+	$id = -1;
+	$db = getDBConnection();
+	if ($db != NULL){
+		$res = $db->query($sql);
+		if ($res && $db->insert_id > 0){
+			$id = $db->insert_id;
+		}
+		$db->close();
+	}
+	return $id;
+}
+
 function saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requesteeContact){
 	$sql = "INSERT INTO `trade` (`requestid`, `tradedate`, `tradelocation`,`requesteecontact`) VALUES ($requestId, '$tradeDate', '$tradeLocation','$requesteeContact');";
 	$id = -1;
@@ -265,7 +281,7 @@ function getCurrentUser(){
 
 
 
-function getAllUserItems(){//should be session id here instead of useId
+function getAllUserItems(){
 	$userID = $_SESSION["id"];
 	$sql ="SELECT * FROM `items` where `userid` =$userID ORDER BY `uploaddate` DESC;";
 	$items =[];
@@ -281,7 +297,23 @@ function getAllUserItems(){//should be session id here instead of useId
 	return $items;
 }
 
-function getProfileItems($userID){//should be session id here instead of useId
+function getUserSavedItems(){
+	$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `saved` s, `items` i, `users` u WHERE s.itemid = i.itemid AND i.userid = u.id AND s.userid = $userID AND `savedindicator` = true ORDER BY `saveddate` DESC;";
+	$items =[];
+	//print($sql);
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getProfileItems($userID){
 	//$userID = $_SESSION["id"];
 	$sql ="SELECT * FROM `items` where `userid` = $userID ORDER BY `uploaddate` DESC;";
 	$items =[];
@@ -493,7 +525,7 @@ function getItem($itemid){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != NULL){
-		$sql = "SELECT * FROM `items` WHERE itemid = '$itemid';";
+		$sql = "SELECT * FROM `items` i, `saved` s WHERE s.itemid = i.itemid and i.itemid = $itemid;";
 		$res = $db->query($sql);
 		if ($res){
 			$rec= $res->fetch_assoc();
