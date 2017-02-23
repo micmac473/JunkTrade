@@ -289,13 +289,23 @@ $app->get("/viewitem/{id}", function(Request $request, Response $response){
 $app->get("/getitem/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country
+	
 	$rec = getItem($val);
-
 	$response = $response->withJson($rec);
 	return $response;
 });
 
 
+// Testing the function that checks if an item has been saved already
+$app->get("/checkitemsaved/{id}", function(Request $request, Response $response){
+	$val = $request->getAttribute('id');
+	// Get Record for Specific Country
+	$rec = checkSavedItem($val, 1);
+	//$rec = addItemToSaved($val, 1);
+
+	$response = $response->withJson($rec);
+	return $response;
+});
 
 
 
@@ -452,6 +462,21 @@ $app->post("/saveitem", function(Request $request, Response $response){
 	$itemId = $post['itemid'];
 	$itemOwner = $post['itemowner'];
 	$res = addItemToSaved($itemId, $itemOwner);
+	if ($res > 0 || $res == true){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+$app->post("/removedsaveditem", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$savedId = $post['savedid'];
+	$res = removeItemFromSaved($savedId);
 	if ($res){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);

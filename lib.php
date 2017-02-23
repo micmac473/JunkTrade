@@ -68,20 +68,62 @@ function saveUser($username, $firstname, $lastname, $email, $password, $security
 	return $id;
 }
 
-function addItemToSaved($itemId, $itemOwner){
-	$userId = $_SESSION['id'];
-	$sql = "INSERT INTO `saved` (`itemid`, `userid`, `itemowner`, `savedindicator`) VALUES ($itemId, $userId, $itemOwner, true);";
-	$id = -1;
+function checkSavedItem($itemId, $itemOwner){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `saved` s where s.itemid = $itemId and s.userid = '$userid' and s.itemowner = $itemOwner;";
 	$db = getDBConnection();
-	if ($db != NULL){
+	$rec = null;
+	if ($db != null){
 		$res = $db->query($sql);
-		if ($res && $db->insert_id > 0){
-			$id = $db->insert_id;
+		if ($res){
+			$rec = $res->fetch_assoc();
 		}
 		$db->close();
 	}
-	return $id;
+	return $rec;	
 }
+
+function addItemToSaved($itemId, $itemOwner){
+	$userId = $_SESSION['id'];
+	$itemExists = checkSavedItem($itemId, $itemOwner);
+	//echo $itemExists;
+	$db = getDBConnection();
+	//var_dump($itemExists);
+	$savedId = $itemExists['savedid'];
+	
+	if($itemExists == null){
+		$sql = "INSERT INTO `saved` (`itemid`, `userid`, `itemowner`, `savedindicator`) VALUES ($itemId, $userId, $itemOwner, true);";
+		$id = -1;
+		if ($db != NULL){
+			$res = $db->query($sql);
+			if ($res && $db->insert_id > 0){
+				$id = $db->insert_id;
+			}
+			$db->close();
+		}
+		return $id;
+	}
+	else{
+		$sql = "UPDATE `saved` s SET `savedindicator` = true WHERE `savedid` = $savedId;";
+		$res = null;
+			if ($db != NULL){
+				$res = $db->query($sql);
+				$db->close();
+			}
+		return $res;
+	}	
+}
+
+function removeItemFromSaved($savedId){
+	$db = getDBConnection();
+	$sql = "UPDATE `saved` s SET `savedindicator` = false WHERE `savedid` = $savedId;";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	return $res;
+} 
 
 function saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requesteeContact){
 	$sql = "INSERT INTO `trade` (`requestid`, `tradedate`, `tradelocation`,`requesteecontact`) VALUES ($requestId, '$tradeDate', '$tradeLocation','$requesteeContact');";
@@ -525,7 +567,21 @@ function getItem($itemid){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != NULL){
-		$sql = "SELECT * FROM `items` i, `saved` s WHERE s.itemid = i.itemid and i.itemid = $itemid;";
+		$sql = "SELECT * FROM `items` i WHERE i.itemid = $itemid;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec= $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
+function checkItemSaved($itemid){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != NULL){
+		$sql = "SELECT * FROM `saved` s WHERE s.itemid = $itemid;";
 		$res = $db->query($sql);
 		if ($res){
 			$rec= $res->fetch_assoc();
@@ -652,6 +708,8 @@ function deleteItem($itemid){
 		$db->close();
 	}
 	return $res;
+
+
 } 
 
 

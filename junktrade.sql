@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2017 at 05:25 AM
--- Server version: 10.1.16-MariaDB
--- PHP Version: 5.6.24
+-- Generation Time: Feb 23, 2017 at 08:12 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 7.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -64,18 +64,18 @@ INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `pictur
 (3, 'Money', 'This is my money item', '../img/nomoney.png', '', '', '2016-11-26 03:38:42', 2, 2),
 (4, 'Friends', 'This is my friends item', '../img/buddy.png', '', '', '2016-11-26 03:38:42', 6, 2),
 (25, 'Dell XPS', 'Processor: i7 3.5 Ghz Quad Core\r\nRam: 12 GB\r\nGraphics: GeForce GTX 980', '../img/xps.png', '', '', '2016-11-26 15:54:19', 6, 4),
-(26, 'Logo', 'This is my logo item', '../img/logo.png', '', '', '2016-11-26 15:55:07', 6, 2),
+(26, 'Logo', 'This is my logo item', '../img/logo.png', '', '', '2016-11-26 15:55:07', 6, 3),
 (27, 'HP Laptop', 'Processor: i5 2.5 Ghz Dual Core\r\nRam: 8 GB\r\nGraphics: Intel ', '../img/hp.jpg', '', '', '2016-11-26 15:57:48', 1, 2),
 (29, 'SVG Flag', 'This the flag of St. Vincent and the Grenadines, West Indies', '../img/svgflag.png', '', '', '2016-11-27 15:21:11', 39, 2),
 (30, 'Cloud Server', 'Heroku cloud server', '../img/cloudserver.jpg', '', '', '2016-11-27 22:57:00', 40, 6),
 (34, 'Hydrangeas', 'Hydrangeas', '../img/Hydrangeas.jpg', '', '', '2016-11-30 13:42:30', 1, 0),
 (36, 'Jellyfish', 'Jellyfish', '../img/Jellyfish.jpg', '', '', '2016-11-30 13:45:11', 1, 0),
 (38, 'Nike', 'Color: Red and black\r\nSize: 12\r\nCondition: New\r\nComes with box', '../img/airjordans.jpe', '', '', '2016-11-30 19:11:47', 40, 3),
-(39, 'Gucci Watch', 'This is real Gucci', '../img/gucciwatch.jpe', '', '', '2016-11-30 19:54:55', 40, 7),
+(39, 'Gucci Watch', 'This is real Gucci,\r\nGenuine Leather,\r\nCondition: New,\r\nColor: Black,\r\nWristband: leather,\r\nAge: 60 days,', '../img/gucciwatch.jpe', '', '', '2016-11-30 19:54:55', 40, 10),
 (42, 'Piano Keyboard', 'Brand: Yamaha\r\nCondition: Used\r\nComes with everything', '../img/pianokeyboard.jpe', '', '', '2016-12-01 15:10:04', 1, 1),
-(44, 'iPhone 6', 'Capacity: 68 GB\r\nRAM: 4 GB\r\nDisplay: Retina\r\nCondition: New', '../img/iphone.jpg', '', '', '2016-12-01 23:40:35', 1, 2),
-(45, 'Gucci Belt', 'Genuine Leather,\r\nCondition: New', '../img/guccibelt.jpg', '', '', '2016-12-02 00:36:38', 1, 0),
-(46, 'New Era Hat', 'Snapback\r\nColor: Black\r\nSize: 7 1/2', '../img/snapback.jpg', '', '', '2016-12-02 00:38:16', 1, 5);
+(44, 'iPhone 6', 'Capacity: 68 GB\r\nRAM: 4 GB\r\nDisplay: Retina\r\nCondition: New', '../img/iphone.jpg', '', '', '2016-12-01 23:40:35', 1, 3),
+(45, 'Gucci Belt', 'Genuine Leather,\r\nCondition: New', '../img/guccibelt.jpg', '', '', '2016-12-02 00:36:38', 1, 4),
+(46, 'New Era Hat', 'Snapback\r\nColor: Black\r\nSize: 7 1/2', '../img/snapback.jpg', '', '', '2016-12-02 00:38:16', 1, 8);
 
 -- --------------------------------------------------------
 
@@ -121,10 +121,30 @@ INSERT INTO `requests` (`id`, `requester`, `item2`, `requestee`, `item`, `decisi
 (38, 1, 44, 40, 39, 0, '2016-12-02 00:34:22'),
 (39, 40, 38, 1, 45, 1, '2016-12-02 00:36:54'),
 (40, 40, 30, 1, 46, 0, '2016-12-02 00:39:27'),
-(41, 1, 34, 40, 30, NULL, '2017-02-19 01:23:09'),
+(41, 1, 34, 40, 30, 1, '2017-02-19 01:23:09'),
 (42, 2, 3, 1, 46, NULL, '2017-02-20 23:57:47'),
-(43, 2, 3, 1, 45, 1, '2017-02-23 00:09:46'),
-(44, 2, 3, 40, 39, NULL, '2017-02-23 00:09:56');
+(43, 40, 30, 1, 46, NULL, '2017-02-22 09:22:58'),
+(44, 1, 45, 40, 39, 1, '2017-02-22 11:08:12'),
+(45, 1, 42, 40, 39, 1, '2017-02-22 15:28:26'),
+(46, 40, 38, 1, 44, 1, '2017-02-22 15:38:07'),
+(47, 2, 3, 1, 36, 1, '2017-02-22 15:43:38'),
+(48, 2, 3, 1, 46, 1, '2017-02-22 16:10:20');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `saved`
+--
+
+DROP TABLE IF EXISTS `saved`;
+CREATE TABLE `saved` (
+  `savedid` int(11) NOT NULL,
+  `itemid` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `itemowner` int(11) NOT NULL,
+  `saveddate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `savedindicator` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -150,7 +170,13 @@ INSERT INTO `trade` (`tradeid`, `requestid`, `tradedate`, `tradelocation`, `requ
 (3, 28, '02/23/2017', 'foodcourt', '123456789', '987654321'),
 (9, 34, '03/01/2017', 'lrcgreens', '868123456', '868987654'),
 (10, 42, '02/24/2017', 'jfk', '868456789', '868654321'),
-(11, 43, '02/26/2017', 'Food Court', '', '1234567');
+(11, 41, '02/28/2017', 'Bookstore', '', '868123456'),
+(12, 41, '02/25/2017', 'JFK Quadrangle', '', '868123456'),
+(13, 44, '02/28/2017', 'Food Court', '', '868123456'),
+(14, 45, '02/23/2017', 'Bookstore', '', '86878945'),
+(15, 46, '03/08/2017', 'DAAGA', '', '868999999'),
+(16, 47, '02/23/2017', 'JFK Quadrangle', '', '868123456'),
+(17, 48, '03/03/2017', 'Bookstore', '', '123456789');
 
 -- --------------------------------------------------------
 
@@ -168,7 +194,7 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `sQuestion` varchar(100) NOT NULL,
   `sAnswer` varchar(100) NOT NULL,
-  `profilepicture` varchar(1000) DEFAULT NULL
+  `profilepicture` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -176,9 +202,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `password`, `sQuestion`, `sAnswer`, `profilepicture`) VALUES
-(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@email.com', '6918950f89321712a8641620423d8c7d25951c0c', '', '', '../img/IMG_2497.JPG'),
-(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '16331e4442209ff309047eaec83430646490f038', 'sport', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8', '../img/aug 2016 010.JPG'),
-(6, 'jamtart', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '0942897430e12d98c4acafc63d50b91fda44ca38', '', '', NULL),
+(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@email.com', '6918950f89321712a8641620423d8c7d25951c0c', '', '', ''),
+(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '16331e4442209ff309047eaec83430646490f038', '', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8', ''),
+(6, 'jamtart', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '0942897430e12d98c4acafc63d50b91fda44ca38', '', '', ''),
 (7, 'fesean', 'Shamar', 'Culzuc', 'shamarculzac@email.com', '825cce7a7af23134328ca7a872a142337e0a07fc', '', '', ''),
 (8, 'pinky', 'Justin', 'Cadougan', 'justincadougan@email.com', 'f1412f80e25ec11bef07414c2cfa8c84ce3fdf23', '', '', ''),
 (9, 'kyledef', 'Kyle', 'DeFreitas', 'kyledefreitas@email.com', '7103a38d7b345ad9dc1e25dd3b7dd606f84d2c0c', '', '', ''),
@@ -187,7 +213,7 @@ INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `passwo
 (38, 'kieu', 'Duc', 'Kieu', 'kieu@email.com', '2c27c22226e3fc5c109ebb4cbc4c972e02bce8f8', '', '', ''),
 (39, 'kyledef', 'Kyle', 'De Freitas', 'kyle@email.com', '6233de5df38c206a8bde5ae6f8be9c6949740c1f', '', '', ''),
 (40, 'rastaman', 'Kadem', 'McGillivary', 'rasta@email.com', 'f9c897117a284ec37d408472be98de935b93f83f', '', '', ''),
-(41, 'skittles', 'Keniesha', 'McMillan', 'skittes@gmail.com', '505643a37d5f86a3cff95f25bcdba5d577d60111', 'food', '99d5f862e5d60ade36f34cd26d0424f2badc71b6', NULL);
+(41, 'skittles', 'Keniesha', 'McMillan', 'skittes@gmail.com', '505643a37d5f86a3cff95f25bcdba5d577d60111', 'food', '99d5f862e5d60ade36f34cd26d0424f2badc71b6', '');
 
 --
 -- Indexes for dumped tables
@@ -204,6 +230,12 @@ ALTER TABLE `items`
 --
 ALTER TABLE `requests`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `saved`
+--
+ALTER TABLE `saved`
+  ADD PRIMARY KEY (`savedid`);
 
 --
 -- Indexes for table `trade`
@@ -230,12 +262,17 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+--
+-- AUTO_INCREMENT for table `saved`
+--
+ALTER TABLE `saved`
+  MODIFY `savedid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `trade`
 --
 ALTER TABLE `trade`
-  MODIFY `tradeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `tradeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `users`
 --

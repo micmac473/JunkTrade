@@ -389,7 +389,6 @@ function addToSavedItems(itemid){
             console.log(res);
             if(res){
                 swal("Item Saved!", "You can view item in Saved Items!", "success");
-                //processUserSavedItems();
             }
             else{
                 swal("Item Not Saved!", "Sorry, try again", "error");
@@ -406,14 +405,13 @@ function processUserSavedItems(records){
     console.log(records);
     var sec_id = "#table_sec_saveditems";
     var htmlStr = $("#table_heading_saveditems").html(); //Includes all the table, thead and tbody declarations
-    var pic;
     records.forEach(function(el){
         htmlStr += "<tr>";
         htmlStr += "<td><img src=\"" + el.picture + "\" width=\"150\" height=\"128\"></td>";
         htmlStr += "<td>"+ el['itemname'] +"</td>";
         htmlStr += "<td>"+ el['username'] +"</td>";
         htmlStr += "<td>"+ el['saveddate'] +"</td>";      
-        htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button> ";
+        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
     });
 
@@ -423,13 +421,15 @@ function processUserSavedItems(records){
 }
 
 
-function removeSavedItem(savedid){
-
-    $.post("../index.php/removedsaveditem/"+savedid, function(res){
-
+function removeSavedItem(savedId){
+    var savedItem = {
+        "savedid": savedId
+    };
+    $.post("../index.php/removedsaveditem",savedItem, function(res){
+        console.log(res);
+        swal("Item removed!", "You can save the item again", "error")
+        getUserSavedItems();
     }, "json");
-    swal("Item removed!", "You can saved the item again", "error")
-    getUserSavedItems();
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------

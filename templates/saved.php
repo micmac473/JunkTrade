@@ -20,7 +20,11 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
     <tr>
-      <th></th><th>Item</th><th>Owner</th><th>Date Saved</th><th>Remove</th>
+      <th></th>
+      <th>Item</th>
+      <th>Owner</th>
+      <th>Date Saved</th>
+      <th>Unsave</th>
     </tr>
     </thead>
     <tbody>

@@ -7,7 +7,10 @@ if(isset($_GET['item'])){
 	//var_dump($itemid);
 
 	$itemDetails = getItem($itemid);
+  $itemId = $itemDetails['itemid'];
 	$username = getUsername($itemDetails['userid']);
+  $savedItem = checkItemSaved($itemId);
+  //var_dump($savedItem);
 	//var_dump($username);
 }
 ?>
@@ -26,11 +29,11 @@ if(isset($_GET['item'])){
   		</div>";
     echo "<div class='col-lg-3'>";
     echo "<button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus' aria-hidden='true'></i> Make Request</button>";
-    if($itemDetails['savedindicator'] == true){
-      echo "<button type='button' class='btn btn-warning btn-block' onclick=\"removeSavedItem(".$itemDetails['savedid'].")\" id='requestbtn'><i class='fa fa-trash' aria-hidden='true'></i> Remove Saved Item</button>";
+    if($savedItem == null || $savedItem['savedindicator'] == false){
+      echo "<button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button>";
     }
     else{
-      echo "<button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button>";
+      echo "<button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem(".$savedItem['savedid'].")\" id='requestbtn'><i class='fa fa-trash' aria-hidden='true'></i> Remove Saved Item</button>";
     }
     
     echo "</div>";
