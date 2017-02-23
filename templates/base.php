@@ -177,13 +177,14 @@ if(!isset($_SESSION)){
             </ul>
         </div>
   <div class="jumbotron">
-  <div class="col-sm-1">
+    <div class="container-fluid">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
         <?php            
           echo getProfileImage();      
         ?>
       </div>
-    <div class="container-fluid">
-      <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive; text-align: center;"> 
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+        <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive;"> 
           <?php  
             date_default_timezone_set("America/Grenada");
             $hour = date("H");
@@ -214,7 +215,8 @@ if(!isset($_SESSION)){
               
             }
           ?>
-      </h1>
+        </h1>
+      </div>
     </div>
   </div>
 
