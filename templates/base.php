@@ -177,9 +177,9 @@ if(!isset($_SESSION)){
             </ul>
         </div>
   <div class="jumbotron">
-  <div class="col-lg-2">
-        <?php
-          echo getProfileImage();          
+  <div class="col-sm-1">
+        <?php            
+          echo getProfileImage();      
         ?>
       </div>
     <div class="container-fluid">

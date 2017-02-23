@@ -74,12 +74,6 @@ $sql = "UPDATE users SET profilepicture='{$filepath}' WHERE id=$id;";
 
  $db->query($sql);
 unset($_POST);
- /*if ($db->query($sql) === TRUE) {
-       echo "Record updated successfully";
-   } else {
-       echo "Error updating record: " . $db->error;
-   }
-   */
    $db->close();
  }catch(Exception $e){
   print( $e->getMessage());

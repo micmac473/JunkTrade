@@ -526,12 +526,19 @@ function getProfileImage(){
     $res = $db->query($sql);
     if ($res){
       $rec= $res->fetch_assoc();
+      
     }
     $db->close();
   }
-  $pp =  json_encode($rec['profilepicture']);
 
-	return "<img src= $pp style='width:80%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
+  $pp =  json_encode($rec['profilepicture']);
+if($pp == "null"){
+return "<img src=../img/defaultPP.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
+ }
+ else{
+ return "<img src= $pp style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 
+}
+	
 }
 function getuserProfileImage($userid){
   $db = getDBConnection();
@@ -545,8 +552,13 @@ function getuserProfileImage($userid){
     $db->close();
   }
   $pp =  json_encode($rec['profilepicture']);
+if($pp == "null"){
+return "<img src=../img/defaultPP.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
+ }
+ else{
+ return "<img src= $pp style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 
+}
 
-	return "<img src= $pp style='width:80%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
 }
 
 function saveRequest($myItem, $requestee, $requestedItem){
