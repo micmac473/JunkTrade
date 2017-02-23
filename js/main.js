@@ -55,6 +55,8 @@ $(document).ready(function(){
     getRequestedMeetUp();
     getRequestsMeetUp();
     getUserSavedItems();
+    getUserFollowees();
+    getUserFollowers();
     
     //alert($('#requests > li').length);
 });  
@@ -435,10 +437,81 @@ function removeSavedItem(savedId){
 //--------------------------------------------------------------------------------------------------------------------
 // Adds the trader clicked to the user's followers
 function followTrader(userid){
-    alert(userid);
+    //alert(userid);
+    var followee = {
+        "followee" : userid
+    }
+
+    $.post("../index.php/follow",followee, function(res){
+        console.log(res);
+        if(res){
+            swal("Trader Followed!", "You can view followed trader in People!", "success");
+        }
+        else{
+            swal("Trader Not Followed!", "Error!", "error")
+        }
+    },"json");
+
     swal("Trader Followed!", "You can view followed trader in People!", "success")
 }
 
+function unfollowTrader(userid){
+        var followee = {
+            "followee" : userid
+        };
+
+        $.post("../index.php/unfollow", followee, function(res){
+            console.log(res);
+            swal("Trader Unfollowed!", "You can follow them again!", "error");
+            getUserFollowees();
+        }, "json");    
+}
+
+
+function getUserFollowees(){
+    $.get("../index.php/followees", processUserFollowees, "json");
+
+}
+
+function processUserFollowees(records){
+    console.log(records);
+    var sec_id = "#table_sec_followees";
+    var htmlStr = $("#table_heading_followees").html(); //Includes all the table, thead and tbody declarations
+    records.forEach(function(el){
+        htmlStr += "<tr>";
+        htmlStr += "<td>"+ el['username'] +"</td>";
+        htmlStr += "<td>"+ el['followdate'] +"</td>";      
+        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"unfollowTrader("+el.followee+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
+        htmlStr +=" </tr>" ;
+    });
+
+    htmlStr += "</tbody></table>";
+    $(sec_id).html(htmlStr);
+    return false;
+}
+
+
+
+function getUserFollowers(){
+    $.get("../index.php/followers", processUserFollowers, "json");
+
+}
+
+function processUserFollowers(records){
+    console.log(records);
+    var sec_id = "#table_sec_followers";
+    var htmlStr = $("#table_heading_followers").html(); //Includes all the table, thead and tbody declarations
+    records.forEach(function(el){
+        htmlStr += "<tr>";
+        htmlStr += "<td>"+ el['username'] +"</td>";
+        htmlStr += "<td>"+ el['followdate'] +"</td>";      
+        htmlStr +=" </tr>" ;
+    });
+
+    htmlStr += "</tbody></table>";
+    $(sec_id).html(htmlStr);
+    return false;
+}
 //--------------------------------------------------------------------------------------------------------------------
 //Dsiplay decisions for requests made by user
 function getDecisions(){

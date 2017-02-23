@@ -167,6 +167,7 @@ $app->get("/profile", function(Request $request, Response $response){
 	return $response;
 });
 
+// Retrieves all the items that the logged in user has saved
 $app->get("/getsaveditems", function(Request $request, Response $response){
 	$items = getUserSavedItems();
 	
@@ -174,6 +175,21 @@ $app->get("/getsaveditems", function(Request $request, Response $response){
 	return $response;
 });
 
+// Retrieves all the people that the logged in user has followed
+$app->get("/followees", function(Request $request, Response $response){
+	$items = getUserFollowees();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
+
+// Retrieves all the people that has followed the logged in user
+$app->get("/followers", function(Request $request, Response $response){
+	$items = getUserFollowers();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
 
 $app->get("/trade", function(Request $request, Response $response){
 	$items = getAllUserTrade();
@@ -488,4 +504,36 @@ $app->post("/removedsaveditem", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->post("/follow", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$followee = $post['followee'];
+
+	$res = addFollowee($followee);
+	if ($res > 0 || $res == true){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+$app->post("/unfollow", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$followee = $post['followee'];
+	$res = removeFollowee($followee);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
 $app->run();
+

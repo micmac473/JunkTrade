@@ -90,7 +90,7 @@ function addItemToSaved($itemId, $itemOwner){
 	$db = getDBConnection();
 	//var_dump($itemExists);
 	$savedId = $itemExists['savedid'];
-	
+
 	if($itemExists == null){
 		$sql = "INSERT INTO `saved` (`itemid`, `userid`, `itemowner`, `savedindicator`) VALUES ($itemId, $userId, $itemOwner, true);";
 		$id = -1;
@@ -124,6 +124,79 @@ function removeItemFromSaved($savedId){
 	}
 	return $res;
 } 
+
+function checkFollowee($followee){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `follow` f where f.followee = $followee and f.follower = '$userid';";
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;	
+}
+
+function addFollowee($followee){
+	$follower = $_SESSION['id'];
+	$db = getDBConnection();
+	$followeeExists = checkFollowee($followee);
+	$followId = $followeeExists['followid'];
+
+	if($followeeExists == null){
+		$sql = "INSERT INTO `follow` (`follower`, `followee`, `followindicator`) VALUES ($follower, $followee, true);";
+		$id = -1;
+		if ($db != NULL){
+			$res = $db->query($sql);
+			if ($res && $db->insert_id > 0){
+				$id = $db->insert_id;
+			}
+			$db->close();
+		}
+		return $id;
+	}
+	else{
+		$sql = "UPDATE `follow` f SET `followindicator` = true WHERE `followid` = $followId;";
+		$res = null;
+			if ($db != NULL){
+				$res = $db->query($sql);
+				$db->close();
+			}
+		return $res;
+	}
+	
+}
+
+function removeFollowee($followee){
+	$db = getDBConnection();
+	$sql = "UPDATE `follow` f SET `followindicator` = false WHERE `followee` = $followee;";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	return $res;
+} 
+
+
+function getFollowID($userId){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `follow` f where f.followee = $userId and f.follower = $userid;";
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;	
+}
+
 
 function saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requesteeContact){
 	$sql = "INSERT INTO `trade` (`requestid`, `tradedate`, `tradelocation`,`requesteecontact`) VALUES ($requestId, '$tradeDate', '$tradeLocation','$requesteeContact');";
@@ -342,6 +415,38 @@ function getAllUserItems(){
 function getUserSavedItems(){
 	$userID = $_SESSION["id"];
 	$sql ="SELECT * FROM `saved` s, `items` i, `users` u WHERE s.itemid = i.itemid AND i.userid = u.id AND s.userid = $userID AND `savedindicator` = true ORDER BY `saveddate` DESC;";
+	$items =[];
+	//print($sql);
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getUserFollowees(){
+	$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `follow` f, `users` u WHERE f.followee = u.id AND f.follower = $userID AND `followindicator` = true ORDER BY `followdate` DESC;";
+	$items =[];
+	//print($sql);
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getUserFollowers(){
+	$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `follow` f, `users` u WHERE f.follower = u.id AND f.followee = $userID AND `followindicator` = true ORDER BY `followdate` DESC;";
 	$items =[];
 	//print($sql);
 	$db = getDBConnection();

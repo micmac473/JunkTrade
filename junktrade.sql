@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2017 at 08:12 PM
+-- Generation Time: Feb 23, 2017 at 09:41 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -25,15 +25,17 @@ USE `peertrading`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `followers`
+-- Table structure for table `follow`
 --
 
-DROP TABLE IF EXISTS `followers`;
-CREATE TABLE `followers` (
+DROP TABLE IF EXISTS `follow`;
+CREATE TABLE `follow` (
+  `followid` int(11) NOT NULL,
   `follower` int(11) NOT NULL,
   `followee` int(11) NOT NULL,
-  `followedindicator` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `followdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `followindicator` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -220,6 +222,12 @@ INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `passwo
 --
 
 --
+-- Indexes for table `follow`
+--
+ALTER TABLE `follow`
+  ADD PRIMARY KEY (`followid`);
+
+--
 -- Indexes for table `items`
 --
 ALTER TABLE `items`
@@ -253,6 +261,11 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `follow`
+--
+ALTER TABLE `follow`
+  MODIFY `followid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `items`
 --

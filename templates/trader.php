@@ -5,6 +5,8 @@ include "base.php";
 if(isset($_GET['trader'])){
   $userID = $_GET['trader'];
   $userDetails = getUserItems($userID);
+  $followeeInfo = getFollowID($userID);
+  //echo $followeeInfo['followid'];
   //var_dump($userDetails);
   //echo $traderInfo;
 }
@@ -24,7 +26,16 @@ if(isset($_GET['trader'])){
         ?>
       </div>
       <div class="col-lg-2">
-        <button type="button" class="btn btn-default btn-block" onClick="followTrader('$val.userid')"><i class='fa fa-plus fa-lg' aria-hidden='true'></i> Follow</button>
+        <?php
+        if($followeeInfo == null || $followeeInfo['followindicator'] == false){
+          echo "<button type='button' class='btn btn-success btn-block' onClick=\"followTrader(". $userID .")\"><i class='fa fa-plus fa-lg' aria-hidden='true'></i> Follow</button>";
+        }
+        else{
+          echo "<button type='button' class='btn btn-danger btn-block' onClick=\"unfollowTrader(". $userID .")\"><i class='fa fa-minus fa-lg' aria-hidden='true'></i> Unfollow</button>";
+        }
+        ?>
+
+        
       </div>
     </div>
   </div>
