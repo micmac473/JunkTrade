@@ -48,3 +48,10 @@ include "base.php";
     <tbody>
 </script>
 
+<script>window.onload = function() {
+  getUserFollowees();
+  getUserFollowers();
+};
+</script>
+
+

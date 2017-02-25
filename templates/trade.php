@@ -34,5 +34,11 @@ include "base.php";
     </thead>
     <tbody>
 </script>
+
+<script>window.onload = function() {
+    getTrade();
+};
+</script>
+
 </body>
 </html>

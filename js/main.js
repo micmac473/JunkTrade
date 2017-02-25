@@ -46,17 +46,17 @@ console.log("hello I'm connected to the world");
 
 $(document).ready(function(){
     console.log("All Elements in the Page was successfully loaded, we can begin our application logic");
-    getTrade();
-    getAllItems();
+    //getTrade();
+    //getAllItems();
     getUserRequests();
     getDecisions();
-    getUserItems();
+    //getUserItems();
     $('[data-toggle="tooltip"]').tooltip();   
-    getRequestedMeetUp();
-    getRequestsMeetUp();
-    getUserSavedItems();
-    getUserFollowees();
-    getUserFollowers();
+    //getRequestedMeetUp();
+    //getRequestsMeetUp();
+    //getUserSavedItems();
+    //getUserFollowees();
+    //getUserFollowers();
     
     //alert($('#requests > li').length);
 });  

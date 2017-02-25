@@ -144,3 +144,8 @@ include "base.php";
       </div>
     </div>
   </div>
+
+<script>window.onload = function() {
+    getAllItems();
+};
+</script>
