@@ -842,7 +842,7 @@ function viewRequest(requestId){
 
 //--------------------------------------------------------------------------------------------------------------------
 function acceptRequest(requestId){
-    $("#requestid").val(requestId);
+    $("#meetupform #requestid").val(requestId);
     $.get("../index.php/requester/"+requestId, function(res){
         console.log(res);
 
@@ -863,7 +863,7 @@ function acceptRequest(requestId){
 function sendArrangement(){
     var requestId = $("#meetupform #requestid").val();
     $("#meetUpModal").modal('hide');
-    swal({
+    sweetAlert({
         title: "Accept Request and Send Arrangement?",
         //text: "You will not be able to undo this operation!",
         type: "info",
@@ -877,10 +877,10 @@ function sendArrangement(){
     function(isConfirm){
         
         if (isConfirm) {
-            arrangement();
+            
             $.get("../index.php/acceptrequest/"+requestId, function(res){
                 swal("Request Accepted and Arrangment Sent!", "The user will be notified", "success");
-
+                arrangement();
                 getUserRequests();
                 return false;
             }, "json");
@@ -889,6 +889,7 @@ function sendArrangement(){
             swal("Cancelled", "Request and Arrangement still Pending", "error");
         }
     });
+    return false;
     
 }
 
@@ -978,7 +979,7 @@ function processRequestedMeetUp(records, records2){
         htmlStr += "<td>" + el['tradelocation'] + "</td>";
         htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
         htmlStr += "<td><button type='button' class='btn btn-success' onclick =\"locationDecision("+el.tradeid+")\"><i class='fa fa-question-circle' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-warning' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-warning' onclick =\"showFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
         i++;
     });
@@ -1073,5 +1074,25 @@ function suggestLocation(tradeid){
           swal("Nice!", "Your suggested locationn is: " + inputValue, "success");
         }
     );
+}
+
+
+function showFeedbackForm(){
+    $('#feedbackModal').modal('show');
+}
+
+function feedback(){
+    var rating = $("#rating").val();
+    var comment = $("#feedbackcomment").val();
+    //alert(rating);
+    //alert(comment);
+    $('#feedbackModal').modal('hide');
+
+    swal("Feedback saved!", "Thank you for your rating and comment", "success");
+    return false;
+}
+
+function cancelFeedback(){
+    swal("Cancelled!", "Feedback not saved!", "error");
 }
 console.log("JavaScript file was successfully loaded in the page");

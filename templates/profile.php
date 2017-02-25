@@ -400,7 +400,7 @@ unset($_POST);
                 <div class="">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-                    <input class="form-control" id="requesteecontact" name="requesteecontact" type="tel" required/>
+                    <input class="form-control" id="requesteecontact" name="requesteecontact" type="tel" required pattern="[868][0-9]{9}"/>
                   </div>
                 </div>
               </div> 

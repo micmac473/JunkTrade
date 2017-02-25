@@ -31,6 +31,8 @@ if(!isset($_SESSION)){
     <!-- Main CSS -->
     <link href ="../css/main.css" rel ="stylesheet">
 
+    <link href ="../css/bootstrap-rating.css" rel ="stylesheet">
+
     <!-- Weather Icons CSS -->
     <link href ="../css/weather-icons.min.css" rel ="stylesheet">
 
@@ -54,6 +56,7 @@ if(!isset($_SESSION)){
 
     <!-- Main JS file-->
     <script src="../js/main.js"></script>
+    <script src="../js/bootstrap-rating.js"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 
