@@ -79,7 +79,7 @@ if(!isset($_SESSION)){
           <span class="icon-bar"></span>
         </button>
 
-        <a id="menu-toggle" href="#" class="navbar-brand glyphicon glyphicon-menu-hamburger btn-menu toggle"> </a>
+        <a id="menu-toggle" href="#"><i class="navbar-brand btn-menu toggle fa fa-bars fa-2x" aria-hidden="true"></i>  </a>
         <a class="navbar-brand" href="homepage.php"><img alt ="logo" width ="30px" height ="30px" src =../img/logo.png></a>
         <!--<a class="navbar-brand" href ="homepage.php">JunkTrade</a> -->
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
@@ -231,3 +231,70 @@ if(!isset($_SESSION)){
     });
     </script>
 
+<!-- Item Request Modal -->
+  <div class="modal fade" id="requestModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h2 class="modal-title" style="text-align: center">Request Details</h2>
+        </div>
+        <div class="modal-body">
+          <form class="" onsubmit="return sendRequest();">
+            <fieldset>
+
+            <div class="form-group">
+              <label class="control-label" for="name">Item Owner</label>
+              <div class="">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                  <input id="requestee" name="requestee" type="text" disabled placeholder="Item Owner" class="form-control input-md" required="">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label" for="name">Owner's Item</label>
+              <div class="">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-gift" aria-hidden="true"></i></span>
+                  <input id="requesteeitem" name="requesteeitem" type="text" disabled placeholder="Requested Item" class="form-control input-md" required="">
+                </div>
+              </div>
+            </div>
+
+            <!-- Select Basic -->
+            <div class="form-group">
+              <label class="control-label" for="selectbasic">Your Item</label>
+              <div class="">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-gift" aria-hidden="true"></i></span>
+                  <select id="requesteritem" name="requesteritem" class="form-control" required=""> 
+
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group"> 
+                <label class="control-label" for="date">Phone Number</label>
+                <div class="">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
+                    <input class="form-control" id="requestercontact" name="requestercontact" type="tel" required pattern="[868][0-9]{9}"/>
+                  </div>
+                </div>
+              </div> 
+            <div class="form-group">
+              <div class="">
+                <button  class="btn btn-success btn-block" type="submit">Send Request</button>
+                <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelRequest()">Cancel Request</button>
+              </div>
+            </div>
+
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -83,6 +83,12 @@ $app->get("/items", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/userrequests", function(Request $request, Response $response){
+	$items = getAllUserRequests();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
 
 $app->get("/requests", function(Request $request, Response $response){
 	$requests = getRequests();
@@ -325,8 +331,6 @@ $app->get("/checkitemsaved/{id}", function(Request $request, Response $response)
 
 
 
-
-
 $app->post("/login", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	//var_dump($post);
@@ -439,18 +443,19 @@ $app->post("/additem", function(Request $request, Response $response){
 
 $app->post("/request", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
-	$myItem = $post['myitem'];
 	$requestee = $post['requestee'];
-	$requestedItem = $post['requesteditem'];
+	$requesteeItem = $post['requesteeitem'];
+	$requesterItem = $post['requesteritem'];
+	$requesterContact = $post['requestercontact'];
 
-	$res = saveRequest($myItem, $requestee, $requestedItem);
+	$res = saveRequest($requestee, $requesteeItem, $requesterItem, $requesterContact);
 	
 	if ($res > 0){
 		$response = $response->withStatus(201);
 		$response = $response->withJson(array("id" => $res));
 		
 	} else {
-		$response = $response->withJson(400);
+		$response = $response->withStatus(400);
 	}
 	return $response;
 });
@@ -461,7 +466,8 @@ $app->post("/tradearrangement", function(Request $request, Response $response){
 	$tradeDate = $post['tradedate'];
 	$tradeLocation = $post['tradelocation'];
 	$requesteeContact = $post['requesteecontact'];
-	$res = saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requesteeContact);
+	$requesterContact = $post['requestercontact'];
+	$res = saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requesteeContact, $requesterContact);
 	if ($res){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);
@@ -524,6 +530,55 @@ $app->post("/unfollow", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	$followee = $post['followee'];
 	$res = removeFollowee($followee);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+$app->post("/requesterfeedback", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$tradeId = $post['tradeid'];
+	$rating = $post['rating'];
+	$comment = $post['comment'];
+	$res = saveRequesterFeedback($tradeId, $rating, $comment);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+$app->post("/requesteefeedback", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$tradeId = $post['tradeid'];
+	$rating = $post['rating'];
+	$comment = $post['comment'];
+	$res = saveRequesteeFeedback($tradeId, $rating, $comment);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+$app->post("/cancelrequest", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$requestId = $post['requestid'];
+	$res = cancelRequest($requestId);
 	if ($res){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);

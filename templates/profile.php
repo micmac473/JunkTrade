@@ -333,7 +333,7 @@ unset($_POST);
              </div>
               <input id="requestid" name="requestid" type="hidden" disabled placeholder="Requested Item" class="form-control input-md">
 
-              <div class="form-group"> <!-- Date input -->
+              <div class="form-group"> 
                 <label class="control-label" for="date">Requester</label>
                 <div class="">
                   <div class="input-group">
@@ -343,7 +343,7 @@ unset($_POST);
                 </div>
               </div> 
 
-              <div class="form-group"> <!-- Date input -->
+              <div class="form-group"> 
                 <label class="control-label" for="date">Requester Item</label>
                 <div class="">
                   <div class="input-group">
@@ -353,7 +353,17 @@ unset($_POST);
                 </div>
               </div> 
 
-              <div class="form-group"> <!-- Date input -->
+              <div class="form-group"> 
+                <label class="control-label" for="date">Requester Phone Number</label>
+                <div class="">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
+                    <input class="form-control" id="requestercontact" name="requestercontact" type="tel" disabled/>
+                  </div>
+                </div>
+              </div> 
+
+              <div class="form-group"> 
                 <label class="control-label" for="date">Your Item</label>
                 <div class="">
                   <div class="input-group">
@@ -395,12 +405,12 @@ unset($_POST);
               </div>
               </div>
 
-              <div class="form-group"> <!-- Date input -->
-                <label class="control-label" for="date">Contact</label>
+              <div class="form-group"> 
+                <label class="control-label" for="date">Phone Number</label>
                 <div class="">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-                    <input class="form-control" id="requesteecontact" name="requesteecontact" type="tel" required pattern="[868][0-9]{7}"/>
+                    <input class="form-control" id="requesteecontact" name="requesteecontact" type="tel" required pattern="[868][0-9]{9}"/>
                   </div>
                 </div>
               </div> 

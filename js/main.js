@@ -229,28 +229,54 @@ function getAllItems(){//alter for slim
 
 function processAllItems(records){
     console.log(records);
-    listAllItems(records)
+    $.get("../index.php/user", function(res){
+        //console.log(res);
+        listAllItems(records, res);
+    },"json");
+    
 }
 
-function listAllItems(records){
+function listAllItems(records, user){
     var itemdiv = "<div>";
-    records.forEach(function(el){
-        //htmlStr += "<tr>";
-        //htmlStr += "<td><img style='cursor: pointer' onclick=\"views("+el.itemid+"); window.open(this.src)\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
-        itemdiv += "<div class='panel panel-default'>";
-        //itemdiv += "<div class='panel-heading'> </div>"; 
-        //<span style='float:right; font-size:12px'> <em> Uploaded: "+  el['uploaddate'] +"</em></span>
-        //itemdiv += "<div class='panel-heading'> Uploaded on: "+  el['uploaddate'] + "</div>"; 
-        itemdiv += "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button></div>"; 
+    var requests, i;
+    $.get("../index.php/userrequests", function(res){
+        //console.log(res);
+        requests = res;
+        console.log(requests);
 
-        itemdiv += "<div class='panel-body'> <div class='text-center lead'> <strong>"+  el['itemname'] + "</strong> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
-        //itemdiv += "<div class='panel-footer'> <a href='item.php' class='btn btn-info btn-block'><span class='glyphicon glyphicon-eye-open'></span> View more....</a> </div>"; 
-        itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
-        itemdiv += "</div>"; 
-    });
-    $("#itemblock").html(itemdiv);
-    //htmlStr += "</tbody></table>";
-    //$(sec_id).html(htmlStr);
+        records.forEach(function(el){
+            var requested = false;
+            itemdiv += "<div class='panel panel-default'>";
+            itemdiv += "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button></div>"; 
+
+            itemdiv += "<div class='panel-body'> <div class='text-center lead'> <strong>"+  el['itemname'] + "</strong> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+            
+            //If the item displayed on the homepage has been requested by the current user already then they cannot
+            // make another request for that item; however, they can cancel that request
+            for(i = 0; i < requests.length; i++){
+                if(requests[i]['item'] == el['itemid'] && requests[i]['requester'] == user && requests[i]['decision'] == null){
+                    itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-danger btn-block' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div>";
+                    requested = true;
+                    break;
+                }
+            }
+
+            //If the any of the items displayed do not currently have a request from the current user, then that user will be able to make 
+            //a request for that item
+            if(requested == false){
+                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div>";
+            }
+            
+            itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
+            itemdiv += "</div>"; 
+        });
+        $("#itemblock").html(itemdiv);
+        //htmlStr += "</tbody></table>";
+        //$(sec_id).html(htmlStr);
+    },"json");
+
+    
+    
     
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -367,8 +393,8 @@ function displayRequests(records){
         htmlStr += "<td>"+ el['itemname'] +"</td>";
         //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
         htmlStr += "<td><button type='button' class='btn btn-info' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
-        htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-check-square-o' aria-hidden='true'></i></button> ";
-        htmlStr += "<button type='button' class='btn btn-danger' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-ban' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up' aria-hidden='true'></i></button> ";
+        htmlStr += "<button type='button' class='btn btn-danger' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
     });
 
@@ -589,7 +615,7 @@ function listUserTrade(records){
         htmlStr += "<td>" + el['timerequested'] + "</td>";
         if(el['decision'] == null){
             htmlStr += "<td> Pending </td>";
-            htmlStr += "<td></td>";
+            htmlStr += "<td> <i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'>Loading...</span></td>";
         }
         else if(el['decision'] == true){
             htmlStr += "<td> Accepted </td>";
@@ -597,8 +623,7 @@ function listUserTrade(records){
         }
         else{
             htmlStr += "<td> Denied </td>";
-            htmlStr += "<td></td>";
-
+            htmlStr += "<td> <i class='fa fa-ban fa-2x' aria-hidden='true'></i></td>";
         }
         htmlStr +=" </tr>" ;
     });
@@ -732,18 +757,18 @@ function displayItemsForRequest(itemid){
 }
 
 function displayInModal(records, itemid){
-    if ($("#myitems").length > 0){ // the country select is available so we can display all countries
+    if ($("#requesteritem").length > 0){ // the country select is available so we can display all countries
         var htmlStr;
         records.forEach(function(item){
             htmlStr += "<option value='"+item.itemid+"'>"+item.itemname+"</option>";
         });
         
-        $("#myitems").html(htmlStr);
+        $("#requesteritem").html(htmlStr);
     } 
     $.get("../index.php/owner/"+itemid, function(res){
         //console.log(res);
         $("#requestee").val(res.username);
-        $("#requesteditem").val(res.itemname);
+        $("#requesteeitem").val(res.itemname);
     }, "json") 
 
     $("#requestModal").modal();
@@ -751,23 +776,53 @@ function displayInModal(records, itemid){
 
 function sendRequest(){
     var requestee = $("#requestee").val();
-    var requestedItem = $("#requesteditem").val();
-    var myItem = $("#myitems").val();
+    var requesteeItem = $("#requesteeitem").val();
+    var requesterItem = $("#requesteritem").val();
+    var requesterContact = $("#requestercontact").val();
+
     var request = {
         "requestee" : requestee,
-        "requesteditem" : requestedItem,
-        "myitem" : myItem
+        "requesteeitem" : requesteeItem,
+        "requesteritem" : requesterItem,
+        "requestercontact" : requesterContact
     };
 
     console.log(request);
-    $.post("../index.php/request", request, function(res){
-        console.log(res);
-        if (res.id && res.id > 0)
-            swal("Request Made!", "", "success");
-        else 
-            swal("Unable to make request", "Please try again", "error");
-    },"json");
+    sweetAlert(
+        {
+            title: "Send Request for \"" + requesteeItem + "\"?",
+            //text: "You will not be able to undo this operation!",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#5cd65c",
+            confirmButtonText: "Send",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.post("../index.php/request", request, function(res){
+                    console.log(res);
+                    if (res.id && res.id > 0){
+                        swal("Request Made!", "Trader will be notified", "success");
+                    }   
+                },"json");
+                getAllItems();
+            } 
+            else {
+                swal("Request Cancelled!", "You can make another request", "error");
+            }
+        }
+    );
+    
     $('#requestModal').modal('hide');
+    return false;
+}
+
+function cancelRequest(){
+    $('#requestModal').modal('hide');
+    swal("Request Cancelled!", "You can make another request", "error");
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -843,11 +898,13 @@ function viewRequest(requestId){
 //--------------------------------------------------------------------------------------------------------------------
 function acceptRequest(requestId){
     $("#meetupform #requestid").val(requestId);
+
     $.get("../index.php/requester/"+requestId, function(res){
         console.log(res);
 
         $("#meetupform #requester").val(res.username);
         $("#meetupform #requesteritem").val(res.itemname);
+        $("#meetupform #requestercontact").val(res.requestercontact);
 
         $.get("../index.php/requestee/"+requestId, function(res){
             console.log(res);
@@ -879,8 +936,9 @@ function sendArrangement(){
         if (isConfirm) {
             
             $.get("../index.php/acceptrequest/"+requestId, function(res){
-                swal("Request Accepted and Arrangment Sent!", "The user will be notified", "success");
                 arrangement();
+                swal("Request Accepted and Arrangment Sent!", "The user will be notified", "success");
+                
                 getUserRequests();
                 return false;
             }, "json");
@@ -925,6 +983,35 @@ function denyRequest(requestId){
     });
 }
 
+
+function cancelMadeRequest(requestId){
+    swal({
+        title: "Cancel Request?",
+        //text: "You will not be able to undo this operation!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, Cancel!",
+        cancelButtonText: "No, Keep!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function(isConfirm){
+        
+        if (isConfirm) {
+            var request = {
+                "requestid" : requestId
+            }; 
+            console.log(request);
+            $.post("../index.php/cancelrequest", request, function(res){
+                swal("Request Cancelled!", "The owner will no longer see your request", "success");
+            }, "json");
+            getAllItems();
+        } else {
+            swal("Cancelled", "Your request is still pending", "error");
+        }
+    });
+}
 //--------------------------------------------------------------------------------------------------------------------
 //
 function arrangement(){
@@ -932,18 +1019,20 @@ function arrangement(){
     var tradeDate = $("#meetupform #tradedate").val();
     var tradeLocation = $("#meetupform #tradelocation").val();
     var requesteeContact = $("#meetupform #requesteecontact").val();
+    var requesterContact = $("#meetupform #requestercontact").val();
 
     var trade = {
         "requestid" : requestId,
         "tradedate" : tradeDate,
         "tradelocation" : tradeLocation,
-        "requesteecontact" : requesteeContact
+        "requesteecontact" : requesteeContact,
+        "requestercontact" : requesterContact
     };
 
     console.log(trade);
-    $.post("../index.php/tradearrangement", trade,function(res){
+    $.post("../index.php/tradearrangement", trade, function(res){
         console.log(res);
-        swal("Arrangement Sent!", "Good stuff!", "success")
+        //swal("Arrangement Sent!", "Good stuff!", "success")
     },"json");
     return false;
 }
@@ -979,7 +1068,7 @@ function processRequestedMeetUp(records, records2){
         htmlStr += "<td>" + el['tradelocation'] + "</td>";
         htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
         htmlStr += "<td><button type='button' class='btn btn-success' onclick =\"locationDecision("+el.tradeid+")\"><i class='fa fa-question-circle' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-warning' onclick =\"showFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-warning' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
         i++;
     });
@@ -1018,7 +1107,7 @@ function processRequestsMeetUp(records, records2){
         htmlStr += "<td>" + el['tradedate'] + "</td>";
         htmlStr += "<td>" + el['tradelocation'] + "</td>";
         htmlStr += "<td> </td>";
-        htmlStr += "<td><button type='button' class='btn btn-warning' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-warning' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
         i++;
     });
@@ -1034,12 +1123,14 @@ function locationDecision(tradeid){
             title: "Accept Location?",
             text: tradeid,
             type: "warning",
+            animation: "slide-from-top",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Yes, accept it!",
             cancelButtonText: "No, deny it!",
             closeOnConfirm: false,
-            closeOnCancel: false
+            closeOnCancel: false,
+
         },
         function(isConfirm){
             if (isConfirm) {
@@ -1054,7 +1145,7 @@ function locationDecision(tradeid){
 
 //------------------------------------------------------------------------------//
 function suggestLocation(tradeid){
-    swal({
+    /*swal({
           title: "Suggest a meet up location",
           text: "Write something interesting:",
           type: "input",
@@ -1073,22 +1164,62 @@ function suggestLocation(tradeid){
           
           swal("Nice!", "Your suggested locationn is: " + inputValue, "success");
         }
-    );
+    ); */
 }
 
 
-function showFeedbackForm(){
-    $('#feedbackModal').modal('show');
+function showRequesterFeedbackForm(tradeId){
+    $("#requesterfeedbackform #tradeid").val(tradeId);
+    $('#requesterFeedbackModal').modal('show');
 }
 
-function feedback(){
-    var rating = $("#rating").val();
-    var comment = $("#feedbackcomment").val();
-    //alert(rating);
-    //alert(comment);
-    $('#feedbackModal').modal('hide');
+function requesterFeedback(){
+    $('#requesterFeedbackModal').modal('hide');
+    var tradeId = $("#requesterfeedbackform #tradeid").val();
+    var rating = $("#requesterfeedbackform #rating").val();
+    var comment = $("#requesterfeedbackform #feedbackcomment").val();
+    var feedback = {
+        "tradeid" : tradeId,
+        "rating" : rating,
+        "comment" : comment
+    };
 
-    swal("Feedback saved!", "Thank you for your rating and comment", "success");
+    console.log(feedback);
+    $.post("../index.php/requesterfeedback", feedback, function(res){
+        if(res)
+            swal("Feedback saved!", "Thank you for your rating and comment", "success");
+        else
+            swal("Feedback not saved!", "Try again", "error");
+    }, "json");
+    return false;
+}
+
+
+
+function showRequesteeFeedbackForm(tradeId){
+    $("#requesteefeedbackform #tradeid").val(tradeId);
+    $('#requesteeFeedbackModal').modal('show');
+
+}
+
+function requesteeFeedback(){
+    $('#requesteeFeedbackModal').modal('hide');
+    var tradeId = $("#requesteefeedbackform #tradeid").val();
+    var rating = $("#requesteefeedbackform #rating").val();
+    var comment = $("#requesteefeedbackform #feedbackcomment").val();
+    var feedback = {
+        "tradeid" : tradeId,
+        "rating" : rating,
+        "comment" : comment
+    };
+    
+    console.log(feedback);
+    $.post("../index.php/requesteefeedback", feedback, function(res){
+        if(res)
+            swal("Feedback saved!", "Thank you for your rating and comment", "success");
+        else
+            swal("Feedback not saved!", "Try again", "error");
+    }, "json");
     return false;
 }
 

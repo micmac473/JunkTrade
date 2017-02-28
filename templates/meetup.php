@@ -40,25 +40,68 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
     <tr>
-      <th>From</th><th>Contact</th><th>With</th><th>For</th><th>Date</th><th>Location</th><th>Suggested Location</th><th>Feedback</th>
+      <th>From</th>
+      <th>Contact</th>
+      <th>With</th>
+      <th>For</th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Suggested Location</th>
+      <th>Feedback</th>
     </tr>
     </thead>
     <tbody>
 </script>
 
-<!-- Meet up Modal -->
-  <div class="modal fade" id="feedbackModal" role="dialog">
+<!-- Requester Feedback Modal -->
+  <div class="modal fade" id="requesterFeedbackModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          <form class="form" id="meetupform" onsubmit="return feedback();">
+          <form class="form" id="requesterfeedbackform" onsubmit="return requesterFeedback();">
             <fieldset>
 
               <div class="modal-header">
-                <h2 class="modal-title" style="text-align: center">Trade Feedback</h2>
+                <h2 class="modal-title" style="text-align: center">Feedback (Requester)</h2>
              </div>
+              <input id="tradeid" name="tradeid" type="hidden" disabled class="form-control input-md">
+              <input id="rating" type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" data-fractions="2" required/>
 
-              <input id="rating" type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" required/>
+              <div class="form-group">
+              <label class="control-label" for="textarea">Comments</label>
+              <div class="">                     
+                <textarea class="form-control"  id="feedbackcomment" rows="5" name="feedbackcomment" placeholder="Comments about the trade" required></textarea>
+              </div>
+            </div>
+
+              <div class="form-group">
+                <div class="">
+                  <button  class="btn btn-success btn-block" type="submit">Send</button>
+                  <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelFeedback()">Cancel</button>
+                </div>
+              </div>
+
+            </fieldset>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Requestee Feedback Modal -->
+  <div class="modal fade" id="requesteeFeedbackModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form" id="requesteefeedbackform" onsubmit="return requesteeFeedback();">
+            <fieldset>
+
+              <div class="modal-header">
+                <h2 class="modal-title" style="text-align: center">Feedback (Requestee)</h2>
+             </div>
+              <input id="tradeid" name="tradeid" type="hidden" disabled class="form-control input-md">
+              <input id="rating" type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" data-fractions="2" required/>
 
               <div class="form-group">
               <label class="control-label" for="textarea">Comments</label>

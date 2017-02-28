@@ -181,6 +181,27 @@ function removeFollowee($followee){
 	return $res;
 } 
 
+function saveRequesterFeedback($tradeId, $rating, $comment){
+	$db = getDBConnection();
+	$sql = "UPDATE `trade` t SET `requesterfeedbackrating` = '$rating', `requesterfeedbackcomment` = '$comment' WHERE `tradeid` = $tradeId;";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	return $res;
+} 
+
+function saveRequesteeFeedback($tradeId, $rating, $comment){
+	$db = getDBConnection();
+	$sql = "UPDATE `trade` t SET `requesteefeedbackrating` = '$rating', `requesteefeedbackcomment` = '$comment' WHERE `tradeid` = $tradeId;";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	return $res;
+} 
 
 function getFollowID($userId){
 	$userid = $_SESSION['id'];
@@ -198,8 +219,8 @@ function getFollowID($userId){
 }
 
 
-function saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requesteeContact){
-	$sql = "INSERT INTO `trade` (`requestid`, `tradedate`, `tradelocation`,`requesteecontact`) VALUES ($requestId, '$tradeDate', '$tradeLocation','$requesteeContact');";
+function saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requesteeContact, $requesterContact){
+	$sql = "INSERT INTO `trade` (`requestid`, `tradedate`, `tradelocation`,`requesteecontact`, `requestercontact`) VALUES ($requestId, '$tradeDate', '$tradeLocation','$requesteeContact','$requesterContact');";
 	$id = -1;
 	$db = getDBConnection();
 	if ($db != NULL){
@@ -524,6 +545,22 @@ function getAllItems(){//should be session id here instead of useId
 	return $items;
 }
 
+function getAllUserRequests(){//should be session id here instead of useId
+	$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `items` i, `requests` r WHERE i.itemid = r.item AND r.requester = $userID AND i.userid <> $userID  ORDER BY `uploaddate` DESC;";
+	$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
 function getUserItem($val){
 	$db = getDBConnection();
 	$rec = null;
@@ -542,7 +579,7 @@ function getRequesterInfo($requestId){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != null){
-		$sql = "SELECT `username`, `itemname` FROM `requests` r, `items` i, `users` u WHERE r.id = $requestId AND r.requester = u.id AND r.item2 = i.itemid;" ;
+		$sql = "SELECT `username`, `itemname`, `requestercontact` FROM `requests` r, `items` i, `users` u WHERE r.id = $requestId AND r.requester = u.id AND r.item2 = i.itemid;" ;
 		$res = $db->query($sql);
 		if ($res){
 			$rec = $res->fetch_assoc();
@@ -754,16 +791,16 @@ return "<img src=../img/defaultPP.jpg style='width:100%; border-radius: 50px;' c
 
 }
 
-function saveRequest($myItem, $requestee, $requestedItem){
+function saveRequest($requestee, $requesteeItem, $requesterItem, $requesterContact){
 	//$owner = getItemOwner($itemid);
 	$requesteeId = getRequesteeId($requestee);
-	$requestedItemId = getItemId($requestedItem);
+	$requesteeItemId = getItemId($requesteeItem);
 	$rId = $requesteeId['id'];
-	$iId = $requestedItemId['itemid'];
+	$iId = $requesteeItemId['itemid'];
 	//echo ($requesteeId['id']);
 	$db = getDBConnection();
 	$requester = $_SESSION['id'];
-	$sql = "INSERT INTO `requests` (`requester`,`item2`,`requestee`,`item`) VALUES($requester,$myItem, $rId,$iId);";
+	$sql = "INSERT INTO `requests` (`requester`,`item2`,`requestercontact`, `requestee`,`item`) VALUES($requester,$requesterItem, '$requesterContact', $rId,$iId);";
 	$id = -1;
 	if ($db != NULL){
 		$res = $db->query($sql);
@@ -817,6 +854,18 @@ function deleteItem($itemid){
 
 } 
 
+function cancelRequest($requestId){
+	$db = getDBConnection();
+	$sql = "DELETE FROM `requests`  WHERE  id= $requestId";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	return $res;
+
+
+} 
 
 function acceptRequest($requestId){
 	$db = getDBConnection();
