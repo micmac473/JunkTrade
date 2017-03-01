@@ -779,10 +779,10 @@ function getProfileImage(){
 
   $pp =  json_encode($rec['profilepicture']);
 if($pp == "null"){
-return "<img src=../img/defaultPP.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
+return "<img src=../img/defaultPP.jpg style='width:auto; height: 215px; max-width: 150px; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
  }
  else{
- return "<img src= $pp style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 
+ return "<img src= $pp style='width:auto; height: 215px; max-width: 150px; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 
 }
 	
 }
@@ -799,10 +799,10 @@ function getuserProfileImage($userid){
   }
   $pp =  json_encode($rec['profilepicture']);
 if($pp == "null"){
-return "<img src=../img/defaultPP.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
+return "<img src=../img/defaultPP.jpg style='width:auto; height: 215px; max-width: 150px; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
  }
  else{
- return "<img src= $pp style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 
+ return "<img src= $pp style='width:auto; height: 215px; max-width: 150px; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 
 }
 
 }
