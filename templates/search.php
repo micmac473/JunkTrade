@@ -1,5 +1,7 @@
 <?php
+include "../lib.php";
 include "base.php";
+
 ?>
 
 <div class="container-fluid">
