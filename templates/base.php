@@ -134,12 +134,12 @@ if(!isset($_SESSION)){
           </li>
           
         </ul>
-        <form class="navbar-form" role="form" action ="search.php?go">
+        <form method = "post" class="navbar-form" role="form" action ="search.php?go" id ="searchform">
         <div class="form-group" style="display:inline;">
           <div class="input-group" style="display:table;">
             <input class="form-control" name="searchname" placeholder="Search for Junk" autocomplete="off" autofocus="autofocus" type="text">
             <span class="input-group-addon" class="btn btn-default" style="width:1%;" name="searchsubmit">
-              <a href="search.php?go"><span class="glyphicon glyphicon-search"></span> </a>
+              <input  type="submit" name="searchsubmit" value="Search">
             </span>
           </div>
         </div>

@@ -8,14 +8,6 @@ include "base.php";
   <div class="row">
 
     <div id = "searchitemblock" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
-    	<p>
-	    <h3>Search For An Item</h3> 
-	    <p>You may enter any key word</p> 
-	    <form  method="post" action="search.php?go"  id="searchform"> 
-	      <input  type="text" name="searchname"> 
-	      <input  type="submit" name="searchsubmit" value="Search"> 
-	    </form> 
-	</p>
 
 <?php
 
@@ -41,7 +33,7 @@ $item = null;
 	   	$ID = $val['userid'];
 
 	   	echo "<div class='panel panel-default'>";
-          //echo "<div class='panel-heading' style='text-align: right'> <em> Uploaded on: ".  $val['uploaddate']."</em></div>";
+
           echo "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile(".$val['userid'].")\">" .  "<strong>" . $val['username'] . "</strong></button></div>";
           echo "<div class='panel-body'> <div class='text-center lead'> <strong>".  $val['itemname'] . "</strong> </div> <img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture']  ."\"  class='img-responsive img-thumbnail mx-auto'> </div>";
           echo "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem(".$val['itemid'].")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div></div></div>";
@@ -49,9 +41,9 @@ $item = null;
     }
 	  } 
 	  } 
-	  else{ 
-	  echo  "<p>Please enter a search query</p>"; 
-	  } 
+	  
+	  if($item == null){ 
+	  echo  "<img src=../img/noresults.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 	  } 
 	  } 
 	  } 	
 
