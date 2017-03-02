@@ -563,7 +563,7 @@ function getAllUserRequests(){
 
 function getAllNonUserItemRequests(){
 	$userID = $_SESSION["id"];
-	$sql ="SELECT * FROM `items` i, `requests` r, `users` u WHERE i.itemid = r.item AND i.userid = u.id AND i.userid <> $userID  ORDER BY `uploaddate` DESC;";
+	$sql ="SELECT r.id, r.requester, r.decision, r.item FROM `items` i, `requests` r, `users` u WHERE i.itemid = r.item AND i.userid = u.id AND i.userid <> $userID  ORDER BY `uploaddate` DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();

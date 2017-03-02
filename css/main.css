@@ -120,7 +120,7 @@ button:active{
 /* Item panel on homepage*/
 .panel{
   background-color: #FFFFFF;
-  box-shadow: 2px 2px 2px #888888;
+  box-shadow: 4px 4px 4px #888888;
 }
 
 
@@ -370,3 +370,21 @@ span.input-group-addon i {
       .theRows p{
         font-size: 150%;
       }
+
+
+
+
+
+      .hide-bullets {
+    list-style:none;
+    margin-left: -40px;
+    margin-top:20px;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.carousel-inner>.item>img, .carousel-inner>.item>a>img {
+    width: 100%;
+}

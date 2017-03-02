@@ -7,22 +7,24 @@ include "base.php";
 <div class ="container-fluid">
   <div class ="row">
     <div class="header text-center">
-    <h1>Following</h1>
-  </div>
+      <h1>Following <i class="fa fa-rss" aria-hidden="true" ></i></h1>
+    </div>
     <div class="col-xs-12 table-responsive">
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->
       <div id="table_sec_followees"></div>
     </div> 
-    <div class="header text-center">
-    <h1>Followers</h1>
   </div>
+  <div class ="row">
+    <div class="header text-center">
+      <h1>Followers <i class="fa fa-rss-square" aria-hidden="true" ></i></h1>
+    </div>
     <div class="col-xs-12 table-responsive">
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->
       <div id="table_sec_followers"></div>
     </div>
-
+  </div>
 </div>
 
 <script type="text/template" id="table_heading_followees">
@@ -42,7 +44,7 @@ include "base.php";
     <thead>
     <tr>
       <th>Follower</th>
-      <th>Date followed</th>
+      <th>Date Followed</th>
     </tr>
     </thead>
     <tbody>

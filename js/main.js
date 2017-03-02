@@ -253,19 +253,21 @@ function listAllItems(records, user){
 
                     else {
                         itemdiv += "<div class='panel panel-default'>";
-                        itemdiv += "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button></div>"; 
 
-                        itemdiv += "<div class='panel-body'> <div class='text-center lead'> <strong>"+  el['itemname'] + "</strong> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+                        itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
+
+                        itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+
                         if(requests[i]['requester'] == user && requests[i]['decision'] == null){
-                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-danger btn-block' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div>";
+                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-10 col-xs-offset-1'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
                             console.log("Request Pending for "+ el['itemname']);
                         }
 
                         else{
-                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div>";
+                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-10 col-xs-offset-1'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
                         }
                 
-                        itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
+                        //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
                         itemdiv += "</div>";
                         break;
                     }
@@ -275,14 +277,15 @@ function listAllItems(records, user){
 
             if(i == requests.length){
                 itemdiv += "<div class='panel panel-default'>";
-                itemdiv += "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button></div>"; 
+                itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
 
-                itemdiv += "<div class='panel-body'> <div class='text-center lead'> <strong>"+  el['itemname'] + "</strong> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+                itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
             
 
-                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div>";
+                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-10 col-xs-offset-1'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
                 
-                itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
+                //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
+                //itemdiv += "<div class='col-lg-6'> <button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems("+el['itemid']+")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button></div></div></div>"
                 itemdiv += "</div>";
             }
             /*var requested = false;
@@ -411,7 +414,7 @@ function getUserRequests(){
 function notifications(records){
     console.log(records);
     records.forEach(function(el){
-        var htmlStr = "<li><a href=profile.php>"+ el.username + " is requesting "+ el.itemname + "</a></li>";
+        var htmlStr = "<li><a href=notifications.php>"+ el.username + " is requesting "+ el.itemname + "</a></li>";
         $("#requests").append(htmlStr);
     });
     var countR = $("#requests li").length;
@@ -429,12 +432,15 @@ function displayRequests(records){
     records.forEach(function(el){
         htmlStr += "<tr>";
         htmlStr += "<td style='display:none;'>"+ el['id'] +"</td>";
-        htmlStr += "<td>"+ el['username'] +"</td>";
-        htmlStr += "<td>"+ el['itemname'] +"</td>";
+        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
+        //htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+        htmlStr += "<td></td>";
+        htmlStr += "<td>"+el['itemname']+"</td>";
+        
         //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
-        htmlStr += "<td><button type='button' class='btn btn-info' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
-        htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up' aria-hidden='true'></i></button> ";
-        htmlStr += "<button type='button' class='btn btn-danger' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-info btn-block' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
+        htmlStr += "<td><div class='col-xs-6'><button type='button' class='btn btn-success btn-block' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up' aria-hidden='true'></i></button></div> ";
+        htmlStr += "<div class='col-xs-6'><button type='button' class='btn btn-danger btn-block' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down' aria-hidden='true'></i></button></div></td>";
         htmlStr +=" </tr>" ;
     });
 
@@ -456,7 +462,9 @@ function addToSavedItems(itemid){
         $.post("../index.php/saveitem", item, function(res){
             console.log(res);
             if(res){
-                swal("Item Saved!", "You can view item in Saved Items!", "success");
+                //swal("Item Saved!", "You can view item in Saved Items!", "success");
+                window.location.reload();
+                return false;
             }
             else{
                 swal("Item Not Saved!", "Sorry, try again", "error");
@@ -476,8 +484,8 @@ function processUserSavedItems(records){
     records.forEach(function(el){
         htmlStr += "<tr>";
         htmlStr += "<td><img src=\"" + el.picture + "\" width=\"150\" height=\"128\"></td>";
-        htmlStr += "<td>"+ el['itemname'] +"</td>";
-        htmlStr += "<td>"+ el['username'] +"</td>";
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ el['saveddate'] +"</td>";      
         htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
@@ -495,8 +503,10 @@ function removeSavedItem(savedId){
     };
     $.post("../index.php/removedsaveditem",savedItem, function(res){
         console.log(res);
-        swal("Item removed!", "You can save the item again", "error")
+        //swal("Item removed!", "You can save the item again", "error");
         getUserSavedItems();
+        window.location.reload();
+        return false;
     }, "json");
     return false;
 }
@@ -511,14 +521,17 @@ function followTrader(userid){
     $.post("../index.php/follow",followee, function(res){
         console.log(res);
         if(res){
-            swal("Trader Followed!", "You can view followed trader in People!", "success");
+            //swal("Trader Followed!", "You can view followed trader in People!", "success");
+            window.location.reload();
         }
         else{
             swal("Trader Not Followed!", "Error!", "error")
         }
+
     },"json");
 
-    swal("Trader Followed!", "You can view followed trader in People!", "success")
+    //swal("Trader Followed!", "You can view followed trader in People!", "success");
+    
 }
 
 function unfollowTrader(userid){
@@ -527,9 +540,9 @@ function unfollowTrader(userid){
         };
 
         $.post("../index.php/unfollow", followee, function(res){
-            console.log(res);
-            swal("Trader Unfollowed!", "You can follow them again!", "error");
-            getUserFollowees();
+            //console.log(res);
+            //swal("Trader Unfollowed!", "You can follow them again!", "error");
+            window.location.reload();
         }, "json");    
 }
 
@@ -545,7 +558,7 @@ function processUserFollowees(records){
     var htmlStr = $("#table_heading_followees").html(); //Includes all the table, thead and tbody declarations
     records.forEach(function(el){
         htmlStr += "<tr>";
-        htmlStr += "<td>"+ el['username'] +"</td>";
+        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.followee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ el['followdate'] +"</td>";      
         htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"unfollowTrader("+el.followee+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
@@ -569,7 +582,7 @@ function processUserFollowers(records){
     var htmlStr = $("#table_heading_followers").html(); //Includes all the table, thead and tbody declarations
     records.forEach(function(el){
         htmlStr += "<tr>";
-        htmlStr += "<td>"+ el['username'] +"</td>";
+        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.follower+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+ " "+el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ el['followdate'] +"</td>";      
         htmlStr +=" </tr>" ;
     });
@@ -603,7 +616,7 @@ function decisions(records){
 
 }
 
-function displayDecisions(records){
+/*function displayDecisions(records){
     var key;
     var sec_id = "#table_secr";
     var htmlStr = $("#table_headingr").html(); //Includes all the table, thead and tbody declarations
@@ -627,7 +640,7 @@ function displayDecisions(records){
 
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr);
-}
+} */
 
 //--------------------------------------------------------------------------------------------------------------------
 
@@ -650,8 +663,8 @@ function listUserTrade(records){
 
     records.forEach(function(el){
         htmlStr += "<tr>";
-        htmlStr += "<td>"+ el['username'] +"</td>";
-        htmlStr += "<td>"+ el['itemname'] +"</td>";
+        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td>" + el['timerequested'] + "</td>";
         if(el['decision'] == null){
             htmlStr += "<td> Pending </td>";

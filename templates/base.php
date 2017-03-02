@@ -105,7 +105,7 @@ if(!isset($_SESSION)){
         </form> -->
 
         <ul class="nav navbar-nav navbar-right">
-          <li data-toggle="modal" data-target="#requestModal"> <a href="#" data-toggle="tooltip" title="Upload item"> <i class="fa fa-plus fa-2x" aria-hidden="true"></i> </a></li>
+          <li data-toggle="modal" data-target="#requestModal"> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom"> <i class="fa fa-plus fa-2x" aria-hidden="true"></i> </a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-2x" aria-hidden="true" ></i><span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -159,7 +159,7 @@ if(!isset($_SESSION)){
                     <a href="profile.php"><i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile</a>
                 </li>
                 <li>
-                    <a href="profile.php"><i class="fa fa-bell fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Notifications</a>
+                    <a href="notifications.php"><i class="fa fa-bell fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Notifications</a>
                 </li>
                 <li>
                     <a href="trade.php"><i class="fa fa-gavel fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Requests</a>
@@ -288,9 +288,11 @@ if(!isset($_SESSION)){
                 </div>
               </div> 
             <div class="form-group">
-              <div class="">
-                <button  class="btn btn-success btn-block" type="submit">Send Request</button>
-                <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelRequest()">Cancel Request</button>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <button  class="btn btn-success btn-block" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send Request</button>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelRequest()"> <i class="fa fa-ban" aria-hidden="true"></i> Cancel Request</button>
               </div>
             </div>
 
@@ -300,3 +302,11 @@ if(!isset($_SESSION)){
       </div>
     </div>
   </div>
+
+
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+</script>
+

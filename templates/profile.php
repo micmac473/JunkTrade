@@ -84,12 +84,17 @@ unset($_POST);
 
 <div class ="container-fluid">
   <div class ="row">
-    <div class ="col-md-8 col-md-offset-2">
-    <button type="button" onclick ="showProfilePictureForm();" class="btn btn-info">Update Profile Pic</button>
-      <button type="button" onclick ="showForm();" class="btn btn-info">Add Item</button>
-      <button type="button" onclick ="showSearch();" class="btn btn-info">Find Item</button>
+    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <button type="button" onclick ="showProfilePictureForm();" class="btn btn-success btn-block"> <i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> Update Profile Picture</button>
+    </div>
+    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <button type="button" onclick ="showForm();" class="btn btn-success btn-block"><i class="fa fa-gift fa-lg" aria-hidden="true"></i> Add Item</button>
+    </div>
+    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <button type="button" onclick ="showSearch();" class="btn btn-info btn-block"><i class="fa fa-search fa-lg" aria-hidden="true"></i> Find Item</button>
     </div>
   </div>
+ 
   <!-- Perform a seafrch -->
   <div class="container" id ="ProfileSearch" style ="display:none;">
   <div class="row">
@@ -249,18 +254,11 @@ unset($_POST);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script src="js/main.js"></script> -->
   <div class="row">
-    <div class="col-md-7 table-responsive">
+    <div class="table-responsive">
       <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">My Junk</h2>
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->
       <div id="table_secp"></div>
-    </div>
-
-    <div class ="col-md-5 table-responsive">
-      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Incoming Requests</h2>
-    <!--<h4>Products</h4>
-    <p>A table highlighting the available products</p> -->
-      <div id="table_secr"></div>
     </div>
   </div>
 
@@ -275,15 +273,7 @@ unset($_POST);
     <tbody>
 </script>
 
-<script type="text/template" id="table_headingr">
-  <table class="table table-hover table-condensed">
-    <thead>
-    <tr>
-      <th>From</th><th>For Your Item</th><th>View</th><th>Decision</th>
-    </tr>
-    </thead>
-    <tbody>
-</script>
+
 
 <!-- View Modal -->
   <div class="modal fade" id="requestModalP" role="dialog">
