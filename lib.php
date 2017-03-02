@@ -529,7 +529,7 @@ function getUserItems($userid){//should be session id here instead of useId
 	return $items;
 }
 
-function getAllItems(){//should be session id here instead of useId
+function getAllItems(){
 	$userID = $_SESSION["id"];
 	$sql ="SELECT * FROM `items` i, `users` u WHERE i.userid = u.id AND `userid` <> $userID ORDER BY `uploaddate` DESC;";
 	$items =[];
@@ -545,9 +545,25 @@ function getAllItems(){//should be session id here instead of useId
 	return $items;
 }
 
-function getAllUserRequests(){//should be session id here instead of useId
+function getAllUserRequests(){
 	$userID = $_SESSION["id"];
 	$sql ="SELECT * FROM `items` i, `requests` r WHERE i.itemid = r.item AND r.requester = $userID AND i.userid <> $userID  ORDER BY `uploaddate` DESC;";
+	$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getAllNonUserItemRequests(){
+	$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `items` i, `requests` r, `users` u WHERE i.itemid = r.item AND i.userid = u.id AND i.userid <> $userID  ORDER BY `uploaddate` DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -763,10 +779,10 @@ function getProfileImage(){
 
   $pp =  json_encode($rec['profilepicture']);
 if($pp == "null"){
-return "<img src=../img/defaultPP.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
+return "<img src=../img/defaultPP.jpg style='width:auto; height: 215px; max-width: 150px; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
  }
  else{
- return "<img src= $pp style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 
+ return "<img src= $pp style='width:auto; height: 215px; max-width: 150px; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 
 }
 	
 }
@@ -783,10 +799,10 @@ function getuserProfileImage($userid){
   }
   $pp =  json_encode($rec['profilepicture']);
 if($pp == "null"){
-return "<img src=../img/defaultPP.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
+return "<img src=../img/defaultPP.jpg style='width:auto; height: 215px; max-width: 150px; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
  }
  else{
- return "<img src= $pp style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 
+ return "<img src= $pp style='width:auto; height: 215px; max-width: 150px; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 
 }
 
 }

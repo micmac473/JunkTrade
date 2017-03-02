@@ -90,6 +90,14 @@ $app->get("/userrequests", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/nonuseritemsrequests", function(Request $request, Response $response){
+	$items = getAllNonUserItemRequests();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
+
+
 $app->get("/requests", function(Request $request, Response $response){
 	$requests = getRequests();
 	

@@ -239,13 +239,53 @@ function processAllItems(records){
 function listAllItems(records, user){
     var itemdiv = "<div>";
     var requests, i;
-    $.get("../index.php/userrequests", function(res){
-        //console.log(res);
+    $.get("../index.php/nonuseritemsrequests", function(res){
         requests = res;
         console.log(requests);
 
         records.forEach(function(el){
-            var requested = false;
+            for(i = 0; i < requests.length; i++){
+                if(requests[i]['item'] == el['itemid']){
+                    if(requests[i]['decision'] == true){
+                        console.log("Request Accepted for "+el['itemname']);
+                        break;
+                    }   
+
+                    else {
+                        itemdiv += "<div class='panel panel-default'>";
+                        itemdiv += "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button></div>"; 
+
+                        itemdiv += "<div class='panel-body'> <div class='text-center lead'> <strong>"+  el['itemname'] + "</strong> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+                        if(requests[i]['requester'] == user && requests[i]['decision'] == null){
+                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-danger btn-block' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div>";
+                            console.log("Request Pending for "+ el['itemname']);
+                        }
+
+                        else{
+                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div>";
+                        }
+                
+                        itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
+                        itemdiv += "</div>";
+                        break;
+                    }
+                }
+                    
+            }
+
+            if(i == requests.length){
+                itemdiv += "<div class='panel panel-default'>";
+                itemdiv += "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button></div>"; 
+
+                itemdiv += "<div class='panel-body'> <div class='text-center lead'> <strong>"+  el['itemname'] + "</strong> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+            
+
+                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div>";
+                
+                itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
+                itemdiv += "</div>";
+            }
+            /*var requested = false;
             itemdiv += "<div class='panel panel-default'>";
             itemdiv += "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button></div>"; 
 
@@ -268,7 +308,7 @@ function listAllItems(records, user){
             }
             
             itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
-            itemdiv += "</div>"; 
+            itemdiv += "</div>"; */
         });
         $("#itemblock").html(itemdiv);
         //htmlStr += "</tbody></table>";
