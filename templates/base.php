@@ -139,7 +139,9 @@ if(!isset($_SESSION)){
           <div class="input-group" style="display:table;">
             <input class="form-control" name="searchname" placeholder="Search for Junk" autocomplete="off" autofocus="autofocus" type="text">
             <span class="input-group-addon" class="btn btn-default" style="width:1%;" name="searchsubmit">
-              <input  type="submit" name="searchsubmit" value="Search">
+              <button type="submit" class="btn btn-default btn-xs" name="searchsubmit" value="Search">
+                <i class="fa fa-search fa-fw"></i>
+              </button>
             </span>
           </div>
         </div>
