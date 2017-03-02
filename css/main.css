@@ -99,7 +99,7 @@ body {
 .footerHome {
   background-color:#f6f6f6;
   text-align: left;
-  color:lightgrey;
+  color:darkgrey;
   font-size: 13px;
   border-top: solid 1px #ccc;
 }
@@ -191,6 +191,7 @@ button:active{
     padding-top: 18px;
     padding-bottom: 18px;
     font-size: 15px;
+    font-weight: bold;
 }
 
 .sidebar-nav li a:hover {
@@ -375,16 +376,3 @@ span.input-group-addon i {
 
 
 
-      .hide-bullets {
-    list-style:none;
-    margin-left: -40px;
-    margin-top:20px;
-}
-
-.thumbnail {
-    padding: 0;
-}
-
-.carousel-inner>.item>img, .carousel-inner>.item>a>img {
-    width: 100%;
-}
