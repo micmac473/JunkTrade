@@ -89,7 +89,7 @@ if(!isset($_SESSION)){
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Electronics</a></li>
+              <li><a href="">Electronics</a></li>
               <li><a href="#">Furniture</a></li>
               <li><a href="#">Books & Magazines</a></li>
               <li><a href="#">Clothes</a></li>
@@ -184,8 +184,9 @@ if(!isset($_SESSION)){
   <div class="jumbotron">
     <div class="container-fluid">
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-        <?php            
-          echo getProfileImage();      
+        <?php   
+          $ppid = $_SESSION["id"];         
+          echo getProfileImage($ppid);      
         ?>
       </div>
       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">

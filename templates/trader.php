@@ -17,7 +17,7 @@ if(isset($_GET['trader'])){
     <div class="row">
       <div class="col-lg-2">
         <?php
-          echo getuserProfileImage($userID);
+          echo getProfileImage($userID);
         ?>
       </div>
       <div class="col-lg-8">

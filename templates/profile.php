@@ -1,6 +1,5 @@
 <?php
 include "../lib.php";
-include "base.php";
 
 if(isset($_POST['upload'])){
 
@@ -80,6 +79,7 @@ unset($_POST);
  }
 
 }
+include "base.php";
 ?>
 
 <div class ="container-fluid">
