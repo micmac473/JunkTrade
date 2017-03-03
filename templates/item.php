@@ -11,7 +11,7 @@ if(isset($_GET['item'])){
 	$username = getUsername($itemDetails['userid']);
     $savedItem = checkItemSaved($itemId);
     $itemRequest = getItemRequestForCurrentUser($itemId);
-    //var_dump($itemRequest);
+    //var_dump($savedItem);
 	//var_dump($username);
 }
 ?>

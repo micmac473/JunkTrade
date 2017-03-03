@@ -751,10 +751,11 @@ function getItemRequestForCurrentUser($itemid){
 }
 
 function checkItemSaved($itemid){
+	$userId = $_SESSION["id"];
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != NULL){
-		$sql = "SELECT * FROM `saved` s WHERE s.itemid = $itemid;";
+		$sql = "SELECT * FROM `saved` s WHERE s.itemid = $itemid AND s.userid = $userId;";
 		$res = $db->query($sql);
 		if ($res){
 			$rec= $res->fetch_assoc();

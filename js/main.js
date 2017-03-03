@@ -1294,4 +1294,31 @@ function requesteeFeedback(){
 function cancelFeedback(){
     swal("Cancelled!", "Feedback not saved!", "error");
 }
+//------------------------------------------------------------------------------------------------
+function logout(){
+    swal({
+        title: "Proceed to Logout?",
+        //text: "You will not be able to undo this operation!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Logout",
+        cancelButtonText: "Stay Logged In",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function(isConfirm){
+        
+        if (isConfirm) {
+            swal("Goodbye!", "See you next time :)", "error");
+            window.location.href = 'login.php';
+
+        } else {
+            swal("Still Logged In", "Continue Trading!", "success");
+        }
+    });
+    return false;
+}
+
+//---------------------------------END-------------------------------------------------
 console.log("JavaScript file was successfully loaded in the page");
