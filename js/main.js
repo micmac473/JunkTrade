@@ -487,7 +487,7 @@ function processUserSavedItems(records){
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ el['saveddate'] +"</td>";      
-        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-minus fa-lg' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
     });
 
@@ -859,9 +859,15 @@ function sendRequest(){
                     console.log(res);
                     if (res.id && res.id > 0){
                         swal("Request Made!", "Trader will be notified", "success");
+                        if(window.location.href.indexOf("/item.php?") > -1){
+                            console.log("Item.php!");
+                            window.location.reload();
+                        }
+                        else{
+                           getAllItems(); 
+                        }
                     }   
-                },"json");
-                getAllItems();
+                },"json"); 
             } 
             else {
                 swal("Request Cancelled!", "You can make another request", "error");
@@ -876,6 +882,8 @@ function sendRequest(){
 function cancelRequest(){
     $('#requestModal').modal('hide');
     swal("Request Cancelled!", "You can make another request", "error");
+
+        
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -1058,8 +1066,15 @@ function cancelMadeRequest(requestId){
             console.log(request);
             $.post("../index.php/cancelrequest", request, function(res){
                 swal("Request Cancelled!", "The owner will no longer see your request", "success");
+                if(window.location.href.indexOf("/item.php?") > -1){
+                    console.log("Item.php!");
+                    window.location.reload();
+                }
+                else{
+                    getAllItems();
+                }
             }, "json");
-            getAllItems();
+            
         } else {
             swal("Cancelled", "Your request is still pending", "error");
         }

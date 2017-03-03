@@ -3,14 +3,15 @@ include "../lib.php";
 include "base.php";
 
 if(isset($_GET['item'])){
-	$itemid = $_GET['item'];
+    $itemid = $_GET['item'];
 	//var_dump($itemid);
 
 	$itemDetails = getItem($itemid);
-  $itemId = $itemDetails['itemid'];
+    $itemId = $itemDetails['itemid'];
 	$username = getUsername($itemDetails['userid']);
-  $savedItem = checkItemSaved($itemId);
-  //var_dump($savedItem);
+    $savedItem = checkItemSaved($itemId);
+    $itemRequest = getItemRequestForCurrentUser($itemId);
+    //var_dump($itemRequest);
 	//var_dump($username);
 }
 ?>
@@ -27,12 +28,18 @@ if(isset($_GET['item'])){
         <p> <strong> Uploaded on </strong>" . $itemDetails['uploaddate'] . "</p>
   			<h3> <u> Description </u> </h3>" . $itemDetails['itemdescription'] . "</div>";
     echo "<div class='col-lg-3'>";
-    echo "<button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button>";
+    if($itemRequest == null){
+        echo "<button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button>";
+    }
+    else{
+        echo "<button type='button' class='btn btn-danger btn-block' onclick=\"cancelMadeRequest(".$itemRequest['id'].")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button>";
+    }
+    
     if($savedItem == null || $savedItem['savedindicator'] == false){
       echo "<button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-bookmark fa-lg' aria-hidden='true'></i> Save</button>";
     }
     else{
-      echo "<button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem(".$savedItem['savedid'].")\" id='requestbtn'><i class='fa fa-trash fa-lg' aria-hidden='true'></i> Remove Saved Item</button>";
+      echo "<button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem(".$savedItem['savedid'].")\" id='requestbtn'><i class='fa fa-minus fa-lg' aria-hidden='true'></i> Unsave</button>";
     }
     
     echo "</div>";

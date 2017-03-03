@@ -735,6 +735,21 @@ function getItem($itemid){
 	return $rec;
 }
 
+function getItemRequestForCurrentUser($itemid){
+	$userId = $_SESSION["id"];
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != NULL){
+		$sql = "SELECT r.id FROM `items` i, `requests` r WHERE i.itemid = $itemid AND r.item = i.itemid AND r.requester = $userId;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec= $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
 function checkItemSaved($itemid){
 	$db = getDBConnection();
 	$rec = null;

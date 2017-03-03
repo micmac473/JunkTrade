@@ -28,10 +28,10 @@ if(isset($_GET['trader'])){
       <div class="col-lg-2">
         <?php
           if($followeeInfo == null || $followeeInfo['followindicator'] == false){
-            echo "<button type='button' class='btn btn-success btn-block' onClick=\"followTrader(". $userID .")\" data-toggle='tooltip' title='Click to Follow' data-placement='bottom'><i class='fa fa-user-plus' aria-hidden='true'></i> Follow <i class='fa fa-rss' aria-hidden='true'></i></button>";
+            echo "<button type='button' class='btn btn-default btn-block' onClick=\"followTrader(". $userID .")\" data-toggle='tooltip' title='Click to Follow' data-placement='bottom'><i class='fa fa-user-plus' aria-hidden='true'></i> Follow <i class='fa fa-rss' aria-hidden='true'></i></button>";
           }
           else{
-            echo "<button type='button' class='btn btn-danger btn-block' onClick=\"unfollowTrader(". $userID .")\" data-toggle='tooltip' title='Click to Unfollow' data-placement='bottom'> <i class='fa fa-user-times' aria-hidden='true'></i> Following <i class='fa fa-rss' aria-hidden='true'></i></button>";
+            echo "<button type='button' class='btn btn-success btn-block' onClick=\"unfollowTrader(". $userID .")\" data-toggle='tooltip' title='Click to Unfollow' data-placement='bottom'> <i class='fa fa-user-times' aria-hidden='true'></i> Following <i class='fa fa-rss-square' aria-hidden='true'></i></button>";
           }
         ?>
 
