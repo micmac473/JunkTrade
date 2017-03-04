@@ -2,84 +2,6 @@
 include "../lib.php";
 include "base.php";
 
-if(isset($_POST['upload'])){
-
-  $filetmp = $_FILES["image"]["tmp_name"];
-  $filename = $_FILES["image"]["name"];
-  $filetype = $_FILES["image"]["type"];
-  $filepath = "../img/".$filename;
-  
-  move_uploaded_file($filetmp,$filepath);
-
-  //$imagePath = "../img/".$post['image'];
-  try{
-    $itemName = $_POST['itemname'];
-    $itemDescription = $_POST['itemdescription'];
-    //unset($_POST);
-    //print_r($_POST);
-    // print "Name: $name, Price:$price, Country: $countryId";
-    $res = saveItem($filepath, $itemName, $itemDescription);
-    //var_dump($res);
-  }catch(Exception $e){
-    print( $e->getMessage());
-  }
-
-}
-
-if (isset($_POST['uploadU'])) {
-$filetmp = $_FILES["imageU"]["tmp_name"];
-  $filename = $_FILES["imageU"]["name"];
-  $filetype = $_FILES["imageU"]["type"];
-  $filepath = "../img/".$filename;
-  
-  move_uploaded_file($filetmp,$filepath);
-try{
-$id = $_POST['id'];
-$name = $_POST['itemnameU'];
-$description = $_POST['itemdescriptionU'];
-//$itempic = "../img/" . $_POST['imageU'];
-
-
-$db = getDBConnection();
-
-$sql = "UPDATE items SET itemname= '{$name}', itemdescription='{$description}', picture='{$filepath}' WHERE itemid=$id;";
-
- $db->query($sql);
-unset($_POST);
- /*if ($db->query($sql) === TRUE) {
-       echo "Record updated successfully";
-   } else {
-       echo "Error updating record: " . $db->error;
-   }
-   */
-   $db->close();
- }catch(Exception $e){
-  print( $e->getMessage());
- }
-
-}
-
-if (isset($_POST['uploadPic'])) {
-$filetmp = $_FILES["imagePic"]["tmp_name"];
-  $filename = $_FILES["imagePic"]["name"];
-  $filetype = $_FILES["imagePic"]["type"];
-  $filepath = "../img/".$filename;
-  
-  move_uploaded_file($filetmp,$filepath);
-try{
-$id = $_SESSION["id"];
-$db = getDBConnection();
-
-$sql = "UPDATE users SET profilepicture='{$filepath}' WHERE id=$id;";
-
- $db->query($sql);
-unset($_POST);
-   $db->close();
- }catch(Exception $e){
-  print( $e->getMessage());
- }
-
-}
 ?>
 
 <div class ="container-fluid">
@@ -101,8 +23,8 @@ unset($_POST);
         <th>From</th>
         <th>With</th>
         <th>For</th>
-        <th>View Request</th>
-        <th>Make Decision</th>
+        <th>Accept Request</th>
+        <th>Deny Request</th>
       </tr>
     </thead>
     <tbody>
@@ -252,3 +174,17 @@ unset($_POST);
       </div>
     </div>
   </div>
+
+  <script>
+    $(document).ready(function(){
+      var date_input=$('input[name="tradedate"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+</script>

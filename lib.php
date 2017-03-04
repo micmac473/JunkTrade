@@ -633,12 +633,29 @@ function getUsername($val){
 	return $rec;
 }
 
+
+function getRequesterItem(){
+	$userId = $_SESSION["id"];
+	$db = getDBConnection();
+	$requests = [];
+	if ($db != null){
+		$sql = "SELECT i.itemname, r.item2 FROM `requests` r, `items` i WHERE i.itemid = r.item2 AND r.requestee = $userId AND `decision` IS NULL ORDER BY r.timerequested DESC;";
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$requests[] = $row;
+		}
+		$db->close();
+	}
+	//var_dump($requests);
+	return $requests;
+}
+
 function getRequests(){
 	$user = $_SESSION["id"];
 	$db = getDBConnection();
 	$requests = [];
 	if ($db != null){
-		$sql = "SELECT * FROM `users` u, `requests` r, `items` i WHERE r.requester = u.id AND i.itemid = r.item AND r.requestee = $user AND `decision` IS NULL ORDER BY r.timerequested DESC;";
+		$sql = "SELECT u.username, r.id, r.requester, i.itemname FROM `users` u, `requests` r, `items` i WHERE r.requester = u.id AND i.itemid = r.item AND r.requestee = $user AND `decision` IS NULL ORDER BY r.timerequested DESC;";
 		$res = $db->query($sql);
 		while($res && $row = $res->fetch_assoc()){
 			$requests[] = $row;

@@ -50,8 +50,7 @@ $(document).ready(function(){
     //getAllItems();
     getUserRequests();
     getDecisions();
-    //getUserItems();
-    $('[data-toggle="tooltip"]').tooltip();   
+    //getUserItems(); 
     //getRequestedMeetUp();
     //getRequestsMeetUp();
     //getUserSavedItems();
@@ -419,30 +418,38 @@ function notifications(records){
     });
     var countR = $("#requests li").length;
     $("#requestsNotify").append(countR);
-    displayRequests(records);
+    $.get("../index.php/requesteritem", function(res){
+        console.log(res);
+        displayRequests(records, res);
+    });
 
 }
 
-function displayRequests(records){
+function displayRequests(records, res){
     var key;
     var sec_id = "#table_secr";
     var htmlStr = $("#table_headingr").html(); //Includes all the table, thead and tbody declarations
-    var pic;
+    var i=0;
     console.log(records);
+
     records.forEach(function(el){
-        htmlStr += "<tr>";
-        htmlStr += "<td style='display:none;'>"+ el['id'] +"</td>";
-        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
-        //htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
-        htmlStr += "<td></td>";
-        htmlStr += "<td>"+el['itemname']+"</td>";
+        var requestId = el['id'];
         
-        //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
-        htmlStr += "<td><button type='button' class='btn btn-info btn-block' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
-        htmlStr += "<td><div class='col-xs-6'><button type='button' class='btn btn-success btn-block' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up' aria-hidden='true'></i></button></div> ";
-        htmlStr += "<div class='col-xs-6'><button type='button' class='btn btn-danger btn-block' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down' aria-hidden='true'></i></button></div></td>";
-        htmlStr +=" </tr>" ;
-    });
+            htmlStr += "<tr>";
+            htmlStr += "<td style='display:none;'>"+ el['id'] +"</td>";
+            htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+res[i]['item2']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+res[i]['itemname']+"<strong></button></td>";
+            //htmlStr += "<td></td>";
+            htmlStr += "<td>"+el['itemname']+"</td>";
+            
+            //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
+            //htmlStr += "<td><button type='button' class='btn btn-info btn-block' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
+            htmlStr += "<td><div class='col-xs-6'><button type='button' class='btn btn-success btn-block' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up' aria-hidden='true'></i></button></div></td>";
+            htmlStr += "<td><div class='col-xs-6'><button type='button' class='btn btn-danger btn-block' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down' aria-hidden='true'></i></button></div></td>";
+            htmlStr +=" </tr>" ;
+            i++;
+        },"json");
+    
 
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr);

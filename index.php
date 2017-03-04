@@ -325,6 +325,13 @@ $app->get("/getitem/{id}", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/requesteritem", function(Request $request, Response $response){
+	
+	$items = getRequesterItem();
+	$response = $response->withJson($items);
+	return $response;
+});
+
 
 // Testing the function that checks if an item has been saved already
 $app->get("/checkitemsaved/{id}", function(Request $request, Response $response){
