@@ -34,14 +34,11 @@ if(isset($_GET['trader'])){
           else{
             echo "<button type='button' class='btn btn-success' onClick=\"unfollowTrader(". $userID .")\" data-toggle='tooltip' title='Click to Unfollow' data-placement='bottom'> Following <i class='fa fa-rss-square' aria-hidden='true'></i></button></p>";
           }
-        ?>
-
-      
+        ?> 
     </div>
   </div>
 </div>
 
-<div class ="container-fluid">
     <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
       <?php
         for($i = 0; $i < count($userDetails); $i++){
@@ -56,15 +53,16 @@ if(isset($_GET['trader'])){
               else{
                 echo "<div class='panel panel-default'>";
 
-                echo "<div class='panel-heading text-center lead'><strong>".  $val['itemname'] . "</strong></div>";
+                echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem(".$val['itemid'].")\"><strong>". $val['itemname'] . "</strong> </button></div>";
           
-                echo "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture']  ."\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+                echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+
                 if($req['decision'] == null){
-                  echo "<div class='panel-footer'> <div class='row'><div class='col-xs-10 col-xs-offset-1'><button type='button' class='btn btn-danger btn-block' onclick=\"cancelMadeRequest(".$req['id'].")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
+                  echo "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest(".$req['id'].")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
                   //echo "Pending!" . $val['itemid'];
                 }
                 else{
-                  echo "<div class='panel-footer'> <div class='row'><div class='col-xs-10 col-xs-offset-1'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
+                  echo "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
                   //echo "Denied!";
                 }
                 
@@ -78,11 +76,11 @@ if(isset($_GET['trader'])){
           if($j == count($userRequests)){
             echo "<div class='panel panel-default'>";
 
-            echo "<div class='panel-heading text-center lead'><strong>".  $val['itemname'] . "</strong></div>";
+            echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem(".$val['itemid'].")\"><strong>". $val['itemname'] . "</strong> </button></div>";
           
-            echo "<div class='panel-body'> <img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture']  ."\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+            echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
                 
-            echo "<div class='panel-footer'> <div class='row'><div class='col-xs-10 col-xs-offset-1'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
+            echo "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
              
             echo "</div>";
             //echo "No Request made!";
@@ -90,7 +88,7 @@ if(isset($_GET['trader'])){
           
         }
       ?>
-    </div>
+    
 </div>
 
 

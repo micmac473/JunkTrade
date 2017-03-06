@@ -869,7 +869,7 @@ function sendRequest(){
                     console.log(res);
                     if (res.id && res.id > 0){
                         swal("Request Made!", "Trader will be notified", "success");
-                        if(window.location.href.indexOf("/item.php?") > -1){
+                        if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1){
                             console.log("Item.php!");
                             window.location.reload();
                         }
@@ -1076,8 +1076,7 @@ function cancelMadeRequest(requestId){
             console.log(request);
             $.post("../index.php/cancelrequest", request, function(res){
                 swal("Request Cancelled!", "The owner will no longer see your request", "success");
-                if(window.location.href.indexOf("/item.php?") > -1){
-                    console.log("Item.php!");
+                if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("trade.php") > -1 || window.location.href.indexOf("trader.php") > -1){
                     window.location.reload();
                 }
                 else{

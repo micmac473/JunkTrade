@@ -176,7 +176,7 @@ if(!isset($_SESSION)){
                     <a href="meetup.php"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
                 </li>
                 <li>
-                    <a href="" onclick="return logout();"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
+                    <a href="" onclick="return logout();"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
                 </li>
                 <li class="footerHome">
                   <p><strong> &copy;2017 JunkTrade. All rights reserved</strong></p>

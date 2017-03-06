@@ -177,6 +177,7 @@ button:active{
     margin: 0;
     padding: 0;
     list-style: none;
+    width:100%;
 }
 
 .sidebar-nav li {
@@ -188,8 +189,8 @@ button:active{
     display: block;
     text-decoration: none;
     color: grey;
-    padding-top: 18px;
-    padding-bottom: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px; 
     font-size: 15px;
     font-weight: bold;
 }
