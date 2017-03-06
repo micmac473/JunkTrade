@@ -607,6 +607,20 @@ function getUserItem($val){
 	return $rec;
 }
 
+function getItemImages($itemId){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$sql = "SELECT  i.picture, i.picture2, i.picture3 FROM `items` i WHERE i.itemid = $itemId;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
 function getRequesterInfo($requestId){
 	$db = getDBConnection();
 	$rec = null;

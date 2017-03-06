@@ -11,9 +11,11 @@ if(isset($_GET['item'])){
 	$username = getUsername($itemDetails['userid']);
     $savedItem = checkItemSaved($itemId);
     $itemRequest = getItemRequestForCurrentUser($itemId);
+    $itemImages = getItemImages($itemid);
     //var_dump($savedItem);
 	//var_dump($username);
     //var_dump($itemRequest);
+    print_r($itemImages);
 
 }
 ?>
@@ -22,7 +24,7 @@ if(isset($_GET['item'])){
   <div class="row">
   <?php
     echo "<div class='col-lg-4'>
-  			<img src=\"" . $itemDetails['picture'] . "\"  style='width:100%; class='img-responsive img-thumbnail mx-auto'>
+  			<img src=\"" . $itemDetails['picture'] . "\"  style='width:100%;' class='img-responsive img-thumbnail mx-auto'>
   		</div>";
 
   	echo "<div class='col-lg-5' style='border:1px solid #cecece;'>
@@ -75,16 +77,26 @@ if(isset($_GET['item'])){
                 <ul class="hide-bullets">
                     <li class="col-sm-3">
                         <a class="thumbnail" id="carousel-selector-0">
-                            <img src="http://placehold.it/150x150&text=zero">
+                            <?php
+                            echo "<img src=\"" . $itemImages['picture'] . "\">";
+                            ?>
                         </a>
                     </li>
 
                     <li class="col-sm-3">
-                        <a class="thumbnail" id="carousel-selector-1"><img src="http://placehold.it/150x150&text=1"></a>
+                        <a class="thumbnail" id="carousel-selector-1">
+                            <?php
+                            echo "<img src=\"" . $itemImages['picture2'] . "\">";
+                            ?>
+                        </a>
                     </li>
 
                     <li class="col-sm-3">
-                        <a class="thumbnail" id="carousel-selector-2"><img src="http://placehold.it/150x150&text=2"></a>
+                        <a class="thumbnail" id="carousel-selector-2">
+                            <?php
+                            echo "<img src=\"" . $itemImages['picture3'] . "\">";
+                            ?>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -97,13 +109,19 @@ if(isset($_GET['item'])){
                                 <!-- Carousel items -->
                                 <div class="carousel-inner">
                                     <div class="active item" data-slide-number="0">
-                                        <img src="http://placehold.it/470x480&text=zero"></div>
+                                        <?php
+                            echo "<img src=\"" . $itemImages['picture'] . "\"  style='width:100%; class='img-responsive img-thumbnail mx-auto'>";
+                            ?></div>
 
                                     <div class="item" data-slide-number="1">
-                                        <img src="http://placehold.it/470x480&text=1"></div>
+                                        <?php
+                            echo "<img src=\"" . $itemImages['picture2'] . "\">";
+                            ?></div>
 
                                     <div class="item" data-slide-number="2">
-                                        <img src="http://placehold.it/470x480&text=2"></div>
+                                        <?php
+                            echo "<img src=\"" . $itemImages['picture3'] . "\">";
+                            ?></div>
 
                                 </div>
                                 <!-- Carousel nav -->
