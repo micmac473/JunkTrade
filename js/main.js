@@ -344,8 +344,8 @@ function listUserItems(records){
         htmlStr += "<td><img src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
         htmlStr += "<td>"+ el['itemname'] +"</td>";
         htmlStr += "<td>"+ el['itemdescription'] +"</td>";
-        htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button> ";
-        htmlStr += "<button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
         htmlStr += "<td>" + el['uploaddate'] + "</td>";
         htmlStr +=" </tr>" ;
     });
@@ -444,8 +444,8 @@ function displayRequests(records, res){
             
             //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
             //htmlStr += "<td><button type='button' class='btn btn-info btn-block' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
-            htmlStr += "<td><div class='col-xs-6'><button type='button' class='btn btn-success btn-block' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up' aria-hidden='true'></i></button></div></td>";
-            htmlStr += "<td><div class='col-xs-6'><button type='button' class='btn btn-danger btn-block' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down' aria-hidden='true'></i></button></div></td>";
+            htmlStr += "<td><div class='col-xs-12'><button type='button' class='btn btn-success btn-block' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up fa-lg' aria-hidden='true'></i></button></div></td>";
+            htmlStr += "<td><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down fa-lg' aria-hidden='true'></i></button></div></td>";
             htmlStr +=" </tr>" ;
             i++;
         },"json");
@@ -676,15 +676,18 @@ function listUserTrade(records){
         if(el['decision'] == null){
             htmlStr += "<td> Pending </td>";
             htmlStr += "<td> <i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'>Loading...</span></td>";
+            htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
         }
         else if(el['decision'] == true){
             htmlStr += "<td> Accepted </td>";
-            htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"meetUp("+el.rid+")\"><i class='fa fa-map-marker' aria-hidden='true'></i></button></td>";
+            htmlStr += "<td><i class='fa fa-check fa-2x' aria-hidden='true'></i></td>";
+            htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.rid+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
         }
         else{
             htmlStr += "<td> Denied </td>";
             htmlStr += "<td> <i class='fa fa-ban fa-2x' aria-hidden='true'></i></td>";
         }
+
         htmlStr +=" </tr>" ;
     });
     //count = $("#mylist li").size();
@@ -1135,15 +1138,15 @@ function processRequestedMeetUp(records, records2){
     records.forEach(function(el){
         // do get request with request id to get my item and contact
         htmlStr += "<tr>";
-        htmlStr += "<td>"+el['username']+"</td>"
+        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td>"+el['requesteecontact']+"</td>"
-        htmlStr += "<td>"+el['itemname']+"</td>"
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el['item']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td>"+records2[i]['itemname']+"</td>";
         htmlStr += "<td>" + el['tradedate'] + "</td>";
         htmlStr += "<td>" + el['tradelocation'] + "</td>";
-        htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-success' onclick =\"locationDecision("+el.tradeid+")\"><i class='fa fa-question-circle' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-warning' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        //htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
         i++;
     });
@@ -1175,14 +1178,14 @@ function processRequestsMeetUp(records, records2){
     records2.forEach(function(el){
         // do get request with request id to get my item and contact
         htmlStr += "<tr>";
-        htmlStr += "<td>"+el['username']+"</td>"
+        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td>"+el['requestercontact']+"</td>"
-        htmlStr += "<td>"+el['itemname']+"</td>"
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el['item2']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td>"+records[i]['itemname']+"</td>";
         htmlStr += "<td>" + el['tradedate'] + "</td>";
         htmlStr += "<td>" + el['tradelocation'] + "</td>";
-        htmlStr += "<td> </td>";
-        htmlStr += "<td><button type='button' class='btn btn-warning' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
         i++;
     });

@@ -6,7 +6,7 @@ include "base.php";
 
 <div class ="container-fluid">
   <div class="header text-center">
-    <h1> Saved Items </h1>
+    <h1> Saved Items <i class="fa fa-bookmark" aria-hidden="true" ></i> </h1>
   </div>
   <div class ="row">
     <div class="col-xs-12 table-responsive">

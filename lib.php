@@ -499,7 +499,7 @@ function getProfileItems($userID){
 
 function getAllUserTrade(){//should be session id here instead of useId
 	$userID = $_SESSION["id"];
-	$sql ="SELECT * FROM `requests` r, `items` i, `users` u where r.item = i.itemid AND r.requestee = u.id AND  r.requester = $userID ORDER BY r.timerequested DESC;";
+	$sql ="SELECT r.requestee, u.username, i.itemid, i.itemname, r.timerequested, r.decision, r.id FROM `requests` r, `items` i, `users` u where r.item = i.itemid AND r.requestee = u.id AND  r.requester = $userID ORDER BY r.timerequested DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -563,7 +563,23 @@ function getAllUserRequests(){
 
 function getAllNonUserItemRequests(){
 	$userID = $_SESSION["id"];
-	$sql ="SELECT r.id, r.requester, r.decision, r.item FROM `items` i, `requests` r, `users` u WHERE i.itemid = r.item AND i.userid = u.id AND i.userid <> $userID  ORDER BY `uploaddate` DESC;";
+	$sql ="SELECT r.id, r.requester, r.decision, r.item FROM `items` i, `requests` r, `users` u WHERE i.itemid = r.item AND i.userid = u.id AND i.userid <> $userID  ORDER BY r.timerequested DESC;";
+	$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getAllNonUserItemRequestsForSpecificTrader($requestee){
+	$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `requests` r WHERE r.requester = $userID AND r.requestee = $requestee ORDER BY r.timerequested DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -757,10 +773,10 @@ function getItemRequestForCurrentUser($itemid){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != NULL){
-		$sql = "SELECT r.id FROM `items` i, `requests` r WHERE i.itemid = $itemid AND r.item = i.itemid AND r.requester = $userId;";
+		$sql = "SELECT * FROM `requests` r WHERE r.item = $itemid  AND r.requester = $userId ORDER BY r.timerequested DESC LIMIT 1;";
 		$res = $db->query($sql);
 		if ($res){
-			$rec= $res->fetch_assoc();
+			$rec = $res->fetch_assoc();
 		}
 		$db->close();
 	}

@@ -6,7 +6,9 @@ include "base.php";
 
   <div class="row">
     <div class="col-xs-12 table-responsive">
-      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">My Requests</h2>
+      <div class="header text-center">
+        <h1>Outgoing Requests <i class="fa fa-paper-plane" aria-hidden="true" ></i></h1>
+      </div>
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->
       <div id="table_sect"></div>
@@ -29,7 +31,8 @@ include "base.php";
       <th>For</th>
       <th>Date Requested</th>
       <th>Status</th>
-      <th>Meet Up </th>
+      <th></th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>

@@ -1,39 +1,28 @@
 #JunkTrade 
-INFO3410	COMP3550
-Project	Description
-
-Introduction
-The	project	provides	a	method	for	students	to	develop	their	skills	in	Web	System	and	
-Internet	Programming.
-Projects
-While	students	can	choose	their	own	projects	a	couple	of	suggestions	are	based	on	the	
-following.
-
-UWI	recruitment	
-UWI	stores	information	about programmes	that	it	offers,	it	would	like	to	create	a	
-progressive	web	application	that	can	run	on	mobile	devices	that	will	allow	users	to	access	
-information	that	they	have	collected	from	these	programmes.	
-The	system	will	keep	track	of	which	students	visit	and	view	information	provided,	to	be	able	
-to	give	appropriate	recommendations	for	possible	programmes	based	on	their	interest.
-
-Autism Database
-Provide	information	on	autism	and	resources	for	children	with	autism	within	Trinidad	and	
-Tobago.	This	is	targeted	for	providing	information	and	for	parents	to	register	themselves	or	
-children	for	possibility	for	support.
-
-Marking	Criteria
-Section 					Mark
-PHP	Framework (Slim	etc.) 	20
-Cloud 						10
-Visualization 				10
-JS	Library/Framework 		20
-Modularity 					5
-Error	Handling 			5
-Data	Validation 			5
-User	Interface Design 	10
-User	Experience 			5
-WOW	Factor 					5
-Presentation	(Oral) 		5
-Github (Bonus) 				5
+COURSE CODE: INFO 3490
+COURSE TITLE: Project
+CREDITS: 4
+LEVEL: 3
+PRE-REQUISITES: INFO 2400 AND INFO 2420
+COURSE DESCRIPTION:
+This course requires the student to implement an IT project of an appropriate scope. The student will
+liaise with an academic supervisor. Several lectures will be given on project management and research
+methodologies.
+COURSE RATIONALE:
+This course will allow students to apply what they have learned from the prerequisite courses in order
+to implement a functional project. This course also encourages students to work with each other to
+achieve an objective, much like the real world. This course also allows students a project management
+experience with involve project planning, group communications to improve social skills and meeting
+deadlines.
+LEARNING OUTCOMES:
+At the successful completion of this course, students will be able to:
+ Prepare a project plan for an IT project that demonstrates an ability to follow standard project
+management methodology
+ Manage a project from start to finish.
+ Specify requirements, design and implement a solution to an open-ended problem
+ Write professional project reports
+ Document and present (using written, oral and visual means) the design process and the results
+from a solution to a problem
+ Evaluate their contribution to a team project.
 
 https://www.genmymodel.com/# this design is beautiful

@@ -80,13 +80,14 @@ if(!isset($_SESSION)){
         </button>
 
         <a id="menu-toggle" href="#"><i class="navbar-brand btn-menu toggle fa fa-bars fa-2x" aria-hidden="true"></i>  </a>
-        <a class="navbar-brand" href="homepage.php"><img alt ="logo" width ="30px" height ="30px" src =../img/logo.png></a>
+        <a class="navbar-brand" href="homepage.php" style="padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
         <!--<a class="navbar-brand" href ="homepage.php">JunkTrade</a> -->
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="dropdown">
+        <!--  <ul class="nav navbar-nav">
+
+         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="">Electronics</a></li>
@@ -95,7 +96,7 @@ if(!isset($_SESSION)){
               <li><a href="#">Clothes</a></li>
             </ul>
           </li>
-        </ul>
+        </ul> -->
 
         <!--<form class="navbar-form navbar-left" role="form" action ="search.php?go">
           <div class="form-group">
@@ -105,7 +106,8 @@ if(!isset($_SESSION)){
         </form> -->
 
         <ul class="nav navbar-nav navbar-right">
-          <li data-toggle="modal" data-target="#requestModal"> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom"> <i class="fa fa-plus fa-2x" aria-hidden="true"></i> </a></li>
+          <li data-toggle="modal" data-target="#requestModal"> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i> </a></li>
+
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-2x" aria-hidden="true" ></i><span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -183,45 +185,47 @@ if(!isset($_SESSION)){
         </div>
   <div class="jumbotron">
     <div class="container-fluid">
-      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-        <?php   
-          $ppid = $_SESSION["id"];         
-          echo getProfileImage($ppid);      
-        ?>
-      </div>
-      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-        <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive;"> 
-          <?php  
-            date_default_timezone_set("America/Grenada");
-            $hour = date("H");
-            //echo $hour;
-            //$hour = 6;
-            if($hour >= 0 && $hour < 12){
-              if($hour < 6){
-                echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-moonset'></i>";
-              }
-              else if ($hour >=6 && $hour <=7){
-                echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-sunrise'></i>";
-              }
-              else{
-                echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-day-sunny'></i>";
-              }
-              
-            }
-            else if($hour >= 12 && $hour < 18){
-              echo "Good Afternoon, ". $_SESSION["user"]. "! <i class='wi wi-day-sunny'></i>";
-            }
-            else{
-              if($hour == 18){
-                echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-sunset'></i>";
-              }
-              else{
-                echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-night-clear'></i>";
-              }
-              
-            }
+      <div class="row text-center">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+          <?php   
+            $ppid = $_SESSION["id"];         
+            echo getProfileImage($ppid);      
           ?>
-        </h1>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+          <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive;"> 
+            <?php  
+              date_default_timezone_set("America/Grenada");
+              $hour = date("H");
+              //echo $hour;
+              //$hour = 6;
+              if($hour >= 0 && $hour < 12){
+                if($hour < 6){
+                  echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-moonset'></i>";
+                }
+                else if ($hour >=6 && $hour <=7){
+                  echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-sunrise'></i>";
+                }
+                else{
+                  echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-day-sunny'></i>";
+                }
+                
+              }
+              else if($hour >= 12 && $hour < 18){
+                echo "Good Afternoon, ". $_SESSION["user"]. "! <i class='wi wi-day-sunny'></i>";
+              }
+              else{
+                if($hour == 18){
+                  echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-sunset'></i>";
+                }
+                else{
+                  echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-night-clear'></i>";
+                }
+                
+              }
+            ?>
+          </h1>
+        </div>
       </div>
     </div>
   </div>
@@ -240,7 +244,7 @@ if(!isset($_SESSION)){
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h2 class="modal-title" style="text-align: center">Request Details</h2>
+          <h2 class="modal-title text-center">Request <i class="fa fa-envira" aria-hidden="true"></i></h2>
         </div>
         <div class="modal-body">
           <form class="" onsubmit="return sendRequest();">
@@ -284,8 +288,9 @@ if(!isset($_SESSION)){
                 <div class="">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-                    <input class="form-control" id="requestercontact" name="requestercontact" type="tel" required pattern="[868][0-9]{9}"/>
+                    <input class="form-control" id="requestercontact" name="requestercontact" type="text" placeholder="868-123-4567"required pattern="\d{3}[\-]\d{3}[\-]\d{4}"/>
                   </div>
+                  <span class="help-block">Format: 868-123-4567</span>
                 </div>
               </div> 
             <div class="form-group">

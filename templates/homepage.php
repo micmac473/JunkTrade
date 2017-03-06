@@ -9,6 +9,9 @@ include "base.php";
     
 <div class="container-fluid">
   <div class="row">
+    <div class="header text-center">
+        <h1><u>Tradable Items</u> <i class="fa fa-gift" aria-hidden="true" ></i></h1>
+      </div>
     <div id = "itemblock" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
     </div>
   </div>
@@ -18,7 +21,13 @@ include "base.php";
   <table class="table table-hover table-condensed col-xs-3">
     <thead class="thead-inverse">
       <tr>
-        <th>Image</th><th>Name</th><th>Views</th><th>Description</th><th>Trader</th><th>Trade</th><th>Uploaded</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Views</th>
+        <th>Description</th>
+        <th>Trader</th>
+        <th>Trade</th>
+        <th>Uploaded</th>
       </tr>
     </thead>
     <tbody>

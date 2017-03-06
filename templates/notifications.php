@@ -7,9 +7,9 @@ include "base.php";
 <div class ="container-fluid">
   <div class="row">
     <div class ="">
-      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">Incoming Requests</h2>
-    <!--<h4>Products</h4>
-    <p>A table highlighting the available products</p> -->
+      <div class="header text-center">
+        <h1>Incoming Requests <i class="fa fa-envelope-open" aria-hidden="true" ></i></h1>
+      </div>
       <div id="table_secr"></div>
     </div>
   </div>
@@ -74,7 +74,7 @@ include "base.php";
             <fieldset>
 
               <div class="modal-header">
-                <h2 class="modal-title" style="text-align: center">Request Details</h2>
+                <h2 class="modal-title" style="text-align: center">Request Details <i class="fa fa-envira" aria-hidden="true"></i></h2>
              </div>
               <input id="requestid" name="requestid" type="hidden" disabled placeholder="Requested Item" class="form-control input-md">
 
@@ -103,7 +103,7 @@ include "base.php";
                 <div class="">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-                    <input class="form-control" id="requestercontact" name="requestercontact" type="tel" disabled/>
+                    <input class="form-control" id="requestercontact" name="requestercontact" type="text" disabled/>
                   </div>
                 </div>
               </div> 
@@ -119,7 +119,7 @@ include "base.php";
               </div> 
 
               <div class="modal-header">
-                <h2 class="modal-title" style="text-align: center">Meetup Details</h2>
+                <h2 class="modal-title" style="text-align: center">Meetup Details <i class="fa fa-handshake-o" aria-hidden="true"></i></h2>
               </div>
 
               <div class="form-group"> <!-- Date input -->
@@ -155,8 +155,10 @@ include "base.php";
                 <div class="">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-                    <input class="form-control" id="requesteecontact" name="requesteecontact" type="tel" required pattern="[868][0-9]{9}"/>
+                    <input class="form-control" id="requesteecontact" name="requesteecontact" type="tel" placeholder="868-123-4567"required pattern="\d{3}[\-]\d{3}[\-]\d{4}"/>
+                    
                   </div>
+                  <span class="help-block">Format: 868-123-4567</span>
                 </div>
               </div> 
 

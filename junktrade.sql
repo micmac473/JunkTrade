@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 01, 2017 at 02:05 AM
+-- Generation Time: Mar 06, 2017 at 04:06 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -36,16 +36,6 @@ CREATE TABLE `follow` (
   `followdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `followindicator` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-
---
--- Dumping data for table `follow`
---
-
-INSERT INTO `follow` (`followid`, `follower`, `followee`, `followdate`, `followindicator`) VALUES
-(1, 1, 40, '2017-02-25 03:25:23', 1),
-(2, 2, 1, '2017-02-25 13:12:38', 1),
-(3, 1, 39, '2017-02-27 01:55:00', 1),
-(4, 41, 1, '2017-02-28 04:36:36', 1);
 
 -- --------------------------------------------------------
 
@@ -101,54 +91,12 @@ CREATE TABLE `requests` (
   `id` int(11) NOT NULL,
   `requester` int(11) NOT NULL,
   `item2` int(11) NOT NULL,
-  `requestercontact` varchar(10) NOT NULL,
+  `requestercontact` varchar(20) NOT NULL,
   `requestee` int(11) NOT NULL,
   `item` int(10) NOT NULL,
   `decision` tinyint(1) DEFAULT NULL,
   `timerequested` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `requests`
---
-
-INSERT INTO `requests` (`id`, `requester`, `item2`, `requestercontact`, `requestee`, `item`, `decision`, `timerequested`) VALUES
-(11, 39, 29, '', 6, 26, NULL, '2016-11-27 20:05:31'),
-(12, 6, 25, '', 39, 29, NULL, '2016-11-27 20:06:06'),
-(13, 39, 29, '', 1, 27, NULL, '2016-11-27 20:08:12'),
-(15, 1, 27, '', 6, 25, NULL, '2016-11-27 21:34:00'),
-(19, 6, 26, '', 39, 29, NULL, '2016-11-27 22:30:01'),
-(20, 39, 29, '', 40, 30, NULL, '2016-11-27 22:57:45'),
-(21, 40, 38, '', 39, 29, NULL, '2016-11-27 23:01:42'),
-(26, 40, 2, '', 1, 1, NULL, '2016-11-30 18:56:48'),
-(27, 40, 2, '', 40, 30, NULL, '2016-11-30 19:07:56'),
-(28, 40, 30, '', 1, 34, NULL, '2016-11-30 19:08:16'),
-(31, 6, 25, '', 1, 27, NULL, '2016-11-30 20:05:31'),
-(32, 6, 4, '', 9, 29, NULL, '2016-11-30 20:09:49'),
-(33, 1, 27, '', 6, 26, NULL, '2016-11-30 20:42:55'),
-(34, 1, 1, '', 6, 26, NULL, '2016-11-30 20:44:16'),
-(35, 6, 26, '', 1, 36, NULL, '2016-11-30 20:47:58'),
-(36, 6, 25, '', 2, 3, NULL, '2016-11-30 20:48:55'),
-(37, 6, 4, '', 1, 42, NULL, '2016-12-01 15:10:50'),
-(38, 1, 44, '', 40, 39, 0, '2016-12-02 00:34:22'),
-(39, 40, 38, '', 1, 45, NULL, '2016-12-02 00:36:54'),
-(40, 40, 30, '', 1, 46, NULL, '2016-12-02 00:39:27'),
-(41, 1, 34, '', 40, 30, NULL, '2017-02-19 01:23:09'),
-(42, 2, 3, '', 1, 46, NULL, '2017-02-20 23:57:47'),
-(43, 40, 30, '', 1, 46, 1, '2017-02-22 09:22:58'),
-(44, 1, 45, '', 40, 39, 0, '2017-02-22 11:08:12'),
-(45, 1, 42, '', 40, 39, 1, '2017-02-22 15:28:26'),
-(46, 40, 38, '', 1, 44, NULL, '2017-02-22 15:38:07'),
-(47, 2, 3, '', 1, 36, 1, '2017-02-22 15:43:38'),
-(48, 2, 3, '', 1, 46, 1, '2017-02-22 16:10:20'),
-(49, 1, 45, '', 40, 39, 0, '2017-02-25 13:39:31'),
-(50, 1, 45, '8681234567', 40, 39, 1, '2017-02-25 14:03:57'),
-(51, 40, 38, '8681234567', 1, 44, 1, '2017-02-25 14:30:10'),
-(52, 1, 42, '8681234567', 9, 29, NULL, '2017-02-26 14:54:03'),
-(56, 1, 44, '8681234567', 40, 39, 1, '2017-02-26 15:46:22'),
-(58, 1, 27, '8681234567', 40, 38, NULL, '2017-02-27 12:02:50'),
-(60, 41, 47, '8689999999', 1, 44, 1, '2017-02-28 04:39:25'),
-(61, 1, 42, '8681234567', 40, 39, NULL, '2017-02-28 05:06:47');
 
 -- --------------------------------------------------------
 
@@ -165,16 +113,6 @@ CREATE TABLE `saved` (
   `saveddate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `savedindicator` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `saved`
---
-
-INSERT INTO `saved` (`savedid`, `itemid`, `userid`, `itemowner`, `saveddate`, `savedindicator`) VALUES
-(1, 38, 1, 40, '2017-02-25 03:25:48', 1),
-(2, 39, 1, 40, '2017-02-25 14:33:33', 1),
-(3, 30, 1, 40, '2017-02-25 21:27:52', 1),
-(4, 44, 41, 1, '2017-02-28 04:41:19', 1);
 
 -- --------------------------------------------------------
 
@@ -194,23 +132,11 @@ CREATE TABLE `trade` (
   `requesteecontact` varchar(20) NOT NULL,
   `requesterfeedbackrating` int(11) NOT NULL,
   `requesterfeedbackcomment` varchar(1000) NOT NULL,
+  `requesterfeedbackindicator` tinyint(1) NOT NULL DEFAULT '0',
   `requesteefeedbackrating` int(11) NOT NULL,
-  `requesteefeedbackcomment` varchar(1000) NOT NULL
+  `requesteefeedbackcomment` varchar(1000) NOT NULL,
+  `requesteefeedbackindicator` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `trade`
---
-
-INSERT INTO `trade` (`tradeid`, `requestid`, `tradedate`, `tradelocation`, `suggestedlocation`, `locationdecision`, `requestercontact`, `requesteecontact`, `requesterfeedbackrating`, `requesterfeedbackcomment`, `requesteefeedbackrating`, `requesteefeedbackcomment`) VALUES
-(1, 48, '02/26/2017', 'DAAGA', '', 0, '', '8683781527', 0, '', 0, ''),
-(2, 47, '02/09/2017', 'Student Admin', '', 0, '', '8683781527', 0, '', 0, ''),
-(3, 50, '02/27/2017', 'JFK Quadrangle', '', 0, '8681234567', '8683781527', 5, 'Good!', 5, 'Mickel is kinda cool'),
-(4, 45, '02/23/2017', 'JFK Quadrangle', '', 0, '', '8683781527', 0, '', 0, ''),
-(5, 43, '03/02/2017', 'Bookstore', '', 0, '', '8683781527', 0, '', 0, ''),
-(6, 51, '03/04/2017', 'LRC Greens', '', 0, '8681234567', '8683781527', 0, '', 0, ''),
-(7, 56, '02/28/2017', 'DAAGA', '', 0, '8681234567', '8683781527', 0, '', 0, ''),
-(8, 60, '03/01/2017', 'Food Court', '', 0, '8689999999', '8681111111', 0, '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -228,7 +154,7 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `sQuestion` varchar(100) NOT NULL,
   `sAnswer` varchar(100) NOT NULL,
-  `profilepicture` varchar(1000) NOT NULL DEFAULT '../img/defaultPP.jpg'
+  `profilepicture` varchar(1000) DEFAULT '../img/defaultPP.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -236,18 +162,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `password`, `sQuestion`, `sAnswer`, `profilepicture`) VALUES
-(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@email.com', '6918950f89321712a8641620423d8c7d25951c0c', '', '', '../img/defaultPP.jpg'),
-(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '16331e4442209ff309047eaec83430646490f038', '', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8', ''),
-(6, 'jamtart', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '0942897430e12d98c4acafc63d50b91fda44ca38', '', '', ''),
-(7, 'fesean', 'Shamar', 'Culzuc', 'shamarculzac@email.com', '825cce7a7af23134328ca7a872a142337e0a07fc', '', '', ''),
-(8, 'pinky', 'Justin', 'Cadougan', 'justincadougan@email.com', 'f1412f80e25ec11bef07414c2cfa8c84ce3fdf23', '', '', ''),
-(9, 'kyledef', 'Kyle', 'DeFreitas', 'kyledefreitas@email.com', '7103a38d7b345ad9dc1e25dd3b7dd606f84d2c0c', '', '', ''),
-(10, 'shiva', 'Shiva', 'Ramoudith', 'shiveramoudith@email.com', '848b186485107266a3807096d328690f86a22c05', '', '', ''),
-(34, 'franny', 'Francis', 'Darius', 'francis@email.com', '63ab89682d9a027b1f5c91f6b0ed347ef7dc9ac7', '', '', ''),
-(38, 'kieu', 'Duc', 'Kieu', 'kieu@email.com', '2c27c22226e3fc5c109ebb4cbc4c972e02bce8f8', '', '', ''),
-(39, 'kyledef', 'Kyle', 'De Freitas', 'kyle@email.com', '6233de5df38c206a8bde5ae6f8be9c6949740c1f', '', '', ''),
-(40, 'rastaman', 'Kadem', 'McGillivary', 'rasta@email.com', 'f9c897117a284ec37d408472be98de935b93f83f', '', '', '../img/download.jpe'),
-(41, 'skittles', 'Keniesha', 'McMillan', 'skittes@gmail.com', '505643a37d5f86a3cff95f25bcdba5d577d60111', 'food', '99d5f862e5d60ade36f34cd26d0424f2badc71b6', '');
+(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@email.com', '6918950f89321712a8641620423d8c7d25951c0c', '', '', NULL),
+(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '16331e4442209ff309047eaec83430646490f038', '', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8', NULL),
+(6, 'jamtart', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '0942897430e12d98c4acafc63d50b91fda44ca38', '', '', NULL),
+(39, 'kyledef', 'Kyle', 'De Freitas', 'kyle@email.com', '6233de5df38c206a8bde5ae6f8be9c6949740c1f', '', '', NULL),
+(40, 'rastaman', 'Kadem', 'McGillivary', 'rasta@email.com', 'f9c897117a284ec37d408472be98de935b93f83f', '', '', NULL),
+(41, 'skittles', 'Keniesha', 'McMillan', 'skittes@gmail.com', '505643a37d5f86a3cff95f25bcdba5d577d60111', 'food', '99d5f862e5d60ade36f34cd26d0424f2badc71b6', NULL);
 
 --
 -- Indexes for dumped tables
@@ -297,7 +217,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `follow`
 --
 ALTER TABLE `follow`
-  MODIFY `followid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `followid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `items`
 --
@@ -307,17 +227,17 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `saved`
 --
 ALTER TABLE `saved`
-  MODIFY `savedid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `savedid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `trade`
 --
 ALTER TABLE `trade`
-  MODIFY `tradeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `tradeid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --

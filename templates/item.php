@@ -13,6 +13,8 @@ if(isset($_GET['item'])){
     $itemRequest = getItemRequestForCurrentUser($itemId);
     //var_dump($savedItem);
 	//var_dump($username);
+    //var_dump($itemRequest);
+
 }
 ?>
 
@@ -22,24 +24,40 @@ if(isset($_GET['item'])){
     echo "<div class='col-lg-4'>
   			<img src=\"" . $itemDetails['picture'] . "\"  style='width:100%; class='img-responsive img-thumbnail mx-auto'>
   		</div>";
+
   	echo "<div class='col-lg-5' style='border:1px solid #cecece;'>
         <h1><u>" . $itemDetails['itemname'] . "</u></h1>
   			<strong> Owned by </strong> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile(".$itemDetails['userid'].")\"><i class='fa fa-user' aria-hidden='true'></i> " . $username['username'] . "</button> 
         <p> <strong> Uploaded on </strong>" . $itemDetails['uploaddate'] . "</p>
   			<h3> <u> Description </u> </h3>" . $itemDetails['itemdescription'] . "</div>";
+
     echo "<div class='col-lg-3'>";
+    //var_dump($itemRequest['decision']);
+    //var_dump($itemRequest);
     if($itemRequest == null){
         echo "<button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button>";
+        //echo "No request!";
     }
     else{
-        echo "<button type='button' class='btn btn-danger btn-block' onclick=\"cancelMadeRequest(".$itemRequest['id'].")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button>";
+        if($itemRequest['decision'] == true){
+            echo "<button type='button' class='btn btn-default btn-block disabled'><i class='fa fa-check fa-lg' aria-hidden='true'></i> Request Accepted</button>";
+        }
+        else if( $itemRequest['decision'] == null){
+            echo "<button type='button' class='btn btn-danger btn-block' onclick=\"cancelMadeRequest(".$itemRequest['id'].")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button>";
+        }
+        else{
+            
+            echo "<button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button>";
+        }
+        
+        //echo "Request pending!";
     }
     
     if($savedItem == null || $savedItem['savedindicator'] == false){
-      echo "<button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-bookmark fa-lg' aria-hidden='true'></i> Save</button>";
+      echo "<button type='button' class='btn btn-primary btn-block' onclick=\"addToSavedItems(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-bookmark fa-lg' aria-hidden='true'></i> Save</button>";
     }
     else{
-      echo "<button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem(".$savedItem['savedid'].")\" id='requestbtn'><i class='fa fa-minus fa-lg' aria-hidden='true'></i> Unsave</button>";
+      echo "<button type='button' class='btn btn-warning btn-block' onclick=\"removeSavedItem(".$savedItem['savedid'].")\" id='requestbtn'><i class='fa fa-minus fa-lg' aria-hidden='true'></i> Unsave</button>";
     }
     
     echo "</div>";

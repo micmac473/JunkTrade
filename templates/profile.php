@@ -241,23 +241,13 @@ include "base.php";
         </form>
     </div>
   </div>
-  <!-- this is a table which will list the pictures of the items which the user has uploaded, only the headings will be here-->
-
-    <!--there should be a footer here -->
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<!--<script src="js/ie10-viewport-bug-workaround.js"></script> -->
-<!--
-<script src="js/jquery/dist/jquery.js"></script>
-<script src="js/angular/angular.min.js"></script>
-<script src="js/angular-route/angular-route.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<script src="js/main.js"></script> -->
+  
   <div class="row">
     <div class="table-responsive">
-      <h2 style="text-align: center; font-family: 'Acme', sans-serif; color:orange">My Junk</h2>
-    <!--<h4>Products</h4>
-    <p>A table highlighting the available products</p> -->
+      <div class="header text-center">
+        <h1> Your Junk <i class="fa fa-gift" aria-hidden="true" ></i> </h1>
+      </div>
+
       <div id="table_secp"></div>
     </div>
   </div>
@@ -267,7 +257,12 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
     <tr>
-      <th> </th><th>Name</th><th>Description</th><th>Options</th><th>Uploaded</th>
+      <th>Primary Image</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Edit</th>
+      <th>Remove</th>
+      <th>Uploaded</th>
     </tr>
     </thead>
     <tbody>
