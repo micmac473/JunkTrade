@@ -251,7 +251,7 @@ function listAllItems(records, user){
                     }   
 
                     else {
-                        itemdiv += "<div class='col-lg-4'>"
+                        itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
                         itemdiv += "<div class='panel panel-default'>";
 
                         itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
@@ -1144,11 +1144,11 @@ function processRequestedMeetUp(records, records2){
         // do get request with request id to get my item and contact
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
-        htmlStr += "<td>"+el['requesteecontact']+"</td>"
+        htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requesteecontact']+"</td>"
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el['item']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
-        htmlStr += "<td>"+records2[i]['itemname']+"</td>";
-        htmlStr += "<td>" + el['tradedate'] + "</td>";
-        htmlStr += "<td>" + el['tradelocation'] + "</td>";
+        htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i> "+records2[i]['itemname']+"</td>";
+        htmlStr += "<td> <i class='fa fa-calendar' aria-hidden='true'></i> " + el['tradedate'] + "</td>";
+        htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i> " + el['tradelocation'] + "</td>";
         //htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
         htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
         htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
@@ -1182,16 +1182,16 @@ function processRequestsMeetUp(records, records2){
 
     records2.forEach(function(el){
         // do get request with request id to get my item and contact
-        htmlStr += "<tr>";
+        htmlStr += "<tr class='text-center'>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
-        htmlStr += "<td>"+el['requestercontact']+"</td>"
+        htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requestercontact']+"</td>"
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el['item2']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
-        htmlStr += "<td>"+records[i]['itemname']+"</td>";
-        htmlStr += "<td>" + el['tradedate'] + "</td>";
-        htmlStr += "<td>" + el['tradelocation'] + "</td>";
+        htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>  "+records[i]['itemname']+"</td>";
+        htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i>  " + el['tradedate'] + "</td>";
+        htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i>  " + el['tradelocation'] + "</td>";
         htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
         htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
-        htmlStr +=" </tr>" ;
+        htmlStr +="</tr>" ;
         i++;
     });
     //count = $("#mylist li").size();
