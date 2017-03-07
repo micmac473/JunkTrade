@@ -15,7 +15,7 @@ if(isset($_GET['item'])){
     //var_dump($savedItem);
 	//var_dump($username);
     //var_dump($itemRequest);
-    print_r($itemImages);
+    //print_r($itemImages);
 
 }
 ?>
@@ -23,17 +23,63 @@ if(isset($_GET['item'])){
 <div class ="container-fluid">
   <div class="row">
   <?php
-    echo "<div class='col-lg-4'>
-  			<img src=\"" . $itemDetails['picture'] . "\"  style='width:100%;' class='img-responsive img-thumbnail mx-auto'>
-  		</div>";
+    echo "<div class='col-lg-1'>
+            <div id='slider-thumbs'>
+                <ul class='hide-bullets'>
+                    <li>
+                        <a class='thumbnail' id='carousel-selector-0'>
+                            <img src=\"" . $itemImages['picture'] . "\">
+                        </a>
+                    </li>
+                    <li>
+                        <a class='thumbnail' id='carousel-selector-1'>
+                            <img src=\"" . $itemImages['picture2'] . "\">
+                        </a>
+                    </li>
 
-  	echo "<div class='col-lg-5' style='border:1px solid #cecece;'>
+                    <li>
+                        <a class='thumbnail' id='carousel-selector-2'>
+                            <img src=\"" . $itemImages['picture3'] . "\">
+                        </a>
+                    </li>
+                </ul>
+           </div>
+        </div>";
+
+    echo "<div class='col-lg-5' id='slider'>
+            <div class='row'>
+                <div class='col-sm-12' id='carousel-bounding-box'>
+                    <div class='carousel slide' id='myCarousel'>
+                        <div class='carousel-inner'>
+                            <div class='active item' data-slide-number='0'>
+                                <img src=\"" . $itemImages['picture'] . "\"  style='width:100%; class='img-responsive img-thumbnail mx-auto'>
+                            </div>
+                            <div class='item' data-slide-number='1'>           
+                                <img src=\"" . $itemImages['picture'] . "\">
+                            </div>
+                            <div class='item' data-slide-number='2'>        
+                                <img src=\"" . $itemImages['picture'] . "\">
+                            </div>
+                        </div>
+                        <!-- Carousel nav -->
+                        <a class='left carousel-control' href='#myCarousel' role='button' data-slide='prev'>
+                            <span class='glyphicon glyphicon-chevron-left'></span>
+                        </a>
+                        <a class='right carousel-control' href='#myCarousel' role='button' data-slide='next'>
+                            <span class='glyphicon glyphicon-chevron-right'></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>";
+
+  	echo "<div class='col-lg-4' style='border:1px solid #cecece;'>
         <h1><u>" . $itemDetails['itemname'] . "</u></h1>
   			<strong> Owned by </strong> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile(".$itemDetails['userid'].")\"><i class='fa fa-user' aria-hidden='true'></i> " . $username['username'] . "</button> 
         <p> <strong> Uploaded on </strong>" . $itemDetails['uploaddate'] . "</p>
   			<h3> <u> Description </u> </h3>" . $itemDetails['itemdescription'] . "</div>";
 
-    echo "<div class='col-lg-3'>";
+    echo "<div class='col-lg-2'>";
     //var_dump($itemRequest['decision']);
     //var_dump($itemRequest);
     if($itemRequest == null){
@@ -68,85 +114,12 @@ if(isset($_GET['item'])){
   </div>
 </div>
 
-<div class="container-fluid">
-    <div id="main_area">
-        <!-- Slider -->
-        <div class="row">
-            <div class="col-sm-6" id="slider-thumbs">
-                <!-- Bottom switcher of slider -->
-                <ul class="hide-bullets">
-                    <li class="col-sm-3">
-                        <a class="thumbnail" id="carousel-selector-0">
-                            <?php
-                            echo "<img src=\"" . $itemImages['picture'] . "\">";
-                            ?>
-                        </a>
-                    </li>
-
-                    <li class="col-sm-3">
-                        <a class="thumbnail" id="carousel-selector-1">
-                            <?php
-                            echo "<img src=\"" . $itemImages['picture2'] . "\">";
-                            ?>
-                        </a>
-                    </li>
-
-                    <li class="col-sm-3">
-                        <a class="thumbnail" id="carousel-selector-2">
-                            <?php
-                            echo "<img src=\"" . $itemImages['picture3'] . "\">";
-                            ?>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-6">
-                <div class="col-xs-12" id="slider">
-                    <!-- Top part of the slider -->
-                    <div class="row">
-                        <div class="col-sm-12" id="carousel-bounding-box">
-                            <div class="carousel slide" id="myCarousel">
-                                <!-- Carousel items -->
-                                <div class="carousel-inner">
-                                    <div class="active item" data-slide-number="0">
-                                        <?php
-                            echo "<img src=\"" . $itemImages['picture'] . "\"  style='width:100%; class='img-responsive img-thumbnail mx-auto'>";
-                            ?></div>
-
-                                    <div class="item" data-slide-number="1">
-                                        <?php
-                            echo "<img src=\"" . $itemImages['picture2'] . "\">";
-                            ?></div>
-
-                                    <div class="item" data-slide-number="2">
-                                        <?php
-                            echo "<img src=\"" . $itemImages['picture3'] . "\">";
-                            ?></div>
-
-                                </div>
-                                <!-- Carousel nav -->
-                                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                </a>
-                                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--/Slider-->
-        </div>
-
-    </div>
-</div>
 
 <script>
 $(document).ready(function(){
 
   $('#myCarousel').carousel({
-                interval: 3000
+                interval: 5000
         });
  
         //Handles the carousel thumbnails

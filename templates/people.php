@@ -7,7 +7,7 @@ include "base.php";
 <div class ="container-fluid">
   <div class ="row">
     <div class="header text-center">
-      <h1>Following <i class="fa fa-rss" aria-hidden="true" ></i></h1>
+      <h1>Following <i class="fa fa-rss fa-lg" aria-hidden="true" ></i></h1>
     </div>
     <div class="col-xs-12 table-responsive">
     <!--<h4>Products</h4>
@@ -17,7 +17,7 @@ include "base.php";
   </div>
   <div class ="row">
     <div class="header text-center">
-      <h1>Followers <i class="fa fa-rss-square" aria-hidden="true" ></i></h1>
+      <h1>Followers <i class="fa fa-rss-square fa-lg" aria-hidden="true" ></i></h1>
     </div>
     <div class="col-xs-12 table-responsive">
     <!--<h4>Products</h4>
@@ -33,7 +33,7 @@ include "base.php";
     <tr>
       <th>Trader</th>
       <th>Date Followed</th>
-      <th>Unfollow</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>

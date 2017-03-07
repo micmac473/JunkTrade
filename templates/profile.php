@@ -152,9 +152,23 @@ include "base.php";
           <legend style="text-align:center">Upload a New Item</legend>
             <!-- File Button --> 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Choose an Image </label>
+              <label class="col-md-4 control-label" for="uppic">Choose primary image </label>
               <div class="col-md-6">
                 <input name="image" class="input-file" id="image" type="file" accept="image/*" required="">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="uppic">Choose second image </label>
+              <div class="col-md-6">
+                <input name="image2" class="input-file" id="image" type="file" accept="image/*" required="">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="uppic">Choose third image </label>
+              <div class="col-md-6">
+                <input name="image3" class="input-file" id="image" type="file" accept="image/*" required="">
               </div>
             </div>
 
@@ -245,7 +259,7 @@ include "base.php";
   <div class="row">
     <div class="table-responsive">
       <div class="header text-center">
-        <h1> Your Junk <i class="fa fa-gift" aria-hidden="true" ></i> </h1>
+        <h1> Your Junk <i class="fa fa-gift fa-lg" aria-hidden="true" ></i> </h1>
       </div>
 
       <div id="table_secp"></div>

@@ -6,7 +6,7 @@ include "base.php";
 
 <div class ="container-fluid">
   <div class="header text-center">
-    <h1> Saved Items <i class="fa fa-bookmark" aria-hidden="true" ></i> </h1>
+    <h1> Saved Items <i class="fa fa-bookmark fa-lg" aria-hidden="true" ></i> </h1>
   </div>
   <div class ="row">
     <div class="col-xs-12 table-responsive">
@@ -24,7 +24,7 @@ include "base.php";
       <th>Item</th>
       <th>Owner</th>
       <th>Date Saved</th>
-      <th>Unsave</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>

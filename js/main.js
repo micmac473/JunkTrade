@@ -236,7 +236,7 @@ function processAllItems(records){
 }
 
 function listAllItems(records, user){
-    var itemdiv = "<div>";
+    var itemdiv="<div>";
     var requests, i;
     $.get("../index.php/nonuseritemsrequests", function(res){
         requests = res;
@@ -251,6 +251,7 @@ function listAllItems(records, user){
                     }   
 
                     else {
+                        itemdiv += "<div class='col-lg-4'>"
                         itemdiv += "<div class='panel panel-default'>";
 
                         itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
@@ -258,16 +259,18 @@ function listAllItems(records, user){
                         itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
 
                         if(requests[i]['requester'] == user && requests[i]['decision'] == null){
-                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-10 col-xs-offset-1'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
+                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
                             console.log("Request Pending for "+ el['itemname']);
                         }
 
                         else{
-                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-10 col-xs-offset-1'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
+                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
                         }
                 
                         //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
                         itemdiv += "</div>";
+                        itemdiv += "</div>";
+
                         break;
                     }
                 }
@@ -275,6 +278,7 @@ function listAllItems(records, user){
             }
 
             if(i == requests.length){
+                itemdiv += "<div class='col-lg-4'>"
                 itemdiv += "<div class='panel panel-default'>";
                 itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
 
@@ -285,6 +289,7 @@ function listAllItems(records, user){
                 
                 //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
                 //itemdiv += "<div class='col-lg-6'> <button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems("+el['itemid']+")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button></div></div></div>"
+                itemdiv += "</div>";
                 itemdiv += "</div>";
             }
             /*var requested = false;
@@ -312,6 +317,7 @@ function listAllItems(records, user){
             itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
             itemdiv += "</div>"; */
         });
+        itemdiv += "</div>";
         $("#itemblock").html(itemdiv);
         //htmlStr += "</tbody></table>";
         //$(sec_id).html(htmlStr);
@@ -494,7 +500,7 @@ function processUserSavedItems(records){
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ el['saveddate'] +"</td>";      
-        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-minus fa-lg' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-minus fa-lg' aria-hidden='true'></i> Unsave</button></td>";
         htmlStr +=" </tr>" ;
     });
 
@@ -567,7 +573,7 @@ function processUserFollowees(records){
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.followee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ el['followdate'] +"</td>";      
-        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"unfollowTrader("+el.followee+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"unfollowTrader("+el.followee+")\"><i class='fa fa-trash' aria-hidden='true'></i> Unfollow</button></td>";
         htmlStr +=" </tr>" ;
     });
 
