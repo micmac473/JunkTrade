@@ -183,7 +183,7 @@ function removeFollowee($followee){
 
 function saveRequesterFeedback($tradeId, $rating, $comment){
 	$db = getDBConnection();
-	$sql = "UPDATE `trade` t SET `requesterfeedbackrating` = '$rating', `requesterfeedbackcomment` = '$comment' WHERE `tradeid` = $tradeId;";
+	$sql = "UPDATE `trade` t SET `requesterfeedbackrating` = '$rating', `requesterfeedbackcomment` = '$comment', `requesterfeedbackindicator` = true WHERE `tradeid` = $tradeId;";
 	$res = null;
 	if ($db != NULL){
 		$res = $db->query($sql);
@@ -194,7 +194,7 @@ function saveRequesterFeedback($tradeId, $rating, $comment){
 
 function saveRequesteeFeedback($tradeId, $rating, $comment){
 	$db = getDBConnection();
-	$sql = "UPDATE `trade` t SET `requesteefeedbackrating` = '$rating', `requesteefeedbackcomment` = '$comment' WHERE `tradeid` = $tradeId;";
+	$sql = "UPDATE `trade` t SET `requesteefeedbackrating` = '$rating', `requesteefeedbackcomment` = '$comment', `requesteefeedbackindicator` = true WHERE `tradeid` = $tradeId;";
 	$res = null;
 	if ($db != NULL){
 		$res = $db->query($sql);
@@ -235,7 +235,7 @@ function saveTradeArrangement($requestId, $tradeDate, $tradeLocation, $requestee
 
 function getRequestedMeetupRequestee(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `requests` r, `trade` t, `users` u, `items` i where r.id = t.requestid and r.requestee = u.id and r.item = i.itemid and r.requester = '$userid';";
+	$sql = "SELECT * FROM `requests` r, `trade` t, `users` u, `items` i where r.id = t.requestid and r.requestee = u.id and r.item = i.itemid and r.requester = '$userid' AND t.requesterfeedbackindicator = false;";
 	$items =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -250,7 +250,7 @@ function getRequestedMeetupRequestee(){
 
 function getRequestedMeetupRequester(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT `itemname` FROM `requests` r, `trade` t, `users` u, `items` i where r.requester = '$userid' and r.id = t.requestid and r.item2 = i.itemid and r.requester = u.id;";
+	$sql = "SELECT `itemname` FROM `requests` r, `trade` t, `users` u, `items` i where r.requester = '$userid' and r.id = t.requestid and r.item2 = i.itemid and r.requester = u.id ;";
 	$items =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -265,7 +265,7 @@ function getRequestedMeetupRequester(){
 
 function getRequestsMeetupRequestee(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `requests` r, `trade` t, `items` i, `users` u where r.requestee = '$userid' and r.id = t.requestid and r.item = i.itemid and r.requestee = u.id;";
+	$sql = "SELECT * FROM `requests` r, `trade` t, `items` i, `users` u where r.requestee = '$userid' and r.id = t.requestid and r.item = i.itemid and r.requestee = u.id ;";
 	$items =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -280,7 +280,7 @@ function getRequestsMeetupRequestee(){
 
 function getRequestsMeetupRequester(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `requests` r, `trade` t, `items` i, `users` u where r.requestee = '$userid' and r.id = t.requestid and r.item2 = i.itemid and r.requester = u.id;";
+	$sql = "SELECT * FROM `requests` r, `trade` t, `items` i, `users` u where r.requestee = '$userid' and r.id = t.requestid and r.item2 = i.itemid and r.requester = u.id AND t.requesteefeedbackindicator = false;";
 	$items =[];
 	$db = getDBConnection();
 		if ($db != NULL){

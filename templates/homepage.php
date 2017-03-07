@@ -11,7 +11,7 @@ include "base.php";
   <div class="row">
     <div class="header text-center">
         <h1><u>Tradable Items</u> <i class="fa fa-gift fa-lg" aria-hidden="true" ></i></h1>
-      </div>
+    </div>
     <!-- <div id = "itemblock" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12"> -->
     <div id = "itemblock">
     </div>
