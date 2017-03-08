@@ -238,25 +238,27 @@ function processAllItems(records){
 function listAllItems(records, user){
     var itemdiv="<div>";
     var requests, i;
-    $.get("../index.php/nonuseritemsrequests", function(res){
+    $.get("../index.php/allnonuseritemsstate", function(res){
         requests = res;
         console.log(requests);
-
+        //$.get("../index.php/requesteritemsstate", function(res){
+            //console.log(res);
+        
         records.forEach(function(el){
             for(i = 0; i < requests.length; i++){
-                if(requests[i]['item'] == el['itemid']){
+                if(requests[i]['item'] == el['itemid'] || requests[i]['item2'] == el['itemid']){
                     if(requests[i]['decision'] == true){
+                        //console.log("Decision for "+el['itemname'] + ": "+requests[i]['decision']);
                         console.log("Request Accepted for "+el['itemname']);
                         break;
-                    }   
-
+                    }  
                     else {
                         itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
                         itemdiv += "<div class='panel panel-default'>";
 
                         itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
 
-                        itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%; height:300px;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+                        itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
 
                         if(requests[i]['requester'] == user && requests[i]['decision'] == null){
                             itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
@@ -265,6 +267,7 @@ function listAllItems(records, user){
 
                         else{
                             itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
+                            console.log(el['itemname']+ " is avaialable");
                         }
                 
                         //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
@@ -282,7 +285,7 @@ function listAllItems(records, user){
                 itemdiv += "<div class='panel panel-default'>";
                 itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
 
-                itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;height:300px;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+                itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
             
 
                 itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12 col-xs-offset-0'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
@@ -291,6 +294,7 @@ function listAllItems(records, user){
                 //itemdiv += "<div class='col-lg-6'> <button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems("+el['itemid']+")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button></div></div></div>"
                 itemdiv += "</div>";
                 itemdiv += "</div>";
+                console.log(el['itemname']+ " is avaialable");
             }
             /*var requested = false;
             itemdiv += "<div class='panel panel-default'>";
@@ -317,10 +321,12 @@ function listAllItems(records, user){
             itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
             itemdiv += "</div>"; */
         });
+
         itemdiv += "</div>";
         $("#itemblock").html(itemdiv);
         //htmlStr += "</tbody></table>";
         //$(sec_id).html(htmlStr);
+    //},"json");
     },"json");
 
     
@@ -340,24 +346,66 @@ function processUserItems(records){
 }
 
 function listUserItems(records){
-    var key;
+    var i;
     var sec_id = "#table_secp";
     var htmlStr = $("#table_headingp").html(); //Includes all the table, thead and tbody declarations
+    $.get("../index.php/accepteduseritems", function(res){
+        console.log(res);
+        records.forEach(function(el){
+            for(i = 0; i < res.length; i++){
+                if(res[i]['item'] == el['itemid'] || res[i]['item2']==el['itemid']){
+                    if(res[i]['decision'] == true){
+                        htmlStr += "<tr>";
+                        htmlStr += "<td style='display:none;'>"+ el['itemid'] +"</td>";
+                        htmlStr += "<td><img src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
+                        htmlStr += "<td>"+ el['itemname'] +"</td>";
+                        htmlStr += "<td>"+ el['itemdescription'] +"</td>";
+                        
+                        htmlStr += "<td><button type='button' class='btn btn-primary disabled'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
+                        htmlStr += "<td><button type='button' class='btn btn-danger disabled'><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
+                        htmlStr += "<td>" + el['uploaddate'] + "</td>";
+                        htmlStr += "<td> Traded </td>";
 
-    records.forEach(function(el){
-        htmlStr += "<tr>";
-        htmlStr += "<td style='display:none;'>"+ el['itemid'] +"</td>";
-        htmlStr += "<td><img src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
-        htmlStr += "<td>"+ el['itemname'] +"</td>";
-        htmlStr += "<td>"+ el['itemdescription'] +"</td>";
-        htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td>" + el['uploaddate'] + "</td>";
-        htmlStr +=" </tr>" ;
-    });
+                        htmlStr +=" </tr>" ;
+                        break;
+                    }
+                    else{
+                        htmlStr += "<tr>";
+                        htmlStr += "<td style='display:none;'>"+ el['itemid'] +"</td>";
+                        htmlStr += "<td><img src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
+                        htmlStr += "<td>"+ el['itemname'] +"</td>";
+                        htmlStr += "<td>"+ el['itemdescription'] +"</td>";
+                    
+                        htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
+                        htmlStr += "<td><button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
+                        htmlStr += "<td>" + el['uploaddate'] + "</td>";
+                        htmlStr += "<td> Available </td>";
+                        htmlStr +=" </tr>" ;
+                        break;
+                    }
+                    
+                }
+            }
+            if(i==res.length){
+                htmlStr += "<tr>";
+                htmlStr += "<td style='display:none;'>"+ el['itemid'] +"</td>";
+                htmlStr += "<td><img src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
+                htmlStr += "<td>"+ el['itemname'] +"</td>";
+                htmlStr += "<td>"+ el['itemdescription'] +"</td>";
+                    
+                htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
+                htmlStr += "<td><button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
+                htmlStr += "<td>" + el['uploaddate'] + "</td>";
+                htmlStr += "<td> Available </td>";
+                htmlStr +=" </tr>" ;
+            }
+        });
+        htmlStr += "</tbody></table>";
+        $(sec_id).html(htmlStr);
+    },"json");
+    
     //count = $("#mylist li").size();
-    htmlStr += "</tbody></table>";
-    $(sec_id).html(htmlStr);
+    
 } 
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -827,12 +875,29 @@ function displayItemsForRequest(itemid){
 
 function displayInModal(records, itemid){
     if ($("#requesteritem").length > 0){ // the country select is available so we can display all countries
-        var htmlStr;
-        records.forEach(function(item){
-            htmlStr += "<option value='"+item.itemid+"'>"+item.itemname+"</option>";
-        });
+        $.get("../index.php/accepteduseritems", function(res){
+            console.log(res);
         
-        $("#requesteritem").html(htmlStr);
+            var htmlStr, i;
+            records.forEach(function(item){
+                for(i = 0; i < res.length; i++){
+                    if(res[i]['item'] == item.itemid || res[i]['item2'] == item.itemid){
+                        if(res[i]['decision'] == true){
+                            break;
+                        }
+                        else{
+                            htmlStr += "<option value='"+item.itemid+"'>"+item.itemname+"</option>";
+                            break;
+                        }
+                    }
+                }
+                if(i == res.length){
+                    htmlStr += "<option value='"+item.itemid+"'>"+item.itemname+"</option>";
+                }
+            });
+            
+            $("#requesteritem").html(htmlStr);
+        },"json");
     } 
     $.get("../index.php/owner/"+itemid, function(res){
         //console.log(res);

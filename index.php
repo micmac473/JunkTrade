@@ -90,12 +90,8 @@ $app->get("/userrequests", function(Request $request, Response $response){
 	return $response;
 });
 
-$app->get("/nonuseritemsrequests", function(Request $request, Response $response){
-	$items = getAllNonUserItemRequests();
-	
-	$response = $response->withJson($items);
-	return $response;
-});
+
+
 
 
 $app->get("/requests", function(Request $request, Response $response){
@@ -332,6 +328,21 @@ $app->get("/requesteritem", function(Request $request, Response $response){
 	return $response;
 });
 
+
+
+$app->get("/accepteduseritems", function(Request $request, Response $response){
+	
+	$items = getAcceptedUserItems();
+	$response = $response->withJson($items);
+	return $response;
+});
+
+$app->get("/allnonuseritemsstate", function(Request $request, Response $response){
+	$items = getAllNonUserItemsState();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
 
 // Testing the function that checks if an item has been saved already
 $app->get("/checkitemsaved/{id}", function(Request $request, Response $response){

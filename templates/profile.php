@@ -143,66 +143,7 @@ include "base.php";
     </div>
   </div>
 
-  <!-- Add Item -->
-  <div class ="row" style ="display:none" id ="uploadItem">
-    <div class ="col-md-6">
-      <form class="form-horizontal" action ="profile.php" enctype="multipart/form-data" method ="POST">
-      <!-- <form class="form-horizontal" action ="index.php/additem" enctype="multipart/form-data" method ="POST" onsubmit="return addItem();"> -->
-        <fieldset>
-          <legend style="text-align:center">Upload a New Item</legend>
-            <!-- File Button --> 
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Choose primary image </label>
-              <div class="col-md-6">
-                <input name="image" class="input-file" id="image" type="file" accept="image/*" required="">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Choose second image </label>
-              <div class="col-md-6">
-                <input name="image2" class="input-file" id="image" type="file" accept="image/*" required="">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Choose third image </label>
-              <div class="col-md-6">
-                <input name="image3" class="input-file" id="image" type="file" accept="image/*" required="">
-              </div>
-            </div>
-
-            <!-- Input -->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="ItemDescription">Item Name</label>
-              <div class="col-md-6">                     
-                <input name="itemname" class="form-control" id="itemname" type="text" placeholder="Item Name" required="" maxlength="20" >
-              </div>
-            </div>
-
-            <!-- Textarea -->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="ItemDescription">Item Description</label>
-              <div class="col-md-6">                     
-                <textarea name="itemdescription" class="form-control" id="itemdescription" placeholder="Tell us about your item" required=""></textarea>
-              </div>
-            </div>
-
-            <!-- Button -->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="upload"></label>
-              <div class="col-md-4">
-                <button type ="submit" name="upload" class="btn btn-success" id="upload">Add</button>
-                  <button type="button"onclick ="hideForm();" class="btn btn-warning" ></a>Cancel
-                </button>
-              </div>
-            </div>
-
-          </fieldset>
-        </form>
-    </div>
-  </div>
-
+  
 
   <div class ="row" style ="display:none" id ="updateItemform">
     <div class ="col-md-6">
@@ -277,6 +218,7 @@ include "base.php";
       <th>Edit</th>
       <th>Remove</th>
       <th>Uploaded</th>
+      <th>Status</th>
     </tr>
     </thead>
     <tbody>

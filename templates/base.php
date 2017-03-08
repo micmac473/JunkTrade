@@ -106,7 +106,7 @@ if(!isset($_SESSION)){
         </form> -->
 
         <ul class="nav navbar-nav navbar-right">
-          <li data-toggle="modal" data-target="#requestModal"> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i> </a></li>
+          <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="showForm();"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i> </a></li>
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-2x" aria-hidden="true" ></i><span class="caret"></span></a>
@@ -229,6 +229,65 @@ if(!isset($_SESSION)){
       </div>
     </div>
   </div>
+<!-- Add Item -->
+  <div class ="row" style ="display:none" id ="uploadItem">
+    <div class ="col-md-6">
+      <form class="form-horizontal" action ="profile.php" enctype="multipart/form-data" method ="POST">
+      <!-- <form class="form-horizontal" action ="index.php/additem" enctype="multipart/form-data" method ="POST" onsubmit="return addItem();"> -->
+        <fieldset>
+          <legend style="text-align:center">Upload a New Item</legend>
+            <!-- File Button --> 
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="uppic">Choose primary image </label>
+              <div class="col-md-6">
+                <input name="image" class="input-file" id="image" type="file" accept="image/*" required="">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="uppic">Choose second image </label>
+              <div class="col-md-6">
+                <input name="image2" class="input-file" id="image" type="file" accept="image/*" required="">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="uppic">Choose third image </label>
+              <div class="col-md-6">
+                <input name="image3" class="input-file" id="image" type="file" accept="image/*" required="">
+              </div>
+            </div>
+
+            <!-- Input -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="ItemDescription">Item Name</label>
+              <div class="col-md-6">                     
+                <input name="itemname" class="form-control" id="itemname" type="text" placeholder="Item Name" required="" maxlength="20" >
+              </div>
+            </div>
+
+            <!-- Textarea -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="ItemDescription">Item Description</label>
+              <div class="col-md-6">                     
+                <textarea name="itemdescription" class="form-control" id="itemdescription" placeholder="Tell us about your item" required=""></textarea>
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="upload"></label>
+              <div class="col-md-4">
+                <button type ="submit" name="upload" class="btn btn-success" id="upload">Add</button>
+                  <button type="button"onclick ="hideForm();" class="btn btn-warning" ></a>Cancel
+                </button>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+    </div>
+  </div>
 
 
 <script>
@@ -272,7 +331,7 @@ if(!isset($_SESSION)){
 
             <!-- Select Basic -->
             <div class="form-group">
-              <label class="control-label" for="selectbasic">Your Item</label>
+              <label class="control-label" for="selectbasic">Your Items (Available)</label>
               <div class="">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-gift" aria-hidden="true"></i></span>

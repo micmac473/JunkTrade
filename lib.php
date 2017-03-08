@@ -293,6 +293,22 @@ function getRequestsMeetupRequester(){
 	return $items;
 }
 
+
+function getAcceptedUserItems(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `requests` r WHERE r.requestee = $userid OR r.requester = $userid;";
+	$items =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
 function isExist($FBID){
 	$sql = "SELECT * FROM `users` WHERE id = '$FBID';";
 	$db = getDBConnection();
@@ -561,9 +577,28 @@ function getAllUserRequests(){
 	return $items;
 }
 
-function getAllNonUserItemRequests(){
+function getAllNonUserItemsState(){
 	$userID = $_SESSION["id"];
-	$sql ="SELECT r.id, r.requester, r.decision, r.item FROM `items` i, `requests` r, `users` u WHERE i.itemid = r.item AND i.userid = u.id AND i.userid <> $userID  ORDER BY r.timerequested DESC;";
+	//$sql ="SELECT r.id, r.decision, r.item, r.item2 FROM `items` i, `requests` r, `users` u WHERE i.itemid = r.item AND i.userid = u.id AND i.userid <> $userID  ORDER BY r.timerequested DESC;";
+	//$sql = "SELECT * FROM `requests` r WHERE r.requestee = $userID OR r.requester = $userID;";
+	$sql ="SELECT r.id, r.decision, r.item, r.item2, i.itemname, r.requester FROM `items` i, `requests` r WHERE i.userid <> $userID  AND i.itemid = r.item OR i.itemid = r.item2 ORDER BY r.timerequested DESC;";
+
+	$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getRequesterItemsState(){
+	$userID = $_SESSION["id"];
+	$sql ="SELECT r.id, r.requester, r.decision, r.item FROM `items` i, `requests` r, `users` u WHERE i.itemid = r.item2 AND i.userid = u.id AND i.userid <> $userID  ORDER BY r.timerequested DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -862,7 +897,7 @@ function saveRequest($requestee, $requesteeItem, $requesterItem, $requesterConta
 	$id = -1;
 	if ($db != NULL){
 		$res = $db->query($sql);
-			if ($res && $db->insert_id > 0){
+		if ($res && $db->insert_id > 0){
 			$id = $db->insert_id;
 		}
 		$db->close();
