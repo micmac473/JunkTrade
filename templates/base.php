@@ -109,7 +109,13 @@ if(!isset($_SESSION)){
           <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="showForm();"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i> </a></li>
 
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-2x" aria-hidden="true" ></i><span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-user-circle fa-2x" aria-hidden="true" ></i>
+              <?php
+                echo $_SESSION['user'];
+              ?>
+              <span class="caret"></span>
+            </a>
             <ul class="dropdown-menu">
               <li><a href="profile.php">My Profile</a></li>
               <li><a href="trade.php">My Requests</a></li>
