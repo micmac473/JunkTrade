@@ -45,7 +45,7 @@ if(isset($_GET['trader'])){
           $val = $userDetails[$i];
           for($j = 0; $j < count($userRequests); $j++){
             $req = $userRequests[$j];
-            if($val['itemid'] == $req['item']){
+            if($val['itemid'] == $req['item'] || $val['itemid'] == $req['item2']){
               if($req['decision'] == true){
                 //echo "Accepted!";
                 break;

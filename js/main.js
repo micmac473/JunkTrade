@@ -253,6 +253,7 @@ function listAllItems(records, user){
                         break;
                     }  
                     else {
+                        if(requests[i]['requester'] == user){
                         itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
                         itemdiv += "<div class='panel panel-default'>";
 
@@ -260,7 +261,7 @@ function listAllItems(records, user){
 
                         itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
 
-                        if(requests[i]['requester'] == user && requests[i]['decision'] == null){
+                         if(requests[i]['decision'] == null){
                             itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
                             console.log("Request Pending for "+ el['itemname']);
                         }
@@ -273,8 +274,8 @@ function listAllItems(records, user){
                         //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
                         itemdiv += "</div>";
                         itemdiv += "</div>";
-
                         break;
+                    }
                     }
                 }
                     
@@ -579,8 +580,12 @@ function removeSavedItem(savedId){
                 type: "error" 
             },
                 function(){
-                    window.location.reload();
-            });
+                    if(window.location.href.indexOf("/item.php?") > -1)
+                        window.location.reload();
+                    else
+                        getUserSavedItems();
+                }
+            );
         //getUserSavedItems();
         //window.location.reload();
         return false;
@@ -633,8 +638,12 @@ function unfollowTrader(userid){
                 type: "error" 
             },
                 function(){
-                    window.location.reload();
-            });
+                    if(window.location.href.indexOf("/trader.php") > -1)
+                        window.location.reload();
+                    else
+                        getUserFollowees();
+                }
+            );
         }, "json");    
 }
 
@@ -759,20 +768,29 @@ function listUserTrade(records, res){
     records.forEach(function(el){
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+        /*htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
-        htmlStr += "<td>" + el['timerequested'] + "</td>";
+        htmlStr += "<td>" + el['timerequested'] + "</td>"; */
         if(el['decision'] == null){
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+            htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
+            htmlStr += "<td>" + el['timerequested'] + "</td>";
             htmlStr += "<td> Pending </td>";
             htmlStr += "<td> <i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'>Loading...</span></td>";
             htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
         }
         else if(el['decision'] == true){
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+            htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
+            htmlStr += "<td>" + el['timerequested'] + "</td>";
             htmlStr += "<td> Accepted </td>";
             htmlStr += "<td><i class='fa fa-check fa-2x' aria-hidden='true'></i></td>";
             htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.rid+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
         }
         else{
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+            htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
+            htmlStr += "<td>" + el['timerequested'] + "</td>";
             htmlStr += "<td> Denied </td>";
             htmlStr += "<td> <i class='fa fa-ban fa-2x' aria-hidden='true'></i></td>";
         }

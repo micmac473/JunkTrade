@@ -296,7 +296,7 @@ function getRequestsMeetupRequester(){
 
 function getAcceptedUserItems(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `requests` r WHERE r.requestee = $userid OR r.requester = $userid;";
+	$sql = "SELECT * FROM `requests` r WHERE r.requestee = $userid OR r.requester = $userid ORDER BY r.decision DESC;";
 	$items =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -581,7 +581,7 @@ function getAllNonUserItemsState(){
 	$userID = $_SESSION["id"];
 	//$sql ="SELECT r.id, r.decision, r.item, r.item2 FROM `items` i, `requests` r, `users` u WHERE i.itemid = r.item AND i.userid = u.id AND i.userid <> $userID  ORDER BY r.timerequested DESC;";
 	//$sql = "SELECT * FROM `requests` r WHERE r.requestee = $userID OR r.requester = $userID;";
-	$sql ="SELECT r.id, r.decision, r.item, r.item2, i.itemname, r.requester FROM `items` i, `requests` r WHERE i.userid <> $userID  AND i.itemid = r.item OR i.itemid = r.item2 ORDER BY r.timerequested DESC;";
+	$sql ="SELECT r.id, r.decision, r.item, r.item2, i.itemname, r.requester FROM `items` i, `requests` r WHERE i.userid <> $userID  AND i.itemid = r.item OR i.itemid = r.item2 ORDER BY r.decision DESC, r.timerequested DESC;";
 
 	$items =[];
 	//print($sql);
@@ -612,9 +612,9 @@ function getRequesterItemsState(){
 	return $items;
 }
 
-function getAllNonUserItemRequestsForSpecificTrader($requestee){
+function getAllNonUserItemRequestsForSpecificTrader($traderId){
 	$userID = $_SESSION["id"];
-	$sql ="SELECT * FROM `requests` r WHERE r.requester = $userID AND r.requestee = $requestee ORDER BY r.timerequested DESC;";
+	$sql ="SELECT * FROM `requests` r WHERE r.requester = $traderId OR r.requestee = $traderId ORDER BY r.decision DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -720,7 +720,7 @@ function getOutgoingRequestItems(){
 	$db = getDBConnection();
 	$items = [];
 	if ($db != null){
-		$sql = "SELECT i.itemname, r.item2 FROM `requests` r, `items` i WHERE i.itemid = r.item2 AND r.requester = $userId AND `decision` IS NULL ORDER BY r.timerequested DESC;";
+		$sql = "SELECT i.itemname, r.item2 FROM `requests` r, `items` i WHERE i.itemid = r.item2 AND r.requester = $userId ORDER BY r.timerequested DESC;";
 		$res = $db->query($sql);
 		while($res && $row = $res->fetch_assoc()){
 			$items[] = $row;
@@ -978,7 +978,10 @@ function acceptRequest($requestId, $requesteeItem, $requesterItem){
 	$db = getDBConnection();
 	$sql = "UPDATE `requests` r SET r.decision = true WHERE r.id = $requestId;";
 	$sql .= "UPDATE `requests` r SET r.decision = false WHERE r.item = $requesteeItem AND r.id <> $requestId;";
-	$sql .= "DELETE FROM `requests`  WHERE  `item2` = $requesteeItem;";
+	$sql .= "UPDATE `requests` r SET r.decision = false WHERE r.item = $requesterItem AND r.id <> $requestId;";
+	$sql .= "UPDATE `requests` r SET r.decision = false WHERE r.item2 = $requesterItem AND r.id <> $requestId;";
+	$sql .= "DELETE FROM `saved`  WHERE  `itemid` = $requesteeItem OR `itemid` = $requesterItem;";
+	$sql .= "DELETE FROM `requests`  WHERE  `item2` = $requesteeItem AND r.id <> $requestId;";
 	$res = null;
 	if ($db != NULL){
 		$res = $db->multi_query($sql);

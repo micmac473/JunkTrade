@@ -118,7 +118,7 @@ if(!isset($_SESSION)){
             </a>
             <ul class="dropdown-menu">
               <li><a href="profile.php"><i class="fa fa-user" aria-hidden="true" ></i> Profile</a></li>
-              <li><a href="login.php"><i class="fa fa-sign-out" aria-hidden="true" ></i> Logout</a></li>
+              <li><a href="#" onclick="logout();"><i class="fa fa-sign-out" aria-hidden="true" ></i> Logout</a></li>
               <!-- <li><a href="google.com">Help</a></li> -->
             </ul>
           </li>
@@ -243,23 +243,23 @@ if(!isset($_SESSION)){
           <legend style="text-align:center">Upload a New Item</legend>
             <!-- File Button --> 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Choose primary image </label>
+              <label class="col-md-4 control-label" for="uppic">Photo 1 </label>
               <div class="col-md-6">
                 <input name="image" class="input-file" id="image" type="file" accept="image/*" required="">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Choose second image </label>
+              <label class="col-md-4 control-label" for="uppic">Photo 2 </label>
               <div class="col-md-6">
-                <input name="image2" class="input-file" id="image" type="file" accept="image/*" required="">
+                <input name="image2" class="input-file" id="image2" type="file" accept="image/*" required="">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Choose third image </label>
+              <label class="col-md-4 control-label" for="uppic">Photo 3 </label>
               <div class="col-md-6">
-                <input name="image3" class="input-file" id="image" type="file" accept="image/*" required="">
+                <input name="image3" class="input-file" id="image3" type="file" accept="image/*" required="">
               </div>
             </div>
 
