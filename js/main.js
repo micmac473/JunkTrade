@@ -760,7 +760,7 @@ function listUserTrade(records, res){
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
-        htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + " "+res[i]['itemname']+"</td>";
+        htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
         htmlStr += "<td>" + el['timerequested'] + "</td>";
         if(el['decision'] == null){
             htmlStr += "<td> Pending </td>";
