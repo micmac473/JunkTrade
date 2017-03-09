@@ -328,7 +328,12 @@ $app->get("/requesteritem", function(Request $request, Response $response){
 	return $response;
 });
 
-
+$app->get("/outgoingrequestitems", function(Request $request, Response $response){
+	
+	$items = getOutgoingRequestItems();
+	$response = $response->withJson($items);
+	return $response;
+});
 
 $app->get("/accepteduseritems", function(Request $request, Response $response){
 	
@@ -477,6 +482,24 @@ $app->post("/request", function(Request $request, Response $response){
 	$res = saveRequest($requestee, $requesteeItem, $requesterItem, $requesterContact);
 	
 	if ($res > 0){
+		$response = $response->withStatus(201);
+		$response = $response->withJson(array("id" => $res));
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+$app->post("/acceptrequest", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$requestId = $post['requestid'];
+	$requesteeItem = $post['requesteeitem'];
+	$requesterItem = $post['requesteritem'];
+
+	$res = acceptRequest($requestId, $requesteeItem, $requesterItem);
+	
+	if ($res){
 		$response = $response->withStatus(201);
 		$response = $response->withJson(array("id" => $res));
 		

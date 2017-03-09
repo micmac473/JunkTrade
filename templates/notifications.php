@@ -88,6 +88,10 @@ include "base.php";
                 </div>
               </div> 
 
+              
+              <input class="form-control" id="requesteritemid" name="requesteritemid" type="hidden" required disabled/>
+                
+
               <div class="form-group"> 
                 <label class="control-label" for="date">Requester Item</label>
                 <div class="">
@@ -108,6 +112,7 @@ include "base.php";
                 </div>
               </div> 
 
+              <input class="form-control" id="requesteeitemid" name="requesteeitemid" type="hidden" required disabled/>
               <div class="form-group"> 
                 <label class="control-label" for="date">Your Item</label>
                 <div class="">

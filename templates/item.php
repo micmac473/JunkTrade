@@ -102,10 +102,10 @@ if(isset($_GET['item'])){
     }
     
     if($savedItem == null || $savedItem['savedindicator'] == false){
-      echo "<button type='button' class='btn btn-primary btn-block' onclick=\"addToSavedItems(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-bookmark fa-lg' aria-hidden='true'></i> Save</button>";
+      echo "<button type='button' class='btn btn-primary btn-block' onclick=\"addToSavedItems(".$itemDetails['itemid'].")\" id='requestbtn' data-toggle='tooltip' title='Click to Save Item' data-placement='bottom'><i class='fa fa-bookmark fa-lg' aria-hidden='true'></i> Save</button>";
     }
     else{
-      echo "<button type='button' class='btn btn-warning btn-block' onclick=\"removeSavedItem(".$savedItem['savedid'].")\" id='requestbtn'><i class='fa fa-minus fa-lg' aria-hidden='true'></i> Unsave</button>";
+      echo "<button type='button' class='btn btn-success btn-block' onclick=\"removeSavedItem(".$savedItem['savedid'].")\" id='requestbtn' data-toggle='tooltip' title='Click to Unsave Item' data-placement='bottom'>Saved <i class='fa fa-check' aria-hidden='true'></i></button>";
     }
     
     echo "</div>";

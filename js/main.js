@@ -467,7 +467,7 @@ function getUserRequests(){
 function notifications(records){
     console.log(records);
     records.forEach(function(el){
-        var htmlStr = "<li><a href=notifications.php>"+ el.username + " is requesting "+ el.itemname + "</a></li>";
+        var htmlStr = "<li><a href=#>"+ el.username + " is requesting "+ el.itemname + "</a></li>";
         $("#requests").append(htmlStr);
     });
     var countR = $("#requests li").length;
@@ -524,7 +524,15 @@ function addToSavedItems(itemid){
             console.log(res);
             if(res){
                 //swal("Item Saved!", "You can view item in Saved Items!", "success");
-                window.location.reload();
+                swal({ 
+                    title: "Item Saved!",
+                    text: "You can view item in Saved!",
+                    type: "success" 
+                },
+                function(){
+                    window.location.reload();
+                });
+                
                 return false;
             }
             else{
@@ -565,8 +573,16 @@ function removeSavedItem(savedId){
     $.post("../index.php/removedsaveditem",savedItem, function(res){
         console.log(res);
         //swal("Item removed!", "You can save the item again", "error");
-        getUserSavedItems();
-        window.location.reload();
+        swal({ 
+                title: "Item removed!",
+                text: "You can save the item again!",
+                type: "error" 
+            },
+                function(){
+                    window.location.reload();
+            });
+        //getUserSavedItems();
+        //window.location.reload();
         return false;
     }, "json");
     return false;
@@ -582,8 +598,16 @@ function followTrader(userid){
     $.post("../index.php/follow",followee, function(res){
         console.log(res);
         if(res){
+            swal({ 
+                title: "Trader Followed!",
+                text: "You can view followed trader in People!",
+                type: "success" 
+            },
+                function(){
+                    window.location.reload();
+            });
             //swal("Trader Followed!", "You can view followed trader in People!", "success");
-            window.location.reload();
+            
         }
         else{
             swal("Trader Not Followed!", "Error!", "error")
@@ -603,7 +627,14 @@ function unfollowTrader(userid){
         $.post("../index.php/unfollow", followee, function(res){
             //console.log(res);
             //swal("Trader Unfollowed!", "You can follow them again!", "error");
-            window.location.reload();
+            swal({ 
+                title: "Trader Unfollowed!",
+                text: "You can follow them again!",
+                type: "error" 
+            },
+                function(){
+                    window.location.reload();
+            });
         }, "json");    
 }
 
@@ -713,12 +744,15 @@ function getTrade(){//alter for slim
 
 function processUserTrade(records){
     console.log(records);
-    listUserTrade(records);
+    $.get("../index.php/outgoingrequestitems", function(res){
+        console.log(res);
+        listUserTrade(records, res);
+    }, "json");
     //showRequestData(records);
 }
 
-function listUserTrade(records){
-    var key;
+function listUserTrade(records, res){
+    var i=0;
     var sec_id = "#table_sect";
     var htmlStr = $("#table_headingt").html(); //Includes all the table, thead and tbody declarations
 
@@ -726,6 +760,7 @@ function listUserTrade(records){
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+        htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + " "+res[i]['itemname']+"</td>";
         htmlStr += "<td>" + el['timerequested'] + "</td>";
         if(el['decision'] == null){
             htmlStr += "<td> Pending </td>";
@@ -743,6 +778,7 @@ function listUserTrade(records){
         }
 
         htmlStr +=" </tr>" ;
+        i++;
     });
     //count = $("#mylist li").size();
     htmlStr += "</tbody></table>";
@@ -939,15 +975,23 @@ function sendRequest(){
                 $.post("../index.php/request", request, function(res){
                     console.log(res);
                     if (res.id && res.id > 0){
-                        swal("Request Made!", "Trader will be notified", "success");
-                        if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1){
-                            console.log("Item.php!");
-                            window.location.reload();
-                        }
-                        else{
-                           getAllItems(); 
-                        }
-                    }   
+                        //swal("Request Made!", "Trader will be notified", "success");
+                        swal({ 
+                            title: "Request Made!",
+                            text: "Trader will be notified!",
+                            type: "success" 
+                            },
+                            function(){
+                                if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1){
+                                    window.location.reload();
+                                }
+                                else{
+                                    getAllItems(); 
+                                }
+                            }
+                        );
+                    }
+                    
                 },"json"); 
             } 
             else {
@@ -1045,15 +1089,17 @@ function acceptRequest(requestId){
         console.log(res);
 
         $("#meetupform #requester").val(res.username);
+        $("#meetupform #requesteritemid").val(res.itemid);
         $("#meetupform #requesteritem").val(res.itemname);
         $("#meetupform #requestercontact").val(res.requestercontact);
 
         $.get("../index.php/requestee/"+requestId, function(res){
             console.log(res);
+            $("#meetupform #requesteeitemid").val(res.itemid);
             $("#meetupform #requesteeitem").val(res.itemname);
         }, "json");
         
-        console.log(res);
+        //console.log(res);
 
     },"json");
     $("#meetUpModal").modal('show');
@@ -1061,7 +1107,17 @@ function acceptRequest(requestId){
 
 function sendArrangement(){
     var requestId = $("#meetupform #requestid").val();
+    var requesterItem = $("#meetupform #requesteritemid").val();
+    var requesteeItem = $("#meetupform #requesteeitemid").val();
+
+    var request = {
+        "requestid" : requestId,
+        "requesteritem" : requesterItem,
+        "requesteeitem" : requesteeItem
+    };
+    console.log(request);
     $("#meetUpModal").modal('hide');
+
     sweetAlert({
         title: "Accept Request and Send Arrangement?",
         //text: "You will not be able to undo this operation!",
@@ -1074,10 +1130,9 @@ function sendArrangement(){
         closeOnCancel: false
     },
     function(isConfirm){
-        
         if (isConfirm) {
-            
-            $.get("../index.php/acceptrequest/"+requestId, function(res){
+            $.post("../index.php/acceptrequest", request, function(res){
+                console.log(res);
                 arrangement();
                 swal("Request Accepted and Arrangment Sent!", "The user will be notified", "success");
                 
@@ -1093,9 +1148,32 @@ function sendArrangement(){
     
 }
 
-
+//------------------------------------------------------------------------------------------------
 function cancelArrangement(){
     sweetAlert("Cancelled", "Request and Arrangement still Pending", "error");
+    return false;
+}
+//---------------------------------------------------------------------------------------------
+function arrangement(){
+    var requestId = $("#meetupform #requestid").val();
+    var tradeDate = $("#meetupform #tradedate").val();
+    var tradeLocation = $("#meetupform #tradelocation").val();
+    var requesteeContact = $("#meetupform #requesteecontact").val();
+    var requesterContact = $("#meetupform #requestercontact").val();
+
+    var trade = {
+        "requestid" : requestId,
+        "tradedate" : tradeDate,
+        "tradelocation" : tradeLocation,
+        "requesteecontact" : requesteeContact,
+        "requestercontact" : requesterContact
+    };
+
+    console.log(trade);
+    $.post("../index.php/tradearrangement", trade, function(res){
+        console.log(res);
+        //swal("Arrangement Sent!", "Good stuff!", "success")
+    },"json");
     return false;
 }
 
@@ -1146,13 +1224,22 @@ function cancelMadeRequest(requestId){
             }; 
             console.log(request);
             $.post("../index.php/cancelrequest", request, function(res){
-                swal("Request Cancelled!", "The owner will no longer see your request", "success");
-                if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("trade.php") > -1 || window.location.href.indexOf("trader.php") > -1){
-                    window.location.reload();
-                }
-                else{
-                    getAllItems();
-                }
+                //swal("Request Cancelled!", "The owner will no longer see your request", "success");
+                swal({ 
+                    title: "Request Cancelled!",
+                    text: "Trader will be notified!",
+                    type: "success" 
+                    },
+                    function(){
+                        if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/trade.php") > -1){
+                            window.location.reload();
+                        }
+                        else{
+                            getAllItems();
+                        }
+                    }
+                );
+                
             }, "json");
             
         } else {
@@ -1162,28 +1249,7 @@ function cancelMadeRequest(requestId){
 }
 //--------------------------------------------------------------------------------------------------------------------
 //
-function arrangement(){
-    var requestId = $("#meetupform #requestid").val();
-    var tradeDate = $("#meetupform #tradedate").val();
-    var tradeLocation = $("#meetupform #tradelocation").val();
-    var requesteeContact = $("#meetupform #requesteecontact").val();
-    var requesterContact = $("#meetupform #requestercontact").val();
 
-    var trade = {
-        "requestid" : requestId,
-        "tradedate" : tradeDate,
-        "tradelocation" : tradeLocation,
-        "requesteecontact" : requesteeContact,
-        "requestercontact" : requesterContact
-    };
-
-    console.log(trade);
-    $.post("../index.php/tradearrangement", trade, function(res){
-        console.log(res);
-        //swal("Arrangement Sent!", "Good stuff!", "success")
-    },"json");
-    return false;
-}
 
 //-------------------------------------------------------------------------//
 // Gets the information for the items that the user requested
@@ -1390,8 +1456,15 @@ function logout(){
     function(isConfirm){
         
         if (isConfirm) {
-            swal("Goodbye!", "See you next time :)", "error");
-            window.location.href = 'login.php';
+            swal({ 
+                title: "Goodbye!",
+                text: "See you next time :)!",
+                type: "error" 
+            },
+                function(){
+                    window.location.href = 'login.php';
+                }
+            );
 
         } else {
             swal("Still Logged In", "Continue Trading!", "success");

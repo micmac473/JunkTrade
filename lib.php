@@ -660,7 +660,7 @@ function getRequesterInfo($requestId){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != null){
-		$sql = "SELECT `username`, `itemname`, `requestercontact` FROM `requests` r, `items` i, `users` u WHERE r.id = $requestId AND r.requester = u.id AND r.item2 = i.itemid;" ;
+		$sql = "SELECT `username`, `itemname`, `requestercontact`, i.itemid FROM `requests` r, `items` i, `users` u WHERE r.id = $requestId AND r.requester = u.id AND r.item2 = i.itemid;" ;
 		$res = $db->query($sql);
 		if ($res){
 			$rec = $res->fetch_assoc();
@@ -674,7 +674,7 @@ function getRequesteeInfo($requestId){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != null){
-		$sql = "SELECT `itemname` FROM `requests` r, `items` i, `users` u WHERE r.id = $requestId AND r.requestee = u.id AND r.item = i.itemid;" ;
+		$sql = "SELECT `itemname`, i.itemid FROM `requests` r, `items` i, `users` u WHERE r.id = $requestId AND r.requestee = u.id AND r.item = i.itemid;" ;
 		$res = $db->query($sql);
 		if ($res){
 			$rec = $res->fetch_assoc();
@@ -704,7 +704,7 @@ function getRequesterItem(){
 	$db = getDBConnection();
 	$requests = [];
 	if ($db != null){
-		$sql = "SELECT i.itemname, r.item2 FROM `requests` r, `items` i WHERE i.itemid = r.item2 AND r.requestee = $userId AND `decision` IS NULL ORDER BY r.timerequested DESC;";
+		$sql = "SELECT i.itemname FROM `requests` r, `items` i WHERE i.itemid = r.item2 AND r.requestee = $userId AND `decision` IS NULL ORDER BY r.timerequested DESC;";
 		$res = $db->query($sql);
 		while($res && $row = $res->fetch_assoc()){
 			$requests[] = $row;
@@ -713,6 +713,22 @@ function getRequesterItem(){
 	}
 	//var_dump($requests);
 	return $requests;
+}
+
+function getOutgoingRequestItems(){
+	$userId = $_SESSION["id"];
+	$db = getDBConnection();
+	$items = [];
+	if ($db != null){
+		$sql = "SELECT i.itemname, r.item2 FROM `requests` r, `items` i WHERE i.itemid = r.item2 AND r.requester = $userId AND `decision` IS NULL ORDER BY r.timerequested DESC;";
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}
+		$db->close();
+	}
+	//var_dump($requests);
+	return $items;
 }
 
 function getRequests(){
@@ -949,25 +965,26 @@ function deleteItem($itemid){
 
 function cancelRequest($requestId){
 	$db = getDBConnection();
-	$sql = "DELETE FROM `requests`  WHERE  id= $requestId";
+	$sql = "DELETE FROM `requests`  WHERE  `id` = $requestId;";
 	$res = null;
 	if ($db != NULL){
 		$res = $db->query($sql);
 		$db->close();
 	}
 	return $res;
-
-
 } 
 
-function acceptRequest($requestId){
+function acceptRequest($requestId, $requesteeItem, $requesterItem){
 	$db = getDBConnection();
-	$sql = "UPDATE `requests` SET `decision` = true WHERE `id` = $requestId;";
+	$sql = "UPDATE `requests` r SET r.decision = true WHERE r.id = $requestId;";
+	$sql .= "UPDATE `requests` r SET r.decision = false WHERE r.item = $requesteeItem AND r.id <> $requestId;";
+	$sql .= "DELETE FROM `requests`  WHERE  `item2` = $requesteeItem;";
 	$res = null;
 	if ($db != NULL){
-		$res = $db->query($sql);
-		
+		$res = $db->multi_query($sql);
 	}
+	$db->close();
+
 	return $res;
 }
 

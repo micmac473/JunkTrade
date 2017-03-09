@@ -29,6 +29,7 @@ include "base.php";
     <tr>
       <th>To</th>
       <th>For</th>
+      <th>With</th>
       <th>Date Requested</th>
       <th>Status</th>
       <th></th>
