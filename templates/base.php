@@ -117,9 +117,8 @@ if(!isset($_SESSION)){
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="profile.php">My Profile</a></li>
-              <li><a href="trade.php">My Requests</a></li>
-              <li><a href="login.php">Log Out</a></li>
+              <li><a href="profile.php"><i class="fa fa-user" aria-hidden="true" ></i> Profile</a></li>
+              <li><a href="login.php"><i class="fa fa-sign-out" aria-hidden="true" ></i> Logout</a></li>
               <!-- <li><a href="google.com">Help</a></li> -->
             </ul>
           </li>
