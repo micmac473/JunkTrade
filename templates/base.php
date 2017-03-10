@@ -79,11 +79,12 @@ if(!isset($_SESSION)){
           <span class="icon-bar"></span>
         </button>
 
-        <a id="menu-toggle" href="#"><i class="navbar-brand btn-menu toggle fa fa-bars fa-2x" aria-hidden="true"></i>  </a>
+        <a id="menu-toggle" href="#"><i class="navbar-brand btn-menu toggle fa fa-bars fa-lg" aria-hidden="true"></i>  </a>
         <a class="navbar-brand" href="homepage.php" style="padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
         <!--<a class="navbar-brand" href ="homepage.php">JunkTrade</a> -->
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
       </div>
+
       <div id="navbar" class="navbar-collapse collapse">
         <!--  <ul class="nav navbar-nav">
 

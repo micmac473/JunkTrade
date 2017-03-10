@@ -5,24 +5,24 @@ include "base.php";
 ?>
 
 <div class ="container-fluid">
+
   <div class ="row">
-    <div class="header text-center">
-      <h1>Following <i class="fa fa-rss fa-lg" aria-hidden="true" ></i></h1>
+    <div class="col-lg-7">
+      <div class="header text-center">
+        <h1>Following <i class="fa fa-rss fa-lg" aria-hidden="true" ></i></h1>
+      </div>
+      <div class="table-responsive">
+        <div id="table_sec_followees"></div>
+      </div> 
     </div>
-    <div class="col-xs-12 table-responsive">
-    <!--<h4>Products</h4>
-    <p>A table highlighting the available products</p> -->
-      <div id="table_sec_followees"></div>
-    </div> 
-  </div>
-  <div class ="row">
-    <div class="header text-center">
-      <h1>Followers <i class="fa fa-rss-square fa-lg" aria-hidden="true" ></i></h1>
-    </div>
-    <div class="col-xs-12 table-responsive">
-    <!--<h4>Products</h4>
-    <p>A table highlighting the available products</p> -->
-      <div id="table_sec_followers"></div>
+
+    <div class="col-lg-5">
+      <div class="header text-center">
+        <h1>Followers <i class="fa fa-rss-square fa-lg" aria-hidden="true" ></i></h1>
+      </div>
+      <div class="table-responsive">
+        <div id="table_sec_followers"></div>
+      </div>
     </div>
   </div>
 </div>

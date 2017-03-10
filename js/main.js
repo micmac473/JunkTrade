@@ -267,7 +267,7 @@ function listAllItems(records, user){
                             }
 
                             else{
-                                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
+                                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-primary btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
                                 console.log(el['itemname']+ " is avaialable");
                             }
                     
@@ -289,7 +289,7 @@ function listAllItems(records, user){
                 itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
             
 
-                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12 col-xs-offset-0'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
+                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12 col-xs-offset-0'><button type='button' class='btn btn-primary btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
                 
                 //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
                 //itemdiv += "<div class='col-lg-6'> <button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems("+el['itemid']+")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button></div></div></div>"
@@ -557,7 +557,7 @@ function processUserSavedItems(records){
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ el['saveddate'] +"</td>";      
-        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-minus fa-lg' aria-hidden='true'></i> Unsave</button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-times' aria-hidden='true'></i> Unsave</button></td>";
         htmlStr +=" </tr>" ;
     });
 
@@ -661,7 +661,7 @@ function processUserFollowees(records){
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.followee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ el['followdate'] +"</td>";      
-        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"unfollowTrader("+el.followee+")\"><i class='fa fa-trash' aria-hidden='true'></i> Unfollow</button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"unfollowTrader("+el.followee+")\"><i class='fa fa-times' aria-hidden='true'></i> Unfollow</button></td>";
         htmlStr +=" </tr>" ;
     });
 

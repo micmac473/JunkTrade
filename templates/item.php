@@ -83,7 +83,7 @@ if(isset($_GET['item'])){
     //var_dump($itemRequest['decision']);
     //var_dump($itemRequest);
     if($itemRequest == null){
-        echo "<button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button>";
+        echo "<button type='button' class='btn btn-primary btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button>";
         //echo "No request!";
     }
     else{
@@ -95,7 +95,7 @@ if(isset($_GET['item'])){
         }
         else{
             
-            echo "<button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button>";
+            echo "<button type='button' class='btn btn-primary btn-block' onclick=\"displayItemsForRequest(".$itemDetails['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button>";
         }
         
         //echo "Request pending!";
@@ -105,7 +105,7 @@ if(isset($_GET['item'])){
       echo "<button type='button' class='btn btn-primary btn-block' onclick=\"addToSavedItems(".$itemDetails['itemid'].")\" id='requestbtn' data-toggle='tooltip' title='Click to Save Item' data-placement='bottom'><i class='fa fa-bookmark fa-lg' aria-hidden='true'></i> Save</button>";
     }
     else{
-      echo "<button type='button' class='btn btn-success btn-block' onclick=\"removeSavedItem(".$savedItem['savedid'].")\" id='requestbtn' data-toggle='tooltip' title='Click to Unsave Item' data-placement='bottom'>Saved <i class='fa fa-check' aria-hidden='true'></i></button>";
+      echo "<button type='button' class='btn btn-success btn-block' onclick=\"removeSavedItem(".$savedItem['savedid'].")\" id='requestbtn' data-toggle='tooltip' title='Click to Unsave Item' data-placement='bottom'><i class='fa fa-check' aria-hidden='true'></i> Saved</button>";
     }
     
     echo "</div>";
