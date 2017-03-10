@@ -23,8 +23,7 @@ include "base.php";
         <th>From</th>
         <th>With</th>
         <th>For</th>
-        <th>Accept Request</th>
-        <th>Deny Request</th>
+        <th>Decision</th>
       </tr>
     </thead>
     <tbody>

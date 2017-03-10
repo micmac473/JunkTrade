@@ -581,8 +581,24 @@ function getAllNonUserItemsState(){
 	$userID = $_SESSION["id"];
 	//$sql ="SELECT r.id, r.decision, r.item, r.item2 FROM `items` i, `requests` r, `users` u WHERE i.itemid = r.item AND i.userid = u.id AND i.userid <> $userID  ORDER BY r.timerequested DESC;";
 	//$sql = "SELECT * FROM `requests` r WHERE r.requestee = $userID OR r.requester = $userID;";
-	$sql ="SELECT r.id, r.decision, r.item, r.item2, i.itemname, r.requester FROM `items` i, `requests` r WHERE i.userid <> $userID  AND i.itemid = r.item OR i.itemid = r.item2 ORDER BY r.decision DESC, r.timerequested DESC;";
+	$sql ="SELECT r.id, r.decision, r.item, r.item2, i.itemname, r.requester FROM `items` i, `requests` r WHERE i.userid <> $userID  AND i.itemid = r.item OR i.itemid = r.item2 ORDER BY r.timerequested DESC,  r.decision DESC;";
 
+	$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getAllNonUserItemRequestsForSpecificTrader($traderId){
+	$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `requests` r WHERE r.requester = $traderId OR r.requestee = $traderId ORDER BY r.timerequested DESC, r.decision DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -612,21 +628,7 @@ function getRequesterItemsState(){
 	return $items;
 }
 
-function getAllNonUserItemRequestsForSpecificTrader($traderId){
-	$userID = $_SESSION["id"];
-	$sql ="SELECT * FROM `requests` r WHERE r.requester = $traderId OR r.requestee = $traderId ORDER BY r.decision DESC;";
-	$items =[];
-	//print($sql);
-		$db = getDBConnection();
-		if ($db != NULL){
-			$res = $db->query($sql);
-			while($res && $row = $res->fetch_assoc()){
-			$items[] = $row;
-		}//while
-		$db->close();
-	}//if
-	return $items;
-}
+
 
 function getUserItem($val){
 	$db = getDBConnection();
@@ -921,14 +923,14 @@ function saveRequest($requestee, $requesteeItem, $requesterItem, $requesterConta
 	return $id;
 } 
 
-function getItemStatus($item){
+function getItemStatus($itemId){
 	$db = getDBConnection();
-	$rec = [];
+	$rec;
 	if ($db != NULL){
-		$sql = "SELECT * FROM `items` i, `requests` r WHERE item = $item;";
+		$sql = "SELECT * FROM `requests` r WHERE r.item = $itemId OR r.item2 = $itemId;";
 		$res = $db->query($sql);
-		while($res && $row = $res->fetch_assoc()){
-			$rec[] = $row;
+		if ($res){
+			$rec= $res->fetch_assoc();
 		}
 		$db->close();
 	}
@@ -936,14 +938,14 @@ function getItemStatus($item){
 }
 
 //In progress
-function getRequestStatus($item){
+function getRequestStatus($itemId){
 	$db = getDBConnection();
-	$rec = [];
+	$rec;
 	if ($db != NULL){
-		$sql = "SELECT * FROM `requests` WHERE `item` = $item AND `decision` = false;";
+		$sql = "SELECT COUNT(*) AS pending FROM `requests` r WHERE r.item = $itemId OR r.item2 = $itemId AND r.decision IS NULL;";
 		$res = $db->query($sql);
-		while($res && $row = $res->fetch_assoc()){
-			$rec[] = $row;
+		if ($res){
+			$rec= $res->fetch_assoc();
 		}
 		$db->close();
 	}

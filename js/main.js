@@ -254,28 +254,28 @@ function listAllItems(records, user){
                     }  
                     else {
                         if(requests[i]['requester'] == user){
-                        itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
-                        itemdiv += "<div class='panel panel-default'>";
+                            itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
+                            itemdiv += "<div class='panel panel-default'>";
 
-                        itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
+                            itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
 
-                        itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+                            itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
 
-                         if(requests[i]['decision'] == null){
-                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
-                            console.log("Request Pending for "+ el['itemname']);
+                             if(requests[i]['decision'] == null){
+                                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
+                                console.log("Request Pending for "+ el['itemname']);
+                            }
+
+                            else{
+                                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
+                                console.log(el['itemname']+ " is avaialable");
+                            }
+                    
+                            //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
+                            itemdiv += "</div>";
+                            itemdiv += "</div>";
+                            break;
                         }
-
-                        else{
-                            itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-success btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
-                            console.log(el['itemname']+ " is avaialable");
-                        }
-                
-                        //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
-                        itemdiv += "</div>";
-                        itemdiv += "</div>";
-                        break;
-                    }
                     }
                 }
                     
@@ -495,12 +495,12 @@ function displayRequests(records, res){
             htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+res[i]['item2']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+res[i]['itemname']+"<strong></button></td>";
             //htmlStr += "<td></td>";
-            htmlStr += "<td>"+el['itemname']+"</td>";
+            htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> "+el['itemname']+"</a></td>";
             
             //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
             //htmlStr += "<td><button type='button' class='btn btn-info btn-block' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
-            htmlStr += "<td><div class='col-xs-12'><button type='button' class='btn btn-success btn-block' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up fa-lg' aria-hidden='true'></i></button></div></td>";
-            htmlStr += "<td><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down fa-lg' aria-hidden='true'></i></button></div></td>";
+            htmlStr += "<td><div class='col-lg-6 col-xs-12'><button type='button' class='btn btn-success btn-block' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up fa-lg' aria-hidden='true'></i></button></div>";
+            htmlStr += "<div class='col-lg-6 col-xs-12'><button type='button' class='btn btn-danger btn-block' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down fa-lg' aria-hidden='true'></i></button></div></td>";
             htmlStr +=" </tr>" ;
             i++;
         },"json");
@@ -772,27 +772,27 @@ function listUserTrade(records, res){
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
         htmlStr += "<td>" + el['timerequested'] + "</td>"; */
         if(el['decision'] == null){
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
-            htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i> " + el['itemname']+"<strong></button></td>";
+            htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
             htmlStr += "<td>" + el['timerequested'] + "</td>";
-            htmlStr += "<td> Pending </td>";
-            htmlStr += "<td> <i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'>Loading...</span></td>";
+            htmlStr += "<td> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
+            //htmlStr += "<td> <i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'>Loading...</span></td>";
             htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
         }
         else if(el['decision'] == true){
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
-            htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+            htmlStr += "<td><a disabled class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
             htmlStr += "<td>" + el['timerequested'] + "</td>";
-            htmlStr += "<td> Accepted </td>";
-            htmlStr += "<td><i class='fa fa-check fa-2x' aria-hidden='true'></i></td>";
+            htmlStr += "<td> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
+            //htmlStr += "<td><i class='fa fa-check fa-2x' aria-hidden='true'></i></td>";
             htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.rid+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
         }
         else{
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
-            htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+            htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
             htmlStr += "<td>" + el['timerequested'] + "</td>";
-            htmlStr += "<td> Denied </td>";
-            htmlStr += "<td> <i class='fa fa-ban fa-2x' aria-hidden='true'></i></td>";
+            htmlStr += "<td> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
+            htmlStr += "<td> </td>";
         }
 
         htmlStr +=" </tr>" ;
@@ -1032,38 +1032,42 @@ function cancelRequest(){
 //--------------------------------------------------------------------------------------------------------------------
 // Deletes a user item from the list
 function deleteItem(itemid){
+    
+    $.get("../index.php/requeststatus/"+itemid, function(res){
+        if(res.pending != 0)
+        console.log("Pending requests: " + res.pending);
+    },"json");
     swal({
-        title: "Delete Item?",
-        text: "You will not be able to undo this operation!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function(isConfirm){
-        
-        if (isConfirm) {
-            $.get("../index.php/itemstatus/"+itemid, function(res){
-                if(res == true){
-                    $.get("../index.php/requeststatus/"+itemid, function(res){
-
-                    },"json");
-                    swal("Cannot delete", "Requests pending", "error")
-                }
-                else{
-                    $.get("../index.php/deleteitem/"+itemid, function(res){
-                        swal("Deleted!", "Your item has been deleted.", "success");
-                        getUserItems(); 
-                    }, "json"); 
-                }  
-            }, "json");
-        } else {
-            swal("Cancelled", "Your item is safe", "error");
+            title: "Delete Item?",
+            text: "You will not be able to undo this operation!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.get("../index.php/requeststatus/"+itemid, function(res){
+                    console.log("Pending requests: " + res.pending);
+                    if(res.pending != 0){
+                        swal("Requests Pending: "+res.pending, "Cannot delete item!", "error")
+                    }
+                    else{
+                        $.get("../index.php/deleteitem/"+itemid, function(res){
+                            swal("Item Deleted!", "Your item has been deleted!", "success");
+                            getUserItems(); 
+                        }, "json"); 
+                    }  
+                }, "json");
+            } 
+            else {
+                swal("Cancelled", "Your item is safe", "error");
+            }
         }
-    });
+    );
     
 }
 //-------------------------------------------------------------------------------------------------------------------
@@ -1213,8 +1217,9 @@ function denyRequest(requestId){
         if (isConfirm) {
             $.get("../index.php/denyrequest/"+requestId, function(res){
                 swal("Denied!", "The user will be notified", "success");
+                 getUserRequests();
             }, "json");
-            getUserRequests();
+           
         } else {
             swal("Cancelled", "The item is still pending", "error");
         }

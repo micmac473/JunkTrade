@@ -267,26 +267,32 @@ $app->get("/itemstatus/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country
 	$rec = getItemStatus($val);
+
+	$response = $response->withJson($rec);
+	return $response;
+	/*
 	if ($rec){
 		$response = $response->withStatus(201);
 		$response = $response->withJson(true);
 	} else {
 		$response = $response->withJson(false);
 	}
-	return $response;
+	return $response; */
 });
 
 $app->get("/requeststatus/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country
 	$rec = getRequestStatus($val);
-	if ($rec){
+	$response = $response->withJson($rec);
+	return $response;
+	/*if ($rec){
 		$response = $response->withStatus(201);
 		$response = $response->withJson(true);
 	} else {
 		$response = $response->withJson(false);
 	}
-	return $response;
+	return $response; */
 });
 
 $app->get("/deleteitem/{id}", function(Request $request, Response $response){

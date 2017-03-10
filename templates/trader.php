@@ -10,6 +10,7 @@ if(isset($_GET['trader'])){
   //var_dump($userDetails);
   //print_r($userDetails);
   $userRequests = getAllNonUserItemRequestsForSpecificTrader($userID);
+  $currentUser = getCurrentUser();
   //print_r($userRequests);
 }
 
@@ -51,6 +52,7 @@ if(isset($_GET['trader'])){
                 break;
               }
               else{
+                if($req['requester'] == $currentUser){
                 echo "<div class='panel panel-default'>";
 
                 echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem(".$val['itemid'].")\"><strong>". $val['itemname'] . "</strong> </button></div>";
@@ -69,6 +71,7 @@ if(isset($_GET['trader'])){
           
                 echo "</div>";
                 break;
+              }
               }
             }
           }

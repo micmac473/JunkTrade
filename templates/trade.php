@@ -32,7 +32,6 @@ include "base.php";
       <th>With</th>
       <th>Date Requested</th>
       <th>Status</th>
-      <th></th>
       <th>Action</th>
     </tr>
     </thead>
