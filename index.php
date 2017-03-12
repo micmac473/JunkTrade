@@ -250,6 +250,23 @@ $app->get("/requestsmeetuprequester", function(Request $request, Response $respo
 	return $response;
 });
 
+
+// Retrieves all meet ups for the current user
+$app->get("/usermeetup", function(Request $request, Response $response){
+	$events = getUserMeetUp();
+	
+	$response = $response->withJson($events);
+	return $response;
+});
+
+// Retrieves all meet ups for the current user
+$app->get("/userfollowerupdates", function(Request $request, Response $response){
+	$events = getUserFollowerUpdates();
+	
+	$response = $response->withJson($events);
+	return $response;
+});
+
 $app->get("/request/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country

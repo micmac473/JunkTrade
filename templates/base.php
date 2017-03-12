@@ -48,6 +48,9 @@ if(!isset($_SESSION)){
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+    <!-- Pusher -->
+    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
+
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
@@ -56,9 +59,17 @@ if(!isset($_SESSION)){
 
     <!-- Main JS file-->
     <script src="../js/main.js"></script>
+
+     <!-- Bootstrap rating -->
     <script src="../js/bootstrap-rating.js"></script>
 
+     <!-- Bootstrap Datepicker -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Backand SDK -->
+    <script src="//cdn.backand.net/vanilla-sdk/1.0.9/backand.js"></script>
+    <script src="//cdn.backand.net/angular1-sdk/1.9.5/backand.provider.js"></script> 
+
 
     <style>
       ./*city{

@@ -293,6 +293,35 @@ function getRequestsMeetupRequester(){
 	return $items;
 }
 
+function getUserMeetUp(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.requestee = $userid OR r.requester = $userid AND r.decision = true ORDER BY t.tradedate ASC;";
+	$events =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$events[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $events;
+}
+
+function getUserFollowerUpdates(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `follow` f, `users` u, `items` i WHERE u.id = f.followee AND u.id = i.userid AND f.follower = $userid AND f.followindicator = true AND i.uploaddate > f.followdate ORDER BY i.uploaddate DESC ;";
+	$updates =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$updates[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $updates;
+}
 
 function getAcceptedUserItems(){
 	$userid = $_SESSION['id'];
@@ -983,7 +1012,7 @@ function acceptRequest($requestId, $requesteeItem, $requesterItem){
 	$sql .= "UPDATE `requests` r SET r.decision = false WHERE r.item = $requesterItem AND r.id <> $requestId;";
 	$sql .= "UPDATE `requests` r SET r.decision = false WHERE r.item2 = $requesterItem AND r.id <> $requestId;";
 	$sql .= "DELETE FROM `saved`  WHERE  `itemid` = $requesteeItem OR `itemid` = $requesterItem;";
-	$sql .= "DELETE FROM `requests`  WHERE  `item2` = $requesteeItem AND r.id <> $requestId;";
+	$sql .= "DELETE FROM `requests`  WHERE  `item2` = $requesteeItem AND `id` <> $requestId;";
 	$res = null;
 	if ($db != NULL){
 		$res = $db->multi_query($sql);

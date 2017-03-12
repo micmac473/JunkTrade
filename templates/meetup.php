@@ -7,8 +7,8 @@ include "base.php";
 <div class ="container-fluid">
   <div class ="row">
     <div class="col-xs-12 table-responsive">
-      <div class="header text-center">
-        <h1>Requested Items <i class="fa fa-paper-plane fa-lg" aria-hidden="true" ></i></h1>
+      <div class="header text-center"> 
+        <h1>Requested Items <i class="fa fa-handshake-o fa-lg" aria-hidden="true" ></i></h1>
       </div>
 
       <div id="table_sec_requested"></div>
@@ -16,7 +16,7 @@ include "base.php";
 
     <div class ="col-xs-12 table-responsive">
       <div class="header text-center">
-        <h1>Requests For Items <i class="fa fa-envelope-open fa-lg" aria-hidden="true" ></i></h1>
+        <h1>Requests For Items <i class="fa fa-handshake-o fa-lg" aria-hidden="true" ></i></h1>
       </div>
 
       <div id="table_sec_requests"></div>

@@ -58,6 +58,7 @@ $(document).ready(function(){
     //getUserFollowers();
     
     //alert($('#requests > li').length);
+
 });  
 // this acts as the main function in Java
  
@@ -257,9 +258,9 @@ function listAllItems(records, user){
                             itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
                             itemdiv += "<div class='panel panel-default'>";
 
-                            itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
+                            itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><small>"+el.views+" Views</small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
 
-                            itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+                            itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'></div>";
 
                              if(requests[i]['decision'] == null){
                                 itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
@@ -284,9 +285,9 @@ function listAllItems(records, user){
             if(i == requests.length){
                 itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
                 itemdiv += "<div class='panel panel-default'>";
-                itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
+                itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong>  </button><small>"+el.views+" Views</small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
 
-                itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+                itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'></div>";
             
 
                 itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12 col-xs-offset-0'><button type='button' class='btn btn-primary btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
@@ -411,8 +412,8 @@ function listUserItems(records){
 
 //--------------------------------------------------------------------------------------------------------------------
 function viewItem(itemid){
-    /*$.get("../index.php/getitem/"+itemid, processItem,"json");
-    views(itemid); */
+    /*$.get("../index.php/getitem/"+itemid, processItem,"json"); */
+    views(itemid); 
     window.location.href = "item.php?item="+itemid;
     return false;
 }
@@ -928,7 +929,7 @@ function displayItemsForRequest(itemid){
 }
 
 function displayInModal(records, itemid){
-    if ($("#requesteritem").length > 0){ // the country select is available so we can display all countries
+    if ($("#requesteritem").length > 0){ 
         $.get("../index.php/accepteduseritems", function(res){
             console.log(res);
         
@@ -1216,12 +1217,12 @@ function denyRequest(requestId){
         
         if (isConfirm) {
             $.get("../index.php/denyrequest/"+requestId, function(res){
-                swal("Denied!", "The user will be notified", "success");
+                swal("Denied!", "The trader will be notified of your decision", "success");
                  getUserRequests();
             }, "json");
            
         } else {
-            swal("Cancelled", "The item is still pending", "error");
+            swal("Cancelled", "The item request is still pending", "error");
         }
     });
 }
@@ -1495,7 +1496,7 @@ function logout(){
     });
     return false;
 }
-
+//------------------------------------------------------------------------------------------------------
 function chat(userid){
     swal({
           title: "Let's Chat",
@@ -1517,6 +1518,56 @@ function chat(userid){
         }
     );
 }
+//-------------------------------------------------------------------------------------------------------
+function userMeetUp(){
+    $.get("../index.php/usermeetup",processUserMeetUp,"json");
+}
 
+function processUserMeetUp(records){
+    console.log(records);
+    displayUserMeetUp(records);
+}
+
+function displayUserMeetUp(records){
+    var events="<div class='container-fluid'>";
+    //alert(records.length);
+    if(records.length != 0){
+        records.forEach(function(el){
+            events+="<div class='well well-sm'><strong><a href='meetup.php' style='cursor: pointer; text-decoration: none; color:black'> " + el.tradedate + " at " + el.tradelocation + "</a></strong></div>";
+        });
+    
+    }
+    else{
+        events += "<div class='well well-sm'> <em>No meetup reminders </em></div>";
+    }
+    events+="</div>"
+    $("#reminders").html(events);
+
+}
+//---------------------------------------------------------------------------------------------------------
+function userFollowerUpdates(){
+    $.get("../index.php/userfollowerupdates", processUserFollowerUpdates, "json");
+}
+
+function processUserFollowerUpdates(records){
+    console.log(records);
+    displayUserFollowerUpdates(records);
+}
+
+function displayUserFollowerUpdates(records){
+    var updates="<div class='container-fluid'>";
+    //alert(records.length);
+    if(records.length != 0){
+        records.forEach(function(el){
+            updates+="<div class='well well-sm'><strong><a onclick=\"viewItem("+el['itemid']+")\" style='cursor: pointer; text-decoration: none; color:black'> <i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + " uploaded <i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+" on " +el.uploaddate+ "</a></strong></div>";
+        });
+    }
+    else{
+        updates+="<div class='well well-sm'> <em>No follower updates </em></div>";
+    }
+    updates+="</div>"
+    $("#followerupdates").html(updates);
+
+}
 //---------------------------------END-------------------------------------------------
 console.log("JavaScript file was successfully loaded in the page");

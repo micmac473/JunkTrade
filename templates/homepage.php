@@ -4,16 +4,30 @@ include "base.php";
 
 ?>
 
-    <!--Div that will hold the pie chart-->
-
-    
 <div class="container-fluid">
   <div class="row">
-    <div class="header text-center">
-        <h1><u>Tradable Items</u> <i class="fa fa-gift fa-lg" aria-hidden="true" ></i></h1>
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+      <div class="header text-center">
+          <h1><u>Tradable Items</u> <i class="fa fa-gift fa-lg" aria-hidden="true" ></i></h1>
+      </div>
+      <!-- <div id = "itemblock" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12"> -->
+      <div id = "itemblock"> </div>
     </div>
-    <!-- <div id = "itemblock" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12"> -->
-    <div id = "itemblock">
+    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+      <div style="background-color: white; box-shadow: 5px 5px 5px #888888;">
+        <h3 class="header text-center" > <u>Events</u>  <i class="fa fa-calendar" aria-hidden="true"></i></h3>
+        <div id="reminders"> 
+          
+        </div>
+      </div>
+
+      <div style="background-color: white; box-shadow: 5px 5px 5px #888888;">
+        <h3 class="header text-center"><u> Followers</u>  <i class="fa fa-rss" aria-hidden="true"></i></h3>
+        <div id="followerupdates"> 
+          
+         </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -108,5 +122,7 @@ include "base.php";
 
 <script>window.onload = function() {
     getAllItems();
+    userMeetUp();
+    userFollowerUpdates();
 };
 </script>
