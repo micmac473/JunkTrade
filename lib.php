@@ -735,7 +735,7 @@ function getRequesterItem(){
 	$db = getDBConnection();
 	$requests = [];
 	if ($db != null){
-		$sql = "SELECT i.itemname FROM `requests` r, `items` i WHERE i.itemid = r.item2 AND r.requestee = $userId AND `decision` IS NULL ORDER BY r.timerequested DESC;";
+		$sql = "SELECT i.itemname, i.itemid FROM `requests` r, `items` i WHERE i.itemid = r.item2 AND r.requestee = $userId AND `decision` IS NULL ORDER BY r.timerequested DESC;";
 		$res = $db->query($sql);
 		while($res && $row = $res->fetch_assoc()){
 			$requests[] = $row;

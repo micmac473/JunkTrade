@@ -494,7 +494,7 @@ function displayRequests(records, res){
             htmlStr += "<tr>";
             htmlStr += "<td style='display:none;'>"+ el['id'] +"</td>";
             htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+res[i]['item2']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+res[i]['itemname']+"<strong></button></td>";
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+res[i]['itemid']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+res[i]['itemname']+"<strong></button></td>";
             //htmlStr += "<td></td>";
             htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> "+el['itemname']+"</a></td>";
             
