@@ -401,13 +401,13 @@ function saveTransactions($User1,$User2,$item1,$item2){
 	return FALSE;
 }
 
-function saveItem($picture,$itemname, $itemDescription){
+function saveItem($picture,$picture2, $picture3, $itemname, $itemDescription){
 
 	$userid =$_SESSION['id'];
 	//$sql = "INSERT INTO items(`userId`,`picture`,`itemDescription`) VALUES('userid','$picture','$itemDescription')"; */
 	$db = getDBConnection();
 	$userId = $_SESSION['id'];
-	$sql = "INSERT INTO items(`itemname`, `userid`,`picture`,`itemdescription`) VALUES('$itemname','$userId','$picture','$itemDescription');";
+	$sql = "INSERT INTO items(`itemname`, `userid`,`picture`,`picture2`,`picture3`,`itemdescription`) VALUES('$itemname','$userId','$picture','$picture2','$picture3','$itemDescription');";
 	$id = -1;
 	if ($db != NULL){
 		$res = $db->query($sql);

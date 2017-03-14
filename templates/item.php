@@ -55,10 +55,10 @@ if(isset($_GET['item'])){
                                 <img src=\"" . $itemImages['picture'] . "\"  style='width:100%; class='img-responsive img-thumbnail mx-auto'>
                             </div>
                             <div class='item' data-slide-number='1'>           
-                                <img src=\"" . $itemImages['picture'] . "\">
+                                <img src=\"" . $itemImages['picture2'] . "\">
                             </div>
                             <div class='item' data-slide-number='2'>        
-                                <img src=\"" . $itemImages['picture'] . "\">
+                                <img src=\"" . $itemImages['picture3'] . "\">
                             </div>
                         </div>
                         <!-- Carousel nav -->

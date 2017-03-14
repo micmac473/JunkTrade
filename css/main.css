@@ -121,9 +121,13 @@ button:active{
 .panel{
   background-color: #FFFFFF;
   box-shadow: 4px 4px 4px #888888;
+  /*height: 100%; */
 }
 
-
+/*.panel-body{
+  height: 100%; 
+  padding-bottom: 55px;
+} */
 
 /*Collapsible side bar*/
 #wrapper {

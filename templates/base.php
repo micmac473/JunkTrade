@@ -257,21 +257,21 @@ if(!isset($_SESSION)){
             <div class="form-group">
               <label class="col-md-4 control-label" for="uppic">Photo 1 </label>
               <div class="col-md-6">
-                <input name="image" class="input-file" id="image" type="file" accept="image/*" required="">
+                <input name="itemImages[]" class="input-file" id="image" type="file" accept="image/*" required="">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-md-4 control-label" for="uppic">Photo 2 </label>
               <div class="col-md-6">
-                <input name="image2" class="input-file" id="image2" type="file" accept="image/*" required="">
+                <input name="itemImages[]" class="input-file" id="image2" type="file" accept="image/*">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-md-4 control-label" for="uppic">Photo 3 </label>
               <div class="col-md-6">
-                <input name="image3" class="input-file" id="image3" type="file" accept="image/*" required="">
+                <input name="itemImages[]" class="input-file" id="image3" type="file" accept="image/*">
               </div>
             </div>
 
