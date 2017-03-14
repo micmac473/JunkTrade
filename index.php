@@ -337,7 +337,6 @@ $app->get("/viewitem/{id}", function(Request $request, Response $response){
 
 $app->get("/getitem/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
-	// Get Record for Specific Country
 	
 	$rec = getItem($val);
 	$response = $response->withJson($rec);

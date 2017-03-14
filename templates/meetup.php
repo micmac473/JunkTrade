@@ -60,29 +60,39 @@ include "base.php";
 
 <!-- Requester Feedback Modal -->
   <div class="modal fade" id="requesterFeedbackModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-body">
           <form class="form" id="requesterfeedbackform" onsubmit="return requesterFeedback();">
             <fieldset>
 
               <div class="modal-header">
-                <h2 class="modal-title" style="text-align: center">Feedback (Requester)</h2>
+                <h2 class="modal-title" style="text-align: center">Trade Feedback</h2>
              </div>
               <input id="tradeid" name="tradeid" type="hidden" disabled class="form-control input-md">
-              <input id="rating" type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" data-fractions="2" required/>
 
               <div class="form-group">
-              <label class="control-label" for="textarea">Comments</label>
-              <div class="">                     
-                <textarea class="form-control"  id="feedbackcomment" rows="5" name="feedbackcomment" placeholder="Comments about the trade" required></textarea>
+                <label class="control-label text-center" for="textarea">Rate</label>
+                <div class="">  
+                  <input id="rating" type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" data-fractions="2" required/>
+                </div>
               </div>
-            </div>
 
               <div class="form-group">
-                <div class="">
-                  <button  class="btn btn-success btn-block" type="submit">Send</button>
-                  <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelFeedback()">Cancel</button>
+                <label class="control-label" for="textarea">Comments</label>
+                <div class="">                     
+                  <textarea class="form-control"  id="feedbackcomment" rows="5" name="feedbackcomment" placeholder="Kindly leave comments about the trade" required></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <button  class="btn btn-success btn-block" type="submit">Send</button>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelFeedback()">Cancel</button>
+                  </div>
                 </div>
               </div>
 
@@ -96,17 +106,26 @@ include "base.php";
 
   <!-- Requestee Feedback Modal -->
   <div class="modal fade" id="requesteeFeedbackModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-body">
           <form class="form" id="requesteefeedbackform" onsubmit="return requesteeFeedback();">
             <fieldset>
 
               <div class="modal-header">
-                <h2 class="modal-title" style="text-align: center">Feedback (Requestee)</h2>
+                <h2 class="modal-title" style="text-align: center">Trade Feedback</h2>
              </div>
+
+
               <input id="tradeid" name="tradeid" type="hidden" disabled class="form-control input-md">
-              <input id="rating" type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" data-fractions="2" required/>
+
+              
+              <div class="form-group">
+                <label class="control-label text-center" for="textarea">Rate</label>
+                <div class="">  
+                  <input id="rating" type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" data-fractions="2" required/>
+                </div>
+              </div>
 
               <div class="form-group">
               <label class="control-label" for="textarea">Comments</label>

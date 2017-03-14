@@ -256,9 +256,9 @@ function listAllItems(records, user){
                     else {
                         if(requests[i]['requester'] == user){
                             itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
-                            itemdiv += "<div class='panel panel-default'>";
+                            itemdiv += "<div class='panel panel-warning'>";
 
-                            itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><small>"+el.views+" Views</small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
+                            itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><small> Views: "+el.views+" </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
 
                             itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'></div>";
 
@@ -284,8 +284,8 @@ function listAllItems(records, user){
 
             if(i == requests.length){
                 itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
-                itemdiv += "<div class='panel panel-default'>";
-                itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong>  </button><small>"+el.views+" Views</small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
+                itemdiv += "<div class='panel panel-info'>";
+                itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong></button><br><small> Views: "+el.views+" </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
 
                 itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'></div>";
             
@@ -1300,7 +1300,7 @@ function processRequestedMeetUp(records, records2){
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requesteecontact']+"</td>"
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el['item']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i> "+records2[i]['itemname']+"</td>";
         htmlStr += "<td> <i class='fa fa-calendar' aria-hidden='true'></i> " + el['tradedate'] + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i> " + el['tradelocation'] + "</td>";
@@ -1340,7 +1340,7 @@ function processRequestsMeetUp(records, records2){
         htmlStr += "<tr class='text-center'>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requestercontact']+"</td>"
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el['item2']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>  "+records[i]['itemname']+"</td>";
         htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i>  " + el['tradedate'] + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i>  " + el['tradelocation'] + "</td>";
@@ -1424,10 +1424,8 @@ function requesterFeedback(){
 
     console.log(feedback);
     $.post("../index.php/requesterfeedback", feedback, function(res){
-        if(res)
-            swal("Feedback saved!", "Thank you for your rating and comment", "success");
-        else
-            swal("Feedback not saved!", "Try again", "error");
+        swal("Feedback saved!", "Thank you for your rating and comment", "success");
+        getRequestedMeetUp();
     }, "json");
     return false;
 }
@@ -1453,10 +1451,8 @@ function requesteeFeedback(){
     
     console.log(feedback);
     $.post("../index.php/requesteefeedback", feedback, function(res){
-        if(res)
-            swal("Feedback saved!", "Thank you for your rating and comment", "success");
-        else
-            swal("Feedback not saved!", "Try again", "error");
+        swal("Feedback saved!", "Thank you for your rating and comment", "success");
+        getRequestsMeetUp();
     }, "json");
     return false;
 }
@@ -1532,9 +1528,13 @@ function displayUserMeetUp(records){
     var events="<div class='container-fluid'>";
     //alert(records.length);
     if(records.length != 0){
-        records.forEach(function(el){
-            events+="<div class='well well-sm'><strong><a href='meetup.php' style='cursor: pointer; text-decoration: none; color:black'> " + el.tradedate + " at " + el.tradelocation + "</a></strong></div>";
-        });
+        console.log(records.length);
+        //records.forEach(function(el){
+            for(var i = 0; i < records.length; i++){
+                events+="<div class='well well-sm'><a href='meetup.php' style='cursor: pointer; color:black'> " + records[i][0] + " at " + records[i][1] + "</a></div>";
+            }
+            
+        //});
     
     }
     else{
@@ -1559,7 +1559,7 @@ function displayUserFollowerUpdates(records){
     //alert(records.length);
     if(records.length != 0){
         records.forEach(function(el){
-            updates+="<div class='well well-sm'><strong><a onclick=\"viewItem("+el['itemid']+")\" style='cursor: pointer; text-decoration: none; color:black'> <i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + " uploaded <i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+" on " +el.uploaddate+ "</a></strong></div>";
+            updates+="<div class='well well-sm'><a onclick=\"viewItem("+el['itemid']+")\" style='cursor: pointer; color:black'> <i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + " uploaded <i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+" on " +el.uploaddate+ "</a></div>";
         });
     }
     else{

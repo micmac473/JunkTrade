@@ -295,15 +295,23 @@ function getRequestsMeetupRequester(){
 
 function getUserMeetUp(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.requestee = $userid OR r.requester = $userid AND r.decision = true ORDER BY t.tradedate ASC;";
+	//$sql = "SELECT * FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requestee = $userid OR r.requester = $userid ORDER BY t.tradedate ASC;";
+	$sql = "SELECT t.tradedate, t.tradelocation, t.requestid, r.requester FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requester = $userid ORDER BY t.tradedate ASC;";
+	$sql .= "SELECT t.tradedate, t.tradelocation, t.requestid, r.requester FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requestee = $userid ORDER BY t.tradedate ASC;";
+
 	$events =[];
 	$db = getDBConnection();
-		if ($db != NULL){
-			$res = $db->query($sql);
-			while($res && $row = $res->fetch_assoc()){
-				$events[] = $row;
-		}//while
-		$db->close();
+	if ($db != NULL){
+		if($db->multi_query($sql)){
+			do{
+				if($res = $db->store_result()){
+					while($row = $res->fetch_row()){
+						$events[] = $row;
+					}
+					$res->free();
+				}
+			} while($db->next_result());
+		} 
 	}//if
 	return $events;
 }
@@ -639,6 +647,40 @@ function getAllNonUserItemRequestsForSpecificTrader($traderId){
 		$db->close();
 	}//if
 	return $items;
+}
+
+function getUserRating($traderId){
+	$userID = $_SESSION["id"];
+	//SUM(COUNT(t.requesterfeedbackcomment) + COUNT(t.requesteefeedbackrating))/2
+	$sql ="SELECT SUM(t.requesteefeedbackrating)/COUNT(t.requesteefeedbackrating) AS rating FROM `requests` r, `trade` t WHERE r.id = t.requestid AND r.requester = $traderId AND r.decision = true AND t.requesteefeedbackindicator = 1;";
+	$sql .="SELECT SUM(t.requesterfeedbackrating)/COUNT(t.requesterfeedbackrating) as Rating FROM `requests` r, `trade` t WHERE r.id = t.requestid AND r.requestee = $traderId AND r.decision = true AND t.requesterfeedbackindicator = 1;";
+
+	/*$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items; */
+	$rating =[];
+	$db = getDBConnection();
+	if ($db != NULL){
+		if($db->multi_query($sql)){
+			do{
+				if($res = $db->store_result()){
+					while($row = $res->fetch_row()){
+						$rating[] = $row;
+					}
+					$res->free();
+				}
+			} while($db->next_result());
+		} 
+	}//if
+	return $rating;
 }
 
 function getRequesterItemsState(){

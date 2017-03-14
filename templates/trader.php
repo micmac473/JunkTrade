@@ -11,7 +11,16 @@ if(isset($_GET['trader'])){
   //print_r($userDetails);
   $userRequests = getAllNonUserItemRequestsForSpecificTrader($userID);
   $currentUser = getCurrentUser();
-  //print_r($userRequests);
+  $userRating = getUserRating($userID);
+  //print_r($userRating);
+  if($userRating[0][0] == null)
+    $rating = $userRating[1][0];
+  else if($userRating[1][0]==null)
+    $rating = $userRating[0][0];
+  else
+    $rating = $userRating[0][0] + $userRating[1][0];
+  $rating = number_format($rating, 1);
+  ///print_r($rating);
 }
 
 ?>
@@ -35,6 +44,7 @@ if(isset($_GET['trader'])){
           else{
             echo "<button type='button' class='btn btn-success' onClick=\"unfollowTrader(". $userID .")\" data-toggle='tooltip' title='Click to Unfollow' data-placement='bottom'> Following <i class='fa fa-rss-square' aria-hidden='true'></i></button></p>";
           }
+          echo "<input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value=\"".$rating."\"/><br>".$rating."/5.0"
         ?> 
     </div>
   </div>
@@ -99,4 +109,6 @@ if(isset($_GET['trader'])){
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
 });
+
+$('#input').rating('rate', 2.5);
 </script>

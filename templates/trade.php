@@ -26,14 +26,14 @@ include "base.php";
 <script type="text/template" id="table_headingt">
   <table class="table table-hover table-condensed">
     <thead>
-    <tr>
-      <th>To</th>
-      <th>For</th>
-      <th>With</th>
-      <th>Date Requested</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
+      <tr>
+        <th>To</th>
+        <th>For</th>
+        <th>With</th>
+        <th>Date Requested</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
     </thead>
     <tbody>
 </script>
