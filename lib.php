@@ -128,7 +128,7 @@ function removeItemFromSaved($savedId){
 
 function checkFollowee($followee){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `follow` f where f.followee = $followee and f.follower = '$userid';";
+	$sql = "SELECT * FROM `follow` f where f.followee = $followee and f.follower = $userid;";
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != null){
@@ -172,8 +172,9 @@ function addFollowee($followee){
 }
 
 function removeFollowee($followee){
+	$follower = $_SESSION['id'];
 	$db = getDBConnection();
-	$sql = "UPDATE `follow` f SET `followindicator` = false WHERE `followee` = $followee;";
+	$sql = "UPDATE `follow` f SET `followindicator` = false WHERE `followee` = $followee AND f.follower = $follower;";
 	$res = null;
 	if ($db != NULL){
 		$res = $db->query($sql);
@@ -320,6 +321,39 @@ function getUserMeetUp(){
 function getUserFollowerUpdates(){
 	$userid = $_SESSION['id'];
 	$sql = "SELECT * FROM `follow` f, `users` u, `items` i WHERE u.id = f.followee AND u.id = i.userid AND f.follower = $userid AND f.followindicator = true AND i.uploaddate > f.followdate ORDER BY i.uploaddate DESC ;";
+	$updates =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$updates[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $updates;
+}
+
+
+function getUserFollowersCount($traderId){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `follow` f, `users` u WHERE f.follower = u.id AND f.followee = $traderId
+	 AND f.followindicator = true;";
+	$updates =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$updates[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $updates;
+}
+
+
+function getUserTradeCount($traderId){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT COUNT(*) AS numtrades FROM `requests` r WHERE r.requester = $traderId OR r.requestee = $traderId AND r.decision = true;";
 	$updates =[];
 	$db = getDBConnection();
 		if ($db != NULL){

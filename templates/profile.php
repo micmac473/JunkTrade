@@ -104,23 +104,44 @@ if (isset($_POST['uploadPic'])) {
    catch(Exception $e){
     print( $e->getMessage());
    }
+
+
+
 }
+$userID = getCurrentUser();
+$userRating = getUserRating($userID);
+  //print_r($userRating);
+  if($userRating[0][0] == null)
+    $rating = $userRating[1][0];
+  else if($userRating[1][0]==null)
+    $rating = $userRating[0][0];
+  else
+    $rating = $userRating[0][0] + $userRating[1][0];
+  $rating = number_format($rating, 1);
 
-
+$tradeCount = getUserTradeCount($userID);
 include "base.php";
 ?>
 
 <div class ="container-fluid">
   <div class ="row">
     <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+    <a href='#' data-toggle='tooltip' title= '<?php echo $rating. " out of 5 stars" ?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php 
+                                    echo $rating 
+                                  ?>
+    ></a>
+    Trades: <?php echo $tradeCount[0]['numtrades']?>
+  </div>
+
+    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <button type="button" onclick ="showProfilePictureForm();" class="btn btn-success btn-block"> <i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> Update Profile Picture</button>
     </div>
     <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <button type="button" onclick ="showForm();" class="btn btn-success btn-block"><i class="fa fa-gift fa-lg" aria-hidden="true"></i> Add Item</button>
     </div>
-    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+    <!-- <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <button type="button" onclick ="showSearch();" class="btn btn-info btn-block"><i class="fa fa-search fa-lg" aria-hidden="true"></i> Find Item</button>
-    </div>
+    </div> -->
   </div>
  
   <!-- Perform a seafrch -->

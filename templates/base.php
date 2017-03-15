@@ -3,6 +3,31 @@ if(!isset($_SESSION)){
   session_start();
 }
 
+$currentPage = getCurrentPage();
+
+function getCurrentPage(){
+  $currentPage = basename($_SERVER['PHP_SELF']);
+  $page = "";
+  if(stripos($currentPage,"homepage") !== false)
+    $page = "Homepage";
+  else if(stripos($currentPage,"profile") !== false)
+    $page = "Profile";
+  else if(stripos($currentPage,"notifications") !== false)
+    $page = "Notifications";
+  else if(stripos($currentPage,"trade") !== false)
+    $page = "Requests";
+  else if(stripos($currentPage,"people") !== false)
+    $page = "People";
+  else if(stripos($currentPage,"saved") !== false)
+    $page = "Saved";
+  else if(stripos($currentPage,"meetup") !== false)
+    $page = "Meetup";
+  else if(stripos($currentPage,"search") !== false)
+    $page = "Search";
+
+
+  return $page;
+}
 ?>
 
 <!doctype html>
@@ -81,7 +106,7 @@ if(!isset($_SESSION)){
 <body>
   <div id="wrapper">
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
+    <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
@@ -92,11 +117,13 @@ if(!isset($_SESSION)){
 
         <a id="menu-toggle" href="#"><i class="navbar-brand btn-menu toggle fa fa-bars fa-lg" aria-hidden="true"></i>  </a>
         <a class="navbar-brand" href="homepage.php" style="padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
+        
         <!--<a class="navbar-brand" href ="homepage.php">JunkTrade</a> -->
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
       </div>
 
       <div id="navbar" class="navbar-collapse collapse">
+        <span class="navbar-brand" style="color: white;text-shadow: 1px 1px #096790;"><strong> <?php echo $currentPage ?></strong></span>
         <!--  <ul class="nav navbar-nav">
 
          <li class="dropdown">
@@ -171,26 +198,89 @@ if(!isset($_SESSION)){
   <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
-                <li>
-                    <a href="homepage.php"><i class="fa fa-home fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Home</a>
+              <?php 
+                if($currentPage == "Homepage"){
+                  echo"<li style='background-color: #bdbdbd;'>";
+                }
+                else{
+                  echo "<li>";
+                }     
+              ?>
+                <a href="homepage.php"><i class="fa fa-home fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Home</a>
                 </li>
-                <li>
+
+              <?php 
+                if($currentPage == "Profile"){
+                  echo"<li style='background-color: #bdbdbd;'>";
+                } 
+
+                else{
+                  echo "<li>";
+                }    
+              ?>
                     <a href="profile.php"><i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile</a>
                 </li>
-                <li>
+
+              <?php 
+                if($currentPage == "Notifications"){
+                  echo"<li style='background-color: #bdbdbd;'>";
+                } 
+
+                else{
+                  echo "<li>";
+                }    
+              ?>
                     <a href="notifications.php"><i class="fa fa-bell fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Notifications</a>
                 </li>
-                <li>
+
+
+              <?php 
+                if($currentPage == "Requests"){
+                  echo"<li style='background-color: #bdbdbd;'>";
+                } 
+
+                else{
+                  echo "<li>";
+                }    
+              ?>
                     <a href="trade.php"><i class="fa fa-gavel fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Requests</a>
                 </li>
-                <li>
+
+
+              <?php 
+                if($currentPage == "People"){
+                  echo"<li style='background-color: #bdbdbd;'>";
+                } 
+
+                else{
+                  echo "<li>";
+                }    
+              ?>
                     <a href="people.php"><i class="fa fa-users fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;People</a>
                 </li>
-                <li>
+              <?php 
+                if($currentPage == "Saved"){
+                  echo"<li style='background-color: #bdbdbd;'>";
+                } 
+
+                else{
+                  echo "<li>";
+                }    
+              ?>
                     <a href="saved.php"><i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saved</a>
                 </li>
-                <li>
-                    <a href="meetup.php"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meet up</a>
+
+
+              <?php 
+                if($currentPage == "Meetup"){
+                  echo"<li style='background-color: #bdbdbd;'>";
+                } 
+
+                else{
+                  echo "<li>";
+                }    
+              ?>
+                    <a href="meetup.php"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meetup</a>
                 </li>
                 <li>
                     <a href="" onclick="return logout();"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>

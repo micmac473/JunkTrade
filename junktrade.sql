@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2017 at 04:48 PM
+-- Generation Time: Mar 15, 2017 at 09:47 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -37,15 +37,6 @@ CREATE TABLE `follow` (
   `followindicator` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Dumping data for table `follow`
---
-
-INSERT INTO `follow` (`followid`, `follower`, `followee`, `followdate`, `followindicator`) VALUES
-(1, 42, 40, '2017-03-15 09:42:51', 1),
-(2, 2, 42, '2017-03-15 09:53:13', 1),
-(3, 42, 2, '2017-03-15 09:53:59', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -72,11 +63,11 @@ CREATE TABLE `items` (
 INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `picture2`, `picture3`, `uploaddate`, `userid`, `views`) VALUES
 (1, 'House', 'This is my house item', '../img/house.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 03:38:21', 1, 4),
 (2, 'Peas', 'This is my easy peasy item', '../img/easy.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 03:38:21', 2, 6),
-(3, 'Money', 'This is my money item', '../img/nomoney.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 03:38:42', 2, 4),
+(3, 'Money', 'This is my money item', '../img/nomoney.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 03:38:42', 2, 5),
 (4, 'Friends', 'This is my friends item', '../img/buddy.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 03:38:42', 6, 2),
 (25, 'Dell XPS', 'Processor: i7 3.5 Ghz Quad Core\r\nRam: 12 GB\r\nGraphics: GeForce GTX 980', '../img/xps.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 15:54:19', 6, 5),
 (26, 'Logo', 'This is my logo item', '../img/logo.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 15:55:07', 6, 3),
-(27, 'HP Laptop', 'Processor: i5 2.5 Ghz Dual Core\r\nRam: 8 GB\r\nGraphics: Intel ', '../img/hp.jpg', '../img/hpLaptop.jpg', '../img/defaultitemimage.jpg', '2016-11-26 15:57:48', 1, 5),
+(27, 'HP Laptop', 'Processor: i5 2.5 Ghz Dual Core\r\nRam: 8 GB\r\nGraphics: Intel ', '../img/hp.jpg', '../img/hpLaptop.jpg', '../img/defaultitemimage.jpg', '2016-11-26 15:57:48', 1, 6),
 (29, 'SVG Flag', 'This the flag of St. Vincent and the Grenadines, West Indies', '../img/svgflag.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-27 15:21:11', 39, 2),
 (30, 'Cloud Server', 'Heroku cloud server', '../img/cloudserver.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-27 22:57:00', 40, 8),
 (34, 'Hydrangeas', 'Hydrangeas', '../img/Hydrangeas.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-30 13:42:30', 1, 1),
@@ -88,11 +79,11 @@ INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `pictur
 (45, 'Gucci Belt', 'Genuine Leather,\r\nCondition: New', '../img/guccibelt.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-12-02 00:36:38', 1, 5),
 (46, 'New Era Hat', 'Snapback\r\nColor: Black\r\nSize: 7 1/2', '../img/snapback.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-12-02 00:38:16', 1, 10),
 (47, 'Galaxy Note Edge', 'Color: White,\r\nCondition: Used,\r\nAge: 2 Months,\r\nBrand: Samsung,\r\nComes with stylus, charger and case', '../img/galaxynoteedge.jpg', '../img/samsung7.jpg', '../img/samsungTab.jpg', '2017-02-28 04:39:04', 41, 5),
-(48, 'MacBook Pro', 'Touch Bar and Touch ID\r\n2.6GHz quad-core Intel Core i7', '../img/macbook.jpg', '../img/macbook2.jpe', '../img/macbook3.jpg', '2017-03-14 18:35:24', 42, 16),
-(49, 'Data Structures Book', 'Title: Data Structures In Java\r\nAuthor: Noel Kalicharan\r\nCondition: Used\r\nAge: 6 months', '../img/dataStructuresInJava.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2017-03-15 09:47:56', 2, 5),
+(48, 'MacBook Pro', 'Touch Bar and Touch ID\r\n2.6GHz quad-core Intel Core i7', '../img/macbook.jpg', '../img/macbook2.jpe', '../img/macbook3.jpg', '2017-03-14 18:35:24', 42, 17),
+(49, 'Data Structures Book', 'Title: Data Structures In Java\r\nAuthor: Noel Kalicharan\r\nCondition: Used\r\nAge: 6 months', '../img/dataStructuresInJava.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2017-03-15 09:47:56', 2, 6),
 (50, 'Data Structures Book', 'Title: Data Structures in C\r\nAuthor: Noel Kalicharan\r\nCondition: New\r\nAge: 1 month\r\nCategory: Books', '../img/datastructuresinc.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2017-03-15 09:50:10', 42, 5),
 (51, 'PHP Book', 'Title: PHP for Absolute Beginners\r\nAuthor: Jason Lengstorf\r\nCategory: Books\r\nCondition: Used\r\nAge: 4 months', '../img/phpbook.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2017-03-15 09:55:23', 2, 10),
-(52, 'Google Pixel', 'Brand: Google\r\nCategory: Phones\r\nCondition: Used\r\nAge: 2 months', '../img/googlepixel.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-15 11:38:27', 42, 4);
+(52, 'Google Pixel', 'Brand: Google\r\nCategory: Phones\r\nCondition: Used\r\nAge: 2 months', '../img/googlepixel.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-15 11:38:27', 42, 5);
 
 -- --------------------------------------------------------
 
@@ -144,10 +135,10 @@ CREATE TABLE `trade` (
   `locationdecision` tinyint(1) NOT NULL,
   `requestercontact` varchar(20) NOT NULL,
   `requesteecontact` varchar(20) NOT NULL,
-  `requesterfeedbackrating` int(11) NOT NULL,
+  `requesterfeedbackrating` decimal(11,1) NOT NULL,
   `requesterfeedbackcomment` varchar(1000) NOT NULL,
   `requesterfeedbackindicator` tinyint(1) NOT NULL DEFAULT '0',
-  `requesteefeedbackrating` int(11) NOT NULL,
+  `requesteefeedbackrating` decimal(11,1) NOT NULL,
   `requesteefeedbackcomment` varchar(1000) NOT NULL,
   `requesteefeedbackindicator` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -233,7 +224,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `follow`
 --
 ALTER TABLE `follow`
-  MODIFY `followid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `followid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `items`
 --
@@ -248,7 +239,7 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `saved`
 --
 ALTER TABLE `saved`
-  MODIFY `savedid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `savedid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `trade`
 --
