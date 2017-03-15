@@ -3,6 +3,7 @@ include "../lib.php";
 
 //Moves item image files to folder and saved the file names and other other to DB
 if(isset($_POST['upload'])){
+  $defaultFileName = "../img/defaultitemimage.jpg";
 
   $filetmp = $_FILES['itemImages']['tmp_name'][0];
   $filename = $_FILES["itemImages"]["name"][0];
@@ -10,19 +11,30 @@ if(isset($_POST['upload'])){
   $filepath = "../img/".$filename;
   
   $filetmp1 = $_FILES["itemImages"]["tmp_name"][1];
-  $filename1 = $_FILES["itemImages"]["name"][1];
+  if($_FILES["itemImages"]["name"][1] != null){
+    $filename1 = $_FILES["itemImages"]["name"][1];
+     move_uploaded_file($filetmp1,$filepath1);
+  }   
+  else
+    $filename1 = $defaultFileName;
+
   $filetype1 = $_FILES["itemImages"]["type"][1];
   $filepath1 = "../img/".$filename1;
 
   $filetmp2 = $_FILES["itemImages"]["tmp_name"][2];
-  $filename2 = $_FILES["itemImages"]["name"][2];
+  if($_FILES["itemImages"]["name"][2] != null){
+    $filename2 = $_FILES["itemImages"]["name"][2];
+    move_uploaded_file($filetmp2,$filepath2);
+  }
+    
+  else
+    $filename2 = $defaultFileName;
+
   $filetype2 = $_FILES["itemImages"]["type"][2];
   $filepath2 = "../img/".$filename2;
 
   move_uploaded_file($filetmp,$filepath);
-  move_uploaded_file($filetmp1,$filepath1);
-  move_uploaded_file($filetmp2,$filepath2);
-
+ 
   //$imagePath = "../img/".$post['image'];
   try{
     $itemName = $_POST['itemname'];
@@ -40,7 +52,7 @@ if(isset($_POST['upload'])){
 }
 
 if (isset($_POST['uploadU'])) {
-$filetmp = $_FILES["imageU"]["tmp_name"];
+  $filetmp = $_FILES["imageU"]["tmp_name"];
   $filename = $_FILES["imageU"]["name"];
   $filetype = $_FILES["imageU"]["type"];
   $filepath = "../img/".$filename;
@@ -168,9 +180,23 @@ include "base.php";
           <legend style="text-align:center">Edit Item</legend>
             <!-- File Button-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Choose an Image </label>
+              <label class="col-md-4 control-label" for="uppic">Photo 1 </label>
               <div class="col-md-6">
                 <input name="imageU" class="input-file" id="imageU" type="file" accept="image/*" required="">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="uppic">Photo 2 </label>
+              <div class="col-md-6">
+                <input name="imageU2" class="input-file" id="imageU" type="file" accept="image/*" required="">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="uppic">Photo 3 </label>
+              <div class="col-md-6">
+                <input name="imageU3" class="input-file" id="imageU" type="file" accept="image/*" required="">
               </div>
             </div>
             
@@ -194,7 +220,7 @@ include "base.php";
             <div class="form-group">
               <label class="col-md-4 control-label" for="ItemDescription">Item Description</label>
               <div class="col-md-6">                     
-                <textarea name="itemdescriptionU" class="form-control" id="itemdescriptionU" placeholder="Tell us about your item" required=""></textarea>
+                <textarea name="itemdescriptionU" class="form-control" id="itemdescriptionU" placeholder="Tell us about your item" rows="5" required=""></textarea>
               </div>
             </div>
 

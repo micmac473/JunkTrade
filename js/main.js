@@ -224,8 +224,16 @@ function updatePassword(){
 
 //--------------------------------------------------------------------------------------------------------------------
 //Dsiplay All items available (except user items) on homepage
-function getAllItems(){//alter for slim 
-    $.get("../index.php/homepage", processAllItems, "json");
+function sortHomepageItems(sortOrder){
+    //alert(value);
+    getAllItems(sortOrder);
+}
+
+function getAllItems(sort){//alter for slim 
+    if(typeof(sort) === 'undefined')
+        sort = "mra";
+    //alert(sort);
+    $.get("../index.php/homepage/"+sort, processAllItems, "json");
 }
 
 function processAllItems(records){
@@ -501,8 +509,8 @@ function displayRequests(records, res){
             
             //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
             //htmlStr += "<td><button type='button' class='btn btn-info btn-block' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
-            htmlStr += "<td><div class='col-lg-6 col-xs-12'><button type='button' class='btn btn-success btn-block' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up fa-lg' aria-hidden='true'></i></button></div>";
-            htmlStr += "<div class='col-lg-6 col-xs-12'><button type='button' class='btn btn-danger btn-block' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down fa-lg' aria-hidden='true'></i></button></div></td>";
+            htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up fa-lg' aria-hidden='true'></i></button> ";
+            htmlStr += " <button type='button' class='btn btn-danger' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down fa-lg' aria-hidden='true'></i></button></td>";
             htmlStr +=" </tr>" ;
             i++;
         },"json");
@@ -847,7 +855,9 @@ function hideSearch(){
 function showUpdateForm(itemid){
    $('#updateItemform').show("slow");
    $.get("../index.php/edititem/"+itemid, function(item){
-       //$("#imageU").val(item.picture);
+        //$("#imageU").val(item.picture);
+        //$("#imageU2").val(item.picture2);
+        //$("#imageU2").val(item.picture3);
         $("#id").val(item.itemid);
         $("#itemnameU").val(item.itemname);
         $("#itemdescriptionU").val(item.itemdescription);
@@ -1302,7 +1312,7 @@ function processRequestedMeetUp(records, records2){
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requesteecontact']+"</td>"
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el['item']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i> "+records2[i]['itemname']+"</td>";
         htmlStr += "<td> <i class='fa fa-calendar' aria-hidden='true'></i> " + el['tradedate'] + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i> " + el['tradelocation'] + "</td>";
@@ -1342,7 +1352,7 @@ function processRequestsMeetUp(records, records2){
         htmlStr += "<tr class='text-center'>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requestercontact']+"</td>"
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el['item2']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>  "+records[i]['itemname']+"</td>";
         htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i>  " + el['tradedate'] + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i>  " + el['tradelocation'] + "</td>";
@@ -1572,5 +1582,9 @@ function displayUserFollowerUpdates(records){
     $("#followerupdates").html(updates);
 
 }
+
+
+
+
 //---------------------------------END-------------------------------------------------
 console.log("JavaScript file was successfully loaded in the page");

@@ -156,8 +156,9 @@ $app->get("/denyrequest/{id}", function(Request $request, Response $response){
 	return $response;
 });
 
-$app->get("/homepage", function(Request $request, Response $response){
-	$items = getAllItems();
+$app->get("/homepage/{id}", function(Request $request, Response $response){
+	$sort = $request->getAttribute('id');
+	$items = getAllItems($sort);
 	
 	$response = $response->withJson($items);
 	return $response;

@@ -583,9 +583,25 @@ function getUserItems($userid){//should be session id here instead of useId
 	return $items;
 }
 
-function getAllItems(){
+function getAllItems($sort){
 	$userID = $_SESSION["id"];
-	$sql ="SELECT * FROM `items` i, `users` u WHERE i.userid = u.id AND `userid` <> $userID ORDER BY `uploaddate` DESC;";
+	if($sort == "mra")
+		$sql ="SELECT * FROM `items` i, `users` u WHERE i.userid = u.id AND `userid` <> $userID ORDER BY `uploaddate` DESC;";
+	else if($sort == "lra")
+		$sql ="SELECT * FROM `items` i, `users` u WHERE i.userid = u.id AND `userid` <> $userID ORDER BY `uploaddate` ASC;";
+	else if($sort == "mv")
+		$sql ="SELECT * FROM `items` i, `users` u WHERE i.userid = u.id AND `userid` <> $userID ORDER BY `views` DESC;";
+	else if($sort == "lv")
+		$sql ="SELECT * FROM `items` i, `users` u WHERE i.userid = u.id AND `userid` <> $userID ORDER BY `views` ASC;";
+	else if($sort == "ia-z")
+		$sql ="SELECT * FROM `items` i, `users` u WHERE i.userid = u.id AND `userid` <> $userID ORDER BY `itemname` ASC;";
+	else if($sort == "iz-a")
+		$sql ="SELECT * FROM `items` i, `users` u WHERE i.userid = u.id AND `userid` <> $userID ORDER BY `itemname` DESC;";
+	else if($sort == "ta-z")
+		$sql ="SELECT * FROM `items` i, `users` u WHERE i.userid = u.id AND `userid` <> $userID ORDER BY `username` ASC;";
+	else if($sort == "tz-a")
+		$sql ="SELECT * FROM `items` i, `users` u WHERE i.userid = u.id AND `userid` <> $userID ORDER BY `username` DESC;";
+
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();

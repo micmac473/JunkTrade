@@ -52,13 +52,13 @@ if(isset($_GET['item'])){
                     <div class='carousel slide' id='myCarousel'>
                         <div class='carousel-inner'>
                             <div class='active item' data-slide-number='0'>
-                                <img src=\"" . $itemImages['picture'] . "\"  style='width:100%; class='img-responsive img-thumbnail mx-auto'>
+                                <img src=\"" . $itemImages['picture'] . "\"  style='width:100%;height:450px;' class='img-responsive img-thumbnail mx-auto'>
                             </div>
                             <div class='item' data-slide-number='1'>           
-                                <img src=\"" . $itemImages['picture2'] . "\">
+                                <img src=\"" . $itemImages['picture2'] . "\" style='width:100%;height:450px;' class='img-responsive img-thumbnail mx-auto'>
                             </div>
                             <div class='item' data-slide-number='2'>        
-                                <img src=\"" . $itemImages['picture3'] . "\">
+                                <img src=\"" . $itemImages['picture3'] . "\" style='width:100%;height:450px;' class='img-responsive img-thumbnail mx-auto'>
                             </div>
                         </div>
                         <!-- Carousel nav -->
@@ -88,7 +88,7 @@ if(isset($_GET['item'])){
     }
     else{
         if($itemRequest['decision'] == true){
-            echo "<button type='button' class='btn btn-default btn-block disabled'><i class='fa fa-check fa-lg' aria-hidden='true'></i> Request Accepted</button>";
+            echo "<button type='button' class='btn btn-default btn-block disabled'><i class='fa fa-check fa-lg' aria-hidden='true'></i> Accepted</button>";
         }
         else if( $itemRequest['decision'] == null){
             echo "<button type='button' class='btn btn-danger btn-block' onclick=\"cancelMadeRequest(".$itemRequest['id'].")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button>";

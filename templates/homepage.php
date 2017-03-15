@@ -6,6 +6,28 @@ include "base.php";
 
 <div class="container-fluid">
   <div class="row">
+    <form class="form-horizontal">
+  <fieldset>
+
+  <!-- Select Basic -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="selectbasic">Sort by</label>
+    <div class="col-md-4">
+      <select id="selectbasic" name="selectbasic" class="form-control" onChange="sortHomepageItems(this.value);">
+        <option value="mra">Date: Most Recently Added (Default)</option>
+        <option value="lra">Date: Least Recently Added</option>
+        <option value="mv">Views: High to Low</option>
+        <option value="lv">Views: Low to High</option>
+        <option value="ia-z">Items: A-Z</option>
+        <option value="iz-a">Items: Z-A</option>
+        <option value="ta-z">Trader: A-Z</option>
+        <option value="tz-a">Trader: Z-A</option>
+      </select>
+    </div>
+  </div>
+
+  </fieldset>
+</form>
     <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
       <div class="header text-center">
           <h1><u>Tradable Items</u> <i class="fa fa-gift fa-lg" aria-hidden="true" ></i></h1>
