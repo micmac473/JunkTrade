@@ -52,12 +52,13 @@ function checkLogin1($email, $securityQuestion, $sAnswer){
 }
 
 
-function saveUser($username, $firstname, $lastname, $email, $password, $securityQuestion, $securityAnswer){
+function saveUser($username, $firstname, $lastname, $email, $telephone, $password, $securityQuestion, $securityAnswer){
 	$password = sha1($password);
 	$securityAnswer = sha1($securityAnswer);
-	$sql = "INSERT INTO `users` (`username`, `firstname`, `lastname`, `email`, `password`, `sQuestion`, `sAnswer`) VALUES ('$username', '$firstname', '$lastname', '$email', '$password','$securityQuestion','$securityAnswer');";
+	$sql = "INSERT INTO `users` (`username`, `firstname`, `lastname`, `email`, `telephone`, `password`, `sQuestion`, `sAnswer`) VALUES ('$username', '$firstname', '$lastname', '$email', '$telephone', '$password','$securityQuestion','$securityAnswer');";
 	$id = -1;
 	$db = getDBConnection();
+	//echo($db);
 	if ($db != NULL){
 		$res = $db->query($sql);
 		if ($res && $db->insert_id > 0){
@@ -310,7 +311,7 @@ function getUserMeetUp(){
 					}
 					$res->free();
 				}
-			} while($db->next_result());
+			} while($db->more_results() && $db->next_result());
 		} 
 	}//if
 	return $events;
@@ -669,7 +670,7 @@ function getUserRating($traderId){
 	$rating =[];
 	$db = getDBConnection();
 	if ($db != NULL){
-		if($db->multi_query($sql)){
+		if($db->multi_query($sql) ){
 			do{
 				if($res = $db->store_result()){
 					while($row = $res->fetch_row()){
@@ -677,7 +678,7 @@ function getUserRating($traderId){
 					}
 					$res->free();
 				}
-			} while($db->next_result());
+			} while($db->more_results() && $db->next_result());
 		} 
 	}//if
 	return $rating;
@@ -747,7 +748,7 @@ function getRequesteeInfo($requestId){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != null){
-		$sql = "SELECT `itemname`, i.itemid FROM `requests` r, `items` i, `users` u WHERE r.id = $requestId AND r.requestee = u.id AND r.item = i.itemid;" ;
+		$sql = "SELECT i.itemname, i.itemid, u.telephone FROM `requests` r, `items` i, `users` u WHERE r.id = $requestId AND r.requestee = u.id AND r.item = i.itemid;" ;
 		$res = $db->query($sql);
 		if ($res){
 			$rec = $res->fetch_assoc();

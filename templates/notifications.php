@@ -155,21 +155,23 @@ include "base.php";
               </div>
 
               <div class="form-group"> 
-                <label class="control-label" for="date">Phone Number</label>
+                <label class="control-label" for="date">Your Phone Number</label>
                 <div class="">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
                     <input class="form-control" id="requesteecontact" name="requesteecontact" type="tel" placeholder="868-123-4567"required pattern="\d{3}[\-]\d{3}[\-]\d{4}"/>
                     
                   </div>
-                  <span class="help-block">Format: 868-123-4567</span>
+                  <small><span class="help-block">Format: 868-123-4567</span></small>
                 </div>
               </div> 
 
               <div class="form-group">
-                <div class="">
-                  <button  class="btn btn-success btn-block" type="submit">Send Arrangement</button>
-                  <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelArrangement()">Cancel Arrangement</button>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <button  class="btn btn-success btn-block" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send Arrangement</button>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelArrangement()"><i class="fa fa-ban" aria-hidden="true"></i> Cancel Arrangement</button>
                 </div>
               </div>
 

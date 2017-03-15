@@ -74,9 +74,9 @@ function login(){
         "password": password
     }
 
-    console.log(user);
+    //console.log(user);
     $.post("../index.php/login", user, function(res){
-        console.log(res);
+        //console.log(res);
         if(res != 400){
             //console.log(res);
             swal({ 
@@ -114,7 +114,7 @@ function login1(){
 
     console.log(user);
     $.post("../index.php/login1", user, function(res){
-        console.log(res);
+        //console.log(res);
         if(res != 400){
             //console.log(res);
             swal({ 
@@ -139,15 +139,15 @@ function login1(){
 //--------------------------------------------------------------------------------------------------------------------
 // Registration functionality
 function register(){
-    console.log("Hi");
+    //console.log("Hi");
     var username = $("#username").val();
     var firstname = $("#firstname").val();
     var lastname = $("#lastname").val();
     var email = $("#email").val();
-    //var contact = $("#contact").val();
+    var telephone = $("#telephone").val();
     //var address = $("#address").val();
     var password = $("#password").val();
-    var retypedpassword = $("#retypedpassword").val();
+    //var retypedpassword = $("#retypedpassword").val();
     var securityQuestion = $("#securityquestion").val();
     var securityAnswer = $("#securityanswer").val();
     /*if(password != retypedpassword){
@@ -160,11 +160,12 @@ function register(){
         "firstname" : firstname,
         "lastname" : lastname,
         "email" : email,
+        "telephone" : telephone,
         "password" : password,
         "securityquestion" : securityQuestion,
         "securityanswer" : securityAnswer
     };
-
+    console.log(regUser);
     $.post("../index.php/register", regUser, function(res){
         if(res){
             console.log(res);
@@ -921,6 +922,7 @@ function displayItemsForRequest(itemid){
         var user = res;
         //console.log(user);
         $.get("../index.php/items/"+user, function(res){
+            console.log(res);
             displayInModal(res, itemid);
 
         }, "json")
@@ -950,7 +952,8 @@ function displayInModal(records, itemid){
                     htmlStr += "<option value='"+item.itemid+"'>"+item.itemname+"</option>";
                 }
             });
-            
+            if(records.length != 0 || records == null)
+                $("#requestercontact").val(records[0]['telephone']);
             $("#requesteritem").html(htmlStr);
         },"json");
     } 
@@ -1025,9 +1028,7 @@ function sendRequest(){
 
 function cancelRequest(){
     $('#requestModal').modal('hide');
-    swal("Request Cancelled!", "You can make another request", "error");
-
-        
+    swal("Request Cancelled!", "You can make another request", "error");   
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -1118,6 +1119,7 @@ function acceptRequest(requestId){
 
         $.get("../index.php/requestee/"+requestId, function(res){
             console.log(res);
+            $("#meetupform #requesteecontact").val(res.telephone);
             $("#meetupform #requesteeitemid").val(res.itemid);
             $("#meetupform #requesteeitem").val(res.itemname);
         }, "json");
@@ -1517,6 +1519,7 @@ function chat(userid){
 //-------------------------------------------------------------------------------------------------------
 function userMeetUp(){
     $.get("../index.php/usermeetup",processUserMeetUp,"json");
+
 }
 
 function processUserMeetUp(records){
@@ -1526,7 +1529,7 @@ function processUserMeetUp(records){
 
 function displayUserMeetUp(records){
     var events="<div class='container-fluid'>";
-    //alert(records.length);
+    //console.log(records.length);
     if(records.length != 0){
         console.log(records.length);
         //records.forEach(function(el){
@@ -1538,7 +1541,7 @@ function displayUserMeetUp(records){
     
     }
     else{
-        events += "<div class='well well-sm'> <em>No meetup reminders </em></div>";
+        events+="<div class='well well-sm'> <em>No upcoming meetups</em></div>";
     }
     events+="</div>"
     $("#reminders").html(events);
@@ -1563,7 +1566,7 @@ function displayUserFollowerUpdates(records){
         });
     }
     else{
-        updates+="<div class='well well-sm'> <em>No follower updates </em></div>";
+        updates+="<div class='well well-sm'> <em>No follower updates</em></div>";
     }
     updates+="</div>"
     $("#followerupdates").html(updates);

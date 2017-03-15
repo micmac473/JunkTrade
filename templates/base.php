@@ -248,7 +248,7 @@ if(!isset($_SESSION)){
   </div>
 <!-- Add Item -->
   <div class ="row" style ="display:none" id ="uploadItem">
-    <div class ="col-md-6">
+    <div class ="">
       <form class="form-horizontal" action ="profile.php" enctype="multipart/form-data" method ="POST">
       <!-- <form class="form-horizontal" action ="index.php/additem" enctype="multipart/form-data" method ="POST" onsubmit="return addItem();"> -->
         <fieldset>
@@ -287,7 +287,7 @@ if(!isset($_SESSION)){
             <div class="form-group">
               <label class="col-md-4 control-label" for="ItemDescription">Item Description</label>
               <div class="col-md-6">                     
-                <textarea name="itemdescription" class="form-control" id="itemdescription" placeholder="Tell us about your item" required=""></textarea>
+                <textarea name="itemdescription" class="form-control" rows="5" id="itemdescription" placeholder="Tell us about your item" required=""></textarea>
               </div>
             </div>
 
@@ -296,7 +296,7 @@ if(!isset($_SESSION)){
               <label class="col-md-4 control-label" for="upload"></label>
               <div class="col-md-4">
                 <button type ="submit" name="upload" class="btn btn-success" id="upload">Add</button>
-                  <button type="button"onclick ="hideForm();" class="btn btn-warning" ></a>Cancel
+                  <button type="button" onclick ="hideForm();" class="btn btn-warning" ></a>Cancel
                 </button>
               </div>
             </div>
@@ -360,13 +360,13 @@ if(!isset($_SESSION)){
             </div>
 
             <div class="form-group"> 
-                <label class="control-label" for="date">Phone Number</label>
+                <label class="control-label" for="date">Your Phone Number</label>
                 <div class="">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
                     <input class="form-control" id="requestercontact" name="requestercontact" type="text" placeholder="868-123-4567"required pattern="\d{3}[\-]\d{3}[\-]\d{4}"/>
                   </div>
-                  <span class="help-block">Format: 868-123-4567</span>
+                  <small><span class="help-block">Format: 868-123-4567</span></small>
                 </div>
               </div> 
             <div class="form-group">
@@ -374,7 +374,7 @@ if(!isset($_SESSION)){
                 <button  class="btn btn-success btn-block" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send Request</button>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelRequest()"> <i class="fa fa-ban" aria-hidden="true"></i> Cancel Request</button>
+                <button  onclick="return cancelRequest();" class="btn btn-danger btn-block" data-dismiss="modal" > <i class="fa fa-ban" aria-hidden="true"></i> Cancel Request</button>
               </div>
             </div>
 
