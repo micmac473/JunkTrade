@@ -160,7 +160,7 @@ function addFollowee($followee){
 		return $id;
 	}
 	else{
-		$sql = "UPDATE `follow` f SET `followindicator` = true WHERE `followid` = $followId;";
+		$sql = "UPDATE `follow` f SET `followindicator` = true, `followdate`=now() WHERE `followid` = $followId;";
 		$res = null;
 			if ($db != NULL){
 				$res = $db->query($sql);
@@ -298,8 +298,8 @@ function getRequestsMeetupRequester(){
 function getUserMeetUp(){
 	$userid = $_SESSION['id'];
 	//$sql = "SELECT * FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requestee = $userid OR r.requester = $userid ORDER BY t.tradedate ASC;";
-	$sql = "SELECT t.tradedate, t.tradelocation, t.requestid, r.requester FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requester = $userid ORDER BY t.tradedate ASC;";
-	$sql .= "SELECT t.tradedate, t.tradelocation, t.requestid, r.requester FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requestee = $userid ORDER BY t.tradedate ASC;";
+	$sql = "SELECT t.tradedate, t.tradelocation, t.requestid, r.requester FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requester = $userid AND t.requesterfeedbackindicator = false ORDER BY t.tradedate ASC;";
+	$sql .= "SELECT t.tradedate, t.tradelocation, t.requestid, r.requester FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requestee = $userid AND t.requesteefeedbackindicator = false ORDER BY t.tradedate ASC;";
 
 	$events =[];
 	$db = getDBConnection();
@@ -320,7 +320,7 @@ function getUserMeetUp(){
 
 function getUserFollowerUpdates(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `follow` f, `users` u, `items` i WHERE u.id = f.followee AND u.id = i.userid AND f.follower = $userid AND f.followindicator = true AND i.uploaddate > f.followdate ORDER BY i.uploaddate DESC ;";
+	$sql = "SELECT * FROM `follow` f, `users` u, `items` i WHERE u.id = f.followee AND u.id = i.userid AND f.follower = $userid AND f.followindicator = true AND i.uploaddate >= f.followdate ORDER BY i.uploaddate DESC ;";
 	$updates =[];
 	$db = getDBConnection();
 		if ($db != NULL){

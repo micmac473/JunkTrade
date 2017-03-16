@@ -37,15 +37,15 @@ include "base.php";
     </div>
     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
       <div style="background-color: white; box-shadow: 5px 5px 5px #888888;">
-        <h3 class="header text-center" > <u>Events</u>  <i class="fa fa-calendar" aria-hidden="true"></i></h3>
-        <div id="reminders"> 
+        <h3 class="header text-center"> <u>Events</u>  <i class="fa fa-calendar" aria-hidden="true"></i></h3>
+        <div id="reminders" style="overflow-y: scroll; height:130px"> 
           
         </div>
       </div>
 
       <div style="background-color: white; box-shadow: 5px 5px 5px #888888;">
-        <h3 class="header text-center"><u> Followers</u>  <i class="fa fa-rss" aria-hidden="true"></i></h3>
-        <div id="followerupdates"> 
+        <h3 class="header text-center" ><u> Followers</u>  <i class="fa fa-rss" aria-hidden="true"></i></h3>
+        <div id="followerupdates" style="overflow-y: scroll; height:180px"> 
           
          </div>
       </div>

@@ -24,6 +24,8 @@ function getCurrentPage(){
     $page = "Meetup";
   else if(stripos($currentPage,"search") !== false)
     $page = "Search";
+  else if(stripos($currentPage,"history") !== false)
+    $page = "History";
 
 
   return $page;
@@ -282,9 +284,24 @@ function getCurrentPage(){
               ?>
                     <a href="meetup.php"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meetup</a>
                 </li>
+
+              <?php 
+                if($currentPage == "History"){
+                  echo"<li style='background-color: #bdbdbd;'>";
+                } 
+
+                else{
+                  echo "<li>";
+                }    
+              ?>
+                    <a href="history.php" ><i class="fa fa-hourglass fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;History</a>
+                </li>
                 <li>
                     <a href="" onclick="return logout();"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
                 </li>
+
+                
+                
                 <li class="footerHome">
                   <p><strong> &copy;2017 JunkTrade. All rights reserved</strong></p>
                 </li>
@@ -482,7 +499,7 @@ function getCurrentPage(){
 
 <script>
   $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
+    $('[data-toggle="tooltip"]').tooltip({html: true});   
   });
 </script>
 

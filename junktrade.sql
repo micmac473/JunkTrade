@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2017 at 09:47 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 7.1.1
+-- Generation Time: Mar 16, 2017 at 05:08 AM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -33,7 +33,7 @@ CREATE TABLE `follow` (
   `followid` int(11) NOT NULL,
   `follower` int(11) NOT NULL,
   `followee` int(11) NOT NULL,
-  `followdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `followdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `followindicator` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
@@ -73,17 +73,19 @@ INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `pictur
 (34, 'Hydrangeas', 'Hydrangeas', '../img/Hydrangeas.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-30 13:42:30', 1, 1),
 (36, 'Jellyfish', 'Jellyfish', '../img/Jellyfish.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-30 13:45:11', 1, 0),
 (38, 'Nike', 'Color: Red and black\r\nSize: 12\r\nCondition: New\r\nComes with box', '../img/airjordans.jpe', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-30 19:11:47', 40, 4),
-(39, 'Gucci Watch', 'This is real Gucci,\r\nGenuine Leather,\r\nCondition: New,\r\nColor: Black,\r\nWristband: leather,\r\nAge: 60 days,', '../img/gucciwatch.jpe', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-30 19:54:55', 40, 12),
+(39, 'Gucci Watch', 'This is real Gucci,\r\nGenuine Leather,\r\nCondition: New,\r\nColor: Black,\r\nWristband: leather,\r\nAge: 60 days,', '../img/gucciwatch.jpe', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-30 19:54:55', 40, 13),
 (42, 'Piano Keyboard', 'Brand: Yamaha\r\nCondition: Used\r\nComes with everything', '../img/pianokeyboard.jpe', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-12-01 15:10:04', 1, 2),
-(44, 'iPhone 6', 'Capacity: 68 GB\r\nRAM: 4 GB\r\nDisplay: Retina\r\nCondition: New', '../img/iphone.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-12-01 23:40:35', 1, 5),
+(44, 'iPhone 6', 'Capacity: 64 GB\r\nRAM: 4 GB\r\nDisplay: Retina\r\nCondition: New\r\nBrand: Apple', '../img/iphone62.jpg', '../img/iphone63.jpg', '../img/iphone.jpg', '2016-12-01 23:40:35', 1, 9),
 (45, 'Gucci Belt', 'Genuine Leather,\r\nCondition: New', '../img/guccibelt.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-12-02 00:36:38', 1, 5),
-(46, 'New Era Hat', 'Snapback\r\nColor: Black\r\nSize: 7 1/2', '../img/snapback.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-12-02 00:38:16', 1, 10),
+(46, 'New Era Hat', 'Snapback\r\nColor: Black\r\nSize: 7 1/2', '../img/snapback.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-12-02 00:38:16', 1, 11),
 (47, 'Galaxy Note Edge', 'Color: White,\r\nCondition: Used,\r\nAge: 2 Months,\r\nBrand: Samsung,\r\nComes with stylus, charger and case', '../img/galaxynoteedge.jpg', '../img/samsung7.jpg', '../img/samsungTab.jpg', '2017-02-28 04:39:04', 41, 5),
-(48, 'MacBook Pro', 'Touch Bar and Touch ID\r\n2.6GHz quad-core Intel Core i7', '../img/macbook.jpg', '../img/macbook2.jpe', '../img/macbook3.jpg', '2017-03-14 18:35:24', 42, 17),
+(48, 'MacBook Pro', 'Touch Bar and Touch ID\r\n2.6GHz quad-core Intel Core i7', '../img/macbook.jpg', '../img/macbook2.jpe', '../img/macbook3.jpg', '2017-03-14 18:35:24', 42, 18),
 (49, 'Data Structures Book', 'Title: Data Structures In Java\r\nAuthor: Noel Kalicharan\r\nCondition: Used\r\nAge: 6 months', '../img/dataStructuresInJava.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2017-03-15 09:47:56', 2, 6),
 (50, 'Data Structures Book', 'Title: Data Structures in C\r\nAuthor: Noel Kalicharan\r\nCondition: New\r\nAge: 1 month\r\nCategory: Books', '../img/datastructuresinc.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2017-03-15 09:50:10', 42, 5),
 (51, 'PHP Book', 'Title: PHP for Absolute Beginners\r\nAuthor: Jason Lengstorf\r\nCategory: Books\r\nCondition: Used\r\nAge: 4 months', '../img/phpbook.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2017-03-15 09:55:23', 2, 10),
-(52, 'Google Pixel', 'Brand: Google\r\nCategory: Phones\r\nCondition: Used\r\nAge: 2 months', '../img/googlepixel.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-15 11:38:27', 42, 5);
+(52, 'Google Pixel', 'Brand: Google\r\nCategory: Phones\r\nCondition: Used\r\nAge: 2 months', '../img/googlepixel.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-15 11:38:27', 42, 7),
+(53, 'Wireless Keyboard', 'Brand: Logitech\r\nColor: Black\r\nCondition: New\r\nCategory: Electronics\r\nAge: 1 month', '../img/keyboard.jpe', '../img/keyboard2.jpe', '../img/../img/defaultitemimage.jpg', '2017-03-16 20:52:47', 42, 6),
+(54, 'iPhone 5', 'Brand: Apple', '../img/iphone5.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-15 22:39:02', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -173,7 +175,7 @@ INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `teleph
 (6, 'jamtart', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '868-333-3333', '0942897430e12d98c4acafc63d50b91fda44ca38', 'food', 'bb5ad7479828c1fe7c2271d75b2a3064bc58b0b3', NULL),
 (39, 'kyledef', 'Kyle', 'De Freitas', 'kyle@email.com', '868-444-4444', '7103a38d7b345ad9dc1e25dd3b7dd606f84d2c0c', 'food', '09bd65866a34013b124a36323add1e5d85e43a2b', NULL),
 (40, 'rastaman', 'Kadem', 'McGillivary', 'rasta@email.com', '868-555-5555', 'f9c897117a284ec37d408472be98de935b93f83f', 'food', 'a72f7b3f8f9bfcfc2e4e1a777b64233b263f3a7e', '../img/rasta.jpg'),
-(41, 'skittles', 'Keniesha', 'McMillan', 'skittes@gmail.com', '868-789-7851', '505643a37d5f86a3cff95f25bcdba5d577d60111', 'food', '99d5f862e5d60ade36f34cd26d0424f2badc71b6', NULL),
+(41, 'skittles', 'Keniesha', 'McMillan', 'skittes@gmail.com', '868-789-7851', '505643a37d5f86a3cff95f25bcdba5d577d60111', 'food', '99d5f862e5d60ade36f34cd26d0424f2badc71b6', '../img/skittles.jpe'),
 (42, 'nana', 'Saranah', 'LaHee', 'nana@email.com', '868-781-4657', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'food', '3e2e95f5ad970eadfa7e17eaf73da97024aa5359', '../img/defaultPP.jpg');
 
 --
@@ -229,7 +231,7 @@ ALTER TABLE `follow`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 --
 -- AUTO_INCREMENT for table `requests`
 --
@@ -239,7 +241,7 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `saved`
 --
 ALTER TABLE `saved`
-  MODIFY `savedid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `savedid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `trade`
 --
