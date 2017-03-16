@@ -8,15 +8,33 @@ include "base.php";
   <div class ="row">
     <div class="col-xs-12 table-responsive">
       <div class="header text-center"> 
-        <h1>Trade History <i class="fa fa-hourglass-o fa-lg" aria-hidden="true" ></i></h1>
+        <h1>Trades <i class="fa fa-handshake-o fa-lg" aria-hidden="true" ></i></h1>
       </div>
 
-      <div id="table_sec_history"></div>
+      <div id="table_sec_tradehistory"></div>
     </div>
+
+    <div class="col-xs-12 table-responsive">
+      <div class="header text-center"> 
+        <h1>Incoming Requests <i class="fa fa-envelope-open fa-lg" aria-hidden="true" ></i></h1>
+      </div>
+
+      <div id="table_sec_tradehistory"></div>
+    </div>
+    
+    <div class="col-xs-12 table-responsive">
+      <div class="header text-center"> 
+        <h1>Outgoing Requests <i class="fa fa-paper-plane fa-lg" aria-hidden="true" ></i></h1>
+      </div>
+
+      <div id="table_sec_tradehistory"></div>
+    </div>
+
+    
   </div>  
 </div>
 
-<script type="text/template" id="table_heading_history">
+<script type="text/template" id="table_heading_tradehistory">
   <table class="table table-hover table-condensed">
     <thead>
     <tr>
@@ -36,7 +54,6 @@ include "base.php";
 
 <script>
 window.onload = function() {
-  getRequestedMeetUp();
-  getRequestsMeetUp();
+  getTradeHistory();
 };
 </script>

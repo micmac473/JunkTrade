@@ -6,7 +6,7 @@ include "base.php";
 
 <div class ="container-fluid">
   <div class="row">
-    <div class ="">
+    <div class ="col-xs-12 table-responsive">
       <div class="header text-center">
         <h1>Incoming Requests <i class="fa fa-envelope-open fa-lg" aria-hidden="true" ></i></h1>
       </div>
@@ -17,7 +17,7 @@ include "base.php";
 </div>  <!-- close container -->  
 
 <script type="text/template" id="table_headingr">
-  <table class="table table-hover table-condensed table-responsive">
+  <table class="table table-hover table-condensed">
     <thead>
       <tr>
         <th>From</th>

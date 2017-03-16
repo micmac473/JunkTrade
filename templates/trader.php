@@ -49,9 +49,9 @@ if(isset($_GET['trader'])){
           else{
             echo "<button type='button' class='btn btn-success' onClick=\"unfollowTrader(". $userID .")\" data-toggle='tooltip' title='Click to Unfollow' data-placement='bottom'> Following <i class='fa fa-rss-square' aria-hidden='true'></i></button>";
           }
-          echo "<span> <small>Followers: <a href='#' id='followerslist' data-toggle='popover' title='Followers' data-content=\"".print_r($followers,true)."\">". count($followers)."</a></small></span><br>";
-          echo "<a href='#' data-toggle='tooltip' title=\"".$rating." out of 5 stars\" data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value=\"".$rating."\"/></a>";
-          echo "Trades: ".$tradeCount[0]['numtrades'];
+          echo "<span> <small>Followed by <a href='#' id='followerslist' data-toggle='popover' data-placement='bottom' data-trigger='focus' title='Followers' data-content=\"".print_r($followers,true)."\">". count($followers)."</a> people</small></span><br>";
+          echo "<a href='#' data-toggle='tooltip' title=\"Trades ". $tradeCount[0]['numtrades']."<br>".$rating." out of 5 stars\" data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value=\"".$rating."\"/></a>";
+          //echo "Trades: ".$tradeCount[0]['numtrades'];
         ?> 
     </div>
   </div>

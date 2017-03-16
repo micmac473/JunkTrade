@@ -478,10 +478,11 @@ function getUserRequests(){
 function notifications(records){
     console.log(records);
     records.forEach(function(el){
-        var htmlStr = "<li><a href=#>"+ el.username + " is requesting "+ el.itemname + "</a></li>";
+        var htmlStr = "<li><a href='notifications.php'>"+ el.username + " is requesting "+ el.itemname + "</a></li>";
         $("#requests").append(htmlStr);
     });
-    var countR = $("#requests li").length;
+    var countR = null;
+    countR = $("#requests li").length;
     $("#requestsNotify").append(countR);
     $.get("../index.php/requesteritem", function(res){
         console.log(res);
@@ -520,6 +521,48 @@ function displayRequests(records, res){
     $(sec_id).html(htmlStr);
 }
 //--------------------------------------------------------------------------------------------------------------------
+
+// Display a user trade history
+function getTradeHistory(){
+    $.get("../index.php/gettradehistory", processTradeHistory, "json");
+
+}
+
+function processTradeHistory(records){
+    console.log(records);
+    displayTradeHistory(records);
+}
+
+function displayTradeHistory(records){
+    var sec_id = "#table_sec_tradehistory";
+    var htmlStr = $("#table_heading_tradehistory").html(); 
+    $.get("../index.php/user", function(user){
+
+        records.forEach(function(el){
+            htmlStr +="<tr>";
+            htmlStr +="<td>"+el.tradedate+"</td>";
+            htmlStr +="<td></td>";
+            htmlStr +="<td></td>";
+            htmlStr +="<td>"+el.tradelocation+"</td>";
+            if(el.requester == user){
+                htmlStr +="<td>"+el.requesteefeedbackcomment+"</td>";
+                htmlStr +="<td>"+el.requesteefeedbackrating+"</td>";
+            }
+            else if(el.requestee == user){
+                htmlStr +="<td>"+el.requesterfeedbackcomment+"</td>";
+                htmlStr +="<td>"+el.requesterfeedbackrating+"</td>";
+            }
+            
+            htmlStr +="</tr>";
+        });
+        htmlStr += "</tbody></table>";
+        $(sec_id).html(htmlStr);
+    },"json");
+    
+}
+
+
+//--------------------------------------------------------------------
 // Add the item clicked to the user's saved items
 function addToSavedItems(itemid){
     $.get("../index.php/owner/"+itemid, function(res){
@@ -1544,7 +1587,7 @@ function displayUserMeetUp(records){
         console.log(records.length);
         //records.forEach(function(el){
             for(var i = 0; i < records.length; i++){
-                events+="<div class='well well-sm'><a href='meetup.php' style='cursor: pointer; color:black'> " + records[i][0] + " at " + records[i][1] + "</a></div>";
+                events+="<div class='well well-sm'><a href='meetup.php' style='cursor: pointer; color:black'><i class='fa fa-calendar' aria-hidden='true'></i> " + records[i][0] + " at <i class='fa fa-map-marker' aria-hidden='true'></i> " + records[i][1] + "</a></div>";
             }
             
         //});
@@ -1572,7 +1615,7 @@ function displayUserFollowerUpdates(records){
     //alert(records.length);
     if(records.length != 0){
         records.forEach(function(el){
-            updates+="<div class='well well-sm'><a onclick=\"viewItem("+el['itemid']+")\" style='cursor: pointer; color:black'> <i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + " uploaded <i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+" on " +el.uploaddate+ "</a></div>";
+            updates+="<div class='well well-sm'><a onclick=\"viewItem("+el['itemid']+")\" style='cursor: pointer; color:black'> <i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + " uploaded <i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"</a></div>";
         });
     }
     else{
@@ -1582,6 +1625,8 @@ function displayUserFollowerUpdates(records){
     $("#followerupdates").html(updates);
 
 }
+//--------------------------------------------------------------------------------------------
+
 
 
 

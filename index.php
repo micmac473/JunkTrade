@@ -268,6 +268,14 @@ $app->get("/userfollowerupdates", function(Request $request, Response $response)
 	return $response;
 });
 
+
+$app->get("/gettradehistory", function(Request $request, Response $response){
+	$trades = getTradeHistory();
+	
+	$response = $response->withJson($trades);
+	return $response;
+});
+
 $app->get("/request/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country

@@ -333,6 +333,21 @@ function getUserFollowerUpdates(){
 	return $updates;
 }
 
+function getTradeHistory(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `requests` r, `trade` t WHERE r.id = t.requestid AND r.requestee = $userid OR r.requester = $userid AND r.decision = true;";
+	$trades =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$trades[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $trades;
+}
+
 
 function getUserFollowersCount($traderId){
 	$userid = $_SESSION['id'];

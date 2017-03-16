@@ -407,3 +407,10 @@ height: 240px;
   height: 300px;
 }
 }
+
+.badge-notify{
+   background:#E50000;
+   position:relative;
+   top: -15px;
+   left: -12px;
+  }
