@@ -61,7 +61,10 @@ $(document).ready(function(){
 
 });  
 // this acts as the main function in Java
- 
+ setInterval(function(){
+    getUserRequests();
+    getDecisions();
+},2000);
  //--------------------------------------------------------------------------------------------------------------------
  // Log in functionality
 function login(){
@@ -477,13 +480,15 @@ function getUserRequests(){
 
 function notifications(records){
     console.log(records);
+    var htmlStr="";
     records.forEach(function(el){
-        var htmlStr = "<li><a href='notifications.php'>"+ el.username + " is requesting "+ el.itemname + "</a></li>";
-        $("#requests").append(htmlStr);
+        htmlStr += "<li><a href='notifications.php'>"+ el.username + " is requesting "+ el.itemname + "</a></li>";
+        
     });
+    $("#requests").html(htmlStr);
     var countR = null;
     countR = $("#requests li").length;
-    $("#requestsNotify").append(countR);
+    $("#requestsNotify").html(countR);
     $.get("../index.php/requesteritem", function(res){
         console.log(res);
         displayRequests(records, res);
@@ -521,7 +526,31 @@ function displayRequests(records, res){
     $(sec_id).html(htmlStr);
 }
 //--------------------------------------------------------------------------------------------------------------------
+//Dsiplay decisions for requests made by user
+function getDecisions(){
+    $.get("../index.php/decisions", decisions, "json");  
+}
 
+function decisions(records){
+    console.log(records);
+    var htmlStr="";
+    records.forEach(function(el){
+        if(el.decision == true){
+            htmlStr += "<li><a href=trade.php>"+ el.itemname + " request was ACCEPTED" + "</a></li>";
+        }
+        else{
+            htmlStr += "<li><a href=trade.php>"+ el.itemname + " request was DENIED" + "</a></li>";
+        }
+        
+       
+    });
+     $("#decisions").html(htmlStr);
+    var countD = $("#decisions li").length;
+    $("#decisionsNotify").html(countD);
+    //displayRequests(records);
+
+}
+//-------------------------------------------------------------------------------------------
 // Display a user trade history
 function getTradeHistory(){
     $.get("../index.php/gettradehistory", processTradeHistory, "json");
@@ -746,29 +775,7 @@ function processUserFollowers(records){
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
-//Dsiplay decisions for requests made by user
-function getDecisions(){
-    $.get("../index.php/decisions", decisions, "json");  
-}
 
-function decisions(records){
-    console.log(records);
-    var htmlStr;
-    records.forEach(function(el){
-        if(el.decision == true){
-            htmlStr = "<li><a href=trade.php>"+ el.itemname + " request was ACCEPTED" + "</a></li>";
-        }
-        else{
-            htmlStr = "<li><a href=trade.php>"+ el.itemname + " request was DENIED" + "</a></li>";
-        }
-        
-        $("#decisions").append(htmlStr);
-    });
-    var countD = $("#decisions li").length;
-    $("#decisionsNotify").append(countD);
-    //displayRequests(records);
-
-}
 
 /*function displayDecisions(records){
     var key;
@@ -1089,8 +1096,11 @@ function cancelRequest(){
 function deleteItem(itemid){
     
     $.get("../index.php/requeststatus/"+itemid, function(res){
-        if(res.pending != 0)
-        console.log("Pending requests: " + res.pending);
+        //if(res.pending != 0)
+        //console.log("Pending requests: " + res.pending);
+        console.log(res);
+        //var count = parseInt(res[0][0]) + parseInt(res[1][0]);
+        //console.log("Pending requests: " + count);
     },"json");
     swal({
             title: "Delete Item?",
@@ -1106,9 +1116,10 @@ function deleteItem(itemid){
         function(isConfirm){
             if (isConfirm) {
                 $.get("../index.php/requeststatus/"+itemid, function(res){
-                    console.log("Pending requests: " + res.pending);
-                    if(res.pending != 0){
-                        swal("Requests Pending: "+res.pending, "Cannot delete item!", "error")
+                    var count = parseInt(res[0][0]) + parseInt(res[1][0]);
+                    console.log("Pending requests: " + count);
+                    if(count != 0){
+                        swal("Requests Pending: "+count, "Cannot delete item!", "error")
                     }
                     else{
                         $.get("../index.php/deleteitem/"+itemid, function(res){

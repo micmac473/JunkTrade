@@ -9,14 +9,14 @@ include "base.php";
 
       <div class="col-lg-4 col-lg-offset-1 col-md-6 col-sm-12 col-xs-12" style="background-color: white; box-shadow: 5px 5px 5px #888888;">
         <h3 class="header text-center"><u>Events</u> <i class="fa fa-calendar" aria-hidden="true"></i></h3>
-        <div id="reminders" style="overflow-y: scroll; height:60px"> 
+        <div id="reminders" style="overflow-y: scroll; height:70px"> 
           
         </div>
       </div>
 
       <div class="col-lg-4 col-lg-offset-1 col-md-6 col-sm-12 col-xs-12" style="background-color: white; box-shadow: 5px 5px 5px #888888;">
         <h3 class="header text-center" ><u>Followers</u> <i class="fa fa-rss" aria-hidden="true"></i></h3>
-        <div id="followerupdates" style="overflow-y: scroll; height:60px"> 
+        <div id="followerupdates" style="overflow-y: scroll; height:70px"> 
           
         </div>
       </div>
@@ -153,5 +153,10 @@ include "base.php";
     getAllItems();
     userMeetUp();
     userFollowerUpdates();
+    setInterval(function(){
+      getAllItems();
+      userMeetUp();
+      userFollowerUpdates();
+    },2000);
 };
 </script>

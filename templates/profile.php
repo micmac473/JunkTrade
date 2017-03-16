@@ -168,6 +168,7 @@ $userRating = getUserRating($userID);
   $rating = number_format($rating, 1);
 
 $tradeCount = getUserTradeCount($userID);
+$trades = $tradeCount[0][0] + $tradeCount[1][0];
 include "base.php";
 ?>
 
@@ -187,7 +188,7 @@ include "base.php";
     </div> 
 
     <div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-      <a href='#' data-toggle='tooltip' title= '<?php echo $rating. " out of 5 stars <br/>Trades: ". $tradeCount[0]['numtrades']?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php echo $rating ?> ></a>
+      <a href='#' data-toggle='tooltip' title= '<?php echo $rating. " out of 5 stars <br/>Trades: ". $trades?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php echo $rating ?> ></a>
     </div>
 
     

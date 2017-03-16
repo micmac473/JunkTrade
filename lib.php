@@ -368,14 +368,21 @@ function getUserFollowersCount($traderId){
 
 function getUserTradeCount($traderId){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT COUNT(*) AS numtrades FROM `requests` r WHERE r.requester = $traderId OR r.requestee = $traderId AND r.decision = true;";
+	$sql = "SELECT COUNT(*) AS numtrades FROM `requests` r WHERE r.requester = $traderId  AND r.decision = true;";
+	$sql .= "SELECT COUNT(*) AS numtrades FROM `requests` r WHERE r.requestee = $traderId AND r.decision = true;";
 	$updates =[];
 	$db = getDBConnection();
 		if ($db != NULL){
-			$res = $db->query($sql);
-			while($res && $row = $res->fetch_assoc()){
-				$updates[] = $row;
-		}//while
+			if($db->multi_query($sql) ){
+			do{
+				if($res = $db->store_result()){
+					while($row = $res->fetch_row()){
+						$updates[] = $row;
+					}
+					$res->free();
+				}
+			} while($db->more_results() && $db->next_result());
+		} 
 		$db->close();
 	}//if
 	return $updates;
@@ -1077,16 +1084,24 @@ function getItemStatus($itemId){
 //In progress
 function getRequestStatus($itemId){
 	$db = getDBConnection();
-	$rec;
+	$pending = [];
 	if ($db != NULL){
-		$sql = "SELECT COUNT(*) AS pending FROM `requests` r WHERE r.item = $itemId OR r.item2 = $itemId AND r.decision IS NULL;";
+		$sql = "SELECT COUNT(*) AS pending FROM `requests` r WHERE r.item = $itemId AND r.decision IS NULL;";
+		$sql .= "SELECT COUNT(*) AS pending2 FROM `requests` r WHERE r.item2 = $itemId AND r.decision IS NULL;";
 		$res = $db->query($sql);
-		if ($res){
-			$rec= $res->fetch_assoc();
-		}
-		$db->close();
+		
+		if($db->multi_query($sql)){
+			do{
+				if($res = $db->store_result()){
+					while($row = $res->fetch_row()){
+						$pending[] = $row;
+					}
+					$res->free();
+				}
+			} while($db->more_results() && $db->next_result());
+		} 
 	}
-	return $rec;
+	return $pending;
 }
 
 function deleteItem($itemid){

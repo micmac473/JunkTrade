@@ -53,6 +53,9 @@ include "base.php";
 <script>window.onload = function() {
   getUserFollowees();
   getUserFollowers();
+  setInterval(function(){
+      getUserFollowers();
+  },2000);
 };
 </script>
 
