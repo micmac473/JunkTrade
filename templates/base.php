@@ -185,7 +185,7 @@ function getCurrentPage(){
         <form method = "post" class="navbar-form" role="form" action ="search.php?go" id ="searchform">
         <div class="form-group" style="display:inline;">
           <div class="input-group" style="display:table;">
-            <input class="form-control" name="searchname" placeholder="Search for Junk" autocomplete="off" autofocus="autofocus" type="text">
+            <input autofocus class="form-control" name="searchname" placeholder="Search for Junk" autocomplete="off" autofocus="autofocus" type="text">
             <span class="input-group-addon" class="btn btn-default" style="width:1%;" name="searchsubmit">
               <button type="submit" class="btn btn-default btn-xs" name="searchsubmit" value="Search">
                 <i class="fa fa-search fa-fw"></i>
@@ -390,7 +390,7 @@ function getCurrentPage(){
             <div class="form-group">
               <label class="col-md-4 control-label" for="ItemDescription">Item Name</label>
               <div class="col-md-6">                     
-                <input name="itemname" class="form-control" id="itemname" type="text" placeholder="Item Name" required="" maxlength="20" >
+                <input  name="itemname" class="form-control" id="itemname" type="text" placeholder="Item Name" required="" maxlength="20" >
               </div>
             </div>
 

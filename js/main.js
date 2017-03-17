@@ -66,6 +66,7 @@ $(document).ready(function(){
     getDecisions();
 },2000);
  //--------------------------------------------------------------------------------------------------------------------
+ var attempts =0;
  // Log in functionality
 function login(){
     console.log("Hi");
@@ -82,6 +83,9 @@ function login(){
         //console.log(res);
         if(res != 400){
             //console.log(res);
+            attempts=0;
+             console.log(attempts);
+
             swal({ 
                 title: "Welcome " + res,
                 text: "You have logged in successfully",
@@ -94,7 +98,32 @@ function login(){
             //return false;
         }
         else{
-            swal("Incorrect Login","Please try again","error")
+            attempts++;
+            console.log(attempts);
+
+            if(attempts == 3){
+                swal({
+                  title: "Problem!",
+                  text: "Your failed 3 login attempts.",
+                  showConfirmButton: false,
+                  timer: 30000
+               });
+
+            }
+            else if(attempts == 5){
+                swal({
+                  title: "Problem!",
+                  text: "Your failed 5 login attempts..",
+                  showConfirmButton: false,
+                  timer: 60000
+               });
+
+            }
+            else{ swal("Incorrect Login","Please try again","error");
+        }
+
+            
+
             //return false;
         }
     },"json");
