@@ -14,6 +14,8 @@ function getCurrentPage(){
     $page = "Profile";
   else if(stripos($currentPage,"notifications") !== false)
     $page = "Notifications";
+  else if(stripos($currentPage,"trader") !== false)
+    $page = "Trader";
   else if(stripos($currentPage,"trade") !== false)
     $page = "Requests";
   else if(stripos($currentPage,"people") !== false)
@@ -26,7 +28,7 @@ function getCurrentPage(){
     $page = "Search";
   else if(stripos($currentPage,"history") !== false)
     $page = "History";
-
+  
 
   return $page;
 }
@@ -307,53 +309,59 @@ function getCurrentPage(){
                 </li>
             </ul>
         </div>
-  <div class="jumbotron">
-    <div class="container-fluid">
-      <div class="row text-center">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-          <?php   
-            $ppid = $_SESSION["id"];         
-            echo getProfileImage($ppid);      
-          ?>
-        </div>
-        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-          <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive;"> 
-            <?php  
-              date_default_timezone_set("America/Grenada");
-              $hour = date("H");
-              //echo $hour;
-              //$hour = 6;
-              if($hour >= 0 && $hour < 12){
-                if($hour < 6){
-                  echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-moonset'></i>";
-                }
-                else if ($hour >=6 && $hour <=7){
-                  echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-sunrise'></i>";
-                }
-                else{
-                  echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-day-sunny'></i>";
-                }
-                
-              }
-              else if($hour >= 12 && $hour < 18){
-                echo "Good Afternoon, ". $_SESSION["user"]. "! <i class='wi wi-day-sunny'></i>";
-              }
-              else{
-                if($hour == 18){
-                  echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-sunset'></i>";
-                }
-                else{
-                  echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-night-clear'></i>";
-                }
-                
-              }
-            ?>
-          </h1>
+    <?php 
+    if($currentPage != "Trader"){
+
+      ?>
+      <div class="jumbotron">
+        <div class="container-fluid">
+          <div class="row text-center">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+              <?php   
+                $ppid = $_SESSION["id"];         
+                echo getProfileImage($ppid);      
+              ?>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+              <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive;"> 
+                <?php  
+                  date_default_timezone_set("America/Grenada");
+                  $hour = date("H");
+                  //echo $hour;
+                  //$hour = 6;
+                  if($hour >= 0 && $hour < 12){
+                    if($hour < 6){
+                      echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-moonset'></i>";
+                    }
+                    else if ($hour >=6 && $hour <=7){
+                      echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-sunrise'></i>";
+                    }
+                    else{
+                      echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-day-sunny'></i>";
+                    }
+                    
+                  }
+                  else if($hour >= 12 && $hour < 18){
+                    echo "Good Afternoon, ". $_SESSION["user"]. "! <i class='wi wi-day-sunny'></i>";
+                  }
+                  else{
+                    if($hour == 18){
+                      echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-sunset'></i>";
+                    }
+                    else{
+                      echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-night-clear'></i>";
+                    }
+                    
+                  }
+                ?>
+              </h1>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
+  <?php
+  }
+  ?>
 
 
 
