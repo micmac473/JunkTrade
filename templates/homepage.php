@@ -154,9 +154,42 @@ include "base.php";
     userMeetUp();
     userFollowerUpdates();
     setInterval(function(){
-      getAllItems();
-      userMeetUp();
-      userFollowerUpdates();
-    },2000);
+      queryAllItems();
+      queryMeetUp();
+      queryFollowerUpdates();
+    },5000);
+
+
+    var currAllItems = [], currMeetup = [], currFollowerUpdates = [], sort="mra";
+    function queryAllItems(sort){
+      $.get("../index.php/homepage/"+sort, function(res){
+        if(JSON.stringify(res) !== JSON.stringify(currAllItems)){
+          console.log("Item Change");
+          currAllItems = res;
+          processAllItems(res);
+        }
+      }, "json");  
+    }
+
+    function queryMeetUp(){
+      $.get("../index.php/usermeetup", function(res){
+        if(JSON.stringify(res) !== JSON.stringify(currMeetup)){
+          console.log("New Event!");
+          currMeetup = res;
+          processUserMeetUp(res);
+        }
+      }, "json");  
+    }
+
+    function queryFollowerUpdates(){
+      $.get("../index.php/userfollowerupdates", function(res){
+        if(JSON.stringify(res) !== JSON.stringify(currFollowerUpdates)){
+          console.log("New Follower item added!");
+          currFollowerUpdates = res;
+          processUserFollowerUpdates(res);
+        }
+      }, "json");  
+    }
+
 };
 </script>

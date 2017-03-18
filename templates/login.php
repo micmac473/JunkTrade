@@ -110,7 +110,7 @@ form {
               <div class="cols-xs-12">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-                  <input autofocus type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="email" id="email"  placeholder="Username or email" required="">
+                  <input autofocus type="text" class="form-control" name="email" id="email"  placeholder="Username or email" required="">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>

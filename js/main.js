@@ -61,10 +61,31 @@ $(document).ready(function(){
 
 });  
 // this acts as the main function in Java
- setInterval(function(){
-    getUserRequests();
-    getDecisions();
-},2000);
+setInterval(function(){
+    queryUserRequests();
+    queryDecisions();
+},5000);
+
+var currNotifcations = [], currDecisions = [];
+function queryUserRequests(){
+    $.get("../index.php/requests", function(res){
+        if(JSON.stringify(res) !== JSON.stringify(currNotifcations)){
+            console.log("New request");
+            currNotifcations = res;
+            notifications(res);
+        }
+    }, "json");  
+}
+
+function queryDecisions(){
+    $.get("../index.php/decisions", function(res){
+        if(JSON.stringify(res) !== JSON.stringify(currDecisions)){
+            console.log("New decision");
+            currDecisions = res;
+            decisions(res);
+        }
+    }, "json");  
+}
  //--------------------------------------------------------------------------------------------------------------------
  var attempts =0;
  // Log in functionality
@@ -503,6 +524,8 @@ function listProfileItems(records){
 }
 //---------------------------------------------------------------------------------
 //Dsiplay requests for user items in the notification icon
+
+
 function getUserRequests(){
     $.get("../index.php/requests", notifications, "json");  
 }

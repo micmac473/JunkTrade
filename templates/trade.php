@@ -40,6 +40,20 @@ include "base.php";
 
 <script>window.onload = function() {
     getTrade();
+    setInterval(function(){
+      queryOutgoingRequests();
+    },5000);
+
+    var currOutgoingRequests = [];
+    function queryOutgoingRequests(){
+      $.get("../index.php/trade", function(res){
+        if(JSON.stringify(res) !== JSON.stringify(currOutgoingRequests)){
+          console.log("Outgoing request decision!");
+          currOutgoingRequests = res;
+          processUserTrade(res);
+        }
+      }, "json");  
+    }
 };
 </script>
 
