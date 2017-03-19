@@ -103,7 +103,7 @@ function login(){
     $.post("../index.php/login", user, function(res){
         //console.log(res);
         if(res != 400){
-            //console.log(res);
+            console.log(res);
             attempts=0;
              console.log(attempts);
 

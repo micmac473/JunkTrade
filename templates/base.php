@@ -374,21 +374,21 @@ function getCurrentPage(){
           <legend style="text-align:center">Upload a New Item</legend>
             <!-- File Button --> 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Photo 1 </label>
+              <label class="col-md-4 control-label" for="uppic">Image 1 </label>
               <div class="col-md-6">
                 <input name="itemImages[]" class="input-file" id="image" type="file" accept="image/*" required="">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Photo 2 </label>
+              <label class="col-md-4 control-label" for="uppic">Image 2 </label>
               <div class="col-md-6">
                 <input name="itemImages[]" class="input-file" id="image2" type="file" accept="image/*">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Photo 3 </label>
+              <label class="col-md-4 control-label" for="uppic">Image 3 </label>
               <div class="col-md-6">
                 <input name="itemImages[]" class="input-file" id="image3" type="file" accept="image/*">
               </div>
@@ -398,7 +398,7 @@ function getCurrentPage(){
             <div class="form-group">
               <label class="col-md-4 control-label" for="ItemDescription">Item Name</label>
               <div class="col-md-6">                     
-                <input  name="itemname" class="form-control" id="itemname" type="text" placeholder="Item Name" required="" maxlength="20" >
+                <input  name="itemname" class="form-control" id="itemname" type="text" placeholder="Item Name" required="" maxlength="50" >
               </div>
             </div>
 

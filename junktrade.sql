@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2017 at 05:08 AM
+-- Generation Time: Mar 19, 2017 at 07:39 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -61,31 +61,30 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `picture2`, `picture3`, `uploaddate`, `userid`, `views`) VALUES
-(1, 'House', 'This is my house item', '../img/house.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 03:38:21', 1, 4),
-(2, 'Peas', 'This is my easy peasy item', '../img/easy.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 03:38:21', 2, 6),
-(3, 'Money', 'This is my money item', '../img/nomoney.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 03:38:42', 2, 5),
-(4, 'Friends', 'This is my friends item', '../img/buddy.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 03:38:42', 6, 2),
-(25, 'Dell XPS', 'Processor: i7 3.5 Ghz Quad Core\r\nRam: 12 GB\r\nGraphics: GeForce GTX 980', '../img/xps.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 15:54:19', 6, 5),
-(26, 'Logo', 'This is my logo item', '../img/logo.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-26 15:55:07', 6, 3),
-(27, 'HP Laptop', 'Processor: i5 2.5 Ghz Dual Core\r\nRam: 8 GB\r\nGraphics: Intel ', '../img/hp.jpg', '../img/hpLaptop.jpg', '../img/defaultitemimage.jpg', '2016-11-26 15:57:48', 1, 6),
-(29, 'SVG Flag', 'This the flag of St. Vincent and the Grenadines, West Indies', '../img/svgflag.png', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-27 15:21:11', 39, 2),
-(30, 'Cloud Server', 'Heroku cloud server', '../img/cloudserver.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-27 22:57:00', 40, 8),
-(34, 'Hydrangeas', 'Hydrangeas', '../img/Hydrangeas.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-30 13:42:30', 1, 1),
-(36, 'Jellyfish', 'Jellyfish', '../img/Jellyfish.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-30 13:45:11', 1, 0),
-(38, 'Nike', 'Color: Red and black\r\nSize: 12\r\nCondition: New\r\nComes with box', '../img/airjordans.jpe', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-30 19:11:47', 40, 4),
-(39, 'Gucci Watch', 'This is real Gucci,\r\nGenuine Leather,\r\nCondition: New,\r\nColor: Black,\r\nWristband: leather,\r\nAge: 60 days,', '../img/gucciwatch.jpe', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-11-30 19:54:55', 40, 13),
-(42, 'Piano Keyboard', 'Brand: Yamaha\r\nCondition: Used\r\nComes with everything', '../img/pianokeyboard.jpe', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-12-01 15:10:04', 1, 2),
-(44, 'iPhone 6', 'Capacity: 64 GB\r\nRAM: 4 GB\r\nDisplay: Retina\r\nCondition: New\r\nBrand: Apple', '../img/iphone62.jpg', '../img/iphone63.jpg', '../img/iphone.jpg', '2016-12-01 23:40:35', 1, 9),
-(45, 'Gucci Belt', 'Genuine Leather,\r\nCondition: New', '../img/guccibelt.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-12-02 00:36:38', 1, 5),
-(46, 'New Era Hat', 'Snapback\r\nColor: Black\r\nSize: 7 1/2', '../img/snapback.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2016-12-02 00:38:16', 1, 11),
-(47, 'Galaxy Note Edge', 'Color: White,\r\nCondition: Used,\r\nAge: 2 Months,\r\nBrand: Samsung,\r\nComes with stylus, charger and case', '../img/galaxynoteedge.jpg', '../img/samsung7.jpg', '../img/samsungTab.jpg', '2017-02-28 04:39:04', 41, 5),
-(48, 'MacBook Pro', 'Touch Bar and Touch ID\r\n2.6GHz quad-core Intel Core i7', '../img/macbook.jpg', '../img/macbook2.jpe', '../img/macbook3.jpg', '2017-03-14 18:35:24', 42, 18),
-(49, 'Data Structures Book', 'Title: Data Structures In Java\r\nAuthor: Noel Kalicharan\r\nCondition: Used\r\nAge: 6 months', '../img/dataStructuresInJava.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2017-03-15 09:47:56', 2, 6),
-(50, 'Data Structures Book', 'Title: Data Structures in C\r\nAuthor: Noel Kalicharan\r\nCondition: New\r\nAge: 1 month\r\nCategory: Books', '../img/datastructuresinc.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2017-03-15 09:50:10', 42, 5),
-(51, 'PHP Book', 'Title: PHP for Absolute Beginners\r\nAuthor: Jason Lengstorf\r\nCategory: Books\r\nCondition: Used\r\nAge: 4 months', '../img/phpbook.jpg', '../img/defaultitemimage.jpg', '../img/defaultitemimage.jpg', '2017-03-15 09:55:23', 2, 10),
-(52, 'Google Pixel', 'Brand: Google\r\nCategory: Phones\r\nCondition: Used\r\nAge: 2 months', '../img/googlepixel.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-15 11:38:27', 42, 7),
-(53, 'Wireless Keyboard', 'Brand: Logitech\r\nColor: Black\r\nCondition: New\r\nCategory: Electronics\r\nAge: 1 month', '../img/keyboard.jpe', '../img/keyboard2.jpe', '../img/../img/defaultitemimage.jpg', '2017-03-16 20:52:47', 42, 6),
-(54, 'iPhone 5', 'Brand: Apple', '../img/iphone5.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-15 22:39:02', 2, 3);
+(1, 'iPhone 6', 'Brand: Apple\r\nColor: White\r\nDisplay: Retina\r\nCategory: Electronics\r\nMemory: 4GB\r\nStorage: 64GB\r\nFront Camera: 8MP\r\nRear Camera: 12MP\r\n', '../img/iphone6.jpg', '../img/iphone62.jpg', '../img/iphone63.jpg', '2017-03-19 00:50:38', 1, 1),
+(2, 'Android Textbook', 'Author: Mark L. Murphy\r\nCategory: Books\r\nCondition: Used\r\n', '../img/android.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:52:43', 1, 1),
+(3, 'American Football', 'Category: Sports\r\nCondition: Used', '../img/football.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:54:13', 1, 1),
+(4, 'Webcam', 'Brand: Logitech\r\nCategory: Electronics\r\nColor: Black\r\nQuality: 1080p\r\nCondition: New', '../img/webcam.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:56:17', 1, 1),
+(5, 'Soccer Ball', 'Category: Sports\r\nCondition: Used\r\nColor: Black and White', '../img/soccerball.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:58:12', 2, 1),
+(6, 'iPhone Charger', 'Brand: Apple\r\nCategory: Electronics\r\nCondition: Used', '../img/iphonecharger.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:59:24', 2, 0),
+(7, 'Data Structures Book', 'Author: Dr. Noel Kalicharan\r\nCategory: Books\r\nCondition: Used', '../img/datastructuresinc.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:00:09', 2, 0),
+(8, 'COMP 3000 Book', 'Title: Design and Analysis of Algorithms\r\nAuthor: Anany Levitin\r\nCategory: Books\r\nCondition: Used', '../img/comp3000.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:03:11', 3, 0),
+(9, 'Computer Architecture Book ', 'Title: Computer Organization and Architecture \r\nAuthor: William Stallings\r\nCondition: Used', '../img/computerarchitecture.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:06:25', 3, 0),
+(10, 'Professional Ethics and Law Notes', 'Category: Other\r\nCourse: INFO 3425\r\nSemester: Two 2016/2017', '../img/notes.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:08:20', 3, 1),
+(11, 'Object Oriented Programming Book', 'Title: An Introduction to Object Oriented Programming with Java\r\nAuthor: C. Thomas Wu\r\nCategory: Books\r\nCondition: New\r\n', '../img/oop.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:10:38', 4, 0),
+(12, 'Macbook Air', 'Brand: Apple\r\nCategory: Electronics\r\nMemory: 12 GB\r\nStorage: 128GB SSD\r\nProcessor: Intel Core i7, with Turbo Boost up to 3.6 GHz', '../img/macbookair.jpe', '../img/macbookair2.jpe', '../img/macbookair3.jpg', '2017-03-19 01:13:08', 4, 2),
+(13, 'Safety Helmet', 'Category: Safety\r\nColor: Yellow\r\nCondition: Large', '../img/safetyhelmet.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:14:37', 4, 0),
+(14, 'Lab Coat', 'Category: Safety\r\nColor: White\r\nCondition: New', '../img/labcoat.JPG', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:15:39', 4, 0),
+(15, 'Networking Textbook', 'Title: Computer Networking, A Top-Down Approach\r\nAuthor: Kurose & Ross\r\nCondition: Used\r\n', '../img/networking.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:17:58', 5, 0),
+(16, 'Safety Glasses', 'Category: Safety\r\nSize: fits all\r\nCondition: New', '../img/saveglasses.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:19:45', 5, 0),
+(17, 'Pixel', 'Brand: Google\r\nColor: White\r\nCondition: Used\r\nMemory: 4GB\r\nCapacity: 64GB\r\nScreen size: 5.0 inches', '../img/googlepixel.png', '../img/googlepixel2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:21:12', 5, 1),
+(18, 'Wireless Mouse', 'Brand: Logitech\r\nColor: Black\r\nCondition: Used\r\nCategory: Electronics', '../img/mouse.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:22:42', 5, 0),
+(19, 'HP Envy Laptop', 'Brand: Hewlett Packard\r\nColor: Silver\r\nCategory: Electronics\r\nCondition: Used\r\nMemory: 12GB\r\nStorage: 1TB\r\nProcess: Intel i7 5th Generation 3.7Ghz', '../img/hpenvy.jpg', '../img/hpenvy2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:24:26', 1, 0),
+(20, 'Copy Paper', 'Category: Stationery\r\nCondition: New\r\nBrand: Xerox\r\n', '../img/copypaper.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:26:23', 3, 0),
+(21, 'S7 Edge', 'Brand: Samsung\r\nCategory: Electronics\r\nColor: Gold\r\nCondition: Used\r\nMemory: 4GB\r\nStorage: 128GB', '../img/samsung.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:28:03', 2, 0),
+(22, 'Power Bank', 'Brand: EliveBuy\r\nCondition: Used\r\nColor: White\r\n10,400mAh', '../img/powerbank.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:30:38', 4, 0),
+(23, 'Safety Boots', 'Category: Safety\r\nCondition: Used\r\nSize: 11\r\nBrand: Amblers Safety', '../img/safetyboots.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:31:46', 2, 0),
+(24, 'Headphones', 'Brand: Beats\r\nColor: Red\r\nCategory: Electronics\r\nCondition: Used', '../img/headphones.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:33:11', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -170,13 +169,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `telephone`, `password`, `sQuestion`, `sAnswer`, `profilepicture`) VALUES
-(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@email.com', '868-111-1111', '6918950f89321712a8641620423d8c7d25951c0c', 'food', '31dda2aa971d428a60d8e2b6d35a7aec0c5a2193', NULL),
-(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '868-222-2222', '16331e4442209ff309047eaec83430646490f038', 'sport', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8', NULL),
-(6, 'jamtart', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '868-333-3333', '0942897430e12d98c4acafc63d50b91fda44ca38', 'food', 'bb5ad7479828c1fe7c2271d75b2a3064bc58b0b3', NULL),
-(39, 'kyledef', 'Kyle', 'De Freitas', 'kyle@email.com', '868-444-4444', '7103a38d7b345ad9dc1e25dd3b7dd606f84d2c0c', 'food', '09bd65866a34013b124a36323add1e5d85e43a2b', NULL),
-(40, 'rastaman', 'Kadem', 'McGillivary', 'rasta@email.com', '868-555-5555', 'f9c897117a284ec37d408472be98de935b93f83f', 'food', 'a72f7b3f8f9bfcfc2e4e1a777b64233b263f3a7e', '../img/rasta.jpg'),
-(41, 'skittles', 'Keniesha', 'McMillan', 'skittes@gmail.com', '868-789-7851', '505643a37d5f86a3cff95f25bcdba5d577d60111', 'food', '99d5f862e5d60ade36f34cd26d0424f2badc71b6', '../img/skittles.jpe'),
-(42, 'nana', 'Saranah', 'LaHee', 'nana@email.com', '868-781-4657', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'food', '3e2e95f5ad970eadfa7e17eaf73da97024aa5359', '../img/defaultPP.jpg');
+(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@gmail.com', '868-378-1234', '6918950f89321712a8641620423d8c7d25951c0c', 'food', '31dda2aa971d428a60d8e2b6d35a7aec0c5a2193', '../img/defaultPP.jpg'),
+(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '868-378-1111', '16331e4442209ff309047eaec83430646490f038', 'sport', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8', '../img/defaultPP.jpg'),
+(3, 'jamwin', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '868-378-2222', '4e575edbd14f3eaf37744f7dea83e58eb2b0fdcc', 'food', 'bb5ad7479828c1fe7c2271d75b2a3064bc58b0b3', '../img/defaultPP.jpg'),
+(4, 'kylric', 'Kyle', 'Richardson', 'kylerichardson@email.com', '868-378-3333', '164113a91b40b39076494d9c761354de7e7b53f3', 'food', '6915b14cc28d7c49e0226fb79d98502e97f6b97f', '../img/defaultPP.jpg'),
+(5, 'danarj', 'Danielle', 'Arjoon', 'daniellearjoon@email.com', '868-378-4444', '56cd9a08899246b193d89fa4f9ef489c01558252', 'sport', 'bb500fcedfa3bb79ec1ebcfb3631364e5ab49dda', '../img/defaultPP.jpg'),
+(6, 'cyncud', 'Ms. Cudjoe', '(Lecturer)', 'cynthiacudjoe@email.com', '868-378-5555', '6d499334fac509bd32e3be765e337f2399735575', 'food', '35c4cdb50a9a6b4475da4a66d955ef2a9e1acc39', '../img/defaultPP.jpg');
 
 --
 -- Indexes for dumped tables
@@ -231,7 +229,7 @@ ALTER TABLE `follow`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `requests`
 --
@@ -251,7 +249,7 @@ ALTER TABLE `trade`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -149,47 +149,50 @@ include "base.php";
     </div>
   </div>
 
-<script>window.onload = function() {
+<script>
+  window.onload = function() {
     getAllItems();
     userMeetUp();
     userFollowerUpdates();
-    setInterval(function(){
-      queryAllItems();
-      queryMeetUp();
-      queryFollowerUpdates();
-    },5000);
+  };
+
+  var currAllItems = [], currMeetup = [], currFollowerUpdates = [], sort="mra";
+  setInterval(function(){
+    queryAllItems(sort);
+    queryMeetUp();
+    queryFollowerUpdates();
+  },5000);
 
 
-    var currAllItems = [], currMeetup = [], currFollowerUpdates = [], sort="mra";
-    function queryAllItems(sort){
-      $.get("../index.php/homepage/"+sort, function(res){
-        if(JSON.stringify(res) !== JSON.stringify(currAllItems)){
-          console.log("Item Change");
-          currAllItems = res;
-          processAllItems(res);
-        }
-      }, "json");  
-    }
+    
+  function queryAllItems(sort){
+    $.get("../index.php/homepage/"+sort, function(res){
+       if(JSON.stringify(res) !== JSON.stringify(currAllItems)){
+        console.log("Item Change");
+        currAllItems = res;
+         processAllItems(res);
+      }
+     }, "json");  
+   }
 
-    function queryMeetUp(){
-      $.get("../index.php/usermeetup", function(res){
-        if(JSON.stringify(res) !== JSON.stringify(currMeetup)){
-          console.log("New Event!");
-          currMeetup = res;
-          processUserMeetUp(res);
-        }
-      }, "json");  
-    }
+  function queryMeetUp(){
+    $.get("../index.php/usermeetup", function(res){
+      if(JSON.stringify(res) !== JSON.stringify(currMeetup)){
+        console.log("New Event!");
+        currMeetup = res;
+        processUserMeetUp(res);
+      }
+    }, "json");  
+  }
 
-    function queryFollowerUpdates(){
-      $.get("../index.php/userfollowerupdates", function(res){
-        if(JSON.stringify(res) !== JSON.stringify(currFollowerUpdates)){
-          console.log("New Follower item added!");
-          currFollowerUpdates = res;
-          processUserFollowerUpdates(res);
-        }
-      }, "json");  
-    }
-
-};
+  function queryFollowerUpdates(){
+    $.get("../index.php/userfollowerupdates", function(res){
+      if(JSON.stringify(res) !== JSON.stringify(currFollowerUpdates)){
+        console.log("New Follower item added!");
+        currFollowerUpdates = res;
+        processUserFollowerUpdates(res);
+      }
+    }, "json");  
+  }
+  s
 </script>
