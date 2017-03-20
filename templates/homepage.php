@@ -194,5 +194,4 @@ include "base.php";
       }
     }, "json");  
   }
-  s
 </script>

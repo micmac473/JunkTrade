@@ -71,9 +71,9 @@ if(isset($_GET['trader'])){
               }
               else{
                 if($req['requester'] == $currentUser){
-                echo "<div class='panel panel-default'>";
+                echo "<div class='panel panel-info'>";
 
-                echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem(".$val['itemid'].")\"><strong>". $val['itemname'] . "</strong> </button></div>";
+                echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$val['itemid'].")\"><strong>". $val['itemname'] . "</strong> </button><br><small> Views: ".$val['views']." </small><br></div>";
           
                 echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
 
@@ -95,9 +95,9 @@ if(isset($_GET['trader'])){
           }
 
           if($j == count($userRequests)){
-            echo "<div class='panel panel-default'>";
+            echo "<div class='panel panel-info'>";
 
-            echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link btn-lg' onclick=\"viewItem(".$val['itemid'].")\"><strong>". $val['itemname'] . "</strong> </button></div>";
+            echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$val['itemid'].")\"><strong>". $val['itemname'] . "</strong> </button><br><small> Views: ".$val['views']." </small><br></div>";
           
             echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
                 

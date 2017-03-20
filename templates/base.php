@@ -187,6 +187,18 @@ function getCurrentPage(){
         <form method = "post" class="navbar-form" role="form" action ="search.php?go" id ="searchform">
         <div class="form-group" style="display:inline;">
           <div class="input-group" style="display:table;">
+
+            <!-- <span class="input-group-addon search-panel" style="width:1%;">
+              <span id="search_concept">Filter by</span>
+              <button  class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-caret-square-o-down fa-fw"></i>
+              </button>
+            
+              <ul class="dropdown-menu" role="menu">
+                  <li><a href="#contains"><i class="fa fa-gift"></i> Items</a></li>
+                  <li><a href="#its_equal"><i class="fa fa-user"></i> Traders</a></li>
+              </ul>
+            </span> -->
             <input autofocus class="form-control" name="searchname" placeholder="Search for Junk" autocomplete="off" autofocus="autofocus" type="text">
             <span class="input-group-addon" class="btn btn-default" style="width:1%;" name="searchsubmit">
               <button type="submit" class="btn btn-default btn-xs" name="searchsubmit" value="Search">
@@ -507,7 +519,15 @@ function getCurrentPage(){
 
 <script>
   $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip({html: true});   
+    $('[data-toggle="tooltip"]').tooltip({html: true}); 
+
+    $('.search-panel .dropdown-menu').find('a').click(function(e) {
+    e.preventDefault();
+    var param = $(this).attr("href").replace("#","");
+    var concept = $(this).text();
+    $('.search-panel span#search_concept').text(concept);
+    $('.input-group #search_param').val(param);
+  });  
   });
 </script>
 
