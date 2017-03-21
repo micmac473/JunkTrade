@@ -380,6 +380,16 @@ $app->get("/allnonuseritemsstate", function(Request $request, Response $response
 	return $response;
 });
 
+$app->get("/getusername/{id}", function(Request $request, Response $response){
+	$val = $request->getAttribute('id');
+	// Get Record for Specific Country
+	$rec = getUsername($val);
+	//$rec = addItemToSaved($val, 1);
+
+	$response = $response->withJson($rec);
+	return $response;
+});
+
 // Testing the function that checks if an item has been saved already
 $app->get("/checkitemsaved/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
@@ -659,6 +669,22 @@ $app->post("/cancelrequest", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	$requestId = $post['requestid'];
 	$res = cancelRequest($requestId);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+
+$app->post("/vieweddecision", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$requestId = $post['requestid'];
+	$res = viewedDecision($requestId);
 	if ($res){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);

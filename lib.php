@@ -834,7 +834,7 @@ function getUsername($val){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != null){
-		$sql = "SELECT `username` FROM `users` WHERE id = $val;";
+		$sql = "SELECT `username`,`firstname` FROM `users` WHERE id = $val;";
 		$res = $db->query($sql);
 		if ($res){
 			$rec = $res->fetch_assoc();
@@ -912,7 +912,7 @@ function getDecisions(){
 	$db = getDBConnection();
 	$requests = [];
 	if ($db != null){
-		$sql = "SELECT * FROM `users` u, `requests` r, `items` i WHERE r.requester = u.id AND i.itemid = r.item AND r.requester = $user AND `decision` IS NOT NULL ORDER BY i.itemname ASC;";
+		$sql = "SELECT r.id, i.itemname, r.decision, r.viewed FROM `users` u, `requests` r, `items` i WHERE r.requester = u.id AND i.itemid = r.item AND r.requester = $user AND `decision` IS NOT NULL ORDER BY i.itemname ASC;";
 		$res = $db->query($sql);
 		while($res && $row = $res->fetch_assoc()){
 			$requests[] = $row;
@@ -1148,6 +1148,17 @@ function acceptRequest($requestId, $requesteeItem, $requesterItem){
 function denyRequest($requestId){
 	$db = getDBConnection();
 	$sql = "UPDATE `requests` r SET `decision` = false WHERE r.id = $requestId;";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	return $res;
+}
+
+function viewedDecision($requestId){
+	$db = getDBConnection();
+	$sql = "UPDATE `requests` r SET `viewed` = true WHERE r.id = $requestId;";
 	$res = null;
 	if ($db != NULL){
 		$res = $db->query($sql);

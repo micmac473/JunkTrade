@@ -161,7 +161,7 @@ include "base.php";
     queryAllItems(sort);
     queryMeetUp();
     queryFollowerUpdates();
-  },5000);
+  },2500);
 
 
     
@@ -169,8 +169,9 @@ include "base.php";
     $.get("../index.php/homepage/"+sort, function(res){
        if(JSON.stringify(res) !== JSON.stringify(currAllItems)){
         console.log("Item Change");
+        //toastr["success"]("New Item Uploaded");
         currAllItems = res;
-         processAllItems(res);
+        processAllItems(res);
       }
      }, "json");  
    }
@@ -179,6 +180,7 @@ include "base.php";
     $.get("../index.php/usermeetup", function(res){
       if(JSON.stringify(res) !== JSON.stringify(currMeetup)){
         console.log("New Event!");
+        //toastr["success"]("New Event");
         currMeetup = res;
         processUserMeetUp(res);
       }
@@ -194,5 +196,4 @@ include "base.php";
       }
     }, "json");  
   }
-  s
 </script>

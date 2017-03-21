@@ -3,7 +3,7 @@ include "../lib.php";
 
 //Moves item image files to folder and saved the file names and other other to DB
 if(isset($_POST['upload'])){
-  $defaultFileName = "../img/defaultitemimage.jpg";
+  $defaultFileName = "defaultitemimage.jpg";
 
   $filetmp = $_FILES['itemImages']['tmp_name'][0];
   $filename = $_FILES["itemImages"]["name"][0];

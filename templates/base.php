@@ -28,6 +28,8 @@ function getCurrentPage(){
     $page = "Search";
   else if(stripos($currentPage,"history") !== false)
     $page = "History";
+  else if(stripos($currentPage,"item") !== false)
+    $page = "Item";
   
 
   return $page;
@@ -99,6 +101,8 @@ function getCurrentPage(){
     <script src="//cdn.backand.net/vanilla-sdk/1.0.9/backand.js"></script>
     <script src="//cdn.backand.net/angular1-sdk/1.9.5/backand.provider.js"></script>  -->
 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <style>
       ./*city{
@@ -366,7 +370,7 @@ function getCurrentPage(){
 
 
 <!-- Add Item -->
-  <div class ="row" style ="display:none" id ="uploadItem">
+  <div class ="row col-lg-12 col-md-12 col-sm-12 col-xs-12" style ="display:none" id ="uploadItem">
     <div class ="">
       <form class="form-horizontal" action ="profile.php" enctype="multipart/form-data" method ="POST">
       <!-- <form class="form-horizontal" action ="index.php/additem" enctype="multipart/form-data" method ="POST" onsubmit="return addItem();"> -->
@@ -414,9 +418,8 @@ function getCurrentPage(){
             <div class="form-group">
               <label class="col-md-4 control-label" for="upload"></label>
               <div class="col-md-4">
-                <button type ="submit" name="upload" class="btn btn-success" id="upload">Add</button>
-                  <button type="button" onclick ="hideForm();" class="btn btn-warning" ></a>Cancel
-                </button>
+                <button type ="submit" name="upload" class="btn btn-success btn-block" id="upload">Upload Item</button>
+                <button type="button" onclick ="hideForm();" class="btn btn-warning btn-block" >Cancel</button>
               </div>
             </div>
 

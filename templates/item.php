@@ -23,22 +23,22 @@ if(isset($_GET['item'])){
 <div class ="container-fluid">
   <div class="row">
   <?php
-    echo "<div class='col-lg-1'>
+    echo "<div class='col-lg-1 col-md-1 col-sm-12 col-xs-12'>
             <div id='slider-thumbs'>
                 <ul class='hide-bullets'>
                     <li>
-                        <a class='thumbnail' id='carousel-selector-0'>
+                        <a class='thumbnail col-lg-12 col-md-12 col-sm-4 col-xs-4' id='carousel-selector-0'>
                             <img src=\"" . $itemImages['picture'] . "\">
                         </a>
                     </li>
                     <li>
-                        <a class='thumbnail' id='carousel-selector-1'>
+                        <a class='thumbnail col-lg-12 col-md-12 col-sm-4 col-xs-4' id='carousel-selector-1'>
                             <img src=\"" . $itemImages['picture2'] . "\">
                         </a>
                     </li>
 
                     <li>
-                        <a class='thumbnail' id='carousel-selector-2'>
+                        <a class='thumbnail col-lg-12 col-md-12 col-sm-4 col-xs-4' id='carousel-selector-2'>
                             <img src=\"" . $itemImages['picture3'] . "\">
                         </a>
                     </li>
@@ -46,19 +46,19 @@ if(isset($_GET['item'])){
            </div>
         </div>";
 
-    echo "<div class='col-lg-5' id='slider'>
+    echo "<div class='col-lg-5 col-md-5 col-sm-12 col-xs-12' id='slider'>
             <div class='row'>
                 <div class='col-sm-12' id='carousel-bounding-box'>
                     <div class='carousel slide' id='myCarousel'>
                         <div class='carousel-inner'>
                             <div class='active item' data-slide-number='0'>
-                                <img src=\"" . $itemImages['picture'] . "\"  style='width:100%;height:450px;' class='img-responsive img-thumbnail mx-auto'>
+                                <img src=\"" . $itemImages['picture'] . "\"  style='width:100%;' class='img-responsive img-thumbnail mx-auto'>
                             </div>
                             <div class='item' data-slide-number='1'>           
-                                <img src=\"" . $itemImages['picture2'] . "\" style='width:100%;height:450px;' class='img-responsive img-thumbnail mx-auto'>
+                                <img src=\"" . $itemImages['picture2'] . "\" style='width:100%;' class='img-responsive img-thumbnail mx-auto'>
                             </div>
                             <div class='item' data-slide-number='2'>        
-                                <img src=\"" . $itemImages['picture3'] . "\" style='width:100%;height:450px;' class='img-responsive img-thumbnail mx-auto'>
+                                <img src=\"" . $itemImages['picture3'] . "\" style='width:100%;' class='img-responsive img-thumbnail mx-auto'>
                             </div>
                         </div>
                         <!-- Carousel nav -->
@@ -73,13 +73,13 @@ if(isset($_GET['item'])){
             </div>
         </div>";
 
-  	echo "<div class='col-lg-4' style='border:1px solid #cecece;'>
+  	echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12' style='border:1px solid #cecece;'>
         <h1><u>" . $itemDetails['itemname'] . "</u></h1>
   			<strong> Owned by </strong> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile(".$itemDetails['userid'].")\"><i class='fa fa-user' aria-hidden='true'></i> " . $username['username'] . "</button> 
         <p> <strong> Uploaded on </strong>" . $itemDetails['uploaddate'] . "</p>
   			<h3> <u> Description </u> </h3>" . $itemDetails['itemdescription'] . "</div>";
 
-    echo "<div class='col-lg-2'>";
+    echo "<div class='col-lg-2 col-md-2 col-sm-12 col-xs-12'>";
     //var_dump($itemRequest['decision']);
     //var_dump($itemRequest);
     if($itemRequest == null){

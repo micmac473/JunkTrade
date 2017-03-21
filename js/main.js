@@ -64,13 +64,14 @@ $(document).ready(function(){
 setInterval(function(){
     queryUserRequests();
     queryDecisions();
-},5000);
+},2500);
 
 var currNotifcations = [], currDecisions = [];
 function queryUserRequests(){
     $.get("../index.php/requests", function(res){
         if(JSON.stringify(res) !== JSON.stringify(currNotifcations)){
             console.log("New request");
+            //toastr["success"]("New Item Request");
             currNotifcations = res;
             notifications(res);
         }
@@ -80,12 +81,15 @@ function queryUserRequests(){
 function queryDecisions(){
     $.get("../index.php/decisions", function(res){
         if(JSON.stringify(res) !== JSON.stringify(currDecisions)){
-            console.log("New decision");
+            console.log("New Item Decision");
+            //toastr["success"]("New Item Decision");
             currDecisions = res;
             decisions(res);
         }
     }, "json");  
 }
+
+
  //--------------------------------------------------------------------------------------------------------------------
  var attempts =0;
  // Log in functionality
@@ -110,7 +114,7 @@ function login(){
             swal({ 
                 title: "Welcome " + res,
                 text: "You have logged in successfully",
-                type: "success" 
+                imageUrl: "../img/welcome.jpg"
             },
                 function(){
                     window.location.href = 'homepage.php';
@@ -473,55 +477,7 @@ function listUserItems(records){
 } 
 
 //--------------------------------------------------------------------------------------------------------------------
-function viewItem(itemid){
-    /*$.get("../index.php/getitem/"+itemid, processItem,"json"); */
-    views(itemid); 
-    window.location.href = "item.php?item="+itemid;
-    return false;
-}
 
-function displayItem(records){
-    
-    // Display item description in modal when "view more" is clicked
-    /*$("#description").val(records.itemdescription);   
-    $('#itemModal').modal('show'); */
-}
-//--------------------------------------------------------------------
-//Redirects to trader.php and displays the items and other items of the trader clicked
-function viewTraderProfile(userid){
-    $.get("../index.php/items/"+userid, processTraderProfile, "json");
-}
-
-function processTraderProfile(records){
-    console.log(records);
-    //alert(records[0].userid);
-    window.location.href = 'trader.php?trader='+records[0].userid;
-    //listProfileItems(records);
-    return false;
-
-}
-function listProfileItems(records){
-    // Display user and their items in a modal
-    /*var htmlStr;
-       $("#trader").val(records[0].username);
-        records.forEach(function(el){
-            htmlStr += "<option value='"+el.itemid+"''>" +el.itemname + "</option>";
-        });
-        $("#items").html(htmlStr);
-    $('#profileModal').modal('show'); */
-
-    var itemdiv = "<div>";
-    $("#itemP").val(records[0].username);
-    console.log(records[0].username);
-    records.forEach(function(el){
-        itemdiv += "<div class='panel panel-default'>";
-        itemdiv += "<div class='panel-heading'>"+  el['itemname'] + "</div>"; 
-        itemdiv += "</div>";
-    });
-    $("#itemblockP").html(itemdiv);
-    window.location.href = 'trader.php';
-    return false;
-}
 //---------------------------------------------------------------------------------
 //Dsiplay requests for user items in the notification icon
 
@@ -587,20 +543,91 @@ function decisions(records){
     console.log(records);
     var htmlStr="";
     records.forEach(function(el){
-        if(el.decision == true){
-            htmlStr += "<li><a href=trade.php>"+ el.itemname + " request was ACCEPTED" + "</a></li>";
+        if(el.decision == true && el.viewed == false){
+            htmlStr += "<li><a href='#' onclick=\"viewedDecision("+el.id+")\">"+ el.itemname + " request was ACCEPTED" + "</a></li>";
         }
-        else{
-            htmlStr += "<li><a href=trade.php>"+ el.itemname + " request was DENIED" + "</a></li>";
-        }
-        
-       
+        else if(el.decision == false && el.viewed == false){
+            htmlStr += "<li><a href='#' onclick=\"viewedDecision("+el.id+")\">"+ el.itemname + " request was DENIED" + "</a></li>";
+        } 
     });
-     $("#decisions").html(htmlStr);
+    $("#decisions").html(htmlStr);
     var countD = $("#decisions li").length;
     $("#decisionsNotify").html(countD);
     //displayRequests(records);
+}
 
+//When a decision is clicked by a user, it is a recorded as viewed in the DB and will no longer be shown in the listing of new requests
+function viewedDecision(requestId){
+    var viewedRequest = {
+        "requestid" : requestId
+    };
+
+    $.post("../index.php/vieweddecision", viewedRequest,function(res){
+        console.log(res);
+        window.location.href = 'trade.php';
+    },"json");
+}
+
+//Dsiplay decisions for requests made by user in a table on the outgoing requests page
+function getTrade(){
+    $.get("../index.php/trade", processUserTrade, "json");
+}
+
+function processUserTrade(records){
+    console.log(records);
+    $.get("../index.php/outgoingrequestitems", function(res){
+        console.log(res);
+        listUserTrade(records, res);
+    }, "json");
+    //showRequestData(records);
+}
+
+function listUserTrade(records, res){
+    var i=0;
+    var sec_id = "#table_sect";
+    var htmlStr = $("#table_headingt").html(); //Includes all the table, thead and tbody declarations
+
+    records.forEach(function(el){
+        htmlStr += "<tr>";
+        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
+        /*htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+        htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
+        htmlStr += "<td>" + el['timerequested'] + "</td>"; */
+        if(el['decision'] == null){
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i> " + el['itemname']+"<strong></button></td>";
+            htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
+            htmlStr += "<td>" + el['timerequested'] + "</td>";
+            htmlStr += "<td> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
+            //htmlStr += "<td> <i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'>Loading...</span></td>";
+            htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
+        }
+        else if(el['decision'] == true){
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+            htmlStr += "<td><a disabled class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
+            htmlStr += "<td>" + el['timerequested'] + "</td>";
+            htmlStr += "<td> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
+            //htmlStr += "<td><i class='fa fa-check fa-2x' aria-hidden='true'></i></td>";
+            htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.rid+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
+        }
+        else{
+            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
+            htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
+            htmlStr += "<td>" + el['timerequested'] + "</td>";
+            htmlStr += "<td> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
+            htmlStr += "<td> </td>";
+        }
+
+        htmlStr +=" </tr>" ;
+        i++;
+    });
+    //count = $("#mylist li").size();
+    htmlStr += "</tbody></table>";
+    $(sec_id).html(htmlStr);
+} 
+
+function meetUp(requestid){
+    //swal("Working!", "", "success");
+    window.location.href = "meetup.php";
 }
 //-------------------------------------------------------------------------------------------
 // Display a user trade history
@@ -642,8 +669,24 @@ function displayTradeHistory(records){
     
 }
 
+//---------------------------------------------------------------------------------------
+function viewItem(itemid){
+    /*$.get("../index.php/getitem/"+itemid, processItem,"json"); */
+    views(itemid); 
+    window.location.href = "item.php?item="+itemid;
+    return false;
+}
 
 //--------------------------------------------------------------------
+//Redirects to trader.php and displays the items and other items of the trader clicked
+function viewTraderProfile(userid){
+    window.location.href = 'trader.php?trader='+userid;
+    //$.get("../index.php/items/"+userid, processTraderProfile, "json");
+    return false;
+}
+//--------------------------------------------------------------------
+
+
 // Add the item clicked to the user's saved items
 function addToSavedItems(itemid){
     $.get("../index.php/owner/"+itemid, function(res){
@@ -700,7 +743,7 @@ function processUserSavedItems(records){
     return false;
 }
 
-
+//-----------------------------------------------------------------------------------------------------------
 function removeSavedItem(savedId){
     var savedItem = {
         "savedid": savedId
@@ -726,6 +769,7 @@ function removeSavedItem(savedId){
     }, "json");
     return false;
 }
+
 //--------------------------------------------------------------------------------------------------------------------
 // Adds the trader clicked to the user's followers
 function followTrader(userid){
@@ -857,68 +901,7 @@ function processUserFollowers(records){
 
 //--------------------------------------------------------------------------------------------------------------------
 
-//Dsiplay decisions for requests made by user
-//Dsiplay All user items on profile
-function getTrade(){//alter for slim 
-    $.get("../index.php/trade", processUserTrade, "json");
-}
 
-function processUserTrade(records){
-    console.log(records);
-    $.get("../index.php/outgoingrequestitems", function(res){
-        console.log(res);
-        listUserTrade(records, res);
-    }, "json");
-    //showRequestData(records);
-}
-
-function listUserTrade(records, res){
-    var i=0;
-    var sec_id = "#table_sect";
-    var htmlStr = $("#table_headingt").html(); //Includes all the table, thead and tbody declarations
-
-    records.forEach(function(el){
-        htmlStr += "<tr>";
-        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
-        /*htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
-        htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
-        htmlStr += "<td>" + el['timerequested'] + "</td>"; */
-        if(el['decision'] == null){
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i> " + el['itemname']+"<strong></button></td>";
-            htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td>" + el['timerequested'] + "</td>";
-            htmlStr += "<td> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
-            //htmlStr += "<td> <i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'>Loading...</span></td>";
-            htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
-        }
-        else if(el['decision'] == true){
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
-            htmlStr += "<td><a disabled class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td>" + el['timerequested'] + "</td>";
-            htmlStr += "<td> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
-            //htmlStr += "<td><i class='fa fa-check fa-2x' aria-hidden='true'></i></td>";
-            htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.rid+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
-        }
-        else{
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
-            htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td>" + el['timerequested'] + "</td>";
-            htmlStr += "<td> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
-            htmlStr += "<td> </td>";
-        }
-
-        htmlStr +=" </tr>" ;
-        i++;
-    });
-    //count = $("#mylist li").size();
-    htmlStr += "</tbody></table>";
-    $(sec_id).html(htmlStr);
-} 
-
-function meetUp(requestid){
-    //swal("Working!", "", "success");
-    window.location.href = "meetup.php";
-}
 
 //--------------------------------------------------------------------------------------------------------------------
 // Show and hide add item form
@@ -1265,8 +1248,8 @@ function sendArrangement(){
         type: "info",
         showCancelButton: true,
         confirmButtonColor: "#5cd65c",
-        confirmButtonText: "Accept",
-        cancelButtonText: "Cancel",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
         closeOnConfirm: false,
         closeOnCancel: false
     },
@@ -1413,6 +1396,7 @@ function processRequestedMeetUp(records, records2){
     var i = 0, size = records2.length -1;
     //console.log(size);
     //console.log(records[1][0]);
+    var currDate = new Date();
     records.forEach(function(el){
         // do get request with request id to get my item and contact
         htmlStr += "<tr>";
@@ -1594,15 +1578,20 @@ function logout(){
     function(isConfirm){
         
         if (isConfirm) {
-            swal({ 
-                title: "Goodbye!",
-                text: "See you next time :)!",
-                type: "error" 
-            },
-                function(){
-                    window.location.href = 'login.php';
-                }
-            );
+            $.get("../index.php/user",function(userId){
+                $.get("../index.php/getusername/"+userId, function(res){
+                    swal({ 
+                        title: "Goodbye " + res.firstname,
+                        text: "See you next time",
+                        imageUrl: "../img/goodbye.jpg"
+                    },
+                        function(){
+                            window.location.href = 'login.php';
+                        }
+                    );
+                },"json"); 
+            },"json");
+            
 
         } else {
             swal("Still Logged In", "Continue Trading!", "success");
