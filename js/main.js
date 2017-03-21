@@ -1680,8 +1680,5 @@ function displayUserFollowerUpdates(records){
 //--------------------------------------------------------------------------------------------
 
 
-
-
-
 //---------------------------------END-------------------------------------------------
 console.log("JavaScript file was successfully loaded in the page");
