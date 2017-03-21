@@ -158,22 +158,22 @@ include "base.php";
             <fieldset>
 
               <div class="modal-header">
-                <h2 class="modal-title" style="text-align: center" id="tradername"> </h2>
+                <h2 class="modal-title" style="text-align: center" ><i class="fa fa-user fa-lg" aria-hidden="true"></i> <span id="tradername"></span> <i class="fa fa-comment-o fa-lg" aria-hidden="true"></i></h2>
              </div>
 
-
+              <input id="traderusername" name="traderusername" type="hidden" disabled class="form-control input-md">
               <input id="userid" name="userid" type="hidden" disabled class="form-control input-md">
               <input id="traderid" name="traderid" type="hidden" disabled class="form-control input-md">
               <div class="form-group">
               <div class="">                     
-                <textarea class="form-control"  id="messages" rows="10" name="messages" disabled></textarea>
+                <textarea class="form-control"  id="messages" rows="10" name="messages" readonly="readonly"></textarea>
               </div>
             </div>
 
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                  <input class="form-control" type="text" id="message" placeholder="Message"/>
+                  <input class="form-control" type="text" id="message" maxlength="200" placeholder="Message" required/>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                   <button class="btn btn-success btn-block" type="submit">Send</button> 
@@ -194,7 +194,10 @@ include "base.php";
 window.onload = function() {
   getRequestedMeetUp();
   getRequestsMeetUp();
+
 };
+
+
 
 
 </script>

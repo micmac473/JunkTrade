@@ -1600,59 +1600,53 @@ function logout(){
     return false;
 }
 //------------------------------------------------------------------------------------------------------
+
 function chat(traderid){
     $.get("../index.php/user",function(userid){
         //console.log(userid);
         $("#chatform #userid").val(userid);
         $("#chatform #traderid").val(traderid);
 
-        $.get("../index.php/getusername/"+traderid,function(username){
+        $.get("../index.php/getusername/"+traderid,function(trader){
             //console.log(username);
-            $("#chatform #tradername").text(username.username);
+            var username;
+            username = trader.username;
+            $("#chatform #traderusername").val(trader.username);
+            $("#chatform #tradername").text(trader.firstname + " " + trader.lastname);
 
-            $.get("../index.php/getmessages/"+traderid, function(messages){
-                console.log(messages);
-                messages.forEach(function(el){
-                    // FIX: appends the same messages each time the button is clicked
-                    if(el.sentfrom == userid)
-                        $("#chatform #messages").append("Me: " + el.message+ "\n");
-                    else
-                        $("#chatform #messages").append(username.username +": " + el.message+ "\n");
-                });
-            }, "json")
+            getMessages(traderid, userid, username);
+            var currChat = []
+            setInterval(function(){
+                $.get("../index.php/getmessages/"+traderid, function(messages){
+                    
+                    var chat="";
+                    if(JSON.stringify(messages) !== JSON.stringify(currChat)){
+                        currChat = messages;
+                        messages.forEach(function(el){
+                            //console.log(el);
+                            if(el.sentfrom == userid)
+                                chat += "Me: " + el.message + "\n";
+                            else
+                                chat += username + ": " + el.message + "\n";
+                        });
+                        $("#chatform #messages").html(chat);
+                    }
+                },"json");
+            },2500);
 
             $("#chatmodal").modal('show');
         },"json");
         
     });
-    
-
-    /*swal({
-          title: "Let's Chat",
-          text: "Send Message: ",
-          type: "input",
-          showCancelButton: true,
-          closeOnConfirm: false,
-          animation: "slide-from-top"
-        },
-        function(inputValue){
-          if (inputValue === false) return false;
-          
-          if (inputValue === "") {
-            swal.showInputError("You need to write something!");
-            return false
-          }
-          
-          swal("Nice!", "Your message: '" + inputValue + "' was sent", "success");
-        }
-    ); */
 }
 
 function sendMessage(){ 
     var sentFrom = $("#chatform #userid").val();
     var sentTo = $("#chatform #traderid").val();
     var message = $("#chatform #message").val();
-
+    //message = encodeURIComponent(message).replace(/'/g,"%27");
+    var traderName = $("#chatform #traderusername").val();
+    console.log(traderName);
     var chat = {
         "sentfrom" : sentFrom,
         "sentto" : sentTo,
@@ -1664,7 +1658,8 @@ function sendMessage(){
     
     $.post("../index.php/sendmessage", chat, function(res){
         if(res){
-            swal("Message Sent!", "User will be receive message", "success");
+            //swal("Message Sent!", "User will be receive your message", "success");
+            getMessages(sentTo, sentFrom, traderName);
             // Call function to get new messages after sending one
         }
         else{
@@ -1675,9 +1670,31 @@ function sendMessage(){
 }
 
 
-function getMessages(){
-    
+function getMessages(traderId, userid, username){
+    $.get("../index.php/getmessages/"+traderId, function(messages){
+        console.log(messages);
+        var currMessages = $("#chatform #messages").val();
+        console.log(currMessages);
+        var chat="";
+        if(JSON.stringify(messages) !== JSON.stringify(currMessages)){
+            messages.forEach(function(el){
+                        // FIX: appends the same messages each time the button is clicked
+                //el.message = decodeURIComponent(message).replace(/'/g,"%27");
+                if(el.sentfrom == userid)
+                    //chat += "<p class='pull-left'> Me: " + el.message + "</p>";
+                    //$("#chatform #messages").append("Me: " + el.message+"\n");
+                    chat += "Me: " + el.message + "\n";
+
+                else
+                    chat += username + ": " + el.message + "\n";
+                    //$("#chatform #messages").append(username.username +": " + el.message+ "\n");
+            });
+            $("#chatform #messages").html(chat);
+        }
+    }, "json");
 }
+
+
 //-------------------------------------------------------------------------------------------------------
 function userMeetUp(){
     $.get("../index.php/usermeetup",processUserMeetUp,"json");

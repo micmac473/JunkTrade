@@ -70,9 +70,12 @@ function saveUser($username, $firstname, $lastname, $email, $telephone, $passwor
 }
 
 function saveMessage($sentFrom, $sentTo, $message){
-	$sql = "INSERT INTO `chat` (`sentfrom`, `sentto`, `message`) VALUES ($sentFrom, $sentTo, '$message');";
 	$id = -1;
 	$db = getDBConnection();
+	//$message = mysql_real_escape_string($db, $message);
+	//$message = str_replace("'","\\'", $message);
+	$sql = "INSERT INTO `chat` (`sentfrom`, `sentto`, `message`) VALUES ($sentFrom, $sentTo, '$message');";
+	
 	//echo($db);
 	if ($db != NULL){
 		$res = $db->query($sql);
@@ -864,7 +867,7 @@ function getUsername($val){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != null){
-		$sql = "SELECT `username`,`firstname` FROM `users` WHERE id = $val;";
+		$sql = "SELECT `username`,`firstname`,`lastname` FROM `users` WHERE id = $val;";
 		$res = $db->query($sql);
 		if ($res){
 			$rec = $res->fetch_assoc();
