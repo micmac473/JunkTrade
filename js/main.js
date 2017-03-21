@@ -58,7 +58,7 @@ $(document).ready(function(){
     //getUserFollowers();
     
     //alert($('#requests > li').length);
-
+    
 });  
 // this acts as the main function in Java
 setInterval(function(){
@@ -454,7 +454,7 @@ function listUserItems(records){
                     
                 }
             }
-            if(i==res.length){
+            if(i == res.length){
                 htmlStr += "<tr>";
                 htmlStr += "<td style='display:none;'>"+ el['itemid'] +"</td>";
                 htmlStr += "<td><img src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
