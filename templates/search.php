@@ -16,7 +16,10 @@ include "base.php";
 	if(isset($_POST['searchsubmit'])){ 
 		if(isset($_GET['go'])){ 
 		  	if(preg_match("/^[  a-zA-Z]+/", $_POST['searchname'])){ 
-		 		$name=$_POST['searchname']; 
+		 		$name=$_POST['searchname'];
+		 		$type=$_POST['search_param'];
+		 		
+if($type == "item"){
 		  //-query  the database table
 		  		$db=mysqli_connect("localhost","root","","peertrading")or die("cannot connect to server"); 
 		  		$sql="SELECT  itemid, itemname, itemdescription, userid, picture, username, views FROM items, users WHERE $user <> `userid` AND itemname LIKE '%" . $name .  "%' && items.userid = users.id"; 
@@ -96,7 +99,7 @@ include "base.php";
 	  		} 
 	  	} 
 	} 	
-
+}
 	  ?>
 
 
