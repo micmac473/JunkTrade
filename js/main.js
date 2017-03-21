@@ -316,7 +316,7 @@ function listAllItems(records, user){
                 if(requests[i]['item'] == el['itemid'] || requests[i]['item2'] == el['itemid']){
                     if(requests[i]['decision'] == true){
                         //console.log("Decision for "+el['itemname'] + ": "+requests[i]['decision']);
-                        console.log("Request Accepted for "+el['itemname']);
+                        //console.log("Request Accepted for "+el['itemname']);
                         break;
                     }  
                     else {
@@ -330,12 +330,12 @@ function listAllItems(records, user){
 
                              if(requests[i]['decision'] == null){
                                 itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
-                                console.log("Request Pending for "+ el['itemname']);
+                                //console.log("Request Pending for "+ el['itemname']);
                             }
 
                             else{
                                 itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-primary btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
-                                console.log(el['itemname']+ " is avaialable");
+                                //console.log(el['itemname']+ " is avaialable");
                             }
                     
                             //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
@@ -362,7 +362,7 @@ function listAllItems(records, user){
                 //itemdiv += "<div class='col-lg-6'> <button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems("+el['itemid']+")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button></div></div></div>"
                 itemdiv += "</div>";
                 itemdiv += "</div>";
-                console.log(el['itemname']+ " is avaialable");
+                //console.log(el['itemname']+ " is avaialable");
             }
             /*var requested = false;
             itemdiv += "<div class='panel panel-default'>";
@@ -1058,7 +1058,7 @@ function displayInModal(records, itemid){
         $("#requesteeitem").val(res.itemname);
     }, "json") 
 
-    $("#requestModal").modal();
+    $("#requestModal").modal('show');
 }
 
 function sendRequest(){
@@ -1200,7 +1200,7 @@ function viewRequest(requestId){
             $("#viewrequestform #requester").val(res.username);
             $("#viewrequestform #requesteritem").val(res.itemname);
             $('#viewrequestform #imagepreview').attr('src', res.picture);
-            $("#requestModalP").modal();
+            $("#requestModalP").modal('show');
         }, "json");
 }
 
@@ -1407,7 +1407,7 @@ function processRequestedMeetUp(records, records2){
         htmlStr += "<td> <i class='fa fa-calendar' aria-hidden='true'></i> " + el['tradedate'] + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i> " + el['tradelocation'] + "</td>";
         //htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requestee+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
         htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         htmlStr +=" </tr>" ;
         i++;
@@ -1600,8 +1600,34 @@ function logout(){
     return false;
 }
 //------------------------------------------------------------------------------------------------------
-function chat(userid){
-    swal({
+function chat(traderid){
+    $.get("../index.php/user",function(userid){
+        //console.log(userid);
+        $("#chatform #userid").val(userid);
+        $("#chatform #traderid").val(traderid);
+
+        $.get("../index.php/getusername/"+traderid,function(username){
+            //console.log(username);
+            $("#chatform #tradername").text(username.username);
+
+            $.get("../index.php/getmessages/"+traderid, function(messages){
+                console.log(messages);
+                messages.forEach(function(el){
+                    // FIX: appends the same messages each time the button is clicked
+                    if(el.sentfrom == userid)
+                        $("#chatform #messages").append("Me: " + el.message+ "\n");
+                    else
+                        $("#chatform #messages").append(username.username +": " + el.message+ "\n");
+                });
+            }, "json")
+
+            $("#chatmodal").modal('show');
+        },"json");
+        
+    });
+    
+
+    /*swal({
           title: "Let's Chat",
           text: "Send Message: ",
           type: "input",
@@ -1619,7 +1645,38 @@ function chat(userid){
           
           swal("Nice!", "Your message: '" + inputValue + "' was sent", "success");
         }
-    );
+    ); */
+}
+
+function sendMessage(){ 
+    var sentFrom = $("#chatform #userid").val();
+    var sentTo = $("#chatform #traderid").val();
+    var message = $("#chatform #message").val();
+
+    var chat = {
+        "sentfrom" : sentFrom,
+        "sentto" : sentTo,
+        "message" : message
+    };
+
+    $("#chatform #message").val("");
+    console.log(chat);
+    
+    $.post("../index.php/sendmessage", chat, function(res){
+        if(res){
+            swal("Message Sent!", "User will be receive message", "success");
+            // Call function to get new messages after sending one
+        }
+        else{
+            swal("Message Failed", "Message not sent", "error");
+        }
+    }, "json");
+    return false;
+}
+
+
+function getMessages(){
+    
 }
 //-------------------------------------------------------------------------------------------------------
 function userMeetUp(){

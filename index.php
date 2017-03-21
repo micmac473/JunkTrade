@@ -380,6 +380,14 @@ $app->get("/allnonuseritemsstate", function(Request $request, Response $response
 	return $response;
 });
 
+$app->get("/getmessages/{id}", function(Request $request, Response $response){
+	$traderId = $request->getAttribute('id');
+	$messages = getMessages($traderId);
+	
+	$response = $response->withJson($messages);
+	return $response;
+});
+
 $app->get("/getusername/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country
@@ -689,6 +697,23 @@ $app->post("/vieweddecision", function(Request $request, Response $response){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);
 		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+$app->post("/sendmessage", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$sentFrom = $post['sentfrom'];
+	$sentTo = $post['sentto'];
+	$message = $post['message'];
+	$res = saveMessage($sentFrom, $sentTo, $message);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson(array("id"=>$res));
 		
 	} else {
 		$response = $response->withStatus(400);

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2017 at 02:33 AM
+-- Generation Time: Mar 21, 2017 at 12:29 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -21,6 +21,29 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `peertrading` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `peertrading`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chat`
+--
+
+DROP TABLE IF EXISTS `chat`;
+CREATE TABLE `chat` (
+  `chatid` int(11) NOT NULL,
+  `sentfrom` int(11) NOT NULL,
+  `sentto` int(11) NOT NULL,
+  `message` varchar(200) NOT NULL,
+  `senton` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `chat`
+--
+
+INSERT INTO `chat` (`chatid`, `sentfrom`, `sentto`, `message`, `senton`) VALUES
+(1, 1, 2, 'Yo Montoute. Wah gwan?', '2017-03-21 11:28:41'),
+(2, 2, 1, 'Waz the scene MC?', '2017-03-21 11:29:02');
 
 -- --------------------------------------------------------
 
@@ -64,22 +87,22 @@ INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `pictur
 (1, 'iPhone 6', 'Brand: Apple\r\nColor: White\r\nDisplay: Retina\r\nCategory: Electronics\r\nMemory: 4GB\r\nStorage: 64GB\r\nFront Camera: 8MP\r\nRear Camera: 12MP\r\n', '../img/iphone6.jpg', '../img/iphone62.jpg', '../img/iphone63.jpg', '2017-03-19 00:50:38', 1, 2),
 (2, 'Android Textbook', 'Author: Mark L. Murphy\r\nCategory: Books\r\nCondition: Used\r\n', '../img/android.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:52:43', 1, 1),
 (3, 'American Football', 'Category: Sports\r\nCondition: Used', '../img/football.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:54:13', 1, 1),
-(4, 'Webcam', 'Brand: Logitech\r\nCategory: Electronics\r\nColor: Black\r\nQuality: 1080p\r\nCondition: New', '../img/webcam.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:24:26', 1, 1),
-(5, 'Soccer Ball', 'Category: Sports\r\nCondition: Used\r\nColor: Black and White', '../img/soccerball.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:58:12', 2, 1),
+(4, 'Webcam', 'Brand: Logitech\r\nCategory: Electronics\r\nColor: Black\r\nQuality: 1080p\r\nCondition: New', '../img/webcam.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:24:26', 1, 2),
+(5, 'Soccer Ball', 'Category: Sports\r\nCondition: Used\r\nColor: Black and White', '../img/soccerball.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:58:12', 2, 2),
 (6, 'iPhone Charger', 'Brand: Apple\r\nCategory: Electronics\r\nCondition: Used', '../img/iphonecharger.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:59:24', 2, 0),
 (7, 'Data Structures Book', 'Author: Dr. Noel Kalicharan\r\nCategory: Books\r\nCondition: Used', '../img/datastructuresinc.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:00:09', 2, 0),
-(8, 'COMP 3000 Book', 'Title: Design and Analysis of Algorithms\r\nAuthor: Anany Levitin\r\nCategory: Books\r\nCondition: Used', '../img/comp3000.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:03:11', 3, 1),
+(8, 'COMP 3000 Book', 'Title: Design and Analysis of Algorithms\r\nAuthor: Anany Levitin\r\nCategory: Books\r\nCondition: Used', '../img/comp3000.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:03:11', 3, 2),
 (9, 'Computer Architecture Book ', 'Title: Computer Organization and Architecture \r\nAuthor: William Stallings\r\nCondition: Used', '../img/computerarchitecture.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:06:25', 3, 0),
 (10, 'Professional Ethics and Law Notes', 'Category: Other\r\nCourse: INFO 3425\r\nSemester: Two 2016/2017', '../img/notes.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:08:20', 3, 1),
 (11, 'Object Oriented Programming Book', 'Title: An Introduction to Object Oriented Programming with Java\r\nAuthor: C. Thomas Wu\r\nCategory: Books\r\nCondition: New\r\n', '../img/oop.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:10:38', 4, 0),
-(12, 'Macbook Air', 'Brand: Apple\r\nCategory: Electronics\r\nMemory: 12 GB\r\nStorage: 128GB SSD\r\nProcessor: Intel Core i7, with Turbo Boost up to 3.6 GHz', '../img/macbookair.jpe', '../img/macbookair2.jpe', '../img/macbookair3.jpg', '2017-03-19 01:13:08', 4, 3),
-(13, 'Safety Helmet', 'Category: Safety\r\nColor: Yellow\r\nCondition: Large', '../img/safetyhelmet.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:14:37', 4, 0),
+(12, 'Macbook Air', 'Brand: Apple\r\nCategory: Electronics\r\nMemory: 12 GB\r\nStorage: 128GB SSD\r\nProcessor: Intel Core i7, with Turbo Boost up to 3.6 GHz', '../img/macbookair.jpe', '../img/macbookair2.jpe', '../img/macbookair3.jpg', '2017-03-19 01:13:08', 4, 4),
+(13, 'Safety Helmet', 'Category: Safety\r\nColor: Yellow\r\nCondition: Large', '../img/safetyhelmet.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:14:37', 4, 3),
 (14, 'Lab Coat', 'Category: Safety\r\nColor: White\r\nCondition: New', '../img/labcoat.JPG', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:15:39', 4, 1),
 (15, 'Networking Textbook', 'Title: Computer Networking, A Top-Down Approach\r\nAuthor: Kurose & Ross\r\nCondition: Used\r\n', '../img/networking.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:17:58', 5, 0),
 (16, 'Safety Glasses', 'Category: Safety\r\nSize: fits all\r\nCondition: New', '../img/saveglasses.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:19:45', 5, 0),
-(17, 'Pixel', 'Brand: Google\r\nColor: White\r\nCondition: Used\r\nMemory: 4GB\r\nCapacity: 64GB\r\nScreen size: 5.0 inches', '../img/googlepixel.png', '../img/googlepixel2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:21:12', 5, 3),
-(18, 'Wireless Mouse', 'Brand: Logitech\r\nColor: Black\r\nCondition: Used\r\nCategory: Electronics', '../img/mouse.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:22:42', 5, 0),
-(19, 'HP Envy Laptop', 'Brand: Hewlett Packard\r\nColor: Silver\r\nCategory: Electronics\r\nCondition: Used\r\nMemory: 12GB\r\nStorage: 1TB\r\nProcess: Intel i7 5th Generation 3.7Ghz', '../img/hpenvy.jpg', '../img/hpenvy2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:56:17', 1, 4),
+(17, 'Pixel', 'Brand: Google\r\nColor: White\r\nCondition: Used\r\nMemory: 4GB\r\nCapacity: 64GB\r\nScreen size: 5.0 inches', '../img/googlepixel.png', '../img/googlepixel2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:21:12', 5, 4),
+(18, 'Wireless Mouse', 'Brand: Logitech\r\nColor: Black\r\nCondition: Used\r\nCategory: Electronics', '../img/mouse.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:22:42', 5, 1),
+(19, 'HP Envy Laptop', 'Brand: Hewlett Packard\r\nColor: Silver\r\nCategory: Electronics\r\nCondition: Used\r\nMemory: 12GB\r\nStorage: 1TB\r\nProcess: Intel i7 5th Generation 3.7Ghz', '../img/hpenvy.jpg', '../img/hpenvy2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 00:56:17', 1, 5),
 (20, 'Copy Paper', 'Category: Stationery\r\nCondition: New\r\nBrand: Xerox\r\n', '../img/copypaper.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:26:23', 3, 0),
 (21, 'S7 Edge', 'Brand: Samsung\r\nCategory: Electronics\r\nColor: Gold\r\nCondition: Used\r\nMemory: 4GB\r\nStorage: 128GB', '../img/samsung3.jpg', '../img/samsung2.jpg', '../img/samsung.jpg', '2017-03-19 01:28:03', 2, 8),
 (22, 'Power Bank', 'Brand: EliveBuy\r\nCondition: Used\r\nColor: White\r\n10,400mAh', '../img/powerbank.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:30:38', 4, 2),
@@ -104,6 +127,13 @@ CREATE TABLE `requests` (
   `timerequested` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `viewed` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `requests`
+--
+
+INSERT INTO `requests` (`id`, `requester`, `item2`, `requestercontact`, `requestee`, `item`, `decision`, `timerequested`, `viewed`) VALUES
+(1, 1, 1, '868-378-1234', 2, 21, 1, '2017-03-21 06:27:54', 0);
 
 -- --------------------------------------------------------
 
@@ -145,6 +175,13 @@ CREATE TABLE `trade` (
   `requesteefeedbackindicator` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `trade`
+--
+
+INSERT INTO `trade` (`tradeid`, `requestid`, `tradedate`, `tradelocation`, `suggestedlocation`, `locationdecision`, `requestercontact`, `requesteecontact`, `requesterfeedbackrating`, `requesterfeedbackcomment`, `requesterfeedbackindicator`, `requesteefeedbackrating`, `requesteefeedbackcomment`, `requesteefeedbackindicator`) VALUES
+(1, 1, 'Mar-22-2017', 'JFK Quadrangle', '', 0, '868-378-1234', '868-378-1111', '0.0', '', 0, '0.0', '', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -180,6 +217,12 @@ INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `teleph
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `chat`
+--
+ALTER TABLE `chat`
+  ADD PRIMARY KEY (`chatid`);
 
 --
 -- Indexes for table `follow`
@@ -222,6 +265,11 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `chat`
+--
+ALTER TABLE `chat`
+  MODIFY `chatid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `follow`
 --
 ALTER TABLE `follow`
@@ -235,7 +283,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `saved`
 --
@@ -245,7 +293,7 @@ ALTER TABLE `saved`
 -- AUTO_INCREMENT for table `trade`
 --
 ALTER TABLE `trade`
-  MODIFY `tradeid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tradeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users`
 --

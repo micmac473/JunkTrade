@@ -69,6 +69,36 @@ function saveUser($username, $firstname, $lastname, $email, $telephone, $passwor
 	return $id;
 }
 
+function saveMessage($sentFrom, $sentTo, $message){
+	$sql = "INSERT INTO `chat` (`sentfrom`, `sentto`, `message`) VALUES ($sentFrom, $sentTo, '$message');";
+	$id = -1;
+	$db = getDBConnection();
+	//echo($db);
+	if ($db != NULL){
+		$res = $db->query($sql);
+		if ($res && $db->insert_id > 0){
+			$id = $db->insert_id;
+		}
+		$db->close();
+	}
+	return $id;
+}
+
+function getMessages($traderId){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `chat` c WHERE c.sentto = $traderId AND c.sentfrom = $userid OR c.sentto = $userid AND c.sentfrom = $traderId ORDER BY senton ASC;";
+	$messages =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$messages[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $messages;
+}
+
 function checkSavedItem($itemId, $itemOwner){
 	$userid = $_SESSION['id'];
 	$sql = "SELECT * FROM `saved` s where s.itemid = $itemId and s.userid = '$userid' and s.itemowner = $itemOwner;";

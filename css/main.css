@@ -414,3 +414,6 @@ height: 240px;
    top: -15px;
    left: -12px;
   }
+textarea {
+    resize: none;
+}

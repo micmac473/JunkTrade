@@ -148,6 +148,48 @@ include "base.php";
       </div>
     </div>
   </div>
+
+  <!-- Chat Modal -->
+  <div class="modal fade" id="chatmodal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form" id="chatform" onsubmit="return sendMessage();">
+            <fieldset>
+
+              <div class="modal-header">
+                <h2 class="modal-title" style="text-align: center" id="tradername"> </h2>
+             </div>
+
+
+              <input id="userid" name="userid" type="hidden" disabled class="form-control input-md">
+              <input id="traderid" name="traderid" type="hidden" disabled class="form-control input-md">
+              <div class="form-group">
+              <div class="">                     
+                <textarea class="form-control"  id="messages" rows="10" name="messages" disabled></textarea>
+              </div>
+            </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                  <input class="form-control" type="text" id="message" placeholder="Message"/>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                  <button class="btn btn-success btn-block" type="submit">Send</button> 
+                  </div>     
+                </div>
+              </div>
+
+            </fieldset>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 <script>
 window.onload = function() {
   getRequestedMeetUp();
