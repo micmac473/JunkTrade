@@ -1099,7 +1099,7 @@ function sendRequest(){
                             type: "success" 
                             },
                             function(){
-                                if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1){
+                                if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/search.php") > -1){
                                     window.location.reload();
                                 }
                                 else{
@@ -1356,7 +1356,7 @@ function cancelMadeRequest(requestId){
                     type: "success" 
                     },
                     function(){
-                        if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/trade.php") > -1){
+                        if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/trade.php") > -1 || window.location.href.indexOf("/search.php") > -1){
                             window.location.reload();
                         }
                         else{
