@@ -188,31 +188,21 @@ function getCurrentPage(){
           </li>
           
         </ul>
-        <script type="text/javascript">
-          var filterType = $(document).ready(function(e){
-            $('.search-panel .dropdown-menu').find('a').click(function(e) {
-                e.preventDefault();
-                var param = $(this).attr("href").replace("#","");
-                var concept = $(this).text();
-                $('.search-panel span#search_concept').text(concept);
-                $('.input-group #search_param').val(param);
-              });
-            });
-        </script>
+
 
         <form method = "post" class="navbar-form" role="form" action ="search.php?go" id ="searchform">
         <div class="form-group" style="display:inline;">
           <div class="input-group" style="display:table;">
 
-                    <span class="input-group-btn search-panel" style="width:1%;">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      <span id="search_concept">Filter by</span> <span class="caret"></span>
+                  <span class="input-group-addon search-panel" class="btn btn-default" style="width:1%;">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                  <span id="search_concept">Filter by</span> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                       <li><a href="#item">Items</a></li>
-                      <li><a href="#users">Traders</a></li>
+                      <li><a href="#user">Traders</a></li>
                     </ul>
-                    <input type="hidden" name="search_param" value="all" id="search_param">
+                    <input type="hidden" name="search_param" value="item" id="search_param">
                   </span>
 
 
