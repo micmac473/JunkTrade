@@ -23,6 +23,7 @@ include "base.php";
         <th>From</th>
         <th>With</th>
         <th>For</th>
+        <th>Date</th>
         <th>Decision</th>
       </tr>
     </thead>
@@ -129,7 +130,7 @@ include "base.php";
               <div class="form-group"> <!-- Date input -->
                 <label class="control-label" for="date">Date</label>
                 <div class="">
-                  <div class="input-group">
+                  <div class="input-group date">
                     <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                     <input class="form-control" id="tradedate" name="tradedate" placeholder="MM/DD/YYY" type="text" required/>
                   </div>
@@ -188,10 +189,11 @@ include "base.php";
       var date_input=$('input[name="tradedate"]'); //our date input has the name "date"
       var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
       var options={
-        format: 'M-dd-yyyy',
+        format: 'DD MM dd, yyyy',
         container: container,
         todayHighlight: true,
         autoclose: true,
+        startDate: new Date()
       };
       date_input.datepicker(options);
     })

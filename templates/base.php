@@ -104,6 +104,8 @@ function getCurrentPage(){
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
+
     <style>
       ./*city{
         background-image:url(http://www.buyandsellnow.ca/wp-content/uploads/2016/06/3d_banner_background.png);
@@ -181,6 +183,15 @@ function getCurrentPage(){
           <li class="">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel fa-2x" aria-hidden="true" ></i><span class="badge badge-notify" id ="decisionsNotify"></span></a>
             <ul class="dropdown-menu" id="decisions">
+                <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
+                
+            </ul>
+
+          </li>
+
+          <li class="">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comment fa-2x" aria-hidden="true" ></i><span class="badge badge-notify" id ="chatNotify"></span></a>
+            <ul class="dropdown-menu" id="messages">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
             </ul>

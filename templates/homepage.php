@@ -163,6 +163,20 @@ include "base.php";
     queryFollowerUpdates();
   },2500);
 
+  $.get("../index.php/homepage/"+sort, function(res){
+    $.get("../index.php/allnonuseritemsstate", function(reqs){
+      currAllItems = res;
+      currAllRequests = reqs;
+    },"json");
+  },"json");
+
+  $.get("../index.php/usermeetup", function(res){
+    currMeetup = res;
+  },"json");
+
+  $.get("../index.php/userfollowerupdates", function(res){
+    currFollowerUpdates = res;
+  },"json");
 
     
   function queryAllItems(sort){

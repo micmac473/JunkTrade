@@ -67,11 +67,25 @@ setInterval(function(){
     queryChat();
 },2500);
 
-var currNotifcations = [], currDecisions = [];
+var currNotifcations = [], currDecisions = [], currNewMessages =[];
+
+$.get("../index.php/requests", function(res){
+    currNotifcations = res;
+},"json");
+
+$.get("../index.php/decisions", function(res){
+    currDecisions = res;
+},"json");
+
+$.get("../index.php/newmessages", function(messages){
+    currNewMessages = messages;
+},"json");
+
+
 function queryUserRequests(){
     $.get("../index.php/requests", function(res){
         if(JSON.stringify(res) !== JSON.stringify(currNotifcations)){
-            console.log("New request");
+            console.log("Request change");
             //toastr["success"]("New Item Request");
             currNotifcations = res;
             notifications(res);
@@ -90,20 +104,13 @@ function queryDecisions(){
     }, "json");  
 }
 
-
-var currNewMessages =[];
-
-$.get("../index.php/newmessages", function(messages){
-    currNewMessages = messages;
-},"json");
-
 function queryChat(){
-  $.get("../index.php/newmessages", function(messages){
-    if(JSON.stringify(messages) !== JSON.stringify(currNewMessages)){
-      toastr["success"]("New Message");
-      currNewMessages = messages;
-    }
-  },"json");
+    $.get("../index.php/newmessages", function(messages){
+        if(JSON.stringify(messages) !== JSON.stringify(currNewMessages)){
+            toastr["success"]("New Message");
+            currNewMessages = messages;
+        }
+    },"json");
 }
 
  //--------------------------------------------------------------------------------------------------------------------
@@ -310,7 +317,7 @@ function getAllItems(sort){//alter for slim
 }
 
 function processAllItems(records){
-    console.log(records);
+    //console.log(records);
     $.get("../index.php/user", function(res){
         //console.log(res);
         listAllItems(records, res);
@@ -323,7 +330,7 @@ function listAllItems(records, user){
     var requests, i;
     $.get("../index.php/allnonuseritemsstate", function(res){
         requests = res;
-        console.log(requests);
+        //console.log(requests);
         //$.get("../index.php/requesteritemsstate", function(res){
             //console.log(res);
         
@@ -529,14 +536,14 @@ function displayRequests(records, res){
 
     records.forEach(function(el){
         var requestId = el['id'];
-        
+            el['timerequested'] = moment(el['timerequested']).format('dddd MMMM Do, YYYY');
             htmlStr += "<tr>";
             htmlStr += "<td style='display:none;'>"+ el['id'] +"</td>";
             htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+res[i]['itemid']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+res[i]['itemname']+"<strong></button></td>";
             //htmlStr += "<td></td>";
             htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> "+el['itemname']+"</a></td>";
-            
+            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> "+el['timerequested']+"</a></td>";
             //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
             //htmlStr += "<td><button type='button' class='btn btn-info btn-block' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
             htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up fa-lg' aria-hidden='true'></i></button> ";
@@ -609,10 +616,11 @@ function listUserTrade(records, res){
         /*htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
         htmlStr += "<td>" + el['timerequested'] + "</td>"; */
+        el['timerequested'] = moment(el['timerequested']).format('dddd MMMM Do, YYYY');
         if(el['decision'] == null){
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i> " + el['itemname']+"<strong></button></td>";
             htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td>" + el['timerequested'] + "</td>";
+            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> " + el['timerequested'] + "</td>";
             htmlStr += "<td> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
             //htmlStr += "<td> <i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'>Loading...</span></td>";
             htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
@@ -620,7 +628,7 @@ function listUserTrade(records, res){
         else if(el['decision'] == true){
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
             htmlStr += "<td><a disabled class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td>" + el['timerequested'] + "</td>";
+            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> " + el['timerequested'] + "</td>";
             htmlStr += "<td> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
             //htmlStr += "<td><i class='fa fa-check fa-2x' aria-hidden='true'></i></td>";
             htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.rid+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
@@ -628,7 +636,7 @@ function listUserTrade(records, res){
         else{
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
             htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td>" + el['timerequested'] + "</td>";
+            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> " + el['timerequested'] + "</td>";
             htmlStr += "<td> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
             htmlStr += "<td> </td>";
         }
@@ -1418,13 +1426,14 @@ function processRequestedMeetUp(records, records2){
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requesteecontact']+"</td>"
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el['item']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i> "+records2[i]['itemname']+"</td>";
         htmlStr += "<td> <i class='fa fa-calendar' aria-hidden='true'></i> " + el['tradedate'] + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i> " + el['tradelocation'] + "</td>";
         //htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
         htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requestee+")\"><i class='fa fa-comments' aria-hidden='true'></i></button><span id='chatnotificationrequested' class='badge badge-notify'></span></td>";
-        if(Date.now() > el.tradedate){
+        var date = moment().format('MMM-D-YYYY');
+        if(date > el.tradedate){
             htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         else{
@@ -1464,12 +1473,14 @@ function processRequestsMeetUp(records, records2){
         htmlStr += "<tr class='text-center'>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requestercontact']+"</td>"
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el['item2']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>  "+records[i]['itemname']+"</td>";
         htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i>  " + el['tradedate'] + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i>  " + el['tradelocation'] + "</td>";
         htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button><span id='chatnotificationrequests' class='badge badge-notify'></span></td>";
-        if(Date.now() > el.tradedate){
+        var date = moment().format('MMM-D-YYYY');
+        //alert(date);
+        if(date > el.tradedate){
             htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         else{
@@ -1715,7 +1726,7 @@ function getMessages(traderId, userid, username){
     $.get("../index.php/getmessages/"+traderId, function(messages){
         console.log(messages);
         var currMessages = $("#chatform #messages").val();
-        console.log(currMessages);
+        //console.log(currMessages);
         var chat="", divchat="<div class='container-fluid'>";
         if(JSON.stringify(messages) !== JSON.stringify(currMessages)){
             messages.forEach(function(el){

@@ -16,6 +16,7 @@ if(isset($_GET['item'])){
 	//var_dump($username);
     //var_dump($itemRequest);
     //print_r($itemImages);
+    $itemDetails['uploaddate'] = date("l F jS, Y", strtotime($itemDetails['uploaddate']));
 
 }
 ?>
@@ -119,7 +120,7 @@ if(isset($_GET['item'])){
 $(document).ready(function(){
 
   $('#myCarousel').carousel({
-                interval: 5000
+                interval: 10000
         });
  
         //Handles the carousel thumbnails
