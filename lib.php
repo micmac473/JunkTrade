@@ -102,6 +102,22 @@ function getMessages($traderId){
 	return $messages;
 }
 
+
+function getNewMessages(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `chat` c WHERE c.sentto = $userid;";
+	$messages =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$messages[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $messages;
+}
+
 function checkSavedItem($itemId, $itemOwner){
 	$userid = $_SESSION['id'];
 	$sql = "SELECT * FROM `saved` s where s.itemid = $itemId and s.userid = '$userid' and s.itemowner = $itemOwner;";

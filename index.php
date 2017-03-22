@@ -380,6 +380,13 @@ $app->get("/allnonuseritemsstate", function(Request $request, Response $response
 	return $response;
 });
 
+$app->get("/newmessages", function(Request $request, Response $response){
+	$messages = getNewMessages();
+	
+	$response = $response->withJson($messages);
+	return $response;
+});
+
 $app->get("/getmessages/{id}", function(Request $request, Response $response){
 	$traderId = $request->getAttribute('id');
 	$messages = getMessages($traderId);

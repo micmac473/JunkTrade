@@ -152,31 +152,37 @@ include "base.php";
   <!-- Chat Modal -->
   <div class="modal fade" id="chatmodal" role="dialog">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
+      <div class="modal-content" >
+        <div class="modal-body" >
           <form class="form" id="chatform" onsubmit="return sendMessage();">
             <fieldset>
 
-              <div class="modal-header">
+              <div class="modal-header" style="background-color:#096790; color: white">
                 <h2 class="modal-title" style="text-align: center" ><i class="fa fa-user fa-lg" aria-hidden="true"></i> <span id="tradername"></span> <i class="fa fa-comment-o fa-lg" aria-hidden="true"></i></h2>
              </div>
 
               <input id="traderusername" name="traderusername" type="hidden" disabled class="form-control input-md">
               <input id="userid" name="userid" type="hidden" disabled class="form-control input-md">
               <input id="traderid" name="traderid" type="hidden" disabled class="form-control input-md">
-              <div class="form-group">
-              <div class="">                     
-                <textarea class="form-control"  id="messages" rows="10" name="messages" readonly="readonly"></textarea>
-              </div>
-            </div>
+              <!-- <div class="form-group">
+                <div class="">                     
+                  <textarea class="form-control"  id="messages" rows="10" name="messages" readonly="readonly"></textarea>
+                </div>
+              </div> -->
 
-              <div class="form-group">
-                <div class="row">
+              <div class="form-group" style="background-color:#f6f6f6">
+                <div class="">                     
+                  <div id="divmessages" style="overflow-y: scroll; height: 250px;">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" >
+                <div class="row" >
                   <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                  <input class="form-control" type="text" id="message" maxlength="200" placeholder="Message" required/>
+                  <input autofocus class="form-control" type="text" id="message" maxlength="200" placeholder="Message" autocomplete="off"  required/>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                  <button class="btn btn-success btn-block" type="submit">Send</button> 
+                  <button class="btn btn-primary btn-block" type="submit">Send</button> 
                   </div>     
                 </div>
               </div>
@@ -197,7 +203,18 @@ window.onload = function() {
 
 };
 
+/*setInterval(function(){
+    queryChat();
+},2500);
 
-
+var currNewMessages = <?php echo json_encode(getNewMessages())?> 
+function queryChat(){
+  $.get("../index.php/newmessages", function(messages){
+    if(JSON.stringify(messages) !== JSON.stringify(currNewMessages)){
+      toastr["success"]("New Message");
+      currNewMessages = messages;
+    }
+  },"json");
+} */
 
 </script>

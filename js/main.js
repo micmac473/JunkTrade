@@ -64,6 +64,7 @@ $(document).ready(function(){
 setInterval(function(){
     queryUserRequests();
     queryDecisions();
+    queryChat();
 },2500);
 
 var currNotifcations = [], currDecisions = [];
@@ -89,6 +90,21 @@ function queryDecisions(){
     }, "json");  
 }
 
+
+var currNewMessages =[];
+
+$.get("../index.php/newmessages", function(messages){
+    currNewMessages = messages;
+},"json");
+
+function queryChat(){
+  $.get("../index.php/newmessages", function(messages){
+    if(JSON.stringify(messages) !== JSON.stringify(currNewMessages)){
+      toastr["success"]("New Message");
+      currNewMessages = messages;
+    }
+  },"json");
+}
 
  //--------------------------------------------------------------------------------------------------------------------
  var attempts =0;
@@ -1407,8 +1423,14 @@ function processRequestedMeetUp(records, records2){
         htmlStr += "<td> <i class='fa fa-calendar' aria-hidden='true'></i> " + el['tradedate'] + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i> " + el['tradelocation'] + "</td>";
         //htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requestee+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requestee+")\"><i class='fa fa-comments' aria-hidden='true'></i></button><span id='chatnotificationrequested' class='badge badge-notify'></span></td>";
+        if(Date.now() > el.tradedate){
+            htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        }
+        else{
+            htmlStr += "<td><button type='button' class='btn btn-info disabled'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        }
+        
         htmlStr +=" </tr>" ;
         i++;
     });
@@ -1446,8 +1468,14 @@ function processRequestsMeetUp(records, records2){
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>  "+records[i]['itemname']+"</td>";
         htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i>  " + el['tradedate'] + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i>  " + el['tradelocation'] + "</td>";
-        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button><span id='chatnotificationrequests' class='badge badge-notify'></span></td>";
+        if(Date.now() > el.tradedate){
+            htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        }
+        else{
+            htmlStr += "<td><button type='button' class='btn btn-info disabled'> <i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        }
+        
         htmlStr +="</tr>" ;
         i++;
     });
@@ -1619,22 +1647,35 @@ function chat(traderid){
             setInterval(function(){
                 $.get("../index.php/getmessages/"+traderid, function(messages){
                     
-                    var chat="";
+                    var chat="", divchat="<div class='container-fluid'>";
                     if(JSON.stringify(messages) !== JSON.stringify(currChat)){
                         currChat = messages;
                         messages.forEach(function(el){
                             //console.log(el);
-                            if(el.sentfrom == userid)
-                                chat += "Me: " + el.message + "\n";
-                            else
-                                chat += username + ": " + el.message + "\n";
+                            if(el.sentfrom == userid){
+                                //chat += "Me: " + el.message + "\n";
+                                divchat += "<div class='row'><div class='well well-sm pull-right'><strong>Me</strong>: "+el.message+"</div></div>";
+                            }
+                            else{
+                                //chat += username + ": " + el.message + "\n";
+                                divchat += "<div class='row'><div class='well well-sm pull-left'><strong>"+username +"</strong>: "+el.message+"</div></div>";
+                            }
                         });
-                        $("#chatform #messages").html(chat);
+                        divchat+="</div>";
+                        //$("#chatform #messages").html(chat);
+                        $("#chatform #divmessages").html(divchat);
+                        //$("#chatnotificationrequested").html("New");
+                        //$("#chatnotificationrequests").html("New");
+                        var element = document.getElementById("divmessages");
+                        element.scrollTop = element.scrollHeight;
+
                     }
                 },"json");
             },2500);
 
             $("#chatmodal").modal('show');
+            var element = document.getElementById("divmessages");
+            element.scrollTop = element.scrollHeight;
         },"json");
         
     });
@@ -1675,21 +1716,32 @@ function getMessages(traderId, userid, username){
         console.log(messages);
         var currMessages = $("#chatform #messages").val();
         console.log(currMessages);
-        var chat="";
+        var chat="", divchat="<div class='container-fluid'>";
         if(JSON.stringify(messages) !== JSON.stringify(currMessages)){
             messages.forEach(function(el){
                         // FIX: appends the same messages each time the button is clicked
                 //el.message = decodeURIComponent(message).replace(/'/g,"%27");
-                if(el.sentfrom == userid)
+                if(el.sentfrom == userid){
                     //chat += "<p class='pull-left'> Me: " + el.message + "</p>";
                     //$("#chatform #messages").append("Me: " + el.message+"\n");
-                    chat += "Me: " + el.message + "\n";
+                    //chat += "Me: " + el.message + "\n";
+                    divchat += "<div class='row'><div class='well well-sm pull-right'><strong>Me</strong>: "+el.message+"</div></div>";
+                    //divchat += "<br/>";
+                }
 
-                else
-                    chat += username + ": " + el.message + "\n";
+                else{
+                    //chat += username + ": " + el.message + "\n";
+                    divchat += "<div class='row'><div class='well well-sm pull-left'><strong>"+username +"</strong>: "+el.message+"</div></div>";
+                    //divchat += "<br/>";
                     //$("#chatform #messages").append(username.username +": " + el.message+ "\n");
+                }
             });
-            $("#chatform #messages").html(chat);
+
+            divchat+="</div>";
+            //$("#chatform #messages").html(chat);
+            $("#chatform #divmessages").html(divchat);
+            var element = document.getElementById("divmessages");
+                        element.scrollTop = element.scrollHeight;
         }
     }, "json");
 }
