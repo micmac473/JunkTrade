@@ -24,12 +24,21 @@ include "base.php";
 
 		  //-query  the database table
 		  		$db=mysqli_connect("localhost","root","","peertrading")or die("cannot connect to server"); 
-		  		$sql="SELECT  itemid, itemname, itemdescription, userid, picture, username,firstname, profilepicture, views FROM items, users WHERE $user <> `userid` AND itemname LIKE '%" . $name .  "%' && items.userid = users.id"; 
+
+		  		$sql="SELECT  itemid, itemname, itemdescription, userid, picture, username, views FROM items, users WHERE $user <> `userid` AND itemname LIKE '%" . $name .  "%' && items.userid = users.id "; 
 		  //-run  the query against the mysql query function 
 		  		$result=$db->query($sql); 
 		  //-create  while loop and loop through result set 
 		  		while($result && $row = $result->fetch_assoc()){ 
 		          $items[]  =$row;
+		   		}
+
+		  		$sql="SELECT  username, firstname, lastname, profilepicture FROM users WHERE username LIKE '%" . $name .  "%' "; 
+		  //-run  the query against the mysql query function 
+		  		$result=$db->query($sql); 
+		  //-create  while loop and loop through result set 
+		  		while($result && $row = $result->fetch_assoc()){ 
+		          $filterUsers[]  = $row;
 		   		}
 
 		   		$sql ="SELECT r.id, r.decision, r.item, r.item2, i.itemname, r.requester FROM `items` i, `requests` r WHERE i.userid <> $user  AND i.itemid = r.item OR i.itemid = r.item2 ORDER BY r.timerequested DESC,  r.decision DESC;";
@@ -39,10 +48,14 @@ include "base.php";
 		  		while($result && $row = $result->fetch_assoc()){ 
 		        	$requests[] = $row;
 		   		}
+
 		   		echo json_encode($items);
+		   		echo json_encode($filterUsers);
+
 		   		$user = getCurrentUser();
 				echo "<h1> Showing results for \"".$_POST['searchname']."\" </h1>";
-		if($items != null){
+
+		if($items != null && $filterUsers != null){
 			if($type == "item"){
 		   			for($i = 0; $i < count($items); $i++) {
 		  //-display the result of the array 
@@ -91,46 +104,20 @@ include "base.php";
 	    			}
 
 			}//end if($type == "item")
+
 			else if($type == "users"){
-		   			for($i = 0; $i < count($items); $i++) {
+		   			for($i = 0; $i < count($filterUsers); $i++) {
 		  //-display the result of the array 
-		   				//$ID = $val['userid'];
-		   				$item = $items[$i];
-		   				for($j = 0; $j < count($requests); $j++){
-		   					$request = $requests[$j];
-		   					if($request['item'] == $item['itemid'] || $request['item2'] == $item['itemid']){
-		   						if($request['decision'] == true){
-		   							break;
-		   						}
-		   						else{
-		   							if($request['requester'] == $user){
-		   								echo "<div class='panel panel-danger'>";
-
-			            				echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$item['itemid'].")\"><strong>". $item['firstname'] . "</strong> </button><br><small> Views: ".$item['views']." </small><br></div>";
-
-			                			if($request['decision']==null){
-			                				echo "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest(".$request['id'].")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
-			                			}
-			                			else{
-			                				echo "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-primary btn-block active' onclick=\"displayItemsForRequest(".$item['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
-			                			}
-			            				
-			             
-			            				echo "</div>";
-			            				break;
-		   							}
-		   						}
-		   					}
-		   				}
-		   				if($j == count($requests)){
+		   				$filterUser = $filterUsers[$i];
+	
 		   					echo "<div class='panel panel-danger'>";
 
-			            	echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$item['itemid'].")\"><strong>". $item['firstname'] . "</strong> </button><br></div>";
+			            	echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$filterUser['username'].")\"><strong>". $filterUser['firstname'] . "</strong> </button><br></div>";
 			          
-			            	echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$item['itemid'].")\" src=\"" . $item['profilepicture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+			            	echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$filterUser['username'].")\" src=\"" . $filterUser['profilepicture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
 			             
 			            	echo "</div>";
-		   				}
+		   				
 		          		
 	    			}
 
@@ -144,7 +131,7 @@ include "base.php";
 	          echo "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div><div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem(".$val['itemid'].")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div></div></div>";
 	          echo "</div>"; */ 
 	  
-	  		if($items == null){ 
+	  		if($items == null && $filterUsers == null){ 
 	  			echo  "<img src=../img/noresults.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 	  
 	  		}//end if($items == null)
 	  	} 
