@@ -447,8 +447,9 @@ function listUserItems(records){
     $.get("../index.php/accepteduseritems", function(res){
         console.log(res);
         records.forEach(function(el){
+            var date = moment(el['uploaddate']).format('dddd MMMM Do, YYYY');
             for(i = 0; i < res.length; i++){
-                var date = moment(el['uploaddate']).format('dddd MMMM Do, YYYY');
+                
                 if(res[i]['item'] == el['itemid'] || res[i]['item2']==el['itemid']){
                     if(res[i]['decision'] == true){
                         htmlStr += "<tr>";
