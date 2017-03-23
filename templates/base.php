@@ -50,7 +50,7 @@ function getCurrentPage(){
 
     <!-- google font  -->
     <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:900" rel="stylesheet">
 
     <!-- Latest compiled and minified CSS Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -343,17 +343,17 @@ function getCurrentPage(){
     if($currentPage != "Trader"){
 
       ?>
-      <div class="jumbotron">
+      <div class="jumbotron container-fluid">
         <div class="container-fluid">
           <div class="row text-center">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
               <?php   
                 $ppid = $_SESSION["id"];         
                 echo getProfileImage($ppid);      
               ?>
             </div>
-            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-              <h1 style="color:#096790 ;text-shadow: 3px 3px white;font-family: 'Bowlby One SC', cursive;"> 
+            <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+              <h1 style="color:#096790 ;text-shadow: 2px 2px white;font-family: 'Fira Sans', sans-serif;"> 
                 <?php  
                   date_default_timezone_set("America/Grenada");
                   $hour = date("H");
@@ -361,7 +361,7 @@ function getCurrentPage(){
                   //$hour = 6;
                   if($hour >= 0 && $hour < 12){
                     if($hour < 6){
-                      echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-moonset'></i>";
+                      echo "Good Morning, ".$_SESSION["user"]."!= <i class='wi wi-moonset'></i>";
                     }
                     else if ($hour >=6 && $hour <=7){
                       echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-sunrise'></i>";

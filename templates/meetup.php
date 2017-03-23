@@ -67,7 +67,7 @@ include "base.php";
             <fieldset>
 
               <div class="modal-header">
-                <h2 class="modal-title" style="text-align: center">Trade Feedback</h2>
+                <h2 class="modal-title" style="text-align: center">Feedback <i class="fa fa-comment" aria-hidden="true" ></i></h2>
              </div>
               <input id="tradeid" name="tradeid" type="hidden" disabled class="form-control input-md">
 
@@ -87,11 +87,11 @@ include "base.php";
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <button  class="btn btn-success btn-block" type="submit">Send</button>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <button  class="btn btn-success btn-block" type="submit">Send <i class="fa fa-paper-plane" aria-hidden="true" ></i></button>
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelFeedback()">Cancel</button>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelFeedback()">Cancel <i class="fa fa-ban" aria-hidden="true" ></i></button>
                   </div>
                 </div>
               </div>
@@ -113,7 +113,7 @@ include "base.php";
             <fieldset>
 
               <div class="modal-header">
-                <h2 class="modal-title" style="text-align: center">Trade Feedback</h2>
+                <h2 class="modal-title" style="text-align: center">Feedback <i class="fa fa-comment" aria-hidden="true" ></i></h2>
              </div>
 
 
@@ -135,9 +135,13 @@ include "base.php";
             </div>
 
               <div class="form-group">
-                <div class="">
-                  <button  class="btn btn-success btn-block" type="submit">Send</button>
-                  <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelFeedback()">Cancel</button>
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <button  class="btn btn-success btn-block" type="submit">Send <i class="fa fa-paper-plane" aria-hidden="true" ></i></button>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelFeedback()">Cancel <i class="fa fa-ban" aria-hidden="true" ></i></button>
+                  </div>
                 </div>
               </div>
 
@@ -170,7 +174,7 @@ include "base.php";
                 </div>
               </div> -->
 
-              <div class="form-group" style="background-color:#f6f6f6">
+              <div class="form-group" style="background-color:white">
                 <div class="">                     
                   <div id="divmessages" style="overflow-y: scroll; height: 250px;">
                   </div>

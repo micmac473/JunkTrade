@@ -135,9 +135,11 @@ function login(){
              console.log(attempts);
 
             swal({ 
-                title: "Welcome " + res,
-                text: "You have logged in successfully",
-                imageUrl: "../img/welcome.jpg"
+                title: "Welcome " + res + ", to JunkTrade!",
+                text: "Login Successful",
+                type: "success",
+                timer: 2000,
+                showConfirmButton: false
             },
                 function(){
                     window.location.href = 'homepage.php';
@@ -252,7 +254,9 @@ function register(){
             swal({ 
                 title: "Registration Complete!",
                 text: "Proceed to login",
-                type: "success" 
+                type: "success",
+                timer: 1000,
+                showConfirmButton: false
             },
                 function(){
                     window.location.href = 'login.php';
@@ -444,6 +448,7 @@ function listUserItems(records){
         console.log(res);
         records.forEach(function(el){
             for(i = 0; i < res.length; i++){
+                var date = moment(el['uploaddate']).format('dddd MMMM Do, YYYY');
                 if(res[i]['item'] == el['itemid'] || res[i]['item2']==el['itemid']){
                     if(res[i]['decision'] == true){
                         htmlStr += "<tr>";
@@ -454,7 +459,7 @@ function listUserItems(records){
                         
                         htmlStr += "<td><button type='button' class='btn btn-primary disabled'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
                         htmlStr += "<td><button type='button' class='btn btn-danger disabled'><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
-                        htmlStr += "<td>" + el['uploaddate'] + "</td>";
+                        htmlStr += "<td>" + date + "</td>";
                         htmlStr += "<td> Traded </td>";
 
                         htmlStr +=" </tr>" ;
@@ -469,7 +474,7 @@ function listUserItems(records){
                     
                         htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
                         htmlStr += "<td><button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
-                        htmlStr += "<td>" + el['uploaddate'] + "</td>";
+                        htmlStr += "<td>" + date + "</td>";
                         htmlStr += "<td> Available </td>";
                         htmlStr +=" </tr>" ;
                         break;
@@ -486,7 +491,7 @@ function listUserItems(records){
                     
                 htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
                 htmlStr += "<td><button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
-                htmlStr += "<td>" + el['uploaddate'] + "</td>";
+                htmlStr += "<td>" + date + "</td>";
                 htmlStr += "<td> Available </td>";
                 htmlStr +=" </tr>" ;
             }
@@ -536,14 +541,14 @@ function displayRequests(records, res){
 
     records.forEach(function(el){
         var requestId = el['id'];
-            el['timerequested'] = moment(el['timerequested']).format('dddd MMMM Do, YYYY');
+            var date = moment(el['timerequested']).format('dddd MMMM Do, YYYY');
             htmlStr += "<tr>";
             htmlStr += "<td style='display:none;'>"+ el['id'] +"</td>";
             htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+res[i]['itemid']+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+res[i]['itemname']+"<strong></button></td>";
             //htmlStr += "<td></td>";
             htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> "+el['itemname']+"</a></td>";
-            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> "+el['timerequested']+"</a></td>";
+            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> "+date+"</a></td>";
             //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
             //htmlStr += "<td><button type='button' class='btn btn-info btn-block' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
             htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up fa-lg' aria-hidden='true'></i></button> ";
@@ -616,11 +621,11 @@ function listUserTrade(records, res){
         /*htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
         htmlStr += "<td>" + el['timerequested'] + "</td>"; */
-        el['timerequested'] = moment(el['timerequested']).format('dddd MMMM Do, YYYY');
+        var date = moment(el['timerequested']).format('dddd MMMM Do, YYYY');
         if(el['decision'] == null){
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i> " + el['itemname']+"<strong></button></td>";
             htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> " + el['timerequested'] + "</td>";
+            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> " + date + "</td>";
             htmlStr += "<td> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
             //htmlStr += "<td> <i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'>Loading...</span></td>";
             htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
@@ -628,7 +633,7 @@ function listUserTrade(records, res){
         else if(el['decision'] == true){
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
             htmlStr += "<td><a disabled class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> " + el['timerequested'] + "</td>";
+            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> " + date + "</td>";
             htmlStr += "<td> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
             //htmlStr += "<td><i class='fa fa-check fa-2x' aria-hidden='true'></i></td>";
             htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.rid+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
@@ -636,7 +641,7 @@ function listUserTrade(records, res){
         else{
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
             htmlStr += "<td><a href='profile.php' class='btn btn-default'><i class='fa fa-gift' aria-hidden='true'></i> " + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> " + el['timerequested'] + "</td>";
+            htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> " + date + "</td>";
             htmlStr += "<td> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
             htmlStr += "<td> </td>";
         }
@@ -729,7 +734,9 @@ function addToSavedItems(itemid){
                 swal({ 
                     title: "Item Saved!",
                     text: "You can view item in Saved!",
-                    type: "success" 
+                    type: "success",
+                    timer: 1000,
+                    showConfirmButton: false
                 },
                 function(){
                     window.location.reload();
@@ -753,11 +760,12 @@ function processUserSavedItems(records){
     var sec_id = "#table_sec_saveditems";
     var htmlStr = $("#table_heading_saveditems").html(); //Includes all the table, thead and tbody declarations
     records.forEach(function(el){
+        var date = moment(el['saveddate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
         htmlStr += "<td><img src=\"" + el.picture + "\" width=\"150\" height=\"128\"></td>";
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
-        htmlStr += "<td>"+ el['saveddate'] +"</td>";      
+        htmlStr += "<td> <i class='fa fa-calendar' aria-hidden='true'></i> "+ date +"</td>";      
         htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-times' aria-hidden='true'></i> Unsave</button></td>";
         htmlStr +=" </tr>" ;
     });
@@ -776,9 +784,11 @@ function removeSavedItem(savedId){
         console.log(res);
         //swal("Item removed!", "You can save the item again", "error");
         swal({ 
-                title: "Item removed!",
+                title: "Item Removed from Saved!",
                 text: "You can save the item again!",
-                type: "error" 
+                type: "success",
+                timer: 1000,
+                showConfirmButton: false
             },
                 function(){
                     if(window.location.href.indexOf("/item.php?") > -1)
@@ -808,7 +818,9 @@ function followTrader(userid){
             swal({ 
                 title: "Trader Followed!",
                 text: "You can view followed trader in People!",
-                type: "success" 
+                type: "success",
+                timer: 1000,
+                showConfirmButton: false
             },
                 function(){
                     window.location.reload();
@@ -837,7 +849,9 @@ function unfollowTrader(userid){
             swal({ 
                 title: "Trader Unfollowed!",
                 text: "You can follow them again!",
-                type: "error" 
+                type: "success",
+                timer: 1000,
+                showConfirmButton: false
             },
                 function(){
                     if(window.location.href.indexOf("/trader.php") > -1)
@@ -860,9 +874,10 @@ function processUserFollowees(records){
     var sec_id = "#table_sec_followees";
     var htmlStr = $("#table_heading_followees").html(); //Includes all the table, thead and tbody declarations
     records.forEach(function(el){
+        var date = moment(el['followdate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.followee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
-        htmlStr += "<td>"+ el['followdate'] +"</td>";      
+        htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> "+ date +"</td>";      
         htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"unfollowTrader("+el.followee+")\"><i class='fa fa-times' aria-hidden='true'></i> Unfollow</button></td>";
         htmlStr +=" </tr>" ;
     });
@@ -884,9 +899,10 @@ function processUserFollowers(records){
     var sec_id = "#table_sec_followers";
     var htmlStr = $("#table_heading_followers").html(); //Includes all the table, thead and tbody declarations
     records.forEach(function(el){
+        var date = moment(el['followdate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.follower+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+ " "+el['username'] + "</strong></button></td>";
-        htmlStr += "<td>"+ el['followdate'] +"</td>";      
+        htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i> "+ date +"</td>";      
         htmlStr +=" </tr>" ;
     });
 
@@ -1118,9 +1134,11 @@ function sendRequest(){
                     if (res.id && res.id > 0){
                         //swal("Request Made!", "Trader will be notified", "success");
                         swal({ 
-                            title: "Request Made!",
-                            text: "Trader will be notified!",
-                            type: "success" 
+                            title: "Request Sent!",
+                            text: "Trader will be notified",
+                            type: "success",
+                            //timer: 1000,
+                            //showConfirmButton: false
                             },
                             function(){
                                 if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/search.php") > -1){
@@ -1135,8 +1153,16 @@ function sendRequest(){
                     
                 },"json"); 
             } 
+
             else {
-                swal("Request Cancelled!", "You can make another request", "error");
+                //swal("Request Cancelled!", "You can make another request", "error");
+                swal({
+                  title: "Request Cancelled!",
+                  text: "You can make another request",
+                  type: "error",
+                  timer: 1000,
+                  showConfirmButton: false
+                });
             }
         }
     );
@@ -1147,7 +1173,14 @@ function sendRequest(){
 
 function cancelRequest(){
     $('#requestModal').modal('hide');
-    swal("Request Cancelled!", "You can make another request", "error");   
+    //swal("Request Cancelled!", "You can make another request", "error");
+    swal({
+        title: "Request Cancelled!",
+        text: "You can make another request",
+        type: "error",
+        timer: 1000,
+        showConfirmButton: false
+    });   
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -1178,18 +1211,39 @@ function deleteItem(itemid){
                     var count = parseInt(res[0][0]) + parseInt(res[1][0]);
                     console.log("Pending requests: " + count);
                     if(count != 0){
-                        swal("Requests Pending: "+count, "Cannot delete item!", "error")
+                        //swal("Requests Pending: "+count, "Cannot delete item!", "error");
+                        swal({
+                            title: "Requests Pending: " + count,
+                            text: "Unable to delete item!",
+                            type: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });   
                     }
                     else{
                         $.get("../index.php/deleteitem/"+itemid, function(res){
-                            swal("Item Deleted!", "Your item has been deleted!", "success");
+                            //swal("Item Deleted!", "Your item has been deleted!", "success");
+                            swal({
+                                title: "Item Deleted!",
+                                text: "Traders will no longer see your item",
+                                type: "success",
+                                timer: 2000,
+                                showConfirmButton: false
+                            }); 
                             getUserItems(); 
                         }, "json"); 
                     }  
                 }, "json");
             } 
             else {
-                swal("Cancelled", "Your item is safe", "error");
+                //swal("Cancelled", "Your item is safe", "error");
+                swal({
+                    title: "Cancelled!",
+                    text: "Your item is still avaialable for trade!",
+                    type: "error",
+                    timer: 2000,
+                    showConfirmButton: false
+                }); 
             }
         }
     );
@@ -1282,14 +1336,28 @@ function sendArrangement(){
             $.post("../index.php/acceptrequest", request, function(res){
                 console.log(res);
                 arrangement();
-                swal("Request Accepted and Arrangment Sent!", "The user will be notified", "success");
+                //swal("Request Accepted and Arrangment Sent!", "The trader will be notified", "success");
+                swal({
+                    title: "Request Accepted and Arrangment Sent!",
+                    text: "The trader will be notified!",
+                    type: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
                 
                 getUserRequests();
                 return false;
             }, "json");
             
         } else {
-            swal("Cancelled", "Request and Arrangement still Pending", "error");
+            //swal("Cancelled", "Request and Arrangement still Pending", "error");
+            swal({
+                title: "Cancelled!",
+                text: "Request and Arrangement still Pending",
+                type: "error",
+                timer: 2000,
+                showConfirmButton: false
+            });
         }
     });
     return false;
@@ -1298,7 +1366,14 @@ function sendArrangement(){
 
 //------------------------------------------------------------------------------------------------
 function cancelArrangement(){
-    sweetAlert("Cancelled", "Request and Arrangement still Pending", "error");
+    //sweetAlert("Cancelled", "Request and Arrangement still Pending", "error");
+    swal({
+        title: "Cancelled!",
+        text: "Request and Arrangement still Pending",
+        type: "error",
+        timer: 1000,
+        showConfirmButton: false
+    });
     return false;
 }
 //---------------------------------------------------------------------------------------------
@@ -1342,12 +1417,26 @@ function denyRequest(requestId){
         
         if (isConfirm) {
             $.get("../index.php/denyrequest/"+requestId, function(res){
-                swal("Denied!", "The trader will be notified of your decision", "success");
+                //swal("Denied!", "The trader will be notified of your decision", "success");
+                swal({
+                    title: "Request Denied!",
+                    text: "The trader will be notified of your decision",
+                    type: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
                  getUserRequests();
             }, "json");
            
         } else {
-            swal("Cancelled", "The item request is still pending", "error");
+            //swal("Cancelled", "The item request is still pending", "error");
+            swal({
+                title: "Cancelled!",
+                text: "The item request is still pending",
+                type: "error",
+                timer: 1000,
+                showConfirmButton: false
+            });
         }
     });
 }
@@ -1355,7 +1444,7 @@ function denyRequest(requestId){
 
 function cancelMadeRequest(requestId){
     swal({
-        title: "Cancel Request?",
+        title: "Cancel Sent Request?",
         //text: "You will not be able to undo this operation!",
         type: "warning",
         showCancelButton: true,
@@ -1376,8 +1465,10 @@ function cancelMadeRequest(requestId){
                 //swal("Request Cancelled!", "The owner will no longer see your request", "success");
                 swal({ 
                     title: "Request Cancelled!",
-                    text: "Trader will be notified!",
-                    type: "success" 
+                    text: "Trader will no longer see your request",
+                    type: "error",
+                    //timer: 1000,
+                    //showConfirmButton: false
                     },
                     function(){
                         if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/trade.php") > -1 || window.location.href.indexOf("/search.php") > -1){
@@ -1392,7 +1483,14 @@ function cancelMadeRequest(requestId){
             }, "json");
             
         } else {
-            swal("Cancelled", "Your request is still pending", "error");
+            //swal("Cancelled", "Your request is still pending", "error");
+            swal({
+                title: "Cancelled!",
+                text: "The request is still pending",
+                type: "success",
+                timer: 1000,
+                showConfirmButton: false
+            });
         }
     });
 }
@@ -1420,20 +1518,22 @@ function processRequestedMeetUp(records, records2){
     var i = 0, size = records2.length -1;
     //console.log(size);
     //console.log(records[1][0]);
-    var currDate = new Date();
+    //var currDate = new Date();
     records.forEach(function(el){
+        var date = moment(el['tradedate']).format('dddd MMMM Do, YYYY');
         // do get request with request id to get my item and contact
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requesteecontact']+"</td>"
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i> "+records2[i]['itemname']+"</td>";
-        htmlStr += "<td> <i class='fa fa-calendar' aria-hidden='true'></i> " + el['tradedate'] + "</td>";
+        htmlStr += "<td> <i class='fa fa-calendar' aria-hidden='true'></i> " + date + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i> " + el['tradelocation'] + "</td>";
         //htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
         htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requestee+")\"><i class='fa fa-comments' aria-hidden='true'></i></button><span id='chatnotificationrequested' class='badge badge-notify'></span></td>";
-        var date = moment().format('MMM-D-YYYY');
-        if(date > el.tradedate){
+        var currDate = moment().format('MMM-D-YYYY');
+
+        if(currDate > el.tradedate){
             htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         else{
@@ -1470,17 +1570,18 @@ function processRequestsMeetUp(records, records2){
 
     records2.forEach(function(el){
         // do get request with request id to get my item and contact
+        var date = moment(el['tradedate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr class='text-center'>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requestercontact']+"</td>"
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>  "+records[i]['itemname']+"</td>";
-        htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i>  " + el['tradedate'] + "</td>";
+        htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i>  " + date + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i>  " + el['tradelocation'] + "</td>";
         htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button><span id='chatnotificationrequests' class='badge badge-notify'></span></td>";
-        var date = moment().format('MMM-D-YYYY');
+        var currDate = moment().format('MMM-D-YYYY');
         //alert(date);
-        if(date > el.tradedate){
+        if(currDate > el.tradedate){
             htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         else{
@@ -1565,7 +1666,14 @@ function requesterFeedback(){
 
     console.log(feedback);
     $.post("../index.php/requesterfeedback", feedback, function(res){
-        swal("Feedback saved!", "Thank you for your rating and comment", "success");
+        //swal("Feedback saved!", "Thank you for your rating and comment", "success");
+        swal({
+            title: "Feedback saved!",
+            text: "Thank you for your rating and comment",
+            type: "success",
+            timer: 1000,
+            showConfirmButton: false
+        });
         getRequestedMeetUp();
     }, "json");
     return false;
@@ -1592,25 +1700,39 @@ function requesteeFeedback(){
     
     console.log(feedback);
     $.post("../index.php/requesteefeedback", feedback, function(res){
-        swal("Feedback saved!", "Thank you for your rating and comment", "success");
+        //swal("Feedback saved!", "Thank you for your rating and comment", "success");
+        swal({
+            title: "Feedback saved!",
+            text: "Thank you for your rating and comment",
+            type: "success",
+            timer: 1000,
+            showConfirmButton: false
+        });
         getRequestsMeetUp();
     }, "json");
     return false;
 }
 
 function cancelFeedback(){
-    swal("Cancelled!", "Feedback not saved!", "error");
+    //swal("Cancelled!", "Feedback not saved!", "error");
+    swal({
+        title: "Cancelled!",
+        text: "Feedback not saved; kindly rating this trade",
+        type: "success",
+        timer: 2000,
+        showConfirmButton: false
+    });
 }
 //------------------------------------------------------------------------------------------------
 function logout(){
     swal({
-        title: "Proceed to Logout?",
+        title: "Logout of JunkTrade?",
         //text: "You will not be able to undo this operation!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Logout",
-        cancelButtonText: "Stay Logged In",
+        confirmButtonText: "Yes, logout",
+        cancelButtonText: "Cancel",
         closeOnConfirm: false,
         closeOnCancel: false
     },
@@ -1621,8 +1743,10 @@ function logout(){
                 $.get("../index.php/getusername/"+userId, function(res){
                     swal({ 
                         title: "Goodbye " + res.firstname,
-                        text: "See you next time",
-                        imageUrl: "../img/goodbye.jpg"
+                        text: "Thanks for using JunkTrade, see you soon",
+                        type: "success",
+                        timer: 2000,
+                        showConfirmButton: false
                     },
                         function(){
                             window.location.href = 'login.php';
@@ -1633,7 +1757,14 @@ function logout(){
             
 
         } else {
-            swal("Still Logged In", "Continue Trading!", "success");
+            //swal("Still Logged In", "Continue Trading!", "success");
+            swal({
+                title: "Logout Cancelled!",
+                text: "Continue using JunkTrade",
+                type: "success",
+                timer: 2000,
+                showConfirmButton: false
+            });
         }
     });
     return false;

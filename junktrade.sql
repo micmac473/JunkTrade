@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2017 at 12:29 PM
--- Server version: 10.1.16-MariaDB
--- PHP Version: 5.6.24
+-- Generation Time: Mar 23, 2017 at 08:37 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 7.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -36,14 +36,6 @@ CREATE TABLE `chat` (
   `message` varchar(200) NOT NULL,
   `senton` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `chat`
---
-
-INSERT INTO `chat` (`chatid`, `sentfrom`, `sentto`, `message`, `senton`) VALUES
-(1, 1, 2, 'Yo Montoute. Wah gwan?', '2017-03-21 11:28:41'),
-(2, 2, 1, 'Waz the scene MC?', '2017-03-21 11:29:02');
 
 -- --------------------------------------------------------
 
@@ -107,7 +99,7 @@ INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `pictur
 (21, 'S7 Edge', 'Brand: Samsung\r\nCategory: Electronics\r\nColor: Gold\r\nCondition: Used\r\nMemory: 4GB\r\nStorage: 128GB', '../img/samsung3.jpg', '../img/samsung2.jpg', '../img/samsung.jpg', '2017-03-19 01:28:03', 2, 8),
 (22, 'Power Bank', 'Brand: EliveBuy\r\nCondition: Used\r\nColor: White\r\n10,400mAh', '../img/powerbank.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:30:38', 4, 2),
 (23, 'Safety Boots', 'Category: Safety\r\nCondition: Used\r\nSize: 11\r\nBrand: Amblers Safety', '../img/safetyboots.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:31:46', 2, 2),
-(24, 'Headphones', 'Brand: Beats\r\nColor: Red\r\nCategory: Electronics\r\nCondition: Used', '../img/headphones.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:33:11', 3, 5);
+(24, 'Headphones', 'Brand: Beats\r\nColor: Red\r\nCategory: Electronics\r\nCondition: Used', '../img/headphones.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 01:33:11', 3, 7);
 
 -- --------------------------------------------------------
 
@@ -127,13 +119,6 @@ CREATE TABLE `requests` (
   `timerequested` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `viewed` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `requests`
---
-
-INSERT INTO `requests` (`id`, `requester`, `item2`, `requestercontact`, `requestee`, `item`, `decision`, `timerequested`, `viewed`) VALUES
-(1, 1, 1, '868-378-1234', 2, 21, 1, '2017-03-21 06:27:54', 0);
 
 -- --------------------------------------------------------
 
@@ -161,7 +146,7 @@ DROP TABLE IF EXISTS `trade`;
 CREATE TABLE `trade` (
   `tradeid` int(11) NOT NULL,
   `requestid` int(11) NOT NULL,
-  `tradedate` varchar(20) NOT NULL,
+  `tradedate` varchar(50) NOT NULL,
   `tradelocation` varchar(100) NOT NULL,
   `suggestedlocation` varchar(100) NOT NULL,
   `locationdecision` tinyint(1) NOT NULL,
@@ -174,13 +159,6 @@ CREATE TABLE `trade` (
   `requesteefeedbackcomment` varchar(1000) NOT NULL,
   `requesteefeedbackindicator` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `trade`
---
-
-INSERT INTO `trade` (`tradeid`, `requestid`, `tradedate`, `tradelocation`, `suggestedlocation`, `locationdecision`, `requestercontact`, `requesteecontact`, `requesterfeedbackrating`, `requesterfeedbackcomment`, `requesterfeedbackindicator`, `requesteefeedbackrating`, `requesteefeedbackcomment`, `requesteefeedbackindicator`) VALUES
-(1, 1, 'Mar-22-2017', 'JFK Quadrangle', '', 0, '868-378-1234', '868-378-1111', '0.0', '', 0, '0.0', '', 0);
 
 -- --------------------------------------------------------
 
@@ -268,7 +246,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `chatid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `chatid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `follow`
 --
@@ -283,7 +261,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `saved`
 --
@@ -293,7 +271,7 @@ ALTER TABLE `saved`
 -- AUTO_INCREMENT for table `trade`
 --
 ALTER TABLE `trade`
-  MODIFY `tradeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `tradeid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
