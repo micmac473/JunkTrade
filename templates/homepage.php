@@ -28,7 +28,7 @@ include "base.php";
     <form class="">
       <fieldset>
         <!-- Select Basic -->
-        <div class="form-group col-lg-6 col-lg-offset-3">
+        <div class="form-group col-lg-4 col-lg-offset-4">
           <label class="control-label" for="selectbasic">Sort by</label>
           <div class="">
             <select id="selectbasic" name="selectbasic" class="form-control" onChange="sortHomepageItems(this.value);">

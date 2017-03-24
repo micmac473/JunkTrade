@@ -387,6 +387,13 @@ $app->get("/newmessages", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/newmessagesnotification", function(Request $request, Response $response){
+	$messages = getNewMessagesNotification();
+	
+	$response = $response->withJson($messages);
+	return $response;
+});
+
 $app->get("/getmessages/{id}", function(Request $request, Response $response){
 	$traderId = $request->getAttribute('id');
 	$messages = getMessages($traderId);
@@ -725,6 +732,22 @@ $app->post("/sendmessage", function(Request $request, Response $response){
 	} else {
 		$response = $response->withStatus(400);
 	}
+	return $response;
+});
+
+$app->post("/readmessage", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$chatId = $post['chatid'];
+	$res = readMessage($chatId);
+	/*if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson(array("id"=>$res));
+		
+	} else {
+		$response = $response->withStatus(400);
+	} */
+	$response = $response->withJson($res);
 	return $response;
 });
 

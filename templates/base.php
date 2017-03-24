@@ -155,11 +155,11 @@ function getCurrentPage(){
         </form> -->
 
         <ul class="nav navbar-nav navbar-right">
-          <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="showForm();"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i> </a></li>
+          <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="showForm();"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-user-circle fa-2x" aria-hidden="true" ></i>
+              <i class="fa fa-user-circle fa-lg" aria-hidden="true" ></i>
               <?php
                 echo $_SESSION['user'];
               ?>
@@ -173,7 +173,7 @@ function getCurrentPage(){
           </li>
           
           <li class="">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell fa-2x" aria-hidden="true" ></i><span class="badge badge-notify" id ="requestsNotify"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="requestsNotify"></span></a>
             <ul class="dropdown-menu" id="requests">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
@@ -181,7 +181,7 @@ function getCurrentPage(){
 
           </li>
           <li class="">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel fa-2x" aria-hidden="true" ></i><span class="badge badge-notify" id ="decisionsNotify"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="decisionsNotify"></span></a>
             <ul class="dropdown-menu" id="decisions">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
@@ -190,7 +190,7 @@ function getCurrentPage(){
           </li>
 
           <li class="">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comment fa-2x" aria-hidden="true" ></i><span class="badge badge-notify" id ="chatNotify"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comment fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="chatNotify"></span></a>
             <ul class="dropdown-menu" id="messages">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
@@ -361,7 +361,7 @@ function getCurrentPage(){
                   //$hour = 6;
                   if($hour >= 0 && $hour < 12){
                     if($hour < 6){
-                      echo "Good Morning, ".$_SESSION["user"]."!= <i class='wi wi-moonset'></i>";
+                      echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-moonset'></i>";
                     }
                     else if ($hour >=6 && $hour <=7){
                       echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-sunrise'></i>";
@@ -533,6 +533,51 @@ function getCurrentPage(){
     </div>
   </div>
 
+  <!-- Chat Modal -->
+  <div class="modal fade" id="chatmodal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content" >
+        <div class="modal-body" >
+          <form class="form" id="chatform" onsubmit="return sendMessage();">
+            <fieldset>
+
+              <div class="modal-header" style="background-color:#096790; color: white">
+                <h2 class="modal-title" style="text-align: center" ><i class="fa fa-user fa-lg" aria-hidden="true"></i> <span id="tradername"></span> <i class="fa fa-comment-o fa-lg" aria-hidden="true"></i></h2>
+             </div>
+
+              <input id="traderusername" name="traderusername" type="hidden" disabled class="form-control input-md">
+              <input id="userid" name="userid" type="hidden" disabled class="form-control input-md">
+              <input id="traderid" name="traderid" type="hidden" disabled class="form-control input-md">
+              <!-- <div class="form-group">
+                <div class="">                     
+                  <textarea class="form-control"  id="messages" rows="10" name="messages" readonly="readonly"></textarea>
+                </div>
+              </div> -->
+
+              <div class="form-group" style="background-color:white">
+                <div class="">                     
+                  <div id="divmessages" style="overflow-y: scroll; height: 250px;">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" >
+                <div class="row" >
+                  <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                  <input autofocus class="form-control" type="text" id="message" maxlength="200" placeholder="Message" autocomplete="off"  required/>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                  <button class="btn btn-primary btn-block" type="submit">Send</button> 
+                  </div>     
+                </div>
+              </div>
+
+            </fieldset>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script>
   $(document).ready(function(){

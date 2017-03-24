@@ -50,6 +50,7 @@ $(document).ready(function(){
     //getAllItems();
     getUserRequests();
     getDecisions();
+    newMessagesNotification();
     //getUserItems(); 
     //getRequestedMeetUp();
     //getRequestsMeetUp();
@@ -58,18 +59,20 @@ $(document).ready(function(){
     //getUserFollowers();
     
     //alert($('#requests > li').length);
+    $('[data-toggle="tooltip"]').tooltip(); 
     
 });  
 // this acts as the main function in Java
 setInterval(function(){
     queryUserRequests();
     queryDecisions();
-    queryChat();
+    //queryChat();
+    queryNewMessages();
 },2500);
 
-var currNotifcations = [], currDecisions = [], currNewMessages =[];
+var currNotifcations = [], currDecisions = [], currNewMessages =[], currNewMessagesNotification=[];
 
-$.get("../index.php/requests", function(res){
+/*$.get("../index.php/requests", function(res){
     currNotifcations = res;
 },"json");
 
@@ -77,16 +80,20 @@ $.get("../index.php/decisions", function(res){
     currDecisions = res;
 },"json");
 
-$.get("../index.php/newmessages", function(messages){
+$.get("../index.php/newmessagesnotification", function(messages){
+    currNewMessagesNotification = messages;
+},"json"); */
+
+/*$.get("../index.php/newmessages", function(messages){
     currNewMessages = messages;
-},"json");
+},"json"); */
 
 
 function queryUserRequests(){
     $.get("../index.php/requests", function(res){
         if(JSON.stringify(res) !== JSON.stringify(currNotifcations)){
             console.log("Request change");
-            //toastr["success"]("New Item Request");
+            //toastr["success"]("New Item Request Or Cancellation");
             currNotifcations = res;
             notifications(res);
         }
@@ -104,11 +111,21 @@ function queryDecisions(){
     }, "json");  
 }
 
-function queryChat(){
+/*function queryChat(){
     $.get("../index.php/newmessages", function(messages){
         if(JSON.stringify(messages) !== JSON.stringify(currNewMessages)){
-            toastr["success"]("New Message");
+            //toastr["success"]("New Message");
             currNewMessages = messages;
+        }
+    },"json");
+} */
+
+function queryNewMessages(){
+    $.get("../index.php/newmessagesnotification", function(messages){
+        if(JSON.stringify(messages) !== JSON.stringify(currNewMessagesNotification)){
+            toastr["success"]("New Message");
+            currNewMessagesNotification = messages;
+            processNewMessagesNotification(messages);
         }
     },"json");
 }
@@ -516,6 +533,7 @@ function getUserRequests(){
 }
 
 function notifications(records){
+    currNotifcations = records;
     console.log(records);
     var htmlStr="";
     records.forEach(function(el){
@@ -525,7 +543,10 @@ function notifications(records){
     $("#requests").html(htmlStr);
     var countR = null;
     countR = $("#requests li").length;
-    $("#requestsNotify").html(countR);
+    if(countR == 0)
+        $("#requestsNotify").html("");
+    else
+        $("#requestsNotify").html(countR);
     $.get("../index.php/requesteritem", function(res){
         console.log(res);
         displayRequests(records, res);
@@ -569,6 +590,7 @@ function getDecisions(){
 }
 
 function decisions(records){
+    currDecisions = records;
     console.log(records);
     var htmlStr="";
     records.forEach(function(el){
@@ -581,7 +603,10 @@ function decisions(records){
     });
     $("#decisions").html(htmlStr);
     var countD = $("#decisions li").length;
-    $("#decisionsNotify").html(countD);
+    if(countD == 0)
+        $("#decisionsNotify").html("");
+    else
+        $("#decisionsNotify").html(countD);
     //displayRequests(records);
 }
 
@@ -597,6 +622,33 @@ function viewedDecision(requestId){
     },"json");
 }
 
+//---------------------------------------------------------------------------------------------------------
+// Display as a count and dropdown list, the new messages sent to the user -- unread messages
+function newMessagesNotification(){
+    $.get("../index.php/newmessagesnotification", processNewMessagesNotification,"json");
+}
+
+function processNewMessagesNotification(records){
+    currNewMessagesNotification = records;
+    console.log(records);
+    displayNewMessagesNotification(records);
+}
+
+function displayNewMessagesNotification(records){
+    var htmlStr = "";
+    records.forEach(function(el){
+        htmlStr += "<li><a href='#' onclick=\"chat("+el.sentfrom+")\">"+ el.username + " messaged you (" +el.messages+")</a></li>";
+    });
+    $("#messages").html(htmlStr);
+    var countM = $("#messages li").length;
+    if(countM == 0)
+        $("#chatNotify").html("");
+    else
+        $("#chatNotify").html(countM);
+
+}
+
+//---------------------------------------------------------------------------------------------------------
 //Dsiplay decisions for requests made by user in a table on the outgoing requests page
 function getTrade(){
     $.get("../index.php/trade", processUserTrade, "json");
@@ -785,22 +837,16 @@ function removeSavedItem(savedId){
         console.log(res);
         //swal("Item removed!", "You can save the item again", "error");
         swal({ 
-                title: "Item Removed from Saved!",
-                text: "You can save the item again!",
-                type: "success",
-                timer: 1000,
-                showConfirmButton: false
-            },
-                function(){
-                    if(window.location.href.indexOf("/item.php?") > -1)
-                        window.location.reload();
-                    else
-                        getUserSavedItems();
-                }
-            );
-        //getUserSavedItems();
-        //window.location.reload();
-        return false;
+            title: "Item Removed from Saved!",
+            text: "You can save the item again!",
+            type: "success",
+            timer: 1000,
+            showConfirmButton: false
+        });
+        if(window.location.href.indexOf("/item.php?") > -1)
+            window.location.reload();
+        else
+            getUserSavedItems();
     }, "json");
     return false;
 }
@@ -853,14 +899,12 @@ function unfollowTrader(userid){
                 type: "success",
                 timer: 1000,
                 showConfirmButton: false
-            },
-                function(){
-                    if(window.location.href.indexOf("/trader.php") > -1)
-                        window.location.reload();
-                    else
-                        getUserFollowees();
-                }
-            );
+            });
+
+            if(window.location.href.indexOf("/trader.php") > -1)
+                window.location.reload();
+            else
+                getUserFollowees();
         }, "json");    
 }
 
@@ -1116,7 +1160,7 @@ function sendRequest(){
     };
 
     console.log(request);
-    sweetAlert(
+    swal(
         {
             title: "Send Request for \"" + requesteeItem + "\"?",
             //text: "You will not be able to undo this operation!",
@@ -1138,32 +1182,29 @@ function sendRequest(){
                             title: "Request Sent!",
                             text: "Trader will be notified",
                             type: "success",
-                            //timer: 1000,
-                            //showConfirmButton: false
-                            },
-                            function(){
-                                if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/search.php") > -1){
-                                    window.location.reload();
+                            timer: 1000,
+                            showConfirmButton: false
+                            });
+                        if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/search.php") > -1){
+                            window.location.reload();
                                 }
-                                else{
-                                    getAllItems(); 
-                                }
-                            }
-                        );
-                    }
-                    
+                        else{
+                            getAllItems(); 
+                        }
+                    }  
                 },"json"); 
             } 
 
             else {
                 //swal("Request Cancelled!", "You can make another request", "error");
-                swal({
+                /*swal({
                   title: "Request Cancelled!",
                   text: "You can make another request",
                   type: "error",
                   timer: 1000,
                   showConfirmButton: false
-                });
+                }); */
+                cancelRequest();
             }
         }
     );
@@ -1184,6 +1225,55 @@ function cancelRequest(){
     });   
     return false;
 }
+//------------------------------------------------------------------------
+function cancelMadeRequest(requestId){
+    swal({
+        title: "Cancel Sent Request?",
+        //text: "You will not be able to undo this operation!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, Cancel!",
+        cancelButtonText: "No, Keep!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function(isConfirm){
+        
+        if (isConfirm) {
+            var request = {
+                "requestid" : requestId
+            }; 
+            console.log(request);
+            $.post("../index.php/cancelrequest", request, function(res){
+                //swal("Request Cancelled!", "The owner will no longer see your request", "success");
+                swal({ 
+                    title: "Request Cancelled!",
+                    text: "Trader will no longer see your request",
+                    type: "error",
+                    timer: 2000,
+                    showConfirmButton: false
+                    });
+                if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/trade.php") > -1 || window.location.href.indexOf("/search.php") > -1){
+                    window.location.reload();
+                }
+                else{
+                    getAllItems();
+                }
+            }, "json");
+            
+        } else {
+            //swal("Cancelled", "Your request is still pending", "error");
+            swal({
+                title: "Cancelled!",
+                text: "The request is still pending",
+                type: "success",
+                timer: 1000,
+                showConfirmButton: false
+            });
+        }
+    });
+}
 //--------------------------------------------------------------------------------------------------------------------
 // Deletes a user item from the list
 function deleteItem(itemid){
@@ -1197,7 +1287,7 @@ function deleteItem(itemid){
     },"json");
     swal({
             title: "Delete Item?",
-            text: "You will not be able to undo this operation!",
+            text: "You will not be able to undo this operation",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
@@ -1240,8 +1330,8 @@ function deleteItem(itemid){
                 //swal("Cancelled", "Your item is safe", "error");
                 swal({
                     title: "Cancelled!",
-                    text: "Your item is still avaialable for trade!",
-                    type: "error",
+                    text: "Your item is still avaialable for trade",
+                    type: "success",
                     timer: 2000,
                     showConfirmButton: false
                 }); 
@@ -1321,7 +1411,7 @@ function sendArrangement(){
     console.log(request);
     $("#meetUpModal").modal('hide');
 
-    sweetAlert({
+    swal({
         title: "Accept Request and Send Arrangement?",
         //text: "You will not be able to undo this operation!",
         type: "info",
@@ -1347,7 +1437,7 @@ function sendArrangement(){
                 });
                 
                 getUserRequests();
-                return false;
+                //return false;
             }, "json");
             
         } else {
@@ -1361,8 +1451,7 @@ function sendArrangement(){
             });
         }
     });
-    return false;
-    
+    return false;   
 }
 
 //------------------------------------------------------------------------------------------------
@@ -1443,58 +1532,7 @@ function denyRequest(requestId){
 }
 
 
-function cancelMadeRequest(requestId){
-    swal({
-        title: "Cancel Sent Request?",
-        //text: "You will not be able to undo this operation!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, Cancel!",
-        cancelButtonText: "No, Keep!",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function(isConfirm){
-        
-        if (isConfirm) {
-            var request = {
-                "requestid" : requestId
-            }; 
-            console.log(request);
-            $.post("../index.php/cancelrequest", request, function(res){
-                //swal("Request Cancelled!", "The owner will no longer see your request", "success");
-                swal({ 
-                    title: "Request Cancelled!",
-                    text: "Trader will no longer see your request",
-                    type: "error",
-                    //timer: 1000,
-                    //showConfirmButton: false
-                    },
-                    function(){
-                        if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/trade.php") > -1 || window.location.href.indexOf("/search.php") > -1){
-                            window.location.reload();
-                        }
-                        else{
-                            getAllItems();
-                        }
-                    }
-                );
-                
-            }, "json");
-            
-        } else {
-            //swal("Cancelled", "Your request is still pending", "error");
-            swal({
-                title: "Cancelled!",
-                text: "The request is still pending",
-                type: "success",
-                timer: 1000,
-                showConfirmButton: false
-            });
-        }
-    });
-}
+
 //--------------------------------------------------------------------------------------------------------------------
 //
 
@@ -1773,6 +1811,7 @@ function logout(){
 //------------------------------------------------------------------------------------------------------
 
 function chat(traderid){
+    var chatId;
     $.get("../index.php/user",function(userid){
         //console.log(userid);
         $("#chatform #userid").val(userid);
@@ -1791,18 +1830,27 @@ function chat(traderid){
                 $.get("../index.php/getmessages/"+traderid, function(messages){
                     
                     var chat="", divchat="<div class='container-fluid'>";
-                    if(JSON.stringify(messages) !== JSON.stringify(currChat)){
+                    if(JSON.stringify(messages) !== JSON.stringify(currChat) && $('#chatModal').hasClass('in') == false){
                         currChat = messages;
                         messages.forEach(function(el){
                             //console.log(el);
+                            chatId = {
+                                "chatid" : el['chatid']
+                            };
+                            //console.log(chatId);
+                            var messageDate = moment(el['senton']).format('MMMM Do YYYY, h:mm:ss a');
+                            $.post("../index.php/readmessage", chatId, function(res){
+                                
+                            },"json");
                             if(el.sentfrom == userid){
                                 //chat += "Me: " + el.message + "\n";
-                                divchat += "<div class='row'><div class='well well-sm pull-right'><strong>Me</strong>: "+el.message+"</div></div>";
-                            }
-                            else{
-                                //chat += username + ": " + el.message + "\n";
-                                divchat += "<div class='row'><div class='well well-sm pull-left'><strong>"+username +"</strong>: "+el.message+"</div></div>";
-                            }
+                                divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+"</div></div>";
+                                }
+                                else{
+                                    //chat += username + ": " + el.message + "\n";
+                                    divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+"</div></div>";
+                                }
+                            
                         });
                         divchat+="</div>";
                         //$("#chatform #messages").html(chat);
@@ -1855,29 +1903,31 @@ function sendMessage(){
 
 
 function getMessages(traderId, userid, username){
+    var chatId;
     $.get("../index.php/getmessages/"+traderId, function(messages){
+        //$('[data-toggle="tooltip"]').tooltip(); 
         console.log(messages);
         var currMessages = $("#chatform #messages").val();
         //console.log(currMessages);
         var chat="", divchat="<div class='container-fluid'>";
         if(JSON.stringify(messages) !== JSON.stringify(currMessages)){
             messages.forEach(function(el){
-                        // FIX: appends the same messages each time the button is clicked
-                //el.message = decodeURIComponent(message).replace(/'/g,"%27");
-                if(el.sentfrom == userid){
-                    //chat += "<p class='pull-left'> Me: " + el.message + "</p>";
-                    //$("#chatform #messages").append("Me: " + el.message+"\n");
-                    //chat += "Me: " + el.message + "\n";
-                    divchat += "<div class='row'><div class='well well-sm pull-right'><strong>Me</strong>: "+el.message+"</div></div>";
-                    //divchat += "<br/>";
-                }
+                var messageDate = moment(el['senton']).format('MMMM Do YYYY, h:mm:ss a');
+                chatId = {
+                    "chatid" : el.chatid
+                };
 
-                else{
-                    //chat += username + ": " + el.message + "\n";
-                    divchat += "<div class='row'><div class='well well-sm pull-left'><strong>"+username +"</strong>: "+el.message+"</div></div>";
-                    //divchat += "<br/>";
-                    //$("#chatform #messages").append(username.username +": " + el.message+ "\n");
-                }
+                $.post("../index.php/readmessage", chatId, function(res){
+                    //console.log(res);
+                    
+                },"json");  
+
+                if(el.sentfrom == userid){
+                        divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip' data-placement='left' title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+"</div></div>";
+                    }
+                    else{  
+                        divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+"</div></div>";  
+                    }      
             });
 
             divchat+="</div>";
@@ -1888,6 +1938,8 @@ function getMessages(traderId, userid, username){
         }
     }, "json");
 }
+
+
 
 
 //-------------------------------------------------------------------------------------------------------

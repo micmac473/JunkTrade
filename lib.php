@@ -118,6 +118,56 @@ function getNewMessages(){
 	return $messages;
 }
 
+
+function getNewMessagesNotification(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT COUNT(*) As messages, u.username, c.sentfrom FROM `chat` c, `users` u WHERE c.sentfrom = u.id AND c.sentto = $userid AND c.readindicator = false GROUP BY u.username;";
+	$messages =[];
+	$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+				$messages[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $messages;
+}
+
+function checkReadMessage($chatId){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT message FROM `chat` c WHERE c.chatid = $chatId AND c.sentto = $userid AND c.readindicator = false;";
+	$rec =[];
+	$db = getDBConnection();
+	if ($db != null){
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
+function readMessage($chatId){
+	$userid = $_SESSION['id'];
+	$sql = "UPDATE `chat` c SET `readindicator` = true WHERE `chatid` = $chatId";
+	$isRead = checkReadMessage($chatId);
+	$res = null;
+	if($isRead == null){
+		return $res;
+	}
+	else{
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			$db->close();
+		}
+		return $res;
+	}
+	//return $res;
+}
+
 function checkSavedItem($itemId, $itemOwner){
 	$userid = $_SESSION['id'];
 	$sql = "SELECT * FROM `saved` s where s.itemid = $itemId and s.userid = '$userid' and s.itemowner = $itemOwner;";
@@ -156,9 +206,9 @@ function addItemToSaved($itemId, $itemOwner){
 	else{
 		$sql = "UPDATE `saved` s SET `savedindicator` = true WHERE `savedid` = $savedId;";
 		$res = null;
-			if ($db != NULL){
-				$res = $db->query($sql);
-				$db->close();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			$db->close();
 			}
 		return $res;
 	}	
