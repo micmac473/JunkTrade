@@ -29,12 +29,13 @@ include "base.php";
     <thead>
     <tr>
       <th>From</th>
+      <th>Chat</th>
+      
       <th>Contact</th>
       <th>With</th>
       <th>For</th>
       <th>Date</th>
       <th>Location</th>
-      <th>Chat</th>
       <th>Feedback</th>
     </tr>
     </thead>
@@ -46,12 +47,13 @@ include "base.php";
     <thead>
     <tr>
       <th>From</th>
+      <th>Chat</th>
       <th>Contact</th>
       <th>With</th>
       <th>For</th>
       <th>Date</th>
       <th>Location</th>
-      <th>Chat</th>
+      
       <th>Feedback</th>
     </tr>
     </thead>

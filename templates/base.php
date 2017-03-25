@@ -70,11 +70,11 @@ function getCurrentPage(){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     
     <!-- Scripts-->
-    <!-- AngularJS JavaScript file  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!-- AngularJS JavaScript file  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
 
-    <!-- AngularJS Route module -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    <!-- AngularJS Route module 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script> -->
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -104,7 +104,7 @@ function getCurrentPage(){
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
+    <script src="../js/moment.js"></script>
 
     <style>
       ./*city{
@@ -591,5 +591,10 @@ function getCurrentPage(){
     $('.input-group #search_param').val(param);
   });  
   });
+
+
+  $('#chatmodal').on('shown.bs.modal', function() {
+  $('#message').focus();
+})
 </script>
 

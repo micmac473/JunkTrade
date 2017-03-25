@@ -268,6 +268,12 @@ $app->get("/userfollowerupdates", function(Request $request, Response $response)
 	return $response;
 });
 
+$app->get("/userfollowerupdatesrequests", function(Request $request, Response $response){
+	$requests = getUserFollowerUpdatesRequests();
+	
+	$response = $response->withJson($requests);
+	return $response;
+});
 
 $app->get("/gettradehistory", function(Request $request, Response $response){
 	$trades = getTradeHistory();

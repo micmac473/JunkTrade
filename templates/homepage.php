@@ -9,14 +9,14 @@ include "base.php";
 
       <div class="col-lg-4 col-lg-offset-1 col-md-6 col-sm-12 col-xs-12" style="background-color: white; box-shadow: 5px 5px 5px #888888;">
         <h3 class="header text-center"><u>Events</u> <i class="fa fa-calendar" aria-hidden="true"></i></h3>
-        <div id="reminders" style="overflow-y: scroll; height:70px"> 
+        <div id="reminders" style="overflow-y: scroll; height:90px"> 
           
         </div>
       </div>
 
       <div class="col-lg-4 col-lg-offset-1 col-md-6 col-sm-12 col-xs-12" style="background-color: white; box-shadow: 5px 5px 5px #888888;">
         <h3 class="header text-center" ><u>Followers</u> <i class="fa fa-rss" aria-hidden="true"></i></h3>
-        <div id="followerupdates" style="overflow-y: scroll; height:70px"> 
+        <div id="followerupdates" style="overflow-y: scroll; height:90px"> 
           
         </div>
       </div>
@@ -156,12 +156,13 @@ include "base.php";
     userFollowerUpdates();
   };
 
-  var currAllItems = [], currAllRequests = [] ,currMeetup = [], currFollowerUpdates = [], sort="mra";
+  var currAllItems = [], currAllRequests = [] ,currMeetup = [], currFollowerUpdates = [], currFollowerUpdatesRequests = [], sort="mra";
   setInterval(function(){
     queryAllItems(sort);
     queryMeetUp();
     queryFollowerUpdates();
   },2500);
+  
 
   $.get("../index.php/homepage/"+sort, function(res){
     $.get("../index.php/allnonuseritemsstate", function(reqs){
@@ -206,11 +207,15 @@ include "base.php";
 
   function queryFollowerUpdates(){
     $.get("../index.php/userfollowerupdates", function(res){
-      if(JSON.stringify(res) !== JSON.stringify(currFollowerUpdates)){
+      $.get("../index.php/userfollowerupdatesrequests", function(reqs){
+        if(JSON.stringify(res) !== JSON.stringify(currFollowerUpdates) || JSON.stringify(reqs) !== JSON.stringify(currFollowerUpdatesRequests)){
         console.log("New Follower item added!");
         currFollowerUpdates = res;
+        currFollowerUpdatesRequests = reqs;
         processUserFollowerUpdates(res);
       }
+      },"json");
+      
     }, "json");  
   }
 </script>

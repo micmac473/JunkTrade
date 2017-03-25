@@ -123,7 +123,7 @@ function queryDecisions(){
 function queryNewMessages(){
     $.get("../index.php/newmessagesnotification", function(messages){
         if(JSON.stringify(messages) !== JSON.stringify(currNewMessagesNotification)){
-            toastr["success"]("New Message");
+            //toastr["success"]("New Message");
             currNewMessagesNotification = messages;
             processNewMessagesNotification(messages);
         }
@@ -152,10 +152,10 @@ function login(){
              console.log(attempts);
 
             swal({ 
-                title: "Welcome " + res + ", to JunkTrade!",
+                title: res + ", Welcome to JunkTrade!",
                 text: "Login Successful",
                 type: "success",
-                timer: 2000,
+                timer: 1000,
                 showConfirmButton: false
             },
                 function(){
@@ -186,7 +186,15 @@ function login(){
                });
 
             }
-            else{ swal("Incorrect Login","Please try again","error");
+            else{ 
+                swal("Incorrect Login","Please try again","error");
+                swal({
+                  title: "Incorrect Credentials!",
+                  text: "Please try again",
+                  type: "error",
+                  showConfirmButton: false,
+                  timer: 1000
+               });
         }
 
             
@@ -1473,7 +1481,8 @@ function arrangement(){
     var tradeLocation = $("#meetupform #tradelocation").val();
     var requesteeContact = $("#meetupform #requesteecontact").val();
     var requesterContact = $("#meetupform #requestercontact").val();
-
+    tradeDate = moment(tradeDate).format('YYYY-M-DD');
+    //alert(tradeDate);
     var trade = {
         "requestid" : requestId,
         "tradedate" : tradeDate,
@@ -1563,20 +1572,21 @@ function processRequestedMeetUp(records, records2){
         // do get request with request id to get my item and contact
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
+        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requestee+")\"><i class='fa fa-comments' aria-hidden='true'></i></button><span id='chatnotificationrequested' class='badge badge-notify'></span></td>";
+
         htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requesteecontact']+"</td>"
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i> "+records2[i]['itemname']+"</td>";
         htmlStr += "<td> <i class='fa fa-calendar' aria-hidden='true'></i> " + date + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i> " + el['tradelocation'] + "</td>";
         //htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requestee+")\"><i class='fa fa-comments' aria-hidden='true'></i></button><span id='chatnotificationrequested' class='badge badge-notify'></span></td>";
-        var currDate = moment().format('MMM-D-YYYY');
-
-        if(currDate > el.tradedate){
-            htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        var now = moment().format();
+        //alert(now);
+        if(moment(now).isAfter(el.tradedate)){
+            htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\" data-toggle='tooltip' data-placement='bottom' title='Give feedback to remove transaction'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         else{
-            htmlStr += "<td><button type='button' class='btn btn-info disabled'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+            htmlStr += "<td><button type='button' class='btn btn-info disabled' data-toggle='tooltip' data-placement='bottom' title='Unable to give feedback, trade date not passed'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         
         htmlStr +=" </tr>" ;
@@ -1611,20 +1621,22 @@ function processRequestsMeetUp(records, records2){
         // do get request with request id to get my item and contact
         var date = moment(el['tradedate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr class='text-center'>";
-        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>"
-        htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requestercontact']+"</td>"
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>"
+        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong><i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + "</strong></button></td>";
+        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button><span id='chatnotificationrequests' class='badge badge-notify'></span></td>";
+        htmlStr += "<td><i class='fa fa-phone' aria-hidden='true'></i> "+el['requestercontact']+"</td>";
+        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>  "+records[i]['itemname']+"</td>";
         htmlStr += "<td><i class='fa fa-calendar' aria-hidden='true'></i>  " + date + "</td>";
         htmlStr += "<td><i class='fa fa-map-marker' aria-hidden='true'></i>  " + el['tradelocation'] + "</td>";
-        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button><span id='chatnotificationrequests' class='badge badge-notify'></span></td>";
-        var currDate = moment().format('MMM-D-YYYY');
-        //alert(date);
-        if(currDate > el.tradedate){
-            htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\"><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+        
+        var now = moment().format();
+        //alert(now);
+        //alert(el.tradedate);
+        if(moment(now).isAfter(el.tradedate)){
+            htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\" data-toggle='tooltip' data-placement='bottom' title='Give feedback to remove transaction'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         else{
-            htmlStr += "<td><button type='button' class='btn btn-info disabled'> <i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+            htmlStr += "<td><button type='button' class='btn btn-info disabled' data-toggle='tooltip' data-placement='bottom' title='Unable to give feedback, trade date not passed'> <i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         
         htmlStr +="</tr>" ;
@@ -1784,7 +1796,7 @@ function logout(){
                         title: "Goodbye " + res.firstname,
                         text: "Thanks for using JunkTrade, see you soon",
                         type: "success",
-                        timer: 2000,
+                        timer: 1000,
                         showConfirmButton: false
                     },
                         function(){
@@ -1801,7 +1813,7 @@ function logout(){
                 title: "Logout Cancelled!",
                 text: "Continue using JunkTrade",
                 type: "success",
-                timer: 2000,
+                timer: 1000,
                 showConfirmButton: false
             });
         }
@@ -1830,7 +1842,7 @@ function chat(traderid){
                 $.get("../index.php/getmessages/"+traderid, function(messages){
                     
                     var chat="", divchat="<div class='container-fluid'>";
-                    if(JSON.stringify(messages) !== JSON.stringify(currChat) && $('#chatModal').hasClass('in') == false){
+                    if(JSON.stringify(messages) !== JSON.stringify(currChat)){
                         currChat = messages;
                         messages.forEach(function(el){
                             //console.log(el);
@@ -1958,9 +1970,10 @@ function displayUserMeetUp(records){
     //console.log(records.length);
     if(records.length != 0){
         console.log(records.length);
+        console.log(records);
         //records.forEach(function(el){
             for(var i = 0; i < records.length; i++){
-                events+="<div class='well well-sm'><a href='meetup.php' style='cursor: pointer; color:black'><i class='fa fa-calendar' aria-hidden='true'></i> " + records[i][0] + " at <i class='fa fa-map-marker' aria-hidden='true'></i> " + records[i][1] + "</a></div>";
+                events+="<div class='well well-sm'><a href='meetup.php' style='cursor: pointer; color:black'><i class='fa fa-calendar' aria-hidden='true'></i> " + moment(records[i][0]).format('dddd MMMM Do, YYYY') + " at <i class='fa fa-map-marker' aria-hidden='true'></i> " + records[i][1] + " with <i class='fa fa-user' aria-hidden='true'></i> "+records[i][4]+" </a></div>";
             }
             
         //});
@@ -1980,15 +1993,28 @@ function userFollowerUpdates(){
 
 function processUserFollowerUpdates(records){
     console.log(records);
-    displayUserFollowerUpdates(records);
+    $.get("../index.php/userfollowerupdatesrequests", function(res){
+        console.log(res);
+        displayUserFollowerUpdates(records, res);
+    },"json");
+    
 }
 
-function displayUserFollowerUpdates(records){
-    var updates="<div class='container-fluid'>";
+function displayUserFollowerUpdates(records, requests){
+    var updates="<div class='container-fluid'>", j;
     //alert(records.length);
-    if(records.length != 0){
+    if(records.length != requests.length){
         records.forEach(function(el){
-            updates+="<div class='well well-sm'><a onclick=\"viewItem("+el['itemid']+")\" style='cursor: pointer; color:black'> <i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + " uploaded <i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"</a></div>";
+            for(j = 0; j < requests.length; j ++){
+                if(el.itemname == requests[j][0]){
+                    break;
+                }
+            }
+
+            if(j == requests.length){
+                updates+="<div class='well well-sm'><a onclick=\"viewItem("+el['itemid']+")\" style='cursor: pointer; color:black'> <i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + " uploaded <i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"</a></div>"; 
+            }
+            
         });
     }
     else{

@@ -397,8 +397,8 @@ function getRequestsMeetupRequester(){
 function getUserMeetUp(){
 	$userid = $_SESSION['id'];
 	//$sql = "SELECT * FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requestee = $userid OR r.requester = $userid ORDER BY t.tradedate ASC;";
-	$sql = "SELECT t.tradedate, t.tradelocation, t.requestid, r.requester FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requester = $userid AND t.requesterfeedbackindicator = false ORDER BY t.tradedate ASC;";
-	$sql .= "SELECT t.tradedate, t.tradelocation, t.requestid, r.requester FROM `trade` t, `requests` r WHERE r.id = t.requestid AND r.decision = true AND r.requestee = $userid AND t.requesteefeedbackindicator = false ORDER BY t.tradedate ASC;";
+	$sql = "SELECT t.tradedate, t.tradelocation, t.requestid, r.requester, u.username FROM `trade` t, `requests` r, `users` u WHERE r.id = t.requestid AND r.requestee = u.id AND r.decision = true AND r.requester = $userid AND t.requesterfeedbackindicator = false ORDER BY t.tradedate ASC;";
+	$sql .= "SELECT t.tradedate, t.tradelocation, t.requestid, r.requester, u.username FROM `trade` t, `requests` r, `users` u WHERE r.id = t.requestid AND r.requester = u.id AND r.decision = true AND r.requestee = $userid AND t.requesteefeedbackindicator = false ORDER BY t.tradedate ASC;";
 
 	$events =[];
 	$db = getDBConnection();
@@ -419,7 +419,7 @@ function getUserMeetUp(){
 
 function getUserFollowerUpdates(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `follow` f, `users` u, `items` i WHERE u.id = f.followee AND u.id = i.userid AND f.follower = $userid AND f.followindicator = true AND i.uploaddate >= f.followdate ORDER BY i.uploaddate DESC ;";
+	$sql = "SELECT i.itemname, u.username, i.itemid FROM `follow` f, `users` u, `items` i WHERE u.id = f.followee AND u.id = i.userid AND f.follower = $userid AND f.followindicator = true AND i.uploaddate >= f.followdate ORDER BY i.uploaddate DESC ;";
 	$updates =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -430,6 +430,27 @@ function getUserFollowerUpdates(){
 		$db->close();
 	}//if
 	return $updates;
+}
+
+function getUserFollowerUpdatesRequests(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT i.itemname, r.decision FROM `follow` f, `users` u, `items` i, `requests` r  WHERE u.id = f.followee AND u.id = i.userid AND f.follower = $userid AND r.item = i.itemid AND f.followindicator = true AND i.uploaddate >= f.followdate AND r.decision = true ORDER BY i.uploaddate DESC, r.decision DESC;";
+	$sql .= "SELECT i.itemname, r.decision FROM `follow` f, `users` u, `items` i, `requests` r  WHERE u.id = f.followee AND u.id = i.userid AND f.follower = $userid AND r.item2 = i.itemid AND f.followindicator = true AND i.uploaddate >= f.followdate AND r.decision = true ORDER BY i.uploaddate DESC, r.decision DESC;";
+	$requests =[];
+	$db = getDBConnection();
+	if ($db != NULL){
+		if($db->multi_query($sql)){
+			do{
+				if($res = $db->store_result()){
+					while($row = $res->fetch_row()){
+						$requests[] = $row;
+					}
+					$res->free();
+				}
+			} while($db->more_results() && $db->next_result());
+		} 
+	}//if
+	return $requests;
 }
 
 function getTradeHistory(){
