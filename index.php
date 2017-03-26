@@ -282,12 +282,40 @@ $app->get("/gettradehistoryrequested", function(Request $request, Response $resp
 	return $response;
 });
 
+$app->get("/gettradehistoryrequesteduserinfo", function(Request $request, Response $response){
+	$trades = getTradeHistoryRequestedUserInfo();
+	
+	$response = $response->withJson($trades);
+	return $response;
+});
+
 $app->get("/gettradehistoryrequests", function(Request $request, Response $response){
 	$trades = getTradeHistoryRequests();
 	
 	$response = $response->withJson($trades);
 	return $response;
 });
+
+$app->get("/gettradehistoryrequestsuserinfo", function(Request $request, Response $response){
+	$trades = getTradeHistoryRequestsUserInfo();
+	
+	$response = $response->withJson($trades);
+	return $response;
+});
+
+/*app->get("/gettradehistoryrequesteduserinfo", function(Request $request, Response $response){
+	$trades = getTradeHistoryRequestedUserInfo();
+	
+	$response = $response->withJson($trades);
+	return $response;
+});
+
+$app->get("/gettradehistoryrequestsuserinfo", function(Request $request, Response $response){
+	$trades = getTradeHistoryRequestsUserInfo();
+	
+	$response = $response->withJson($trades);
+	return $response;
+}); */
 
 
 $app->get("/incomingrequestshistoryrequester", function(Request $request, Response $response){
@@ -719,22 +747,6 @@ $app->post("/cancelrequest", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	$requestId = $post['requestid'];
 	$res = cancelRequest($requestId);
-	if ($res){
-		//$name = $_SESSION["name"];
-		$response = $response->withStatus(201);
-		$response = $response->withJson($res);
-		
-	} else {
-		$response = $response->withStatus(400);
-	}
-	return $response;
-});
-
-
-$app->post("/vieweddecision", function(Request $request, Response $response){
-	$post = $request->getParsedBody();
-	$requestId = $post['requestid'];
-	$res = viewedDecision($requestId);
 	if ($res){
 		//$name = $_SESSION["name"];
 		$response = $response->withStatus(201);

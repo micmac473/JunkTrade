@@ -603,10 +603,10 @@ function decisions(records){
     var htmlStr="";
     records.forEach(function(el){
         if(el.decision == true && el.viewed == false){
-            htmlStr += "<li><a href='#' onclick=\"viewedDecision("+el.id+")\">"+ el.itemname + " request was ACCEPTED" + "</a></li>";
+            htmlStr += "<li><a href='trade.php'>"+ el.itemname + " request was ACCEPTED" + "</a></li>";
         }
         else if(el.decision == false && el.viewed == false){
-            htmlStr += "<li><a href='#' onclick=\"viewedDecision("+el.id+")\">"+ el.itemname + " request was DENIED" + "</a></li>";
+            htmlStr += "<li><a href='trade.php'>"+ el.itemname + " request was DENIED" + "</a></li>";
         } 
     });
     $("#decisions").html(htmlStr);
@@ -618,17 +618,6 @@ function decisions(records){
     //displayRequests(records);
 }
 
-//When a decision is clicked by a user, it is a recorded as viewed in the DB and will no longer be shown in the listing of new requests
-function viewedDecision(requestId){
-    var viewedRequest = {
-        "requestid" : requestId
-    };
-
-    $.post("../index.php/vieweddecision", viewedRequest,function(res){
-        console.log(res);
-        window.location.href = 'trade.php';
-    },"json");
-}
 
 //---------------------------------------------------------------------------------------------------------
 // Display as a count and dropdown list, the new messages sent to the user -- unread messages
@@ -682,9 +671,9 @@ function listUserTrade(records, res){
             "requestid" : el.id
         };
 
-        $.post("../index.php/setrequeststoviewed", viewedRequest,function(res){
-            console.log(res);
-        },"json");
+        //When the requests page is visited, all request status can be seen so all new request notifications are considered viewed since it would be redundant to have a count for an request that is currently being seen.
+        $.post("../index.php/setrequeststoviewed", viewedRequest);
+
         htmlStr += "<tr>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
         /*htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
@@ -734,40 +723,62 @@ function getTradeHistory(){
 }
 
 function processTradeHistory(records){
-    console.log(records);
+    
     $.get("../index.php/gettradehistoryrequests", function(requests){
-        console.log(requests);
-        displayTradeHistory(records, requests);
+        $.get("../index.php/gettradehistoryrequestsuserinfo", function(requestsUser){
+            $.get("../index.php/gettradehistoryrequesteduserinfo", function(requestedUser){
+                displayTradeHistory(records, requests, requestsUser, requestedUser);
+            },"json");
+            
+        },"json");
+        
     },"json");
     
 }
 
-function displayTradeHistory(records, requests){
+function displayTradeHistory(records, requests, requestsUser, requestedUser){
+    console.log(records);
+    console.log(requests);
+    console.log(requestsUser);
+    console.log(requestedUser);
+    var i = 0, j = 0;
     var sec_id = "#table_sec_tradehistory";
     var htmlStr = $("#table_heading_tradehistory").html(); 
-    $.get("../index.php/user", function(user){
-        for(var i = 0; i < records.length; i++){
-            for(var j = 0; j < requests.length; j++){
-                htmlStr +="<tr>";
-                htmlStr +="<td>Trade Date</td>";
-                htmlStr +="<td>Trade Location</td>";
-                htmlStr +="<td>Requester</td>";
-                htmlStr +="<td>With</td>";
-                htmlStr +="<td>Feedback</td>";
-                htmlStr +="<td>Rating</td>";
-                htmlStr +="<td>Requestee</td>";
-                htmlStr +="<td>For</td>";
-                htmlStr +="<td>Feedback</td>";
-                htmlStr +="<td>Rating</td>";
-                
-                htmlStr +="</tr>";
-            } 
-        }
-            
-        htmlStr += "</tbody></table>";
-        $(sec_id).html(htmlStr);
-    },"json");
-    
+    records.forEach(function(el){
+        var tradeDate = moment(el.tradedate).format('dddd MMMM Do, YYYY');
+        htmlStr +="<tr>";
+        htmlStr +="<td>"+tradeDate+"</td>";
+        htmlStr +="<td>"+el.tradelocation+"</td>";
+        htmlStr +="<td>"+requestedUser[i]['username']+"</td>";
+        htmlStr +="<td>"+requestedUser[i]['itemname']+"</td>";
+        htmlStr +="<td>"+el.requesterfeedbackcomment+"</td>";
+        htmlStr +="<td>"+el.requesterfeedbackrating+"</td>";
+        htmlStr +="<td>"+el.username+"</td>";
+        htmlStr +="<td>"+el.itemname+"</td>";
+        htmlStr +="<td>"+el.requesteefeedbackcomment+"</td>";
+        htmlStr +="<td>"+el.requesteefeedbackrating+"</td>";
+        htmlStr +="</tr>";
+        i++;
+    });
+
+    requests.forEach(function(el){
+        var tradeDate = moment(el.tradedate).format('dddd MMMM Do, YYYY');
+        htmlStr +="<tr>";
+        htmlStr +="<td>"+tradeDate+"</td>";
+        htmlStr +="<td>"+el.tradelocation+"</td>";
+        htmlStr +="<td>"+el.username+"</td>";
+        htmlStr +="<td>"+el.itemname+"</td>";
+        htmlStr +="<td>"+el.requesteefeedbackcomment+"</td>";
+        htmlStr +="<td>"+el.requesteefeedbackrating+"</td>";
+        htmlStr +="<td>"+requestsUser[j]['username']+"</td>";
+        htmlStr +="<td>"+requestsUser[j]['itemname']+"</td>";
+        htmlStr +="<td>"+el.requesterfeedbackcomment+"</td>";
+        htmlStr +="<td>"+el.requesterfeedbackrating+"</td>";
+        htmlStr +="</tr>";
+        j++;
+    });
+    htmlStr += "</tbody></table>";
+    $(sec_id).html(htmlStr); 
 }
 //-------------------------------------------------------------------------------------
 // Displays as a table all the incoming requests for the user
