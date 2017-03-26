@@ -275,10 +275,32 @@ $app->get("/userfollowerupdatesrequests", function(Request $request, Response $r
 	return $response;
 });
 
-$app->get("/gettradehistory", function(Request $request, Response $response){
-	$trades = getTradeHistory();
+$app->get("/gettradehistoryrequested", function(Request $request, Response $response){
+	$trades = getTradeHistoryRequested();
 	
 	$response = $response->withJson($trades);
+	return $response;
+});
+
+$app->get("/gettradehistoryrequests", function(Request $request, Response $response){
+	$trades = getTradeHistoryRequests();
+	
+	$response = $response->withJson($trades);
+	return $response;
+});
+
+
+$app->get("/incomingrequestshistoryrequester", function(Request $request, Response $response){
+	$incoming = getIncomingRequestsHistory();
+	
+	$response = $response->withJson($incoming);
+	return $response;
+});
+
+$app->get("/incomingrequestshistoryuser", function(Request $request, Response $response){
+	$incoming = getIncomingRequestsHistoryUser();
+	
+	$response = $response->withJson($incoming);
 	return $response;
 });
 
@@ -721,6 +743,16 @@ $app->post("/vieweddecision", function(Request $request, Response $response){
 	} else {
 		$response = $response->withStatus(400);
 	}
+	return $response;
+});
+
+
+$app->post("/setrequeststoviewed", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$requestId = $post['requestid'];
+	$res = setRequestToViewed($requestId);
+	
+	$response = $response->withJson($res);
 	return $response;
 });
 

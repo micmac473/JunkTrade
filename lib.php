@@ -3,9 +3,11 @@ session_start();
 
 function getDBConnection(){
 	try{ 
-		//$db = new mysqli("localhost","peertrading","k$3eYUdUz_Th","peertrading");
-		$db = new mysqli("localhost","root","","peertrading");
-		if ($db == null && $db->connect_errno > 0)return null;
+		//$db = new mysqli("198.199.66.99","junktrader","j!p@aChU7Ust","junktrader");
+		//$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
+		$db = new mysqli("localhost","root","","junktrader");
+		if ($db == null && $db->connect_errno > 0)
+			return null;
 		return $db;
 	}catch(Exception $e){ } 
 	return null;
@@ -14,7 +16,7 @@ function getDBConnection(){
 
 function checkLogin($email, $password){
 	$password = sha1($password);
-	$sql = "SELECT * FROM `users` where `email`='$email' OR `username`='$email'";
+	$sql = "SELECT * FROM `users` WHERE `email`='$email' OR `username`='$email'";
 	//print($email);
 	$db = getDBConnection();
 	//print_r($db);
@@ -453,19 +455,98 @@ function getUserFollowerUpdatesRequests(){
 	return $requests;
 }
 
-function getTradeHistory(){
+function getTradeHistoryRequested(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `requests` r, `trade` t WHERE r.id = t.requestid AND r.requestee = $userid OR r.requester = $userid AND r.decision = true;";
+	$sql = "SELECT t.tradedate, t.tradelocation, i.itemname , u.username  FROM `requests` r, `trade` t, `users` u, `items` i WHERE r.id = t.requestid AND r.requester = u.id AND r.item2 = i.itemid AND r.requester = $userid AND r.decision = true ORDER BY t.tradedate DESC;";
+	$sql .= "SELECT t.tradedate, t.tradelocation, i.itemname AS 'requesteeitemuserrequester', u.username AS 'requesteeusernameuserrequester' FROM `requests` r, `trade` t, `users` u, `items` i WHERE r.id = t.requestid AND r.requestee = u.id AND r.item = i.itemid AND r.requester = $userid AND r.decision = true ORDER BY t.tradedate DESC;";
+
 	$trades =[];
 	$db = getDBConnection();
-		if ($db != NULL){
-			$res = $db->query($sql);
-			while($res && $row = $res->fetch_assoc()){
-				$trades[] = $row;
+	/*if ($db != NULL){
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$trades[] = $row;
 		}//while
 		$db->close();
-	}//if
+	} */
+	if ($db != NULL){
+		if($db->multi_query($sql)){
+			do{
+				if($res = $db->store_result()){
+					while($row = $res->fetch_row()){
+						$trades[] = $row;
+					}
+					$res->free();
+				}
+			} while($db->more_results() && $db->next_result());
+		} 
+	}
 	return $trades;
+}
+
+function getTradeHistoryRequests(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT t.tradedate, t.tradelocation, i.itemname AS 'requesteeitemuserrequestee', u.username AS 'requesteeusernameuserrequestee' FROM `requests` r, `trade` t, `users` u, `items` i WHERE r.id = t.requestid AND r.requestee = u.id AND r.item = i.itemid AND r.requestee = $userid AND r.decision = true ORDER BY t.tradedate DESC;";
+	$sql .= "SELECT t.tradedate, t.tradelocation, i.itemname AS 'requesteritemuserrequestee', u.username AS 'requesterusernameuserrequestee' FROM `requests` r, `trade` t, `users` u, `items` i WHERE r.id = t.requestid AND r.requester = u.id AND r.item2 = i.itemid AND r.requestee = $userid AND r.decision = true ORDER BY t.tradedate DESC;";
+	
+	$trades =[];
+	$db = getDBConnection();
+	/*if ($db != NULL){
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$trades[] = $row;
+		}//while
+		$db->close();
+	} */
+	if ($db != NULL){
+		if($db->multi_query($sql)){
+			do{
+				if($res = $db->store_result()){
+					while($row = $res->fetch_row()){
+						$trades[] = $row;
+					}
+					$res->free();
+				}
+			} while($db->more_results() && $db->next_result());
+		} 
+	}
+	return $trades;
+}
+
+
+
+function getIncomingRequestsHistory(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT * FROM `requests` r, `items` i, `users` u WHERE r.requester = u.id AND r.item2 = i.itemid AND r.requestee = $userid AND r.decision IS NOT NULL ORDER BY r.timerequested ASC;";
+	
+	$incomingRequests =[];
+	$db = getDBConnection();
+	if ($db != NULL){
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$incomingRequests[] = $row;
+		}//while
+		$db->close();
+	} 
+	
+	return $incomingRequests;
+}
+
+function getIncomingRequestsHistoryUser(){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT i.itemname FROM `requests` r, `items` i, `users` u WHERE r.requestee = u.id AND r.item = i.itemid AND r.requestee = $userid AND r.decision IS NOT NULL ORDER BY r.timerequested ASC;";
+	
+	$incomingRequests =[];
+	$db = getDBConnection();
+	if ($db != NULL){
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$incomingRequests[] = $row;
+		}//while
+		$db->close();
+	} 
+	
+	return $incomingRequests;
 }
 
 
@@ -1285,6 +1366,37 @@ function viewedDecision($requestId){
 		$db->close();
 	}
 	return $res;
+}
+
+function checkForViewed($requestId){
+	$db = getDBConnection();
+	$rec=null;
+	if ($db != NULL){
+		$sql = "SELECT r.viewed FROM `requests` r WHERE r.id = $requestId;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec= $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
+function setRequestToViewed($requestId){
+	$db = getDBConnection();
+	$isViewed = checkForViewed($requestId);
+	$res = null;
+	if($isViewed == '1'){
+		return $res;
+	}
+	else{
+		$sql = "UPDATE `requests` r SET `viewed` = true WHERE r.id = $requestId;";
+		if ($db != NULL){
+			$res = $db->query($sql);
+			$db->close();
+		}
+		return $res;
+	} 
 }
 
 function productViews($itemid){

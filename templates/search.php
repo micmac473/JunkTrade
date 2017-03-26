@@ -22,7 +22,7 @@ include "base.php";
 			 		$type=$_POST['search_param'];			 		
 
 			  //-query  the database table
-			  		$db=mysqli_connect("localhost","root","","peertrading")or die("cannot connect to server"); 
+			  		$db=mysqli_connect("localhost","root","","junktrader")or die("cannot connect to server"); 
 
 			  		$sql="SELECT  itemid, itemname, itemdescription, userid, picture, username, views FROM items, users WHERE $user <> `userid` AND itemname LIKE '%" . $name .  "%' && items.userid = users.id "; 
 			  //-run  the query against the mysql query function 

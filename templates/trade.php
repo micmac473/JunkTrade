@@ -27,12 +27,12 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
       <tr>
-        <th>To</th>
-        <th>For</th>
-        <th>With</th>
-        <th>Date Requested</th>
-        <th>Status</th>
-        <th>Action</th>
+        <th><i class="fa fa-user" aria-hidden="true" ></i> To</th>
+        <th><i class="fa fa-gift" aria-hidden="true" ></i> For</th>
+        <th><i class="fa fa-gift" aria-hidden="true" ></i> With</th>
+        <th><i class="fa fa-calendar" aria-hidden="true" ></i> Date Requested</th>
+        <th><i class="fa fa-question-circle" aria-hidden="true" ></i> Status</th>
+        <th><i class="fa fa-cog" aria-hidden="true" ></i> Action</th>
       </tr>
     </thead>
     <tbody>

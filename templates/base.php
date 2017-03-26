@@ -50,7 +50,8 @@ function getCurrentPage(){
 
     <!-- google font  -->
     <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
 
     <!-- Latest compiled and minified CSS Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -133,7 +134,7 @@ function getCurrentPage(){
       </div>
 
       <div id="navbar" class="navbar-collapse collapse">
-        <span class="navbar-brand" style="color: white;text-shadow: 1px 1px #096790;"><strong> <?php echo $currentPage ?></strong></span>
+        <span class="navbar-brand" style="color: white;font-family: 'Roboto Condensed', sans-serif;"><?php echo $currentPage ?></span>
         <!--  <ul class="nav navbar-nav">
 
          <li class="dropdown">
@@ -234,99 +235,94 @@ function getCurrentPage(){
             <ul class="sidebar-nav">
               <?php 
                 if($currentPage == "Homepage"){
-                  echo"<li style='background-color: #bdbdbd;'>";
+                  echo"<li style='background-color: #096790;'> <a href='homepage.php' style='color: white'><i class='fa fa-home fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;Home</a>";
                 }
                 else{
-                  echo "<li>";
+                  echo "<li><a href='homepage.php'><i class='fa fa-home fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;Home</a>";
                 }     
               ?>
-                <a href="homepage.php"><i class="fa fa-home fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Home</a>
+                
                 </li>
 
               <?php 
                 if($currentPage == "Profile"){
-                  echo"<li style='background-color: #bdbdbd;'>";
+                  echo"<li style='background-color: #096790;'> <a href='profile.php' style='color: white'><i class='fa fa-user fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile</a>";
                 } 
 
                 else{
-                  echo "<li>";
+                  echo "<li><a href='profile.php'><i class='fa fa-user fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile</a>";
                 }    
               ?>
-                    <a href="profile.php"><i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile</a>
+    
                 </li>
 
               <?php 
                 if($currentPage == "Notifications"){
-                  echo"<li style='background-color: #bdbdbd;'>";
+                  echo"<li style='background-color: #096790;'><a href='notifications.php' style='color: white'><i class='fa fa-bell fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;Notifications</a>";
                 } 
 
                 else{
-                  echo "<li>";
+                  echo "<li><a href='notifications.php'><i class='fa fa-bell fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;Notifications</a>";
                 }    
               ?>
-                    <a href="notifications.php"><i class="fa fa-bell fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Notifications</a>
                 </li>
 
 
               <?php 
                 if($currentPage == "Requests"){
-                  echo"<li style='background-color: #bdbdbd;'>";
+                  echo"<li style='background-color: #096790;'><a href='trade.php' style='color: white'><i class='fa fa-gavel fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;Requests</a>";
                 } 
 
                 else{
-                  echo "<li>";
+                  echo "<li><a href='trade.php'><i class='fa fa-gavel fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;Requests</a>";
                 }    
               ?>
-                    <a href="trade.php"><i class="fa fa-gavel fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Requests</a>
                 </li>
 
 
               <?php 
                 if($currentPage == "People"){
-                  echo"<li style='background-color: #bdbdbd;'>";
+                  echo"<li style='background-color: #096790;'><a href='people.php' style='color: white'><i class='fa fa-users fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;People</a>";
                 } 
 
                 else{
-                  echo "<li>";
+                  echo "<li><a href='people.php'><i class='fa fa-users fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;People</a>";
                 }    
               ?>
-                    <a href="people.php"><i class="fa fa-users fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;People</a>
+          
                 </li>
               <?php 
                 if($currentPage == "Saved"){
-                  echo"<li style='background-color: #bdbdbd;'>";
+                  echo"<li style='background-color: #096790;'><a href='saved.php' style='color: white'><i class='fa fa-bookmark fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saved</a>";
                 } 
 
                 else{
-                  echo "<li>";
+                  echo "<li><a href='saved.php'><i class='fa fa-bookmark fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saved</a>";
                 }    
               ?>
-                    <a href="saved.php"><i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saved</a>
                 </li>
 
 
               <?php 
                 if($currentPage == "Meetup"){
-                  echo"<li style='background-color: #bdbdbd;'>";
+                  echo"<li style='background-color: #096790;'><a href='meetup.php' style='color: white'><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meetup</a>";
                 } 
 
                 else{
-                  echo "<li>";
+                  echo "<li><a href='meetup.php'><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meetup</a>";
                 }    
               ?>
-                    <a href="meetup.php"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Meetup</a>
                 </li>
 
               <?php 
                 if($currentPage == "History"){
-                  echo"<li style='background-color: #bdbdbd;'>";
+                  echo"<li style='background-color: #096790;'><a href='history.php' style='color: white'><i class='fa fa-hourglass fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;History</a>";
                 } 
 
                 else{
-                  echo "<li>";
+                  echo "<li><a href='history.php'><i class='fa fa-hourglass fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;History</a>";
                 }    
               ?>
-                    <a href="history.php" ><i class="fa fa-hourglass fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;History</a>
                 </li>
                 <li>
                     <a href="" onclick="return logout();"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Logout</a>
@@ -353,7 +349,7 @@ function getCurrentPage(){
               ?>
             </div>
             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
-              <h1 style="color:#096790 ;text-shadow: 2px 2px white;font-family: 'Fira Sans', sans-serif;"> 
+              <h1 style="color:#096790 ;text-shadow: 2px 2px white;font-family: 'Oswald', sans-serif;"> 
                 <?php  
                   date_default_timezone_set("America/Grenada");
                   $hour = date("H");

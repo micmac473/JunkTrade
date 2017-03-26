@@ -20,11 +20,11 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
       <tr>
-        <th>From</th>
-        <th>With</th>
-        <th>For</th>
-        <th>Date</th>
-        <th>Decision</th>
+        <th><i class="fa fa-user" aria-hidden="true" ></i> From</th>
+        <th><i class="fa fa-gift" aria-hidden="true" ></i> With</th>
+        <th><i class="fa fa-gift" aria-hidden="true" ></i> For</th>
+        <th><i class="fa fa-calendar" aria-hidden="true" ></i> Date</th>
+        <th><i class="fa fa-gavel" aria-hidden="true" ></i> Decision</th>
       </tr>
     </thead>
     <tbody>

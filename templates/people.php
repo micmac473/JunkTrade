@@ -31,9 +31,9 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
     <tr>
-      <th>Trader</th>
-      <th>Date Followed</th>
-      <th>Action</th>
+      <th><i class="fa fa-user" aria-hidden="true" ></i> Trader</th>
+      <th><i class="fa fa-calendar" aria-hidden="true" ></i> Date Followed</th>
+      <th><i class="fa fa-cog" aria-hidden="true" ></i> Action</th>
     </tr>
     </thead>
     <tbody>
@@ -43,8 +43,8 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
     <tr>
-      <th>Follower</th>
-      <th>Date Followed</th>
+      <th><i class="fa fa-user" aria-hidden="true" ></i> Follower</th>
+      <th><i class="fa fa-calendar" aria-hidden="true" ></i> Date Followed</th>
     </tr>
     </thead>
     <tbody>

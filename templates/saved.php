@@ -21,10 +21,10 @@ include "base.php";
     <thead>
     <tr>
       <th></th>
-      <th>Item</th>
-      <th>Owner</th>
-      <th>Date Saved</th>
-      <th>Action</th>
+      <th><i class="fa fa-gift" aria-hidden="true" ></i> Item</th>
+      <th><i class="fa fa-user" aria-hidden="true" ></i> Owner</th>
+      <th><i class="fa fa-calendar" aria-hidden="true" ></i> Date Saved</th>
+      <th><i class="fa fa-cog" aria-hidden="true" ></i> Action</th>
     </tr>
     </thead>
     <tbody>

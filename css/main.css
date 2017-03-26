@@ -70,7 +70,7 @@ body {
   padding-top: 54px;
   min-height: 100%;
 
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 .demo {
@@ -105,9 +105,13 @@ body {
 }
 
 th {
-    background-color: grey;
+    background-color: #096790;
     color: white;
+    text-align: left;
 } 
+tbody{
+  background-color: white;
+}
 
 button:active{
     background:red;

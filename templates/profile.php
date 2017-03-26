@@ -378,7 +378,7 @@ include "base.php";
   </div>
   
   <div class="row">
-    <div class="table-responsive">
+    <div class="col-xs-12 table-responsive">
       <div class="header text-center">
         <h1> Your Junk <i class="fa fa-gift fa-lg" aria-hidden="true" ></i> </h1>
       </div>
@@ -392,13 +392,12 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
     <tr>
-      <th>Primary Image</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Edit</th>
-      <th>Remove</th>
-      <th>Uploaded</th>
-      <th>Status</th>
+      <th><i class="fa fa-picture-o" aria-hidden="true" ></i> Picture</th>
+      <th><i class="fa fa-gift" aria-hidden="true" ></i> Name</th>
+      <th><i class="fa fa-pencil" aria-hidden="true" ></i> Description</th>
+      <th><i class="fa fa-cog" aria-hidden="true" ></i> Action</th>
+      <th><i class="fa fa-calendar" aria-hidden="true" ></i> Uploaded</th>
+      <th><i class="fa fa-question-circle" aria-hidden="true" ></i> State</th>
     </tr>
     </thead>
     <tbody>
