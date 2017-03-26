@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2017 at 06:47 AM
+-- Generation Time: Mar 26, 2017 at 09:37 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `peertrading`
+-- Database: `junktrader`
 --
-CREATE DATABASE IF NOT EXISTS `peertrading` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `peertrading`;
+CREATE DATABASE IF NOT EXISTS `junktrader` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `junktrader`;
 
 -- --------------------------------------------------------
 
@@ -81,26 +81,26 @@ INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `pictur
 (2, 'Android Textbook', 'Author: Mark L. Murphy\r\nCategory: Books\r\nCondition: Used\r\n', '../img/android.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:52:43', 1, 1),
 (3, 'American Football', 'Category: Sports\r\nCondition: Used', '../img/football.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:54:13', 1, 3),
 (4, 'Webcam', 'Brand: Logitech\r\nCategory: Electronics\r\nColor: Black\r\nQuality: 1080p\r\nCondition: New', '../img/webcam.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:24:26', 1, 3),
-(5, 'Soccer Ball', 'Category: Sports\r\nCondition: Used\r\nColor: Black and White', '../img/soccerball.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:58:12', 2, 2),
+(5, 'Soccer Ball', 'Category: Sports\r\nCondition: Used\r\nColor: Black and White', '../img/soccerball.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:58:12', 2, 3),
 (6, 'iPhone Charger', 'Brand: Apple\r\nCategory: Electronics\r\nCondition: Used', '../img/iphonecharger.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:59:24', 2, 1),
-(7, 'Data Structures Book', 'Author: Dr. Noel Kalicharan\r\nCategory: Books\r\nCondition: Used', '../img/datastructuresinc.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:00:09', 2, 0),
+(7, 'Data Structures Book', 'Author: Dr. Noel Kalicharan\r\nCategory: Books\r\nCondition: Used', '../img/datastructuresinc.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:00:09', 2, 1),
 (8, 'COMP 3000 Book', 'Title: Design and Analysis of Algorithms\r\nAuthor: Anany Levitin\r\nCategory: Books\r\nCondition: Used', '../img/comp3000.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:03:11', 3, 3),
-(9, 'Computer Architecture Book ', 'Title: Computer Organization and Architecture \r\nAuthor: William Stallings\r\nCondition: Used', '../img/computerarchitecture.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:06:25', 3, 0),
+(9, 'Computer Architecture Book ', 'Title: Computer Organization and Architecture \r\nAuthor: William Stallings\r\nCondition: Used', '../img/computerarchitecture.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:06:25', 3, 1),
 (10, 'Professional Ethics and Law Notes', 'Category: Other\r\nCourse: INFO 3425\r\nSemester: Two 2016/2017', '../img/notes.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:08:20', 3, 1),
 (11, 'Object Oriented Programming Book', 'Title: An Introduction to Object Oriented Programming with Java\r\nAuthor: C. Thomas Wu\r\nCategory: Books\r\nCondition: New\r\n', '../img/oop.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:10:38', 4, 0),
 (12, 'Macbook Air', 'Brand: Apple\r\nCategory: Electronics\r\nMemory: 12 GB\r\nStorage: 128GB SSD\r\nProcessor: Intel Core i7, with Turbo Boost up to 3.6 GHz', '../img/macbookair.jpe', '../img/macbookair2.jpe', '../img/macbookair3.jpg', '2017-03-19 06:13:08', 4, 5),
 (13, 'Safety Helmet', 'Category: Safety\r\nColor: Yellow\r\nCondition: Large', '../img/safetyhelmet.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:14:37', 4, 4),
-(14, 'Lab Coat', 'Category: Safety\r\nColor: White\r\nCondition: New', '../img/labcoat.JPG', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:15:39', 4, 3),
+(14, 'Lab Coat', 'Category: Safety\r\nColor: White\r\nCondition: New', '../img/labcoat.JPG', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:15:39', 4, 4),
 (15, 'Networking Textbook', 'Title: Computer Networking, A Top-Down Approach\r\nAuthor: Kurose & Ross\r\nCondition: Used\r\n', '../img/networking.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:17:58', 5, 0),
 (16, 'Safety Glasses', 'Category: Safety\r\nSize: fits all\r\nCondition: New', '../img/saveglasses.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:19:45', 5, 0),
 (17, 'Pixel', 'Brand: Google\r\nColor: White\r\nCondition: Used\r\nMemory: 4GB\r\nCapacity: 64GB\r\nScreen size: 5.0 inches', '../img/googlepixel.png', '../img/googlepixel2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:21:12', 5, 5),
 (18, 'Wireless Mouse', 'Brand: Logitech\r\nColor: Black\r\nCondition: Used\r\nCategory: Electronics', '../img/mouse.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:22:42', 5, 1),
 (19, 'HP Envy Laptop', 'Brand: Hewlett Packard\r\nColor: Silver\r\nCategory: Electronics\r\nCondition: Used\r\nMemory: 12GB\r\nStorage: 1TB\r\nProcess: Intel i7 5th Generation 3.7Ghz', '../img/hpenvy.jpg', '../img/hpenvy2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:56:17', 1, 6),
 (20, 'Copy Paper', 'Category: Stationery\r\nCondition: New\r\nBrand: Xerox\r\n', '../img/copypaper.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:26:23', 3, 0),
-(21, 'S7 Edge', 'Brand: Samsung\r\nCategory: Electronics\r\nColor: Gold\r\nCondition: Used\r\nMemory: 4GB\r\nStorage: 128GB', '../img/samsung3.jpg', '../img/samsung2.jpg', '../img/samsung.jpg', '2017-03-19 06:28:03', 2, 11),
-(22, 'Power Bank', 'Brand: EliveBuy\r\nCondition: Used\r\nColor: White\r\n10,400mAh', '../img/powerbank.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:30:38', 4, 3),
+(21, 'S7 Edge', 'Brand: Samsung\r\nCategory: Electronics\r\nColor: Gold\r\nCondition: Used\r\nMemory: 4GB\r\nStorage: 128GB', '../img/samsung3.jpg', '../img/samsung2.jpg', '../img/samsung.jpg', '2017-03-19 06:28:03', 2, 12),
+(22, 'Power Bank', 'Brand: EliveBuy\r\nCondition: Used\r\nColor: White\r\n10,400mAh', '../img/powerbank.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:30:38', 4, 5),
 (23, 'Safety Boots', 'Category: Safety\r\nCondition: Used\r\nSize: 11\r\nBrand: Amblers Safety', '../img/safetyboots.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:31:46', 2, 7),
-(24, 'Headphones', 'Brand: Beats\r\nColor: Red\r\nCategory: Electronics\r\nCondition: Used', '../img/headphones.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:33:11', 3, 12);
+(24, 'Headphones', 'Brand: Beats\r\nColor: Red\r\nCategory: Electronics\r\nCondition: Used', '../img/headphones.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:33:11', 3, 14);
 
 -- --------------------------------------------------------
 
