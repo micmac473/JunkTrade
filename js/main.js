@@ -1324,7 +1324,7 @@ function cancelMadeRequest(requestId){
                     window.location.reload();
                 }
                 else if(window.location.href.indexOf("/trade.php") > -1 ){
-                    getUserRequests();
+                    getTrade();
                 }
                 else{
                     getAllItems();
