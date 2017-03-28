@@ -518,7 +518,7 @@ function listUserItems(records){
                 htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>";
                 htmlStr += "<button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
                 htmlStr += "<td>" + date + "</td>";
-                htmlStr += "<td> Available </td>";
+                htmlStr += "<td><strong> Available </strong></td>";
                 htmlStr +=" </tr>" ;
             }
         });
@@ -1320,8 +1320,11 @@ function cancelMadeRequest(requestId){
                     timer: 2000,
                     showConfirmButton: false
                     });
-                if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/trade.php") > -1 || window.location.href.indexOf("/search.php") > -1){
+                if(window.location.href.indexOf("/item.php?") > -1 || window.location.href.indexOf("/trader.php") > -1 || window.location.href.indexOf("/search.php") > -1){
                     window.location.reload();
+                }
+                else if(window.location.href.indexOf("/trade.php") > -1 ){
+                    getUserRequests();
                 }
                 else{
                     getAllItems();
