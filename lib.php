@@ -7,10 +7,10 @@ function getDBConnection(){
 		//$db = new mysqli("198.199.66.99","junktrader","j!p@aChU7Ust","junktrader");
 
 		//Use when on Server
-		//$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
+		$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
 
 		//Use when on local machine
-		$db = new mysqli("localhost","root","","junktrader");
+		//$db = new mysqli("localhost","root","","junktrader");
 		if ($db == null && $db->connect_errno > 0)
 			return null;
 		return $db;
