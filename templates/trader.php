@@ -40,7 +40,7 @@ if(isset($_GET['trader'])){
       </div>
       <div class="col-lg-10">
         <?php
-          echo "<h1>" . $userDetails[0]['firstname'] ." ". $userDetails[0]['lastname'] ." <small>(" . $userDetails[0]['username']. ")</small></h1>"  ;
+          echo "<h1>" . $userDetails[0]['firstname'] ." ". $userDetails[0]['lastname'] ." <small>(" . $userDetails[0]['username']. ")</small> <button type='button' class='btn btn-default' onClick=\"chat(". $userID .")\" data-toggle='tooltip' title='Click to chat' data-placement='bottom'><i class='fa fa-comments' aria-hidden='true'></i></button></h1>"  ;
         ?>
       
         <?php
