@@ -530,7 +530,7 @@ function getCurrentPage(){
   </div>
 
   <!-- Chat Modal -->
-  <div class="modal fade" id="chatmodal" role="dialog">
+  <div class="modal fade" id="chatmodal" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content" >
         <div class="modal-body" >
@@ -538,7 +538,8 @@ function getCurrentPage(){
             <fieldset>
 
               <div class="modal-header" style="background-color:#096790; color: white">
-                <h2 class="modal-title" style="text-align: center" ><i class="fa fa-user fa-lg" aria-hidden="true"></i> <span id="tradername"></span> <i class="fa fa-comment-o fa-lg" aria-hidden="true"></i></h2>
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close" aria-hidden="true"></i></button>
+                <h2 class="modal-title" style="text-align: center" ><i class="fa fa-comment" aria-hidden="true"></i> <span id="tradername"></span> <i class="fa fa-toggle-on" aria-hidden="true"></i> </h2>
              </div>
 
               <input id="traderusername" name="traderusername" type="hidden" disabled class="form-control input-md">
@@ -591,6 +592,9 @@ function getCurrentPage(){
 
   $('#chatmodal').on('shown.bs.modal', function() {
   $('#message').focus();
+
+  var element = document.getElementById("divmessages");
+            element.scrollTop = element.scrollHeight;
 })
 </script>
 

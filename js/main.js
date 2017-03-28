@@ -1687,8 +1687,8 @@ function processRequestsMeetUp(records, records2){
         htmlStr += "<td>"+el['requestercontact']+"</td>";
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td>"+records[i]['itemname']+"</td>";
-        htmlStr += "<td>" + date + "</td>";
-        htmlStr += "<td>" + el['tradelocation'] + "</td>";
+        htmlStr += "<td>" + date + " <button type='button' class='btn btn-default btn-xs' onclick=\"editTradeDate("+el.tradeid+")\"> <i class='fa fa-pencil' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td>" + el['tradelocation'] + " <button type='button' class='btn btn-default btn-xs' onclick=\"editTradeLocation("+el.tradeid+")\"> <i class='fa fa-pencil' aria-hidden='true'></i></button></td>";
         
         var now = moment().format();
         //alert(now);
@@ -1708,6 +1708,28 @@ function processRequestsMeetUp(records, records2){
     $(sec_id).html(htmlStr); 
 }
 
+function editTradeDate(tradeId){
+    swal({
+            title: "Edit Trade Date button works!",
+            text: "Good stuff",
+            type: "success",
+            timer: 1000,
+            showConfirmButton: false
+        });
+    return false;
+}
+
+
+function editTradeLocation(tradeId){
+    swal({
+            title: "Edit Trade Location button works!",
+            text: "Irie",
+            type: "success",
+            timer: 1000,
+            showConfirmButton: false
+        });
+    return false;
+}
 //------------------------------------------------------------------------------//
 // Decides on the location given by the requestee
 function locationDecision(tradeid){
@@ -1882,7 +1904,7 @@ function logout(){
     return false;
 }
 //------------------------------------------------------------------------------------------------------
-
+var currChat = [];
 function chat(traderid){
     var chatId;
     $.get("../index.php/user",function(userid){
@@ -1898,12 +1920,14 @@ function chat(traderid){
             $("#chatform #tradername").text(trader.firstname + " " + trader.lastname);
 
             getMessages(traderid, userid, username);
-            var currChat = []
+            
             setInterval(function(){
+                
                 $.get("../index.php/getmessages/"+traderid, function(messages){
                     
                     var chat="", divchat="<div class='container-fluid'>";
-                    if(JSON.stringify(messages) !== JSON.stringify(currChat)){
+                    if(JSON.stringify(messages) !== JSON.stringify(currChat) && $('#chatmodal').hasClass('in')){
+                        console.log("Fired off");
                         currChat = messages;
                         messages.forEach(function(el){
                             //console.log(el);
@@ -1931,15 +1955,14 @@ function chat(traderid){
                         //$("#chatnotificationrequested").html("New");
                         //$("#chatnotificationrequests").html("New");
                         var element = document.getElementById("divmessages");
-                        element.scrollTop = element.scrollHeight;
-
+                        element.scrollTop = element.scrollHeight;  
                     }
                 },"json");
+            
             },2500);
-
+    
             $("#chatmodal").modal('show');
-            var element = document.getElementById("divmessages");
-            element.scrollTop = element.scrollHeight;
+            
         },"json");
         
     });
@@ -1978,6 +2001,7 @@ function sendMessage(){
 function getMessages(traderId, userid, username){
     var chatId;
     $.get("../index.php/getmessages/"+traderId, function(messages){
+        currChat = messages;
         //$('[data-toggle="tooltip"]').tooltip(); 
         console.log(messages);
         var currMessages = $("#chatform #messages").val();
@@ -2007,7 +2031,7 @@ function getMessages(traderId, userid, username){
             //$("#chatform #messages").html(chat);
             $("#chatform #divmessages").html(divchat);
             var element = document.getElementById("divmessages");
-                        element.scrollTop = element.scrollHeight;
+            element.scrollTop = element.scrollHeight;
         }
     }, "json");
 }
