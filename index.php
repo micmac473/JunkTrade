@@ -449,6 +449,13 @@ $app->get("/newmessagesnotification", function(Request $request, Response $respo
 	$response = $response->withJson($messages);
 	return $response;
 });
+$app->get("/userstatus/{id}", function(Request $request, Response $response){
+	$traderId = $request->getAttribute('id');
+	$status = getUserStatus($traderId);
+	
+	$response = $response->withJson($status);
+	return $response;
+});
 
 $app->get("/getmessages/{id}", function(Request $request, Response $response){
 	$traderId = $request->getAttribute('id');

@@ -595,6 +595,6 @@ function getCurrentPage(){
     var element = document.getElementById("divmessages");
     element.scrollTop = element.scrollHeight;
   })
-  
+
 </script>
 

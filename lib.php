@@ -62,6 +62,22 @@ function logout($userId){
 	//return $res;
 }
 
+
+function getUserStatus($traderId){
+	$userid = $_SESSION['id'];
+	$sql = "SELECT u.status FROM `users` u WHERE u.id = $traderId;";
+	$rec =[];
+	$db = getDBConnection();
+	if ($db != null){
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
 function checkLogin1($email, $securityQuestion, $sAnswer){
 	$sAnswer = sha1($sAnswer);
 	$sql = "SELECT * FROM `users` where `email`='$email' OR `username`='$email' AND `sQuestion` = '$securityQuestion' ";

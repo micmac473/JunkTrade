@@ -2008,6 +2008,7 @@ function logout(){
 //------------------------------------------------------------------------------------------------------
 var currChat = [];
 function chat(traderid){
+    console.log(traderid);
     var chatId;
     $.get("../index.php/user",function(userid){
         //console.log(userid);
@@ -2021,63 +2022,19 @@ function chat(traderid){
             $("#chatform #traderusername").val(trader.username);
             $("#chatform #tradername").text(trader.firstname + " " + trader.lastname);
 
-            if(trader.status == '1')
-                $("#chatform #traderstatus").text("- online");
-            else
-                $("#chatform #traderstatus").text("- offline");
-
-            getMessages(traderid, userid, username);
-            
+            getMessages(traderid, userid, username);        
             setInterval(function(){
+                //console.log(traderid);
+                getNewMessages(traderid, userid, username);
+            },2000);
                 
-                $.get("../index.php/getmessages/"+traderid, function(messages){
-                    
-                    var chat="", divchat="<div class='container-fluid'>";
-                    if(JSON.stringify(messages) !== JSON.stringify(currChat) && $('#chatmodal').hasClass('in')){
-                        console.log("Fired off");
-                        currChat = messages;
-                        messages.forEach(function(el){
-                            //console.log(el);
-                            chatId = {
-                                "chatid" : el['chatid']
-                            };
-                            //console.log(chatId);
-                            var messageDate = moment(el['senton']).format('MMMM Do YYYY, h:mm:ss a');
-
-                            $.post("../index.php/readmessage", chatId);
-                            var sentDate =  moment(el.senton).startOf('seconds').fromNow();
-                            var isRead;
-                            if(el.readindicator == '1')
-                                isRead = "<i class='fa fa-check-circle' aria-hidden='true'></i>";
-                            else
-                                isRead = "<i class='fa fa-check-circle-o' aria-hidden='true'></i>";
-
-                            if(el.sentfrom == userid){
-                                divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+" "+isRead+"<br/><small><small>"+sentDate+"</small></small></div></div>";
-                            }
-                            else{  
-                                divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+" "+isRead+"<br/> <small><small>"+sentDate+"</small></small></div></div>";  
-                            }      
-                            
-                        });
-                        divchat+="</div>";
-                        //$("#chatform #messages").html(chat);
-                        $("#chatform #divmessages").html(divchat);
-                        //$("#chatnotificationrequested").html("New");
-                        //$("#chatnotificationrequests").html("New");
-                        var element = document.getElementById("divmessages");
-                        element.scrollTop = element.scrollHeight;  
-                    }
-                },"json");
-            
-            },2500);
-    
             $("#chatmodal").modal('show');
             
         },"json");
         
     });
 }
+
 
 function sendMessage(){ 
     var sentFrom = $("#chatform #userid").val();
@@ -2093,13 +2050,11 @@ function sendMessage(){
     };
 
     $("#chatform #message").val("");
-    console.log(chat);
+    //console.log(chat);
     
     $.post("../index.php/sendmessage", chat, function(res){
         if(res){
-            //swal("Message Sent!", "User will be receive your message", "success");
             getMessages(sentTo, sentFrom, traderName);
-            // Call function to get new messages after sending one
         }
         else{
             swal("Message Failed", "Message not sent", "error");
@@ -2109,26 +2064,72 @@ function sendMessage(){
 }
 
 
-function getMessages(traderId, userid, username){
-    var chatId;
-    $.get("../index.php/getmessages/"+traderId, function(messages){
+function getMessages(traderid, userid, username){
+    $.get("../index.php/getmessages/"+traderid, function(messages){
         currChat = messages;
-        //$('[data-toggle="tooltip"]').tooltip(); 
-        console.log(messages);
         var currMessages = $("#chatform #messages").val();
-        //console.log(currMessages);
-        var chat="", divchat="<div class='container-fluid'>";
-        if(JSON.stringify(messages) !== JSON.stringify(currMessages)){
-            messages.forEach(function(el){
-                var messageDate = moment(el['senton']).format('MMMM Do YYYY, h:mm:ss a');
-                chatId = {
-                    "chatid" : el.chatid
-                };
+        console.log("getMessages  called");
+        var chat="", divchat="<div class='container-fluid'>",chatId, isRead, sentDate;
 
-                $.post("../index.php/readmessage", chatId, function(res){
-                    //console.log(res);
-                    
-                },"json"); 
+        $.get("../index.php/userstatus/"+traderid, function(res){
+            if(res.status == "1")
+                $("#chatform #traderstatus").text("- online");
+            else
+                $("#chatform #traderstatus").text("- offline");
+        },"json");
+
+        messages.forEach(function(el){
+            var messageDate = moment(el['senton']).format('MMMM Do YYYY, h:mm:ss a');
+            chatId = {
+                "chatid" : el.chatid
+            };
+
+            $.post("../index.php/readmessage", chatId); 
+            sentDate =  moment(el.senton).startOf('seconds').fromNow();
+            if(el.readindicator == '1')
+                isRead = "<i class='fa fa-check-circle' aria-hidden='true'></i>";
+            else
+                isRead = "<i class='fa fa-check-circle-o' aria-hidden='true'></i>";
+
+            if(el.sentfrom == userid){
+                divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+" "+isRead+"<br/><small><small>"+sentDate+"</small></small></div></div>";
+            }
+            else{  
+                divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+" "+isRead+"<br/> <small><small>"+sentDate+"</small></small></div></div>";  
+            }      
+        });
+
+        divchat+="</div>";
+        //$("#chatform #messages").html(chat);
+        $("#chatform #divmessages").html(divchat);
+        var element = document.getElementById("divmessages");
+        element.scrollTop = element.scrollHeight;
+    }, "json");
+}
+
+function getNewMessages(traderid, userid, username){
+    //console.log(username);
+    $.get("../index.php/getmessages/"+traderid, function(messages){   
+        $.get("../index.php/userstatus/"+traderid, function(res){
+            if(res.status == "1")
+                $("#chatform #traderstatus").text("- online");
+            else
+                $("#chatform #traderstatus").text("- offline");
+        },"json");  
+
+        var chat="",chatId, divchat="<div class='container-fluid'>";
+        if(JSON.stringify(messages) !== JSON.stringify(currChat) && $('#chatmodal').hasClass('in')){
+            console.log("New Message/s");
+            currChat = messages;
+
+            messages.forEach(function(el){
+                chatId = {
+                    "chatid" : el['chatid']
+                };
+                var messageDate = moment(el['senton']).format('MMMM Do YYYY, h:mm:ss a');
+
+
+                $.post("../index.php/readmessage", chatId);
                 var sentDate =  moment(el.senton).startOf('seconds').fromNow();
                 var isRead;
                 if(el.readindicator == '1')
@@ -2137,22 +2138,20 @@ function getMessages(traderId, userid, username){
                     isRead = "<i class='fa fa-check-circle-o' aria-hidden='true'></i>";
 
                 if(el.sentfrom == userid){
-                        divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+" "+isRead+"<br/><small><small>"+sentDate+"</small></small></div></div>";
-                    }
-                    else{  
-                        divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+" "+isRead+"<br/> <small><small>"+sentDate+"</small></small></div></div>";  
-                    }      
+                    divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+" "+isRead+"<br/><small><small>"+sentDate+"</small></small></div></div>";
+                }
+                else{  
+                    divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+" "+isRead+"<br/> <small><small>"+sentDate+"</small></small></div></div>";  
+                }      
+                                
             });
-
             divchat+="</div>";
-            //$("#chatform #messages").html(chat);
             $("#chatform #divmessages").html(divchat);
             var element = document.getElementById("divmessages");
-            element.scrollTop = element.scrollHeight;
+            element.scrollTop = element.scrollHeight;  
         }
-    }, "json");
+    },"json");
 }
-
 
 
 

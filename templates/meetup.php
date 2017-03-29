@@ -256,20 +256,43 @@ window.onload = function() {
   getRequestsMeetUp();
 
 };
+var currRequestedMeetUpRequestee = <?php echo json_encode(getRequestedMeetupRequestee())?>;
+var currRequestedMeetUpRequester = <?php echo json_encode(getRequestedMeetupRequester())?>; 
+var currRequestsMeetUpRequestee = <?php echo json_encode(getRequestsMeetupRequestee())?>;
+var currRequestsMeetUpRequester = <?php echo json_encode(getRequestsMeetupRequester())?>;
 
-/*setInterval(function(){
-    queryChat();
+setInterval(function(){
+    queryRequestedMeetUp();
+    queryRequestsMeetUp();
 },2500);
 
-var currNewMessages = <?php echo json_encode(getNewMessages())?> 
-function queryChat(){
-  $.get("../index.php/newmessages", function(messages){
-    if(JSON.stringify(messages) !== JSON.stringify(currNewMessages)){
-      toastr["success"]("New Message");
-      currNewMessages = messages;
-    }
+
+function queryRequestedMeetUp(){
+  $.get("../index.php/requestedmeetuprequestee", function(res1){
+    $.get("../index.php/requestedmeetuprequester",function(res2){
+      if(JSON.stringify(res1) !== JSON.stringify(currRequestedMeetUpRequestee) || JSON.stringify(res2) !== JSON.stringify(currRequestedMeetUpRequester) ){
+      //toastr["success"]("New Message");
+        currRequestedMeetUpRequestee = res1;
+        currRequestedMeetUpRequester = res2;
+        processRequestedMeetUp(res1, res2);
+      }
+    },"json");
   },"json");
-} */
+} 
+
+function queryRequestsMeetUp(){
+  $.get("../index.php/requestsmeetuprequestee", function(res1){
+    $.get("../index.php/requestsmeetuprequester",function(res2){
+      if(JSON.stringify(res1) !== JSON.stringify(currRequestsMeetUpRequestee) || JSON.stringify(res2) !== JSON.stringify(currRequestsMeetUpRequester) ){
+      //toastr["success"]("New Message");
+        currRequestsMeetUpRequestee = res1;
+        currRequestsMeetUpRequester = res2;
+        processRequestsMeetUp(res1, res2);
+      }
+    },"json");
+  },"json");
+} 
+
 $(document).ready(function(){
       var date_input=$('input[name="newtradedate"]'); //our date input has the name "date"
       var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
