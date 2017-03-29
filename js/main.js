@@ -2020,10 +2020,11 @@ function chat(traderid){
             username = trader.username;
             $("#chatform #traderusername").val(trader.username);
             $("#chatform #tradername").text(trader.firstname + " " + trader.lastname);
+
             if(trader.status == '1')
-                $("#chatform #traderstatus").text("Online");
+                $("#chatform #traderstatus").text("- online");
             else
-                $("#chatform #traderstatus").text("Offline");
+                $("#chatform #traderstatus").text("- offline");
 
             getMessages(traderid, userid, username);
             
@@ -2042,17 +2043,21 @@ function chat(traderid){
                             };
                             //console.log(chatId);
                             var messageDate = moment(el['senton']).format('MMMM Do YYYY, h:mm:ss a');
-                            $.post("../index.php/readmessage", chatId, function(res){
-                                
-                            },"json");
+
+                            $.post("../index.php/readmessage", chatId);
+                            var sentDate =  moment(el.senton).startOf('seconds').fromNow();
+                            var isRead;
+                            if(el.readindicator == '1')
+                                isRead = "<i class='fa fa-check-circle' aria-hidden='true'></i>";
+                            else
+                                isRead = "<i class='fa fa-check-circle-o' aria-hidden='true'></i>";
+
                             if(el.sentfrom == userid){
-                                //chat += "Me: " + el.message + "\n";
-                                divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+"<br/><small> read "+el.readindicator+"</small></div></div>";
-                                }
-                                else{
-                                    //chat += username + ": " + el.message + "\n";
-                                    divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+"<br/> <small>read: "+el.readindicator+"</small></div></div>";
-                                }
+                                divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+" "+isRead+"<br/><small><small>"+sentDate+"</small></small></div></div>";
+                            }
+                            else{  
+                                divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+" "+isRead+"<br/> <small><small>"+sentDate+"</small></small></div></div>";  
+                            }      
                             
                         });
                         divchat+="</div>";
@@ -2123,13 +2128,19 @@ function getMessages(traderId, userid, username){
                 $.post("../index.php/readmessage", chatId, function(res){
                     //console.log(res);
                     
-                },"json");  
+                },"json"); 
+                var sentDate =  moment(el.senton).startOf('seconds').fromNow();
+                var isRead;
+                if(el.readindicator == '1')
+                    isRead = "<i class='fa fa-check-circle' aria-hidden='true'></i>";
+                else
+                    isRead = "<i class='fa fa-check-circle-o' aria-hidden='true'></i>";
 
                 if(el.sentfrom == userid){
-                        divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+"<br/><small> read "+el.readindicator+"</small></div></div>";
+                        divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+" "+isRead+"<br/><small><small>"+sentDate+"</small></small></div></div>";
                     }
                     else{  
-                        divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+"<br/> <small>read: "+el.readindicator+"</small></div></div>";  
+                        divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+" "+isRead+"<br/> <small><small>"+sentDate+"</small></small></div></div>";  
                     }      
             });
 
