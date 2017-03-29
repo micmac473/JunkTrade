@@ -7,10 +7,10 @@ function getDBConnection(){
 		//$db = new mysqli("198.199.66.99","junktrader","j!p@aChU7Ust","junktrader");
 
 		//Use when on Server
-		$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
+		//$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
 
 		//Use when on local machine
-		//$db = new mysqli("localhost","root","","junktrader");
+		$db = new mysqli("localhost","root","","junktrader");
 		if ($db == null && $db->connect_errno > 0)
 			return null;
 		return $db;
@@ -31,12 +31,35 @@ function checkLogin($email, $password){
 			if($row['password'] == $password){
 				$_SESSION["user"] = $row['firstname'];
 				$_SESSION["id"] = $row['id'];
+				login($row['id']);
 				return $row['firstname'];
 			}
 				
 		}
 	}
 	return false;
+}
+
+function login($userId){
+	$db = getDBConnection();
+	$sql = "UPDATE `users` u SET `status` = true WHERE u.id = $userId;";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	//return $res;
+}
+
+function logout($userId){
+	$db = getDBConnection();
+	$sql = "UPDATE `users` u SET `status` = false WHERE u.id = $userId;";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	//return $res;
 }
 
 function checkLogin1($email, $securityQuestion, $sAnswer){
@@ -128,7 +151,7 @@ function getNewMessages(){
 
 function getNewMessagesNotification(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT COUNT(*) As messages, u.username, c.sentfrom FROM `chat` c, `users` u WHERE c.sentfrom = u.id AND c.sentto = $userid AND c.readindicator = false GROUP BY u.username;";
+	$sql = "SELECT COUNT(*) As messages, u.username, c.sentfrom FROM `chat` c, `users` u WHERE c.sentfrom = u.id AND c.sentto = $userid AND c.readindicator = 0 GROUP BY u.username;";
 	$messages =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -143,7 +166,7 @@ function getNewMessagesNotification(){
 
 function checkReadMessage($chatId){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT message FROM `chat` c WHERE c.chatid = $chatId AND c.sentto = $userid AND c.readindicator = false;";
+	$sql = "SELECT message FROM `chat` c WHERE c.chatid = $chatId AND c.sentto = $userid AND c.readindicator = 0;";
 	$rec =[];
 	$db = getDBConnection();
 	if ($db != null){
@@ -871,7 +894,7 @@ function getProfileItems($userID){
 
 function getAllUserTrade(){//should be session id here instead of useId
 	$userID = $_SESSION["id"];
-	$sql ="SELECT r.requestee, u.username, i.itemid, i.itemname, r.timerequested, r.decision, r.id FROM `requests` r, `items` i, `users` u where r.item = i.itemid AND r.requestee = u.id AND  r.requester = $userID ORDER BY r.timerequested DESC;";
+	$sql ="SELECT r.requestee, u.username, i.itemid, i.itemname, r.timerequested, r.decision, r.id, r.denyreason FROM `requests` r, `items` i, `users` u where r.item = i.itemid AND r.requestee = u.id AND  r.requester = $userID ORDER BY r.timerequested DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -1096,7 +1119,7 @@ function getUsername($val){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != null){
-		$sql = "SELECT `username`,`firstname`,`lastname` FROM `users` WHERE id = $val;";
+		$sql = "SELECT `username`,`firstname`,`lastname`, `status` FROM `users` WHERE id = $val;";
 		$res = $db->query($sql);
 		if ($res){
 			$rec = $res->fetch_assoc();
@@ -1407,9 +1430,31 @@ function acceptRequest($requestId, $requesteeItem, $requesterItem){
 	return $res;
 }
 
-function denyRequest($requestId){
+function denyRequest($requestId, $denyReason){
 	$db = getDBConnection();
-	$sql = "UPDATE `requests` r SET `decision` = false WHERE r.id = $requestId;";
+	$sql = "UPDATE `requests` r SET `decision` = false, `denyreason` = '$denyReason' WHERE r.id = $requestId;";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	return $res;
+}
+
+function changeTradeDate($tradeId, $newTradeDate){
+	$db = getDBConnection();
+	$sql = "UPDATE `trade` t SET `tradedate` = '$newTradeDate' WHERE t.tradeid = $tradeId;";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	return $res;
+}
+
+function changeTradeLocation($tradeId, $newTradeLocation){
+	$db = getDBConnection();
+	$sql = "UPDATE `trade` t SET `tradelocation` = '$newTradeLocation' WHERE t.tradeid = $tradeId;";
 	$res = null;
 	if ($db != NULL){
 		$res = $db->query($sql);

@@ -53,6 +53,7 @@ include "base.php";
         <th><i class="fa fa-gift" aria-hidden="true" ></i> With</th>
         <th><i class="fa fa-gift" aria-hidden="true" ></i> For</th>
         <th><i class="fa fa-gavel" aria-hidden="true" ></i> Your Decision</th>
+        <th><i class="fa fa-comment" aria-hidden="true" ></i> Denied Reason</th>
       </tr>
     </thead>
     <tbody>

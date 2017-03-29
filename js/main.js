@@ -685,7 +685,7 @@ function listUserTrade(records, res){
             htmlStr += "<td><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
             htmlStr += "<td>" + date + "</td>";
             htmlStr += "<td> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
-            //htmlStr += "<td> <i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'>Loading...</span></td>";
+            htmlStr += "<td></td>";
             htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
         }
         else if(el['decision'] == true){
@@ -693,7 +693,7 @@ function listUserTrade(records, res){
             htmlStr += "<td><a disabled class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
             htmlStr += "<td>" + date + "</td>";
             htmlStr += "<td> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
-            //htmlStr += "<td><i class='fa fa-check fa-2x' aria-hidden='true'></i></td>";
+            htmlStr += "<td></td>";
             htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.id+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
         }
         else{
@@ -701,6 +701,7 @@ function listUserTrade(records, res){
             htmlStr += "<td><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
             htmlStr += "<td>" + date + "</td>";
             htmlStr += "<td> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
+            htmlStr += "<td><em>" + el.denyreason + "</em></td>";
             htmlStr += "<td> </td>";
         }
 
@@ -811,6 +812,7 @@ function displayIncomingRequestsHistory(records, records2){
             htmlStr += "<td>Accepted</td>"; 
         else
             htmlStr += "<td>Denied</td>"; 
+        htmlStr += "<td>"+el.denyreason+"</td>";
         htmlStr += "</tr>"; 
         i++;
     })
@@ -1542,7 +1544,7 @@ function arrangement(){
     var tradeLocation = $("#meetupform #tradelocation").val();
     var requesteeContact = $("#meetupform #requesteecontact").val();
     var requesterContact = $("#meetupform #requestercontact").val();
-    tradeDate = moment(tradeDate).format('YYYY-M-DD 23:59:59');
+    tradeDate = moment(tradeDate).format('YYYY-MM-DD 23:59:59');
     //alert(tradeDate);
     var trade = {
         "requestid" : requestId,
@@ -1562,7 +1564,48 @@ function arrangement(){
 
 //--------------------------------------------------------------------------------------------------------------------
 function denyRequest(requestId){
+    var denyReason="";
     swal({
+        title: "Deny Request?",
+        text: "Tell Trader Why",
+        type: "input",
+        confirmButtonColor: "#DD6B55",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: "slide-from-top",
+        inputPlaceholder: "Leave a reason",
+        confirmButtonText: "Deny"
+        },
+
+        function(inputValue){
+            denyReason = inputValue;
+            if (inputValue === false){
+                return false;
+            }
+      
+            if (inputValue === "") {
+                swal.showInputError("Kindly leave a reason for denying request");
+                return false
+            }
+            var deniedRequest = {
+                "requestid": requestId,
+                "denyreason" : denyReason
+            };
+            console.log(deniedRequest);
+            $.post("../index.php/denyrequest", deniedRequest, function(res){
+                console.log(res);
+                swal({
+                    title: "Request Denied!",
+                    text: "Decision and Reason sent to Trader",
+                    type: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }, "json");
+            //swal("Nice!", "You wrote: " + denyReason, "success");
+        }
+    );
+    /*swal({
         title: "Deny Request?",
         //text: "You will not be able to undo this operation!",
         type: "warning",
@@ -1598,7 +1641,7 @@ function denyRequest(requestId){
                 showConfirmButton: false
             });
         }
-    });
+    }); */
 }
 
 
@@ -1709,22 +1752,76 @@ function processRequestsMeetUp(records, records2){
 }
 
 function editTradeDate(tradeId){
-    swal({
-            title: "Edit Trade Date button works!",
-            text: "Good stuff",
+    $("#editdateform #tradeid").val(tradeId);
+    $("#editDateModal").modal('show');
+    
+    return false;
+}
+
+function changeTradeDate(){
+    $("#editDateModal").modal('hide');
+    var newTradeDate = $("#editdateform #newtradedate").val();
+    newTradeDate = moment(newTradeDate).format('YYYY-MM-DD 23:59:59');
+    var tradeId = $("#editdateform #tradeid").val();
+
+    var tradeDateDetails = {
+        "tradeid": tradeId,
+        "newtradedate" : newTradeDate
+    };
+    console.log(tradeDateDetails);
+    $.post("../index.php/changetradedate", tradeDateDetails, function(res){
+        console.log(res);
+        swal({
+            title: "Trade Date modified!",
+            text: "Requester will see change",
             type: "success",
             timer: 1000,
             showConfirmButton: false
-        });
+        }); 
+    },"json");
+    getRequestsMeetUp();
     return false;
 }
 
 
+
 function editTradeLocation(tradeId){
-    swal({
-            title: "Edit Trade Location button works!",
-            text: "Irie",
+    $("#editlocationform #tradeid").val(tradeId);
+    $("#editLocationModal").modal('show');
+    
+    return false;
+}
+
+function changeTradeLocation(){
+    $("#editLocationModal").modal('hide');
+    var newTradeLocation = $("#editlocationform #newtradelocation").val();
+    var tradeId = $("#editlocationform #tradeid").val();
+
+    var tradeLocationDetails = {
+        "tradeid": tradeId,
+        "newtradelocation" : newTradeLocation
+    };
+    //alert(tradeLocationDetails);
+    $.post("../index.php/changetradelocation", tradeLocationDetails, function(res){
+        console.log(res);
+        swal({
+            title: "Trade Location modified!",
+            text: "Requester will see change",
             type: "success",
+            timer: 1000,
+            showConfirmButton: false
+        }); 
+    },"json");
+    getRequestsMeetUp();
+    return false;
+}
+
+
+function cancelEdit(){
+    swal({
+            title: "Cancelled!",
+            text: "Nothing modified",
+            type: "error",
             timer: 1000,
             showConfirmButton: false
         });
@@ -1875,6 +1972,11 @@ function logout(){
         if (isConfirm) {
             $.get("../index.php/user",function(userId){
                 $.get("../index.php/getusername/"+userId, function(res){
+                    var user = {
+                        "userid" : userId
+                    };
+
+                    $.post("../index.php/logout", user);
                     swal({ 
                         title: "Goodbye " + res.firstname,
                         text: "Thanks for using JunkTrade, see you soon",
@@ -1918,6 +2020,10 @@ function chat(traderid){
             username = trader.username;
             $("#chatform #traderusername").val(trader.username);
             $("#chatform #tradername").text(trader.firstname + " " + trader.lastname);
+            if(trader.status == '1')
+                $("#chatform #traderstatus").text("Online");
+            else
+                $("#chatform #traderstatus").text("Offline");
 
             getMessages(traderid, userid, username);
             
@@ -1941,11 +2047,11 @@ function chat(traderid){
                             },"json");
                             if(el.sentfrom == userid){
                                 //chat += "Me: " + el.message + "\n";
-                                divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+"</div></div>";
+                                divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+"<br/><small> read "+el.readindicator+"</small></div></div>";
                                 }
                                 else{
                                     //chat += username + ": " + el.message + "\n";
-                                    divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+"</div></div>";
+                                    divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+"<br/> <small>read: "+el.readindicator+"</small></div></div>";
                                 }
                             
                         });
@@ -2020,10 +2126,10 @@ function getMessages(traderId, userid, username){
                 },"json");  
 
                 if(el.sentfrom == userid){
-                        divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip' data-placement='left' title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+"</div></div>";
+                        divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+"<br/><small> read "+el.readindicator+"</small></div></div>";
                     }
                     else{  
-                        divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+"</div></div>";  
+                        divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+"<br/> <small>read: "+el.readindicator+"</small></div></div>";  
                     }      
             });
 

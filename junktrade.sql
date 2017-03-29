@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2017 at 09:37 AM
+-- Generation Time: Mar 29, 2017 at 03:06 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -38,6 +38,22 @@ CREATE TABLE `chat` (
   `readindicator` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `chat`
+--
+
+INSERT INTO `chat` (`chatid`, `sentfrom`, `sentto`, `message`, `senton`, `readindicator`) VALUES
+(1, 1, 2, 'Yo montoute', '2017-03-28 23:23:52', 1),
+(2, 1, 2, 'Yo', '2017-03-28 23:24:14', 1),
+(3, 2, 1, 'Wah gwan?', '2017-03-28 23:24:25', 1),
+(4, 1, 2, 'Waz the scene?', '2017-03-28 23:25:47', 1),
+(5, 2, 1, 'I cool brethren', '2017-03-28 23:25:56', 1),
+(6, 2, 1, 'Read indicator test', '2017-03-28 23:30:52', 1),
+(7, 2, 1, 'Test 2', '2017-03-28 23:32:58', 1),
+(8, 2, 1, 'Test 3', '2017-03-28 23:35:09', 1),
+(9, 1, 2, 'Yo', '2017-03-28 23:38:16', 1),
+(10, 2, 1, 'Yo MC', '2017-03-29 01:04:15', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -52,6 +68,13 @@ CREATE TABLE `follow` (
   `followdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `followindicator` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+--
+-- Dumping data for table `follow`
+--
+
+INSERT INTO `follow` (`followid`, `follower`, `followee`, `followdate`, `followindicator`) VALUES
+(1, 2, 1, '2017-03-28 23:56:40', 1);
 
 -- --------------------------------------------------------
 
@@ -77,27 +100,27 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`itemid`, `itemname`, `itemdescription`, `picture`, `picture2`, `picture3`, `uploaddate`, `userid`, `views`) VALUES
-(1, 'iPhone 6', 'Brand: Apple\r\nColor: White\r\nDisplay: Retina\r\nCategory: Electronics\r\nMemory: 4GB\r\nStorage: 64GB\r\nFront Camera: 8MP\r\nRear Camera: 12MP\r\n', '../img/iphone6.jpg', '../img/iphone62.jpg', '../img/iphone63.jpg', '2017-03-19 05:50:38', 1, 3),
+(1, 'iPhone 6', 'Brand: Apple\r\nColor: White\r\nDisplay: Retina\r\nCategory: Electronics\r\nMemory: 4GB\r\nStorage: 64GB\r\nFront Camera: 8MP\r\nRear Camera: 12MP\r\n', '../img/iphone6.jpg', '../img/iphone62.jpg', '../img/iphone63.jpg', '2017-03-19 05:50:38', 1, 5),
 (2, 'Android Textbook', 'Author: Mark L. Murphy\r\nCategory: Books\r\nCondition: Used\r\n', '../img/android.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:52:43', 1, 1),
-(3, 'American Football', 'Category: Sports\r\nCondition: Used', '../img/football.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:54:13', 1, 3),
-(4, 'Webcam', 'Brand: Logitech\r\nCategory: Electronics\r\nColor: Black\r\nQuality: 1080p\r\nCondition: New', '../img/webcam.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:24:26', 1, 3),
+(3, 'American Football', 'Category: Sports\r\nCondition: Used', '../img/football.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:54:13', 1, 4),
+(4, 'Webcam', 'Brand: Logitech\r\nCategory: Electronics\r\nColor: Black\r\nQuality: 1080p\r\nCondition: New', '../img/webcam.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:24:26', 1, 4),
 (5, 'Soccer Ball', 'Category: Sports\r\nCondition: Used\r\nColor: Black and White', '../img/soccerball.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:58:12', 2, 3),
-(6, 'iPhone Charger', 'Brand: Apple\r\nCategory: Electronics\r\nCondition: Used', '../img/iphonecharger.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:59:24', 2, 1),
+(6, 'iPhone Charger', 'Brand: Apple\r\nCategory: Electronics\r\nCondition: Used', '../img/iphonecharger.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:59:24', 2, 2),
 (7, 'Data Structures Book', 'Author: Dr. Noel Kalicharan\r\nCategory: Books\r\nCondition: Used', '../img/datastructuresinc.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:00:09', 2, 1),
 (8, 'COMP 3000 Book', 'Title: Design and Analysis of Algorithms\r\nAuthor: Anany Levitin\r\nCategory: Books\r\nCondition: Used', '../img/comp3000.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:03:11', 3, 3),
 (9, 'Computer Architecture Book ', 'Title: Computer Organization and Architecture \r\nAuthor: William Stallings\r\nCondition: Used', '../img/computerarchitecture.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:06:25', 3, 1),
 (10, 'Professional Ethics and Law Notes', 'Category: Other\r\nCourse: INFO 3425\r\nSemester: Two 2016/2017', '../img/notes.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:08:20', 3, 1),
-(11, 'Object Oriented Programming Book', 'Title: An Introduction to Object Oriented Programming with Java\r\nAuthor: C. Thomas Wu\r\nCategory: Books\r\nCondition: New\r\n', '../img/oop.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:10:38', 4, 0),
-(12, 'Macbook Air', 'Brand: Apple\r\nCategory: Electronics\r\nMemory: 12 GB\r\nStorage: 128GB SSD\r\nProcessor: Intel Core i7, with Turbo Boost up to 3.6 GHz', '../img/macbookair.jpe', '../img/macbookair2.jpe', '../img/macbookair3.jpg', '2017-03-19 06:13:08', 4, 5),
+(11, 'Object Oriented Programming Book', 'Title: An Introduction to Object Oriented Programming with Java\r\nAuthor: C. Thomas Wu\r\nCategory: Books\r\nCondition: New\r\n', '../img/oop.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:10:38', 4, 1),
+(12, 'Macbook Air', 'Brand: Apple\r\nCategory: Electronics\r\nMemory: 12 GB\r\nStorage: 128GB SSD\r\nProcessor: Intel Core i7, with Turbo Boost up to 3.6 GHz', '../img/macbookair.jpe', '../img/macbookair2.jpe', '../img/macbookair3.jpg', '2017-03-19 06:13:08', 4, 6),
 (13, 'Safety Helmet', 'Category: Safety\r\nColor: Yellow\r\nCondition: Large', '../img/safetyhelmet.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:14:37', 4, 4),
 (14, 'Lab Coat', 'Category: Safety\r\nColor: White\r\nCondition: New', '../img/labcoat.JPG', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:15:39', 4, 4),
 (15, 'Networking Textbook', 'Title: Computer Networking, A Top-Down Approach\r\nAuthor: Kurose & Ross\r\nCondition: Used\r\n', '../img/networking.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:17:58', 5, 0),
 (16, 'Safety Glasses', 'Category: Safety\r\nSize: fits all\r\nCondition: New', '../img/saveglasses.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:19:45', 5, 0),
 (17, 'Pixel', 'Brand: Google\r\nColor: White\r\nCondition: Used\r\nMemory: 4GB\r\nCapacity: 64GB\r\nScreen size: 5.0 inches', '../img/googlepixel.png', '../img/googlepixel2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:21:12', 5, 5),
 (18, 'Wireless Mouse', 'Brand: Logitech\r\nColor: Black\r\nCondition: Used\r\nCategory: Electronics', '../img/mouse.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:22:42', 5, 1),
-(19, 'HP Envy Laptop', 'Brand: Hewlett Packard\r\nColor: Silver\r\nCategory: Electronics\r\nCondition: Used\r\nMemory: 12GB\r\nStorage: 1TB\r\nProcess: Intel i7 5th Generation 3.7Ghz', '../img/hpenvy.jpg', '../img/hpenvy2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:56:17', 1, 6),
+(19, 'HP Envy Laptop', 'Brand: Hewlett Packard\r\nColor: Silver\r\nCategory: Electronics\r\nCondition: Used\r\nMemory: 12GB\r\nStorage: 1TB\r\nProcess: Intel i7 5th Generation 3.7Ghz', '../img/hpenvy.jpg', '../img/hpenvy2.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 05:56:17', 1, 7),
 (20, 'Copy Paper', 'Category: Stationery\r\nCondition: New\r\nBrand: Xerox\r\n', '../img/copypaper.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:26:23', 3, 0),
-(21, 'S7 Edge', 'Brand: Samsung\r\nCategory: Electronics\r\nColor: Gold\r\nCondition: Used\r\nMemory: 4GB\r\nStorage: 128GB', '../img/samsung3.jpg', '../img/samsung2.jpg', '../img/samsung.jpg', '2017-03-19 06:28:03', 2, 12),
+(21, 'S7 Edge', 'Brand: Samsung\r\nCategory: Electronics\r\nColor: Gold\r\nCondition: Used\r\nMemory: 4GB\r\nStorage: 128GB', '../img/samsung3.jpg', '../img/samsung2.jpg', '../img/samsung.jpg', '2017-03-19 06:28:03', 2, 15),
 (22, 'Power Bank', 'Brand: EliveBuy\r\nCondition: Used\r\nColor: White\r\n10,400mAh', '../img/powerbank.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:30:38', 4, 5),
 (23, 'Safety Boots', 'Category: Safety\r\nCondition: Used\r\nSize: 11\r\nBrand: Amblers Safety', '../img/safetyboots.jpg', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:31:46', 2, 7),
 (24, 'Headphones', 'Brand: Beats\r\nColor: Red\r\nCategory: Electronics\r\nCondition: Used', '../img/headphones.png', '../img/../img/defaultitemimage.jpg', '../img/../img/defaultitemimage.jpg', '2017-03-19 06:33:11', 3, 14);
@@ -117,9 +140,18 @@ CREATE TABLE `requests` (
   `requestee` int(11) NOT NULL,
   `item` int(10) NOT NULL,
   `decision` tinyint(1) DEFAULT NULL,
+  `denyreason` varchar(100) DEFAULT NULL,
   `timerequested` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `viewed` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `requests`
+--
+
+INSERT INTO `requests` (`id`, `requester`, `item2`, `requestercontact`, `requestee`, `item`, `decision`, `denyreason`, `timerequested`, `viewed`) VALUES
+(1, 1, 3, '868-378-1234', 2, 23, 1, 'Another safety item would be nice', '2017-03-28 22:32:13', 1),
+(2, 2, 7, '868-378-1111', 1, 2, 0, 'I am looking for a java programming book, sorry', '2017-03-29 01:03:08', 1);
 
 -- --------------------------------------------------------
 
@@ -147,19 +179,27 @@ DROP TABLE IF EXISTS `trade`;
 CREATE TABLE `trade` (
   `tradeid` int(11) NOT NULL,
   `requestid` int(11) NOT NULL,
-  `tradedate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `tradedate` datetime NOT NULL,
   `tradelocation` varchar(100) NOT NULL,
-  `suggestedlocation` varchar(100) NOT NULL,
-  `locationdecision` tinyint(1) NOT NULL,
+  `suggestedlocation` varchar(100) DEFAULT NULL,
+  `locationdecision` tinyint(1) DEFAULT NULL,
   `requestercontact` varchar(20) NOT NULL,
   `requesteecontact` varchar(20) NOT NULL,
-  `requesterfeedbackrating` decimal(11,1) NOT NULL,
-  `requesterfeedbackcomment` varchar(1000) NOT NULL,
+  `requesterfeedbackrating` decimal(11,1) DEFAULT NULL,
+  `requesterfeedbackcomment` varchar(1000) DEFAULT NULL,
   `requesterfeedbackindicator` tinyint(1) NOT NULL DEFAULT '0',
-  `requesteefeedbackrating` decimal(11,1) NOT NULL,
-  `requesteefeedbackcomment` varchar(1000) NOT NULL,
+  `requesteefeedbackrating` decimal(11,1) DEFAULT NULL,
+  `requesteefeedbackcomment` varchar(1000) DEFAULT NULL,
   `requesteefeedbackindicator` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `trade`
+--
+
+INSERT INTO `trade` (`tradeid`, `requestid`, `tradedate`, `tradelocation`, `suggestedlocation`, `locationdecision`, `requestercontact`, `requesteecontact`, `requesterfeedbackrating`, `requesterfeedbackcomment`, `requesterfeedbackindicator`, `requesteefeedbackrating`, `requesteefeedbackcomment`, `requesteefeedbackindicator`) VALUES
+(1, 1, '2017-03-28 23:59:59', 'LRC Greens', NULL, NULL, '868-378-1234', '868-378-1111', NULL, NULL, 0, NULL, NULL, 0),
+(2, 1, '2017-04-02 23:59:59', 'Student Admin', NULL, NULL, '868-378-1234', '868-378-1111', NULL, NULL, 0, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -178,20 +218,21 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `sQuestion` varchar(100) NOT NULL,
   `sAnswer` varchar(100) NOT NULL,
-  `profilepicture` varchar(1000) DEFAULT '../img/defaultPP.jpg'
+  `profilepicture` varchar(1000) DEFAULT '../img/defaultPP.jpg',
+  `status` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `telephone`, `password`, `sQuestion`, `sAnswer`, `profilepicture`) VALUES
-(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@gmail.com', '868-378-1234', '6918950f89321712a8641620423d8c7d25951c0c', 'food', '31dda2aa971d428a60d8e2b6d35a7aec0c5a2193', '../img/defaultPP.jpg'),
-(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '868-378-1111', '16331e4442209ff309047eaec83430646490f038', 'sport', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8', '../img/defaultPP.jpg'),
-(3, 'jamwin', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '868-378-2222', '4e575edbd14f3eaf37744f7dea83e58eb2b0fdcc', 'food', 'bb5ad7479828c1fe7c2271d75b2a3064bc58b0b3', '../img/defaultPP.jpg'),
-(4, 'kylric', 'Kyle', 'Richardson', 'kylerichardson@email.com', '868-378-3333', '164113a91b40b39076494d9c761354de7e7b53f3', 'food', '6915b14cc28d7c49e0226fb79d98502e97f6b97f', '../img/defaultPP.jpg'),
-(5, 'danarj', 'Danielle', 'Arjoon', 'daniellearjoon@email.com', '868-378-4444', '56cd9a08899246b193d89fa4f9ef489c01558252', 'sport', 'bb500fcedfa3bb79ec1ebcfb3631364e5ab49dda', '../img/defaultPP.jpg'),
-(6, 'cyncud', 'Ms. Cudjoe', '-Lecturer', 'cynthiacudjoe@email.com', '868-378-5555', '6d499334fac509bd32e3be765e337f2399735575', 'food', '35c4cdb50a9a6b4475da4a66d955ef2a9e1acc39', '../img/samsung.jpg');
+INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `telephone`, `password`, `sQuestion`, `sAnswer`, `profilepicture`, `status`) VALUES
+(1, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@gmail.com', '868-378-1234', '6918950f89321712a8641620423d8c7d25951c0c', 'food', '31dda2aa971d428a60d8e2b6d35a7aec0c5a2193', '../img/defaultPP.jpg', 1),
+(2, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '868-378-1111', '16331e4442209ff309047eaec83430646490f038', 'sport', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8', '../img/defaultPP.jpg', 1),
+(3, 'jamwin', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '868-378-2222', '4e575edbd14f3eaf37744f7dea83e58eb2b0fdcc', 'food', 'bb5ad7479828c1fe7c2271d75b2a3064bc58b0b3', '../img/defaultPP.jpg', 0),
+(4, 'kylric', 'Kyle', 'Richardson', 'kylerichardson@email.com', '868-378-3333', '164113a91b40b39076494d9c761354de7e7b53f3', 'food', '6915b14cc28d7c49e0226fb79d98502e97f6b97f', '../img/defaultPP.jpg', 0),
+(5, 'danarj', 'Danielle', 'Arjoon', 'daniellearjoon@email.com', '868-378-4444', '56cd9a08899246b193d89fa4f9ef489c01558252', 'sport', 'bb500fcedfa3bb79ec1ebcfb3631364e5ab49dda', '../img/defaultPP.jpg', 0),
+(6, 'cyncud', 'Ms. Cudjoe', '-Lecturer', 'cynthiacudjoe@email.com', '868-378-5555', '6d499334fac509bd32e3be765e337f2399735575', 'food', '35c4cdb50a9a6b4475da4a66d955ef2a9e1acc39', '../img/samsung.jpg', 0);
 
 --
 -- Indexes for dumped tables
@@ -247,12 +288,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `chatid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `chatid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `follow`
 --
 ALTER TABLE `follow`
-  MODIFY `followid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `followid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `items`
 --
@@ -262,7 +303,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `saved`
 --
@@ -272,7 +313,7 @@ ALTER TABLE `saved`
 -- AUTO_INCREMENT for table `trade`
 --
 ALTER TABLE `trade`
-  MODIFY `tradeid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tradeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `users`
 --

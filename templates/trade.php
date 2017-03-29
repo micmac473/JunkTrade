@@ -32,6 +32,7 @@ include "base.php";
         <th><i class="fa fa-gift" aria-hidden="true" ></i> With</th>
         <th><i class="fa fa-calendar" aria-hidden="true" ></i> Date Requested</th>
         <th><i class="fa fa-question-circle" aria-hidden="true" ></i> Status</th>
+        <th><i class="fa fa-comment" aria-hidden="true" ></i> Denied Reason</th>
         <th><i class="fa fa-cog" aria-hidden="true" ></i> Action</th>
       </tr>
     </thead>

@@ -539,7 +539,7 @@ function getCurrentPage(){
 
               <div class="modal-header" style="background-color:#096790; color: white">
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close" aria-hidden="true"></i></button>
-                <h2 class="modal-title" style="text-align: center" ><i class="fa fa-comment" aria-hidden="true"></i> <span id="tradername"></span> <span> <small><em> (Online) </em> </small> </span> </h2>
+                <h2 class="modal-title" style="text-align: center" ><i class="fa fa-comment" aria-hidden="true"></i> <span id="tradername"></span> <small><em>(<span id="traderstatus" style="color: black">  </span>)</em> </small> </h2>
              </div>
 
               <input id="traderusername" name="traderusername" type="hidden" disabled class="form-control input-md">

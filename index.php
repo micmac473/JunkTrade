@@ -628,6 +628,23 @@ $app->post("/acceptrequest", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->post("/denyrequest", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$requestId = $post['requestid'];
+	$denyReason = $post['denyreason'];
+
+	$res = denyRequest($requestId, $denyReason);
+	
+	if ($res){
+		$response = $response->withStatus(201);
+		$response = $response->withJson(array("id" => $res));
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
 $app->post("/tradearrangement", function(Request $request, Response $response){
 	$post = $request->getParsedBody();
 	$requestId = $post['requestid'];
@@ -799,6 +816,44 @@ $app->post("/readmessage", function(Request $request, Response $response){
 	} */
 	$response = $response->withJson($res);
 	return $response;
+});
+
+$app->post("/changetradedate", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$tradeId = $post['tradeid'];
+	$newTradeDate = $post['newtradedate'];
+	$res = changeTradeDate($tradeId, $newTradeDate);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+$app->post("/changetradelocation", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$tradeId = $post['tradeid'];
+	$newTradeLocation = $post['newtradelocation'];
+	$res = changeTradeLocation($tradeId, $newTradeLocation);
+	if ($res){
+		//$name = $_SESSION["name"];
+		$response = $response->withStatus(201);
+		$response = $response->withJson($res);
+		
+	} else {
+		$response = $response->withStatus(400);
+	}
+	return $response;
+});
+
+$app->post("/logout", function(Request $request, Response $response){
+	$post = $request->getParsedBody();
+	$userId = $post['userid'];
+	$res = logout($userId);
 });
 
 $app->run();
