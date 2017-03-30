@@ -7,10 +7,10 @@ function getDBConnection(){
 		//$db = new mysqli("198.199.66.99","junktrader","j!p@aChU7Ust","junktrader");
 
 		//Use when on Server
-		//$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
+		$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
 
 		//Use when on local machine
-		$db = new mysqli("localhost","root","","junktrader");
+		//$db = new mysqli("localhost","root","","junktrader");
 		if ($db == null && $db->connect_errno > 0)
 			return null;
 		return $db;
@@ -167,7 +167,7 @@ function getNewMessages(){
 
 function getNewMessagesNotification(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT COUNT(*) As messages, u.username, c.sentfrom FROM `chat` c, `users` u WHERE c.sentfrom = u.id AND c.sentto = $userid AND c.readindicator = 0 GROUP BY u.username;";
+	$sql = "SELECT u.username, c.sentfrom, COUNT(*) As messages FROM `chat` c, `users` u WHERE c.sentfrom = u.id AND c.sentto = $userid AND c.readindicator = false GROUP BY u.username, c.sentfrom;";
 	$messages =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -182,7 +182,7 @@ function getNewMessagesNotification(){
 
 function checkReadMessage($chatId){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT message FROM `chat` c WHERE c.chatid = $chatId AND c.sentto = $userid AND c.readindicator = 0;";
+	$sql = "SELECT message FROM `chat` c WHERE c.chatid = $chatId AND c.sentto = $userid AND c.readindicator = false;";
 	$rec =[];
 	$db = getDBConnection();
 	if ($db != null){
