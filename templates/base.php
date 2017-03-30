@@ -156,7 +156,7 @@ function getCurrentPage(){
         </form> -->
 
         <ul class="nav navbar-nav navbar-right">
-          <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="showForm();"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
+          <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="toggler('uploadItem');"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -402,7 +402,7 @@ function getCurrentPage(){
             <div class="form-group">
               <label class="col-md-4 control-label" for="uppic">Image 1 </label>
               <div class="col-md-6">
-                <input name="itemImages[]" class="input-file" id="image" type="file" accept="image/*" required="">
+                <input name="itemImages[]"  class="input-file" id="image" type="file" accept="image/*" required="">
               </div>
             </div>
 
@@ -424,7 +424,7 @@ function getCurrentPage(){
             <div class="form-group">
               <label class="col-md-4 control-label" for="ItemDescription">Item Name</label>
               <div class="col-md-6">                     
-                <input  name="itemname" class="form-control" id="itemname" type="text" placeholder="Item Name" required="" maxlength="50" >
+                <input  autofocus name="itemname"  class="form-control" id="itemname" type="text" placeholder="Item Name" required="" maxlength="50" autofocus="autofocus">
               </div>
             </div>
 
@@ -440,8 +440,14 @@ function getCurrentPage(){
             <div class="form-group">
               <label class="col-md-4 control-label" for="upload"></label>
               <div class="col-md-4">
-                <button type ="submit" name="upload" class="btn btn-success btn-block" id="upload"><i class="fa fa-upload" aria-hidden="true"></i>  Upload Item</button>
-                <button type="button" onclick ="hideForm();" class="btn btn-warning btn-block" ><i class="fa fa-ban" aria-hidden="true"></i>  Cancel</button>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <button type ="submit" name="upload" class="btn btn-success btn-block" id="upload"><i class="fa fa-upload" aria-hidden="true"></i>  Upload Item</button>
+                  </div>
+                  <div class="col-lg-6">
+                    <button type="button" onclick ="hideForm();" class="btn btn-warning btn-block" ><i class="fa fa-ban" aria-hidden="true"></i>  Cancel</button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -560,10 +566,10 @@ function getCurrentPage(){
               <div class="form-group" >
                 <div class="row" >
                   <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                  <input autofocus class="form-control" type="text" id="message" maxlength="200" placeholder="Message" autocomplete="off"  required/>
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                  <button class="btn btn-primary btn-block" type="submit">Send</button> 
+                    <input autofocus class="form-control" type="text" id="message" maxlength="200" placeholder="Message" autocomplete="off"  required/>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <button class="btn btn-primary btn-block" type="submit">Send</button> 
                   </div>     
                 </div>
               </div>

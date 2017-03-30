@@ -7,23 +7,22 @@ include "base.php";
 <div class="container-fluid">
     <div class="row">
 
-      <div class="col-lg-4 col-lg-offset-1 col-md-6 col-sm-12 col-xs-12" style="background-color: white; box-shadow: 5px 5px 5px #888888;">
-        <h3 class="text-center"><u>Events</u> <i class="fa fa-calendar" aria-hidden="true"></i></h3>
-        <div id="reminders" style="overflow-y: scroll; height:90px"> 
+      <div class="well well-sm col-lg-4 col-lg-offset-1 col-md-6 col-sm-12 col-xs-12" style="background-color: white;">
+        <h3 class="text-center"><i class="fa fa-calendar" aria-hidden="true"></i> <u>Upcoming Events</u> </h3>
+        <div id="reminders" style="overflow-y: scroll; height:70px"> 
           
         </div>
       </div>
 
-      <div class="col-lg-4 col-lg-offset-1 col-md-6 col-sm-12 col-xs-12" style="background-color: white; box-shadow: 5px 5px 5px #888888;">
-        <h3 class="header text-center" ><u>Followers</u> <i class="fa fa-rss" aria-hidden="true"></i></h3>
-        <div id="followerupdates" style="overflow-y: scroll; height:90px"> 
+      <div class="well well-sm col-lg-4 col-lg-offset-1 col-md-6 col-sm-12 col-xs-12" style="background-color: white;">
+        <h3 class="text-center" ><i class="fa fa-rss" aria-hidden="true"></i> <u>Recent Updates</u> </h3>
+        <div id="followerupdates" style="overflow-y: scroll; height:70px"> 
           
         </div>
       </div>
 
     </div>
 
-    <br>
     <div class="row">
     <form class="">
       <fieldset>
@@ -50,8 +49,8 @@ include "base.php";
 
     <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="header text-center">
-          <h1><u>Tradable Items</u> <i class="fa fa-gift fa-lg" aria-hidden="true" ></i></h1>
+      <div class="page-header text-center">
+          <h1><i class="fa fa-gift fa-lg" aria-hidden="true" ></i> Tradable Items</h1>
       </div>
       <!-- <div id = "itemblock" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12"> -->
       <div id = "itemblock"> </div>

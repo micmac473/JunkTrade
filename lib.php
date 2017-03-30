@@ -908,9 +908,41 @@ function getProfileItems($userID){
 	return $items;
 }
 
-function getAllUserTrade(){//should be session id here instead of useId
+function getAllUserTrade(){
 	$userID = $_SESSION["id"];
 	$sql ="SELECT r.requestee, u.username, i.itemid, i.itemname, r.timerequested, r.decision, r.id, r.denyreason FROM `requests` r, `items` i, `users` u where r.item = i.itemid AND r.requestee = u.id AND  r.requester = $userID ORDER BY r.timerequested DESC;";
+	$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getOutgoingRequestItems(){
+	$userId = $_SESSION["id"];
+	$db = getDBConnection();
+	$items = [];
+	if ($db != null){
+		$sql = "SELECT i.itemname, r.item2 FROM `requests` r, `items` i WHERE i.itemid = r.item2 AND r.requester = $userId ORDER BY r.timerequested DESC;";
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}
+		$db->close();
+	}
+	//var_dump($requests);
+	return $items;
+}
+
+function getAcceptedTradeStatus(){
+	$userID = $_SESSION["id"];
+	$sql ="SELECT t.requesterfeedbackindicator, r.id FROM `requests` r, `trade` t WHERE r.id = t.requestid AND r.requester = $userID ORDER BY r.timerequested DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -1089,6 +1121,20 @@ function getUserItem($val){
 	return $rec;
 }
 
+function getItemImage($item){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != NULL){
+		$sql = "SELECT `picture` FROM `items` WHERE itemid = '$item';";
+		$res = $db->query($sql);
+		if ($res){
+			$rec= $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
 function getItemImages($itemId){
 	$db = getDBConnection();
 	$rec = null;
@@ -1102,6 +1148,8 @@ function getItemImages($itemId){
 	}
 	return $rec;
 }
+
+
 
 function getRequesterInfo($requestId){
 	$db = getDBConnection();
@@ -1162,21 +1210,7 @@ function getRequesterItem(){
 	return $requests;
 }
 
-function getOutgoingRequestItems(){
-	$userId = $_SESSION["id"];
-	$db = getDBConnection();
-	$items = [];
-	if ($db != null){
-		$sql = "SELECT i.itemname, r.item2 FROM `requests` r, `items` i WHERE i.itemid = r.item2 AND r.requester = $userId ORDER BY r.timerequested DESC;";
-		$res = $db->query($sql);
-		while($res && $row = $res->fetch_assoc()){
-			$items[] = $row;
-		}
-		$db->close();
-	}
-	//var_dump($requests);
-	return $items;
-}
+
 
 function getRequests(){
 	$user = $_SESSION["id"];
@@ -1310,19 +1344,7 @@ function checkItemSaved($itemid){
 	return $rec;
 }
 
-function getItemImage($item){
-	$db = getDBConnection();
-	$rec = null;
-	if ($db != NULL){
-		$sql = "SELECT `picture` FROM `items` WHERE itemid = '$item';";
-		$res = $db->query($sql);
-		if ($res){
-			$rec= $res->fetch_assoc();
-		}
-		$db->close();
-	}
-	return $rec;
-}
+
 
 function getProfileImage($userid){
   $db = getDBConnection();

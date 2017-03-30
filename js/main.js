@@ -494,7 +494,7 @@ function listUserItems(records){
                     else{
                         htmlStr += "<tr>";
                         htmlStr += "<td style='display:none;'>"+ el['itemid'] +"</td>";
-                        htmlStr += "<td><img src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
+                        htmlStr += "<td><img style='cursor: pointer;' onclick=\"viewItemImages("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
                         htmlStr += "<td>"+ el['itemname'] +"</td>";
                         htmlStr += "<td>"+ el['itemdescription'] +"</td>";
                     
@@ -511,7 +511,7 @@ function listUserItems(records){
             if(i == res.length){
                 htmlStr += "<tr>";
                 htmlStr += "<td style='display:none;'>"+ el['itemid'] +"</td>";
-                htmlStr += "<td><img src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
+                htmlStr += "<td><img style='cursor: pointer;' onclick=\"viewItemImages("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
                 htmlStr += "<td>"+ el['itemname'] +"</td>";
                 htmlStr += "<td>"+ el['itemdescription'] +"</td>";
                     
@@ -530,6 +530,17 @@ function listUserItems(records){
     
 } 
 
+
+function viewItemImages(itemId){
+    $.get("../index.php/itemimages/"+itemId, function(image){
+        $('.imagepreview').attr('src', image.picture);
+        $('#picture1').attr('src', image.picture);
+        $('#picture2').attr('src', image.picture2);
+        $('#picture3').attr('src', image.picture3);
+        $('#imagemodal').modal('show'); 
+    },"json");
+    
+}
 //--------------------------------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------
@@ -655,13 +666,17 @@ function processUserTrade(records){
     console.log(records);
     $.get("../index.php/outgoingrequestitems", function(res){
         console.log(res);
-        listUserTrade(records, res);
+        $.get("../index.php/acceptedtradestatus", function(status){
+            console.log(status);
+            listUserTrade(records, res, status);
+        }, "json");
+        
     }, "json");
     //showRequestData(records);
 }
 
-function listUserTrade(records, res){
-    var i=0;
+function listUserTrade(records, res, status){
+    var i=0, j=0;
     var sec_id = "#table_sect";
     var htmlStr = $("#table_headingt").html(); //Includes all the table, thead and tbody declarations
 
@@ -685,16 +700,27 @@ function listUserTrade(records, res){
             htmlStr += "<td><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
             htmlStr += "<td>" + date + "</td>";
             htmlStr += "<td> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
-            htmlStr += "<td></td>";
+            htmlStr += "<td>-</td>";
             htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
         }
         else if(el['decision'] == true){
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
             htmlStr += "<td><a disabled class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
             htmlStr += "<td>" + date + "</td>";
-            htmlStr += "<td> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
-            htmlStr += "<td></td>";
-            htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.id+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
+            if(status[j]['id'] == el.id){
+                if(status[j]['requesterfeedbackindicator'] == '1'){
+                    htmlStr += "<td> Trade Complete <i class='fa fa-check-circle fa-lg' aria-hidden='true'></i></td>";
+                    htmlStr += "<td>-</td>";
+                    htmlStr += "<td>-</td>";
+                }
+                else{
+                    htmlStr += "<td> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
+                    htmlStr += "<td>-</td>";
+                    htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.id+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
+                }
+                j++;
+            }
+            
         }
         else{
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
@@ -702,7 +728,7 @@ function listUserTrade(records, res){
             htmlStr += "<td>" + date + "</td>";
             htmlStr += "<td> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
             htmlStr += "<td><em>" + el.denyreason + "</em></td>";
-            htmlStr += "<td> </td>";
+            htmlStr += "<td>-</td>";
         }
 
         htmlStr +=" </tr>" ;
@@ -808,11 +834,15 @@ function displayIncomingRequestsHistory(records, records2){
         htmlStr += "<td>"+el.username+"</td>"; 
         htmlStr += "<td>"+el.itemname+"</td>"; 
         htmlStr += "<td>"+records2[i]['itemname']+"</td>";
-        if(el.decision == true)
+        if(el.decision == true){
             htmlStr += "<td>Accepted</td>"; 
-        else
+            htmlStr += "<td>-</td>";
+        }  
+        else{
             htmlStr += "<td>Denied</td>"; 
-        htmlStr += "<td>"+el.denyreason+"</td>";
+            htmlStr += "<td>"+el.denyreason+"</td>";
+        }
+            
         htmlStr += "</tr>"; 
         i++;
     })
@@ -1053,7 +1083,9 @@ function processUserFollowers(records){
 } */
 
 //--------------------------------------------------------------------------------------------------------------------
-
+function toggler(divId) {
+    $("#" + divId).toggle("slow");
+}
 
 
 //--------------------------------------------------------------------------------------------------------------------

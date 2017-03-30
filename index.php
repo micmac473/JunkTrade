@@ -124,9 +124,9 @@ $app->get("/requestee/{id}", function(Request $request, Response $response){
 	return $response;
 });
 
-$app->get("/itemimage/{id}", function(Request $request, Response $response){
+$app->get("/itemimages/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
-	$requests = getItemImage($val);
+	$requests = getItemImages($val);
 	
 	$response = $response->withJson($requests);
 	return $response;
@@ -209,12 +209,28 @@ $app->get("/trade", function(Request $request, Response $response){
 	return $response;
 });
 
+
+$app->get("/outgoingrequestitems", function(Request $request, Response $response){
+	
+	$items = getOutgoingRequestItems();
+	$response = $response->withJson($items);
+	return $response;
+});
+
+$app->get("/acceptedtradestatus", function(Request $request, Response $response){
+	$items = getAcceptedTradeStatus();
+	
+	$response = $response->withJson($items);
+	return $response;
+});
+
 $app->get("/login", function(Request $request, Response $response){
 	$items = checkLogin("micmcm","micmcm");
 	
 	$response = $response->withJson($items);
 	return $response;
 });
+
 
 $app->get("/request", function(Request $request, Response $response){
 	$items = saveRequest(2,"rastaman","Cloud Server");
@@ -395,7 +411,7 @@ $app->get("/viewitem/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country
 	$rec = productViews($val);
-	echo $rec;
+	//echo $rec;
 	$response = $response->withJson($rec);
 	return $response;
 });
@@ -408,6 +424,7 @@ $app->get("/getitem/{id}", function(Request $request, Response $response){
 	return $response;
 });
 
+
 $app->get("/requesteritem", function(Request $request, Response $response){
 	
 	$items = getRequesterItem();
@@ -415,12 +432,7 @@ $app->get("/requesteritem", function(Request $request, Response $response){
 	return $response;
 });
 
-$app->get("/outgoingrequestitems", function(Request $request, Response $response){
-	
-	$items = getOutgoingRequestItems();
-	$response = $response->withJson($items);
-	return $response;
-});
+
 
 $app->get("/accepteduseritems", function(Request $request, Response $response){
 	

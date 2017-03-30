@@ -188,7 +188,7 @@ include "base.php";
     </div> 
 
     <div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-      <a href='#' data-toggle='tooltip' title= '<?php echo $rating. " out of 5 stars <br/>Trades: ". $trades?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php echo $rating ?> ></a>
+      <a href='#' data-toggle='tooltip' data-html='true' title= '<?php echo $rating. " out of 5 stars <br>  Trades: ". $trades?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php echo $rating ?> ></a>
     </div>
 
     
@@ -377,6 +377,7 @@ include "base.php";
     </div>
   </div>
   
+
   <div class="row">
     <div class="col-xs-12 table-responsive">
       <div class="header text-center">
@@ -388,6 +389,40 @@ include "base.php";
   </div>
 
 </div>  <!-- close container -->  
+
+<!-- Image Modal -->
+  <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">              
+        
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+  
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+     <img id="picture1" style="width: 100%;" class="img-responsive" src="" alt="...">
+    </div>
+    <div class="item">
+      <img id="picture2" style="width: 100%;" class="img-responsive" src="" alt="...">
+    </div>
+     <div class="item">
+      <img id="picture3" style="width: 100%;" class="img-responsive" src="" alt="...">
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div>
+    </div>
+  </div>
+  
 <script type="text/template" id="table_headingp">
   <table class="table table-hover table-condensed">
     <thead>
