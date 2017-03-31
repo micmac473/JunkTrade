@@ -95,7 +95,7 @@ form {
       </div>
     </nav>
   <div class ="container">
-    <div class="jumbotron" style="text-align:center; font-family: 'Oswald', sans-serif;">
+    <div class="jumbotron" style="text-align:center; color: #096790; font-family: 'Oswald', sans-serif;">
       <h1 >Sign in to JunkTrade </h1>
       <h3> Let the trading begin!</h3>
     </div>
@@ -152,7 +152,7 @@ form {
                   $helper = $fb->getRedirectLoginHelper();
 
                   $permissions = ['email']; // Optional permissions
-                  $loginUrl = $helper->getLoginUrl('http://localhost:8080/Project/junktrade/templates/facebookSession.php', $permissions);
+                  $loginUrl = $helper->getLoginUrl('http://localhost:8080/junktrade/templates/facebookSession.php', $permissions);
 
                   echo '<a href="' . htmlspecialchars($loginUrl) . '" class="btn btn-primary btn-block"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i> Login with Facebook</a>';
                 ?>

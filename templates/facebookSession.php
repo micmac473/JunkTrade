@@ -130,6 +130,7 @@ if(true){
   if($res == null){
       $sessionId = saveFBUser($fb_firstname,$fb_email, $fb_id);
       $_SESSION["id"] = $sessionId;
+      login($sessionId);
   }
   else{
     $isFbId = isExistFbId($res['fbid']);
@@ -138,6 +139,7 @@ if(true){
       updateFbId($res['id'], $fb_id);
     }
     $_SESSION["id"] = $res['id'];
+    login($res['id']);
   }
   $_SESSION["user"] = $fb_firstname;
   header('Location: homepage.php'); 

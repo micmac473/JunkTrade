@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2017 at 09:02 AM
+-- Generation Time: Apr 01, 2017 at 12:44 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -189,12 +189,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fbid`, `username`, `firstname`, `lastname`, `email`, `telephone`, `password`, `sQuestion`, `sAnswer`, `profilepicture`, `status`) VALUES
-(1, NULL, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@gmail.com', '868-378-1234', '6918950f89321712a8641620423d8c7d25951c0c', 'food', '31dda2aa971d428a60d8e2b6d35a7aec0c5a2193', '../img/WIN_20160405_045418.JPG', 0),
+(1, 2147483647, 'micmcm', 'Mickel', 'McMillan', 'mickelmcmillan@gmail.com', '868-378-1234', '6918950f89321712a8641620423d8c7d25951c0c', 'food', '31dda2aa971d428a60d8e2b6d35a7aec0c5a2193', '../img/defaultPP.jpg', 0),
 (2, NULL, 'mikmon', 'Mikael', 'Montoute', 'mikaelmontoute@email.com', '868-378-1111', '16331e4442209ff309047eaec83430646490f038', 'sport', '2d27b62c597ec858f6e7b54e7e58525e6a95e6d8', '../img/defaultPP.jpg', 0),
 (3, NULL, 'jamwin', 'Jamal', 'Winchester', 'jamalwinchester@email.com', '868-378-2222', '4e575edbd14f3eaf37744f7dea83e58eb2b0fdcc', 'food', 'bb5ad7479828c1fe7c2271d75b2a3064bc58b0b3', '../img/defaultPP.jpg', 0),
 (4, NULL, 'kylric', 'Kyle', 'Richardson', 'kylerichardson@email.com', '868-378-3333', '164113a91b40b39076494d9c761354de7e7b53f3', 'food', '6915b14cc28d7c49e0226fb79d98502e97f6b97f', '../img/defaultPP.jpg', 0),
 (5, NULL, 'danarj', 'Danielle', 'Arjoon', 'daniellearjoon@email.com', '868-378-4444', '56cd9a08899246b193d89fa4f9ef489c01558252', 'sport', 'bb500fcedfa3bb79ec1ebcfb3631364e5ab49dda', '../img/defaultPP.jpg', 0),
-(6, NULL, 'cyncud', 'Ms. Cudjoe', '-Lecturer', 'cynthiacudjoe@email.com', '868-378-5555', '6d499334fac509bd32e3be765e337f2399735575', 'food', '35c4cdb50a9a6b4475da4a66d955ef2a9e1acc39', '../img/samsung.jpg', 0);
+(6, NULL, 'cyncud', 'Ms. Cudjoe', '-Lecturer', 'cynthiacudjoe@email.com', '868-378-5555', '6d499334fac509bd32e3be765e337f2399735575', 'food', '35c4cdb50a9a6b4475da4a66d955ef2a9e1acc39', '../img/defaultPP.jpg', 0);
 
 --
 -- Indexes for dumped tables
