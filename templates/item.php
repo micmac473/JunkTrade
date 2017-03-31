@@ -53,13 +53,13 @@ if(isset($_GET['item'])){
                     <div class='carousel slide' id='myCarousel'>
                         <div class='carousel-inner'>
                             <div class='active item' data-slide-number='0'>
-                                <img src=\"" . $itemImages['picture'] . "\"  style='width:100%;' class='img-responsive img-thumbnail mx-auto'>
+                                <a href ='#' onclick=\"viewItemImage('".$itemImages['picture']."')\"><img src=\"" . $itemImages['picture'] . "\"  style='width:100%;' class='img-responsive img-thumbnail mx-auto'> </a>
                             </div>
                             <div class='item' data-slide-number='1'>           
-                                <img src=\"" . $itemImages['picture2'] . "\" style='width:100%;' class='img-responsive img-thumbnail mx-auto'>
+                                <a href ='#' onclick=\"viewItemImage('".$itemImages['picture2']."')\"><img src=\"" . $itemImages['picture2'] . "\" style='width:100%;' class='img-responsive img-thumbnail mx-auto'></a>
                             </div>
                             <div class='item' data-slide-number='2'>        
-                                <img src=\"" . $itemImages['picture3'] . "\" style='width:100%;' class='img-responsive img-thumbnail mx-auto'>
+                                <a href ='#' onclick=\"viewItemImage('".$itemImages['picture3']."')\"><img src=\"" . $itemImages['picture3'] . "\" style='width:100%;' class='img-responsive img-thumbnail mx-auto'></a>
                             </div>
                         </div>
                         <!-- Carousel nav -->

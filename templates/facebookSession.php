@@ -1,6 +1,5 @@
 <?php
 
-
 include "../lib.php";
 
 $fb_name;
@@ -41,14 +40,15 @@ try {
      $st=curl_exec($ch); 
      $result=json_decode($st,TRUE);
      echo "My name: ".$result['name'];
-     $fb_name =$result['first_name'];
+     $fb_firstname =$result['first_name'];
+     $fb_email =$result['email'];
      $fb_id =$result['id'];
      $shorten = substr($fb_id, 0, -12);  // returns "abcde"
      $shorten =intval($shorten);
      echo "<img src=".$result['cover']['source'].">";
      echo $result['name'].'has an is of '.$result['id'];
-    $_SESSION["user"] = $fb_name;
-    $_SESSION["id"] = $fb_id;
+    /*$_SESSION["user"] = $fb_name;
+    $_SESSION["id"] = $fb_id; */
    
 
   //++++++++++++++++++++++++++++++
@@ -121,15 +121,26 @@ $_SESSION['fb_access_token'] = (string) $accessToken;
   //$password = $_POST['password'];
   //p($post);
   // print "Name: $name, Price:$price, Country: $countryId";
-    $_SESSION["user"] = $fb_name;
-    $_SESSION["id"] = $fb_id;
+    /*$_SESSION["user"] = $fb_name;
+    $_SESSION["id"] = $fb_id; */
 
 
 if(true){
-  if(isExist($fb_id) == false){
-      saveFBUser($fb_name,$fb_id);
+  $res = isExist($fb_firstname);
+  if($res == null){
+      $sessionId = saveFBUser($fb_firstname,$fb_email, $fb_id);
+      $_SESSION["id"] = $sessionId;
   }
-   header('Location: homepage.php'); 
+  else{
+    $isFbId = isExistFbId($res['fbid']);
+    
+    if($isFbId == null){
+      updateFbId($res['id'], $fb_id);
+    }
+    $_SESSION["id"] = $res['id'];
+  }
+  $_SESSION["user"] = $fb_firstname;
+  header('Location: homepage.php'); 
 }
 
 ?>

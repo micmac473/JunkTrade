@@ -8,7 +8,8 @@
     <meta name="author" content="">
     
     <title>JunkTrade Sign Up</title>
-    
+    <link href="https://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
     <!-- Bootstrap core CSS -->
     <!-- Latest compiled and minified CSS Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -53,6 +54,7 @@
 } 
 body{
   background-color: #f6f6f6;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 </style>
@@ -72,7 +74,7 @@ body{
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img alt ="logo" width ="30px" height ="30px" src ="../img/logo.png"></a>
+          <a class="navbar-brand" href="../" style="padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
           <a class ="navbar-brand" href ="../">JunkTrade</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -91,7 +93,7 @@ body{
       </div>
     </nav>
 <div class="container">
-  <div class="jumbotron" style="text-align:center;">
+  <div class="jumbotron" style="text-align:center;font-family: 'Oswald', sans-serif;">
     <h1 >Join JunkTrade </h1>
     <h3> The best way to trade the things you HAVE for the things you WANT</h3>
   </div>
@@ -99,7 +101,6 @@ body{
         <div class="main-login main-center">
           
           <form role="form" data-toggle="validator" onsubmit="return register();">
-            <legend style="text-align:center;"> <h2> Sign Up </h2> </legend>
 
             <div class="form-group has-feedback">
               <label for="username" class="cols-xs-2 control-label">Username</label>
@@ -155,7 +156,7 @@ body{
                 <div class="cols-sm-10">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-                    <input class="form-control" id="telephone" name="telephone" type="tel" placeholder="868-123-4567" required pattern="\d{3}[\-]\d{3}[\-]\d{4}"/>
+                    <input class="form-control" id="telephone" name="telephone" type="tel" placeholder="868-123-4567" required pattern="\d{868}[\-]\d{3}[\-]\d{4}"/>
                   </div>
                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                   <div class="help-block with-errors"></div>
@@ -227,16 +228,16 @@ body{
             </div>
 
             <div class="form-group ">
-              <button id="saveBnt" name="saveBnt" type="submit" class="btn btn-primary btn-lg btn-block login-button" data-delay="disable">Join Now</button>
+              <button id="saveBnt" name="saveBnt" type="submit" class="btn btn-success btn-block login-button" data-delay="disable">Create Account</button>
             </div>
             </fieldset>
           </form>
+          <!--footer -->
+          <div class="footer">
+            <p> <strong> &copy;2017 JunkTrade. All rights reserved</strong> </p>
+          </div>
         </div>
       </div>
     </div>
-<!--footer -->
-  <div class="footer">
-    <p> &copy; JunkTrade 2016 </p>
-  </div>
 <body>
 </html>

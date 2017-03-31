@@ -7,10 +7,10 @@ function getDBConnection(){
 		//$db = new mysqli("198.199.66.99","junktrader","j!p@aChU7Ust","junktrader");
 
 		//Use when on Server
-		$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
+		//$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
 
 		//Use when on local machine
-		//$db = new mysqli("localhost","root","","junktrader");
+		$db = new mysqli("localhost","root","","junktrader");
 		if ($db == null && $db->connect_errno > 0)
 			return null;
 		return $db;
@@ -113,6 +113,73 @@ function saveUser($username, $firstname, $lastname, $email, $telephone, $passwor
 		$db->close();
 	}
 	return $id;
+}
+
+
+function isExist($firstName){
+	/*$sql = "SELECT * FROM `users` WHERE id = '$FBID';";
+	$db = getDBConnection();
+	$rec = null;
+	if($db != NULL){
+		$res = $db->query($sql);
+		if($res && $row = $res->fetch_assoc()){
+			//var_dump($data);
+			if($row["id"]!=NUll)return true;
+		}
+		return false;
+	} */
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$sql = "SELECT * FROM `users` u WHERE u.firstname = '$firstName';";
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
+function isExistFbId($fbId){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$sql = "SELECT * FROM `users` u WHERE u.fbid = $fbId;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
+function saveFBUser($fbFirstName, $fbEmail, $fbId){
+	$sql = "INSERT INTO `users` (`fbid`,`username`,`firstname`,`email`) VALUES ($fbId,'$fbFirstName','$fbFirstName', '$fbEmail');";
+	$id = -1;
+	$db = getDBConnection();
+	if ($db != NULL){
+		$res = $db->query($sql);
+	
+		if ($res && $db->insert_id > 0){
+			$id = $db->insert_id;
+		}
+		$db->close();
+	}
+	return $id;
+}
+
+
+function updateFbId($userId, $fbId){
+	$db = getDBConnection();
+	$sql = "UPDATE `users` u SET `fbid` = $fbId WHERE u.id = $userId;";
+	$res = null;
+	if ($db != NULL){
+		$res = $db->query($sql);
+		$db->close();
+	}
+	return $res;
 }
 
 function saveMessage($sentFrom, $sentTo, $message){
@@ -652,7 +719,7 @@ function getIncomingRequestsHistoryUser(){
 
 function getUserFollowersCount($traderId){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT * FROM `follow` f, `users` u WHERE f.follower = u.id AND f.followee = $traderId
+	$sql = "SELECT u.id, u.username FROM `follow` f, `users` u WHERE f.follower = u.id AND f.followee = $traderId
 	 AND f.followindicator = true;";
 	$updates =[];
 	$db = getDBConnection();
@@ -704,60 +771,7 @@ function getAcceptedUserItems(){
 	return $items;
 }
 
-function isExist($FBID){
-	$sql = "SELECT * FROM `users` WHERE id = '$FBID';";
-	$db = getDBConnection();
-	if($db != NULL){
-		$res = $db->query($sql);
-		if($res && $row = $res->fetch_assoc()){
-			//var_dump($data);
-			if($row["id"]!=NUll)return true;
-		}
-		return false;
-	}
-}
 
-function saveFBUser($FBUsername, $FBID){
-	$sql = "INSERT INTO `users` (`id`,`username`) VALUES ('$FBID','$FBUsername');";
-	$id = -1;
-	$db = getDBConnection();
-	if ($db != NULL){
-		$res = $db->query($sql);
-	
-		if ($res && $db->insert_id > 0){
-			$id = $db->insert_id;
-		}
-		$db->close();
-	}
-	return $id;
-}
-
-
-function saveProfile($contact, $interest, $tradables){
-	$sql = "INSERT INTO profile (`contact`,`interest`,`tradables`) VALUES ($contact, 'interest', 'tradables')";
-	try{
-		$db = getDBConnection();
-		if ($db != NULL){
-			$db->query($sql);
-			$id = $db->insert_id;
-			if ($id >0)return TRUE;
-		}
-	}catch (Exception $e){}
-	return FALSE;
-}
-
-function saveTransactions($User1,$User2,$item1,$item2){
-	$sql = "INSERT INTO transaction(`user1`,`user2`,`item1`,`item2`) VALUES('$User1','$User2','$item1','$item2')";
-	try{
-		$db = getDBConnection();
-		if ($db != NULL){
-			$db->query($sql);
-			$id = $db->insert_id;
-			if ($id >0)return TRUE;
-		}
-	}catch (Exception $e){}
-	return FALSE;
-}
 
 function saveItem($picture,$picture2, $picture3, $itemname, $itemDescription){
 
@@ -775,37 +789,6 @@ function saveItem($picture,$picture2, $picture3, $itemname, $itemDescription){
 		$db->close();
 	}
 	return $id;
-}
-
-function saveRating ($username,$ratings){
-	//$oldrating = "SELECT rating FROM ratings WHERE username=$'username;";
-
-	$sql = "INSERT INTO ratings(`username`,`rating`) VALUES ('$username','$rating')";
-	try{
-		$db = getDBConnection();
-		if ($db != NULL){
-			$db->query($sql);
-			$id = $db->insert_id;
-			if ($id >0)return TRUE;
-		}
-	}catch (Exception $e){}
-	return FALSE;
-}
-
-function getRecentActivity(){
-	$db = getDBConnection();
-	$activity = [];
-
-	if($db != NULL){
-		$sql = "SELECT tradables FROM profile";
-
-		$res = $db->query($sql);
-		while($res && $row = $res->fetch_assoc()){
-			$activity[] = $row;
-		}
-		$db->close();
-	}
-	return $activity;
 }
 
 function getAllUsers(){
@@ -1121,11 +1104,26 @@ function getUserItem($val){
 	return $rec;
 }
 
-function getItemImage($item){
+
+function getUserInfo($userId){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$sql = "SELECT u.username, u.firstname, u.lastname FROM `users` u WHERE u.id = $userId;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
+function getProfilePicture($userId){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != NULL){
-		$sql = "SELECT `picture` FROM `items` WHERE itemid = '$item';";
+		$sql = "SELECT `profilepicture` FROM `users` u WHERE u.id = $userId;";
 		$res = $db->query($sql);
 		if ($res){
 			$rec= $res->fetch_assoc();
@@ -1347,26 +1345,18 @@ function checkItemSaved($itemid){
 
 
 function getProfileImage($userid){
-  $db = getDBConnection();
-  $rec = null;
-  if ($db != NULL){
-    $sql = "SELECT `profilepicture` FROM `users` WHERE id = '$userid';";
-    $res = $db->query($sql);
-    if ($res){
-      $rec= $res->fetch_assoc();
-      
-    }
-    $db->close();
-  }
-
-  $pp =  json_encode($rec['profilepicture']);
-if($pp == "null"){
-return "<img src=../img/defaultPP.jpg style='width:auto; height: 10px; max-width: 150px; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>";
- }
- else{
- return "<img src= $pp style='width:auto; height: 100px; max-width: 150px; border-radius: 30px;' class='img-responsive img-thumbnail mx-auto'>"; 
-}
-	
+	$db = getDBConnection();
+  	$rec = null;
+	if ($db != NULL){
+		$sql = "SELECT `profilepicture` FROM `users` WHERE id = '$userid';";
+	    $res = $db->query($sql);
+	    if ($res){
+	    	$rec= $res->fetch_assoc();
+	    }
+	    $db->close();
+	}
+	$pp =  json_encode($rec['profilepicture']);
+	return "<img src= $pp style='width:auto; height: 100px; max-width: 150px; border-radius: 30px;' class='img-responsive img-thumbnail mx-auto'>"; 
 }
 
 function saveRequest($requestee, $requesteeItem, $requesterItem, $requesterContact){

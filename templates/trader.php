@@ -5,6 +5,7 @@ include "base.php";
 if(isset($_GET['trader'])){
   $userID = $_GET['trader'];
   $userDetails = getUserItems($userID);
+  $userInfo = getUserInfo($userID);
   $followeeInfo = getFollowID($userID);
   //echo $followeeInfo['followid'];
   //var_dump($userDetails);
@@ -35,12 +36,12 @@ if(isset($_GET['trader'])){
     <div class="row text-center">
       <div class="col-lg-2">
         <?php
-          echo getProfileImage($userID);
+          echo "<a href='#' onClick=\"viewProfileImage(".$userID.")\">".getProfileImage($userID)."</a>";
         ?>
       </div>
       <div class="col-lg-10">
         <?php
-          echo "<h1>" . $userDetails[0]['firstname'] ." ". $userDetails[0]['lastname'] ." <small>(" . $userDetails[0]['username']. ")</small></h1>"  ;
+          echo "<h1>" . $userInfo['firstname'] ." ". $userInfo['lastname'] ." <small>(" . $userInfo['username']. ")</small></h1>"  ;
         ?>
       
         <?php
@@ -50,7 +51,14 @@ if(isset($_GET['trader'])){
           else{
             echo "<button type='button' class='btn btn-success' onClick=\"unfollowTrader(". $userID .")\" data-toggle='tooltip' title='Click to Unfollow' data-placement='bottom'> Following <i class='fa fa-rss-square' aria-hidden='true'></i></button>";
           }
-          echo "<span> <small>Followed by <a href='#' id='followerslist' data-toggle='popover' data-placement='bottom' data-trigger='focus' title='Followers' data-content=\"".print_r($followers,true)."\">". count($followers)."</a> people</small></span><br>";
+          echo "<span> <small>Followed by <a href='#' id='followerslist' data-html ='true' data-toggle='popover' data-placement='right' data-trigger='focus' data-content=\"";
+            foreach ($followers as $key => $value) {
+              if($value['id'] != $currentUser)
+                echo "<a class='btn btn-link' href='#' onclick='viewTraderProfile(".$value['id'].")'>".$value['username']."</a><br/>";
+              else
+                echo "<a class='btn btn-link disabled' href='#'>".$value['username']."</a><br/>";
+            }
+          echo "\">". count($followers)."</a> people</small></span><br>";
           echo "<a href='#' data-toggle='tooltip' data-html='true' title=\"Trades: ". $trades."<br>".$rating." out of 5 stars\" data-placement='bottom'><input  type='hidden' class='rating'  data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value=\"".$rating."\"/></a>";
           //echo "Trades: ".$tradeCount[0]['numtrades'];
         ?> 

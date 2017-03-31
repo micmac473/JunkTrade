@@ -339,16 +339,17 @@ function getCurrentPage(){
     if($currentPage != "Trader"){
 
       ?>
-      <div class="jumbotron container-fluid">
-        <div class="container-fluid">
+      <div class="jumbotron">
+        <div class="container">
           <div class="row text-center">
-            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+            <div class="col-lg-2 col-md-1 col-sm-1 col-xs-12">
               <?php   
                 $ppid = $_SESSION["id"];         
-                echo getProfileImage($ppid);      
+                echo "<a href='#' onclick=\"viewProfileImage(".$ppid.")\">" .getProfileImage($ppid)."</a>"; 
+                //echo $_SESSION["id"];  
               ?>
             </div>
-            <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+            <div class="col-lg-10 col-md-11 col-sm-11 col-xs-12">
               <h1 style="color:#096790 ;text-shadow: 2px 2px white;font-family: 'Oswald', sans-serif;"> 
                 <?php  
                   date_default_timezone_set("America/Grenada");
@@ -581,6 +582,16 @@ function getCurrentPage(){
       </div>
     </div>
   </div>
+
+  <!-- Image Modal -->
+  <div class="modal fade" id="profilepicturemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">              
+      
+        <img src="" id="profilepicture" class="img-responsive" style="width: 100%;" >
+    </div>
+  </div>
+</div>
 
 <script>
   $(document).ready(function(){

@@ -16,7 +16,8 @@ session_unset();
     <meta name="author" content="">
     
     <title>JunkTrade Login</title>
-    
+    <link href="https://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
     <!-- Latest compiled and minified CSS Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -53,6 +54,7 @@ body {
   padding-bottom: 6rem;
   min-height: 100%;
   background-color: #f6f6f6;
+  font-family: "Roboto Condensed", sans-serif;
 }
 body, html{
      height: 100%;
@@ -74,7 +76,7 @@ form {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img alt ="logo" width ="30px" height ="30px" src ="../img/logo.png"></a>
+          <a class="navbar-brand" href="../" style="padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
           <a class ="navbar-brand" href ="../">JunkTrade</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -93,82 +95,79 @@ form {
       </div>
     </nav>
   <div class ="container">
-    <div class="jumbotron" style="text-align:center;">
-    <h1 >Sign in to JunkTrade </h1>
-    <h3> Let the trading begin!</h3>
-  </div>
+    <div class="jumbotron" style="text-align:center; font-family: 'Oswald', sans-serif;">
+      <h1 >Sign in to JunkTrade </h1>
+      <h3> Let the trading begin!</h3>
+    </div>
     <div class ="row main">
       <div class="main-login main-center">
         <!-- <form class="form-horizontal" onsubmit="return login();" method ="POST" action="index.php/users"> -->
           <form  role="form" data-toggle="validator" onsubmit="return login();">
           <fieldset>
             <!-- Form Name -->
-            <legend style="text-align: center"> <h2> Sign In </h2></legend>
 
             <div class="form-group has-feedback">
               <label for="username" class="cols-xs-2 control-label">Username or email address</label>
               <div class="cols-xs-12">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-                  <input autofocus type="text" class="form-control" name="email" id="email"  placeholder="Username or email" required="">
+                  <input autofocus type="text" class="form-control" name="email" id="email"  placeholder="Username or email" required/>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
+                
               </div>
             </div>
 
             <div class="form-group has-feedback">
-              <label for="password" class="cols-sm-2 control-label">Password</label>
-              <div class="cols-sm-10">
+              <label for="password" class="cols-xs-2 control-label">Password </label> 
+              
+              <div class="cols-xs-12">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                   <input type="password" data-minlength="6" class="form-control" name="password" id="password"  placeholder="Password" required/>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
+                <a class="pull-right"href ="reset.php" style ="color: blue; text-decoration: none;">Forgot password?</a></small>
               </div>
             </div>
 
             <!-- Button -->
             <div class="form-group">
-                <button name="saveBnt" class="btn btn-primary btn-lg btn-block login-button" id="saveBnt" type ="submit">Sign in</button>
-                <a href ="reset.php" style ="color: blue; text-decoration: none;">Forgot password?</a>
+                <button name="saveBnt" class="btn btn-success btn-block login-button" id="saveBnt" type ="submit">Sign in</button>
+                
+              </div>
+              <div>
+                <?php
+                  //Facebook 
+
+                  require_once __DIR__ . '/src/Facebook/autoload.php';
+                  $fb = new Facebook\Facebook([
+                    'app_id' => '552065338336275',
+                    'app_secret' => 'fed80c20693c796130702fc8f4be751f',
+                    'default_graph_version' => 'v2.4',
+                    ]);
+                  $helper = $fb->getRedirectLoginHelper();
+                  $permissions = ['email']; // optional
+                    
+                  $helper = $fb->getRedirectLoginHelper();
+
+                  $permissions = ['email']; // Optional permissions
+                  $loginUrl = $helper->getLoginUrl('http://localhost:8080/Project/junktrade/templates/facebookSession.php', $permissions);
+
+                  echo '<a href="' . htmlspecialchars($loginUrl) . '" class="btn btn-primary btn-block"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i> Login with Facebook</a>';
+                ?>
               </div>
             </div>
-              
           </fieldset>
         </form>
-
+        <div class="footer">
+          <p> <strong> &copy;2017 JunkTrade. All rights reserved</strong> </p>
+        </div>
       </div>
     </div>
   </div>
   <!--FAcebook login -->
-
-</div>
-
-<?php
-//Facebook 
-
-require_once __DIR__ . '/src/Facebook/autoload.php';
-$fb = new Facebook\Facebook([
-  'app_id' => '552065338336275',
-  'app_secret' => 'fed80c20693c796130702fc8f4be751f',
-  'default_graph_version' => 'v2.4',
-  ]);
-$helper = $fb->getRedirectLoginHelper();
-$permissions = ['email']; // optional
-  
-$helper = $fb->getRedirectLoginHelper();
-
-$permissions = ['email']; // Optional permissions
-$loginUrl = $helper->getLoginUrl('http://localhost:8080/junktradeproject/templates/facebookSession.php', $permissions);
-
-
-echo '<a href="' . htmlspecialchars($loginUrl) . '">Log in with Facebook!</a>';
-?>
 <!--footer -->
-  <div class="footer">
-    <p> &copy; JunkTrade 2016 </p>
-  </div>
+  
 <body>
 </html>

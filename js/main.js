@@ -533,13 +533,28 @@ function listUserItems(records){
 
 function viewItemImages(itemId){
     $.get("../index.php/itemimages/"+itemId, function(image){
-        $('.imagepreview').attr('src', image.picture);
         $('#picture1').attr('src', image.picture);
         $('#picture2').attr('src', image.picture2);
         $('#picture3').attr('src', image.picture3);
-        $('#imagemodal').modal('show'); 
+        $('#itemimagesmodal').modal('show'); 
     },"json");
     
+}
+
+function viewProfileImage(userId){
+    //swal("Working!", "", "success");
+    console.log(userId);
+    $.get("../index.php/profilepicture/"+userId, function(image){
+        console.log(image);
+        $('#profilepicture').attr('src', image.profilepicture);
+        $('#profilepicturemodal').modal('show'); 
+    },"json");  
+}
+
+function viewItemImage(image){
+    console.log(image);
+    $('#profilepicture').attr('src', image);
+    $('#profilepicturemodal').modal('show');  
 }
 //--------------------------------------------------------------------------------------------------------------------
 

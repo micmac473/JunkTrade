@@ -67,7 +67,7 @@ include "base.php";
 			   							if($request['requester'] == $user){
 			   								echo "<div class='panel panel-info'>";
 
-				            				echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$item['itemid'].")\"><strong>". $item['itemname'] . "</strong> </button><br><small> Views: ".$item['views']." </small><br></div>";
+				            				echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$item['itemid'].")\"><strong>". $item['itemname'] . "</strong> </button><br><small> Views: ".$item['views']." </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile(".$item['userid'].")\"> <strong> by ". $item['username'] ."</strong></button></div>";
 				          
 				            				echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$item['itemid'].")\" src=\"" . $item['picture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
 
@@ -88,7 +88,7 @@ include "base.php";
 			   				if($j == count($requests)){
 			   					echo "<div class='panel panel-info'>";
 
-				            	echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$item['itemid'].")\"><strong>". $item['itemname'] . "</strong> </button><br><small> Views: ".$item['views']." </small><br></div>";
+				            	echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$item['itemid'].")\"><strong>". $item['itemname'] . "</strong> </button><br><small> Views: ".$item['views']." </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile(".$item['userid'].")\"> <strong> by ". $item['username'] ."</strong></button></div>";
 				          
 				            	echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$item['itemid'].")\" src=\"" . $item['picture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
 				                

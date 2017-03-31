@@ -125,10 +125,26 @@ $app->get("/requestee/{id}", function(Request $request, Response $response){
 });
 
 $app->get("/itemimages/{id}", function(Request $request, Response $response){
-	$val = $request->getAttribute('id');
-	$requests = getItemImages($val);
+	$itemId = $request->getAttribute('id');
+	$images = getItemImages($itemId);
 	
-	$response = $response->withJson($requests);
+	$response = $response->withJson($images);
+	return $response;
+});
+
+$app->get("/itemimage/{id}", function(Request $request, Response $response){
+	$itemId = $request->getAttribute('id');
+	$image = getItemImage($itemId);
+	
+	$response = $response->withJson($image);
+	return $response;
+});
+
+$app->get("/profilepicture/{id}", function(Request $request, Response $response){
+	$userId = $request->getAttribute('id');
+	$profilePicture = getProfilePicture($userId);
+	
+	$response = $response->withJson($profilePicture);
 	return $response;
 });
 
