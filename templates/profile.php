@@ -135,6 +135,26 @@ if (isset($_POST['uploadU'])) {
 
 }
 
+if (isset($_POST['saveBnt'])) {
+  try{
+    $id = $_SESSION["id"];
+    $fname = $_POST['firstname'];
+    $lname = $_POST['lastname'];
+    $email = $_POST['email'];
+    $phone = $_POST['telephone'];
+
+    $db = getDBConnection();
+
+    $sql = "UPDATE users SET firstname='{$fname}', lastname='{$lname}', email='{$email}', telephone='{$phone}' WHERE id=$id;";
+    $db->query($sql);
+    unset($_POST);
+    $db->close();
+   }
+   catch(Exception $e){
+    print( $e->getMessage());
+   }
+}
+
 if (isset($_POST['uploadPic'])) {
   $filetmp = $_FILES["imagePic"]["tmp_name"];
   $filename = $_FILES["imagePic"]["name"];
@@ -155,6 +175,10 @@ if (isset($_POST['uploadPic'])) {
     print( $e->getMessage());
    }
 }
+
+
+
+
 
 $userID = getCurrentUser();
 $userRating = getUserRating($userID);
@@ -184,7 +208,7 @@ include "base.php";
     </div>
 
     <div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-      <button type="button" onclick ="showSearch();" class="btn btn-primary btn-block"><i class="fa fa-pencil-square fa-lg" aria-hidden="true"></i> Edit Profile</button>
+      <button type="button" onclick ="showEditProfileForm();" class="btn btn-primary btn-block"><i class="fa fa-pencil-square fa-lg" aria-hidden="true"></i> Edit Profile</button>
     </div> 
 
     <div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -311,54 +335,48 @@ include "base.php";
     </div>
   </div>
 
-  <div class ="row" style ="display:none" id ="editProfile">
+  <div class ="row" style ="display:none" id ="editProfileForm">
     <div class ="col-md-6">
-      <form class="form-horizontal" action ="profile.php" method ="POST" enctype="multipart/form-data">
+      <form class="form-horizontal" action="profile.php" method ="POST" enctype="multipart/form-data">
         <fieldset>
           <legend style="text-align:center">Edit Profile</legend>
             <!-- File Button-->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Photo 1 </label>
-              <div class="col-md-6">
-                <input name="itemImagesUpdate[]" class="input-file" id="imageU" type="file" accept="image/*" required="">
-              </div>
-            </div>
 
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Photo 2 </label>
-              <div class="col-md-6">
-                <input name="itemImagesUpdate[]" class="input-file" id="imageU" type="file" accept="image/*">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="uppic">Photo 3 </label>
-              <div class="col-md-6">
-                <input name="itemImagesUpdate[]" class="input-file" id="imageU" type="file" accept="image/*">
-              </div>
-            </div>
-            
-            <!-- Input -->
-            <div class="form-group"  >
-              <!-- <label class="col-md-4 control-label" for="ItemDescription">ItemID</label> -->
-              <div class="col-md-6">                     
-                <input name="id" class="form-control" id="id"  type="hidden" placeholder="ID" required="" >
-              </div>
-            </div>
           
             <!-- Input -->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="ItemDescription">Item Name</label>
+              <label class="col-md-4 control-label" for="editProfileForm">UserName</label>
               <div class="col-md-6">                     
-                <input name="itemnameU" class="form-control" id="itemnameU" type="text" placeholder="Item Name" maxlength="20" required="">
+                 <input autofocus type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="username" id="username"  placeholder="Enter your Username" disabled="">
               </div>
             </div>
 
             <!-- Textarea -->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="ItemDescription">Item Description</label>
+              <label class="col-md-4 control-label" for="editProfileForm">First Name</label>
               <div class="col-md-6">                     
-                <textarea name="itemdescriptionU" class="form-control" id="itemdescriptionU" placeholder="Tell us about your item" rows="5" required=""></textarea>
+                <input type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="firstname" id="firstname"  placeholder="Enter your First Name" required/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="editProfileForm">Last Name</label>
+              <div class="col-md-6">                     
+                <input type="text" pattern="^[_A-z0-9]{1,}$" minlength="3" maxlength="15" class="form-control" name="lastname" id="lastname"  placeholder="Enter your First Name" required/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="editProfileForm">Email</label>
+              <div class="col-md-6">                     
+                <input type="email" class="form-control" name="email" id="email"  placeholder="Enter your Email" required/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="editProfileForm">Telephone (E.g. 868-123-4567 )</label>
+              <div class="col-md-6">                     
+                <input class="form-control" id="telephone" name="telephone" type="tel" placeholder="868-123-4567" />
               </div>
             </div>
 
@@ -366,8 +384,8 @@ include "base.php";
             <div class="form-group">
               <label class="col-md-4 control-label" for="upload"></label>
               <div class="col-md-4">
-                <button type ="submit" name="uploadU" class="btn btn-success" id="uploadU">Update</button>
-                  <button type="button"onclick ="hideUpdateForm();" class="btn btn-warning" ></a>Cancel
+                <button id="saveBnt" name="saveBnt" type="submit" class="btn btn-success" data-delay="disable">Update</button>
+                  <button type="button"onclick ="hideEditProfileForm();" class="btn btn-warning" ></a>Cancel
                 </button>
               </div>
             </div>

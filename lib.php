@@ -1104,6 +1104,19 @@ function getUserItem($val){
 	return $rec;
 }
 
+function getUserDetails($userId){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$sql = "SELECT u.username, u.firstname, u.lastname, u.email, u.telephone FROM `users` u WHERE u.id = $userId;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec = $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
 
 function getUserInfo($userId){
 	$db = getDBConnection();

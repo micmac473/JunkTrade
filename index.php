@@ -68,6 +68,19 @@ $app->get("/edititem/{id}", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/editprofile/{id}", function(Request $request, Response $response){
+	$val = $request->getAttribute('id');
+	$item = getUserDetails($val);
+	
+	if($item > 0){
+		$response = $response->withJson($item);
+	}
+	else{
+		$response = $response->withStatus(404);
+	}
+	return $response;
+});
+
 $app->get("/owner/{id}", function(Request $request, Response $response){
 	$userID = $request->getAttribute('id');
 	$owner = getItemOwner($userID);

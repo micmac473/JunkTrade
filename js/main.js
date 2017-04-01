@@ -1135,6 +1135,29 @@ function hideSearch(){
     $('#ProfileSearch').hide("slow");
 
 }
+
+//----------------------------------------------------------------------------------------------------------------------
+//show and hide profile edit bar 
+function showEditProfileForm(){
+   
+$('#editProfileForm').show("slow");
+
+    $.get("../index.php/user", function(res){
+        var usr = res;
+        
+       $.get("../index.php/editprofile/"+usr, function(user){
+        $("#username").val(user.username);
+        $("#firstname").val(user.firstname);
+        $("#lastname").val(user.lastname);
+        $("#email").val(user.email);
+        $("#telephone").val(user.telephone);
+    }, "json");
+}, "json");
+}
+function hideEditProfileForm(){
+    $('#editProfileForm').hide("slow");
+
+}
 //--------------------------------------------------------------------------------------------------------------------
 // Show and hide edit item form
 function showUpdateForm(itemid){
@@ -1152,8 +1175,7 @@ function hideUpdateForm(){
     $('#updateItemform').hide("slow");
 
 }
-//----------------------------------------------------------------------------------------------------------------------
-
+//--------------------------------------------------------------------------------------------------------------
 // Add item image, name and description to database
 function addItem(){
     var image = $("#image").val();
