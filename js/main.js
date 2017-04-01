@@ -143,7 +143,7 @@ function login(){
         "password": password
     }
 
-    //console.log(user);
+    console.log(user);
     $.post("../index.php/login", user, function(res){
         //console.log(res);
         if(res != 400){
@@ -159,7 +159,10 @@ function login(){
                 showConfirmButton: false
             },
                 function(){
-                    window.location.href = 'homepage.php';
+                    if(res == "Administrator")
+                        window.location.href = 'admin.php';
+                    else
+                        window.location.href = 'homepage.php';
             });
             //window.location.href="homepage.php";
             //return false;
@@ -202,7 +205,6 @@ function login(){
             //return false;
         }
     },"json");
-    console.log("Logged In");
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------

@@ -390,21 +390,21 @@ span.input-group-addon i {
 
 
 @media (min-width: 480px) {
-#itemblock  img{
-  height: 200px;
-}
+  #itemblock  img{
+    height: 200px;
+  }
 }
 
 @media (-width: 768px) {
-#itemblock img{
-height: 240px;
-}
+  #itemblock img{
+    height: 240px;
+  }
 }
 
 @media (min-width: 992px) {
-#itemblock img{
-height: 240px;
-}
+  #itemblock img{
+    height: 240px;
+  }
 }
 
 @media (min-width: 1100px) {
@@ -414,11 +414,73 @@ height: 240px;
 }
 
 @media (min-width: 1200px) {
- #itemblock img{
-  height: 300px;
+  #itemblock img{
+    height: 300px;
+  }
+}
+
+/* Media Queries for trader items */
+@media (min-width: 480px) {
+  #traderitems  img{
+    height: 200px;
+  }
+}
+
+@media (-width: 768px) {
+  #traderitems img{
+    height: 240px;
+  }
+}
+
+@media (min-width: 992px) {
+  #traderitems img{
+    height: 240px;
+  }
+}
+
+@media (min-width: 1100px) {
+ #traderitems img{
+  height: 265px;
 }
 }
 
+@media (min-width: 1200px) {
+  #traderitems img{
+    height: 300px;
+  }
+}
+
+
+/* Media Queries for search result items */
+@media (min-width: 480px) {
+  #searchitemblock  img{
+    height: 200px;
+  }
+}
+
+@media (-width: 768px) {
+  #searchitemblock img{
+    height: 240px;
+  }
+}
+
+@media (min-width: 992px) {
+  #searchitemblock img{
+    height: 240px;
+  }
+}
+
+@media (min-width: 1100px) {
+ #searchitemblock img{
+  height: 265px;
+}
+}
+
+@media (min-width: 1200px) {
+  #searchitemblock img{
+    height: 300px;
+  }
+}
 .badge-notify{
    background:#E50000;
    position:relative;

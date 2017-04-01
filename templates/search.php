@@ -7,7 +7,7 @@ include "base.php";
 <div class="container-fluid">
   <div class="row">
 
-    <div id = "searchitemblock" class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+    <div id = "searchitemblock" class="">
 
 <?php
 		$items = [];
@@ -49,7 +49,7 @@ include "base.php";
 			   		}
 
 			   		$user = getCurrentUser();
-					echo "<h1> Showing results for \"".$_POST['searchname']."\" </h1>";
+					echo "<h1 class='text-center'> Showing results for \"".$_POST['searchname']."\" </h1>";
 
 			if($items != null){
 				if($type == "item"){
@@ -65,7 +65,8 @@ include "base.php";
 			   						}//end if($request['decision'] == true)
 			   						else{
 			   							if($request['requester'] == $user){
-			   								echo "<div class='panel panel-info'>";
+			   								echo "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>";
+			   								echo "<div class='panel panel-warning'>";
 
 				            				echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$item['itemid'].")\"><strong>". $item['itemname'] . "</strong> </button><br><small> Views: ".$item['views']." </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile(".$item['userid'].")\"> <strong> by ". $item['username'] ."</strong></button></div>";
 				          
@@ -79,6 +80,7 @@ include "base.php";
 				                			}
 				             
 				            				echo "</div>";
+				            				echo "</div>";
 				            				break;
 			   							}//end if($request['requester'] == $user)
 			   						}//end else
@@ -86,6 +88,7 @@ include "base.php";
 			   				}//end for($j = 0; $j < count($requests); $j++)
 
 			   				if($j == count($requests)){
+			   					echo "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>";
 			   					echo "<div class='panel panel-info'>";
 
 				            	echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$item['itemid'].")\"><strong>". $item['itemname'] . "</strong> </button><br><small> Views: ".$item['views']." </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile(".$item['userid'].")\"> <strong> by ". $item['username'] ."</strong></button></div>";
@@ -94,6 +97,7 @@ include "base.php";
 				                
 				            	echo "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-primary btn-block active' onclick=\"displayItemsForRequest(".$item['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
 				             
+				            	echo "</div>";
 				            	echo "</div>";
 			   				}//end ($j == count($requests))
 			          		
@@ -107,12 +111,13 @@ include "base.php";
 				  //-display the result of the array 
 				   				$filterUser = $filterUsers[$i];
 						if($filterUser['id'] != $user){
-				   					echo "<div class='panel panel-info'>";
+									echo "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>";
+				   					echo "<div class='panel panel-default'>";
 
-					            	echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewTraderProfile(".$filterUser['id'].")\"><strong>". $filterUser['firstname'] ." ".$filterUser['lastname']."(".$filterUser['username'].")".  "</strong> </button><br></div>";
+					            	echo "<div class='panel-heading text-center'><button style='text-decoration:none; color:black' type='button' class='btn btn-link' onclick=\"viewTraderProfile(".$filterUser['id'].")\"><strong>". $filterUser['firstname'] ." ".$filterUser['lastname']." (".$filterUser['username'].")".  "</strong> </button><br></div>";
 					          
 					            	echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewTraderProfile(".$filterUser['id'].")\" src=\"" . $filterUser['profilepicture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
-					             
+					             	echo "</div>";
 					            	echo "</div>";
 						}//end if($filterUsers['id'] != $user)
 							}//end	for($i = 0; $i < count($filterUsers); $i++)	
