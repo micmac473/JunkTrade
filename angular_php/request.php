@@ -1,7 +1,8 @@
 <?php
+
 	include ("libAngular.php");
 
-	$result = allUserDetails();
+	$result = allRequestDetails();
 
 	header('Content-Type: application/json');
 	echo json_encode(($result));

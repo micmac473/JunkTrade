@@ -175,58 +175,9 @@ if(!isset($_SESSION)){
                 </li>
             </ul>
         </div>
-     
-<!--
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-
-<div class ="container-fluid">
-  <div class ="row">
-    <div class="text-center jumbotron"> 
-      <h1>Activity <i class="fa fa-cogs fa-lg" aria-hidden="true" ></i></h1>
-    </div>  
-  </div>
-</div>
-
-    <h2>AngularJS Sample Application</h2>
-      <div ng-app = "" ng-controller = "userController">
-      
-         <table>
-            <tr>
-               <th>Id</th>
-               <th>FBID</th>
-               <th>Username</th>
-               <th>First Name</th>
-               <th>Last Name</th>
-               <th>email</th>
-               <th>telephone</th>
-            </tr>
-         
-            <tr ng-repeat = "user in users">
-               <td>{{ user.id }}</td>
-               <td>{{ user.fbid }}</td>
-               <td>{{ user.username }}</td>
-               <td>{{ user.firstnme }}</td>
-               <td>{{ user.lastname }}</td>
-               <td>{{ user.email }}</td>
-               <td>{{ user.telephone }}</td>
-            </tr>
-         </table>
-      </div>
-
-      <script>
-
-         function userController($scope,$http) {
-            var url = "../angular_php/users.php";
-
-            $http.get(url).then( function(response) {
-				console.log(response.data);
-               $scope.users = response.data;
-            });
-         }
-      </script>
-      
--->
-
+ <!--
+ Angular JS body begins for admin page
+ -->   
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 
@@ -239,8 +190,13 @@ if(!isset($_SESSION)){
 var app = angular.module("myApp", ["ngRoute"]);
 app.config(function($routeProvider) {
     $routeProvider
-    .when("/", {
-        templateUrl : "users.htm",
+    .when("/requests", {
+        templateUrl : "requests.htm",
+        controller : "requestsCtrl"
+    })
+    .when("/graphs", {
+      templateUrl: "users.htm",
+      controller: "usersCtrl"
     })
     .when("/items", {
         templateUrl : "items.htm",
@@ -249,6 +205,9 @@ app.config(function($routeProvider) {
     .when("/users", {
         templateUrl : "users.htm",
         controller : "usersCtrl"
+    })
+    .otherwise({
+        redirectTo : "/users"
     });
 });
 app.controller("usersCtrl", function ($scope, $http) {
@@ -258,6 +217,10 @@ app.controller("usersCtrl", function ($scope, $http) {
                 console.log(response.data);
                $scope.users = response.data;
             });
+
+            $scope.remove = function($index){
+              $scope.users.splice($index, 1 );
+            }
 });
 
 app.controller("itemsCtrl", function ($scope, $http) {
@@ -267,8 +230,23 @@ app.controller("itemsCtrl", function ($scope, $http) {
                 console.log(response.data);
                $scope.items = response.data;
             });
+
+            $scope.remove = function($index){
+             $scope.items.splice($index, 1 );
+            }      
 });
 
+app.controller("requestsCtrl", function ($scope, $http) {
+            var url = "../angular_php/request.php";
+
+            $http.get(url).then( function(response) {
+                console.log(response.data);
+               $scope.requests = response.data;
+            });
+            $scope.remove = function($index){
+              $scope.requests.splice($index, 1 );
+            }
+});
 </script>
 </div>      
 
