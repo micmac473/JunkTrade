@@ -119,42 +119,24 @@ function getCurrentPage(){
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
 
-        <a id="menu-toggle" href="#"><i class="navbar-brand btn-menu toggle fa fa-bars fa-lg" aria-hidden="true"></i>  </a>
-        <a class="navbar-brand" href="homepage.php" style="padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
+        <a class="navbar-brand btn btn-link btn-menu toggle" id="menu-toggle" href="#" style="padding-left:0; padding-right:0;"><i class="fa fa-arrows-h fa-lg"></i>  </a>
+        <a class="navbar-brand" href="homepage.php" style="padding-left:0;padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
+        <a href="#" class="navbar-brand" style="color: white;font-family: 'Roboto Condensed', sans-serif; padding-left:0; padding-right:0;"><?php echo $currentPage ?></a>
         
         <!--<a class="navbar-brand" href ="homepage.php">JunkTrade</a> -->
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
       </div>
 
-      <div id="navbar" class="navbar-collapse collapse">
-        <span class="navbar-brand" style="color: white;font-family: 'Roboto Condensed', sans-serif;"><?php echo $currentPage ?></span>
-        <!--  <ul class="nav navbar-nav">
-
-         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="">Electronics</a></li>
-              <li><a href="#">Furniture</a></li>
-              <li><a href="#">Books & Magazines</a></li>
-              <li><a href="#">Clothes</a></li>
-            </ul>
-          </li>
-        </ul> -->
-
-        <!--<form class="navbar-form navbar-left" role="form" action ="search.php?go">
-          <div class="form-group">
-            <input type="text" placeholder="Search for Junk" class="form-control" name="searchname">
-          </div>
-          <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true" name="searchsubmit"></i></button>
-        </form> -->
-
+      <div id="mynavbar" class="navbar-collapse collapse">
+        
+        
         <ul class="nav navbar-nav navbar-right">
           <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="toggler('uploadItem');"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
 
@@ -173,7 +155,7 @@ function getCurrentPage(){
             </ul>
           </li>
           
-          <li class="">
+          <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="requestsNotify"></span></a>
             <ul class="dropdown-menu" id="requests">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
@@ -181,7 +163,7 @@ function getCurrentPage(){
             </ul>
 
           </li>
-          <li class="">
+          <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="decisionsNotify"></span></a>
             <ul class="dropdown-menu" id="decisions">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
@@ -190,7 +172,7 @@ function getCurrentPage(){
 
           </li>
 
-          <li class="">
+          <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comment fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="chatNotify"></span></a>
             <ul class="dropdown-menu" id="messages">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
@@ -344,7 +326,7 @@ function getCurrentPage(){
           <div class="row text-center">
             <div class="col-lg-2 col-md-1 col-sm-1 col-xs-12">
               <?php   
-                $ppid = $_SESSION["id"];         
+                $ppid = $_SESSION["id"];       
                 echo "<a href='#' onclick=\"viewProfileImage(".$ppid.")\">" .getProfileImage($ppid)."</a>"; 
                 //echo $_SESSION["id"];  
               ?>

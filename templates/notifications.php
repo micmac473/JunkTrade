@@ -160,7 +160,7 @@ include "base.php";
                 <div class="">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-                    <input class="form-control" id="requesteecontact" name="requesteecontact" type="tel" placeholder="868-123-4567"required pattern="\d{868}[\-]\d{3}[\-]\d{4}"/>
+                    <input class="form-control" id="requesteecontact" name="requesteecontact" type="tel" placeholder="868-123-4567"required pattern="\d{3}[\-]\d{3}[\-]\d{4}"/>
                     
                   </div>
                   <small><span class="help-block">Format: 868-123-4567</span></small>

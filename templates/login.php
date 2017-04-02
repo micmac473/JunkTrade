@@ -154,15 +154,15 @@ form {
                   $permissions = ['email']; // Optional permissions
                   $loginUrl = $helper->getLoginUrl('http://localhost:8080/junktrade/templates/facebookSession.php', $permissions);
 
-                  echo '<a href="' . htmlspecialchars($loginUrl) . '" class="btn btn-primary btn-block"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i> Login with Facebook</a>';
+                  echo '<div class="form-group"> <a href="' . htmlspecialchars($loginUrl) . '" class="btn btn-primary btn-block"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i> Login with Facebook</a></div>';
                 ?>
               </div>
-            </div>
           </fieldset>
         </form>
         <div class="footer">
           <p> <strong> &copy;2017 JunkTrade. All rights reserved</strong> </p>
         </div>
+
       </div>
     </div>
   </div>

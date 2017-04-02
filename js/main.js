@@ -93,7 +93,23 @@ function queryUserRequests(){
     $.get("../index.php/requests", function(res){
         if(JSON.stringify(res) !== JSON.stringify(currNotifcations)){
             console.log("Request change");
-            //toastr["success"]("New Item Request Or Cancellation");
+            toastr["info"]("New/Cancelled/Decision", "Request")
+            toastr.options = {
+              "closeButton": false,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": false,
+              "positionClass": "toast-bottom-left",
+              "preventDuplicates": false,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            };
             currNotifcations = res;
             notifications(res);
         }
@@ -104,7 +120,23 @@ function queryDecisions(){
     $.get("../index.php/decisions", function(res){
         if(JSON.stringify(res) !== JSON.stringify(currDecisions)){
             console.log("New Item Decision");
-            //toastr["success"]("New Item Decision");
+            toastr["info"]("Accepted/Denied/Read", "Decision")
+            toastr.options = {
+              "closeButton": false,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": false,
+              "positionClass": "toast-bottom-left",
+              "preventDuplicates": false,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            };
             currDecisions = res;
             decisions(res);
         }
@@ -123,7 +155,23 @@ function queryDecisions(){
 function queryNewMessages(){
     $.get("../index.php/newmessagesnotification", function(messages){
         if(JSON.stringify(messages) !== JSON.stringify(currNewMessagesNotification)){
-            //toastr["success"]("New Message");
+            toastr["info"]("New/Read", "Chat Message")
+            toastr.options = {
+              "closeButton": false,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": false,
+              "positionClass": "toast-bottom-left",
+              "preventDuplicates": false,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            };
             currNewMessagesNotification = messages;
             processNewMessagesNotification(messages);
         }
@@ -229,7 +277,9 @@ function login1(){
             swal({ 
                 title: "Success " + res,
                 text: "You have reset your password",
-                type: "" 
+                type: "success",
+                timer: 1000,
+                showConfirmButton: false
             },
                 function(){
                     window.location.href = 'updatePassword.php';
@@ -238,7 +288,13 @@ function login1(){
             //return false;
         }
         else{
-            swal("Incorrect Security Answer","Please try again","error")
+            swal({
+                title: "Incorrect Security Answer",
+                text: "Please try again",
+                type: "error",
+                timer: 1000,
+                showConfirmButton: false
+            });
             //return false;
         }
     },"json");
