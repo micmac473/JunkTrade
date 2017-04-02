@@ -1,6 +1,6 @@
 <?php
 
-	include ("../lib.php");
+	include ("libAngular.php");
 
 	$result = allItemDetails();
 

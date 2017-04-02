@@ -1118,34 +1118,6 @@ function getUserDetails($userId){
 	return $rec;
 }
 
-function allUserDetails(){
-	$db = getDBConnection();
-	$rec = null;
-	if ($db != null){
-		$sql = "SELECT u.id, u.fbid, u.username, u.firstname, u.lastname, u.email, u.telephone FROM `users` u";
-		$res = $db->query($sql);
-		while($res && $row = $res->fetch_assoc()){
-			$users[] = $row;
-		}
-		$db->close();
-	}
-	return $users;
-}
-
-function allItemDetails(){
-	$db = getDBConnection();
-	$rec = null;
-	if ($db != null){
-		$sql = "SELECT u.username, i.itemname, i.itemdescription, i.uploaddate FROM `items` i ,`users` u WHERE u.id = i.userid";
-		$res = $db->query($sql);
-		while($res && $row = $res->fetch_assoc()){
-			$users[] = $row;
-		}
-		$db->close();
-	}
-	return $users;
-}
-
 function getUserInfo($userId){
 	$db = getDBConnection();
 	$rec = null;
