@@ -176,7 +176,7 @@ if(!isset($_SESSION)){
             </ul>
         </div>
      
-
+<!--
 <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 
 <div class ="container-fluid">
@@ -225,8 +225,52 @@ if(!isset($_SESSION)){
          }
       </script>
       
-      
-      
+-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+
+
+<div ng-app="myApp">
+
+<div ng-view></div>
+
+<script>
+var app = angular.module("myApp", ["ngRoute"]);
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/", {
+        templateUrl : "users.htm",
+    })
+    .when("/items", {
+        templateUrl : "items.htm",
+        controller : "itemsCtrl"
+    })
+    .when("/users", {
+        templateUrl : "users.htm",
+        controller : "usersCtrl"
+    });
+});
+app.controller("usersCtrl", function ($scope, $http) {
+            var url = "../angular_php/users.php";
+
+            $http.get(url).then( function(response) {
+                console.log(response.data);
+               $scope.users = response.data;
+            });
+});
+
+app.controller("itemsCtrl", function ($scope, $http) {
+            var url = "../angular_php/items.php";
+
+            $http.get(url).then( function(response) {
+                console.log(response.data);
+               $scope.items = response.data;
+            });
+});
+
+</script>
+</div>      
 
 <script>
 window.onload = function() {

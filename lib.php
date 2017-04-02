@@ -1132,6 +1132,20 @@ function allUserDetails(){
 	return $users;
 }
 
+function allItemDetails(){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$sql = "SELECT u.username, i.itemname, i.itemdescription, i.uploaddate FROM `items` i ,`users` u WHERE u.id = i.userid";
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$users[] = $row;
+		}
+		$db->close();
+	}
+	return $users;
+}
+
 function getUserInfo($userId){
 	$db = getDBConnection();
 	$rec = null;
