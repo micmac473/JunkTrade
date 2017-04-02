@@ -93,7 +93,13 @@ function queryUserRequests(){
     $.get("../index.php/requests", function(res){
         if(JSON.stringify(res) !== JSON.stringify(currNotifcations)){
             console.log("Request change");
-            toastr["info"]("New/Cancelled/Decision", "Request")
+            //toastr["info"]("New/Cancelled/Decision", "Request");
+            if(res.length < currNotifcations.length){
+                toastr["warning"]("Cancelled", "Item Request");
+            }
+            else{
+                toastr["info"]("New/Decision made", "Item Request");
+            }
             toastr.options = {
               "closeButton": false,
               "debug": false,
