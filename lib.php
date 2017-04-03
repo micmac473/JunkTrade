@@ -7,10 +7,10 @@ function getDBConnection(){
 		//$db = new mysqli("198.199.66.99","junktrader","j!p@aChU7Ust","junktrader");
 
 		//Use when on Server
-		$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
+		//$db = new mysqli("localhost","junktrader","j!p@aChU7Ust","junktrader");
 
 		//Use when on local machine
-		//$db = new mysqli("localhost","root","","junktrader");
+		$db = new mysqli("localhost","root","","junktrader");
 		if ($db == null && $db->connect_errno > 0)
 			return null;
 		return $db;
@@ -155,8 +155,8 @@ function isExistFbId($fbId){
 	return $rec;
 }
 
-function saveFBUser($fbFirstName, $fbEmail, $fbId){
-	$sql = "INSERT INTO `users` (`fbid`,`username`,`firstname`,`email`) VALUES ($fbId,'$fbFirstName','$fbFirstName', '$fbEmail');";
+function saveFBUser($fbFirstName, $fbEmail, $fbId, $fbPicture){
+	$sql = "INSERT INTO `users` (`fbid`,`username`,`firstname`,`email`,`profilepicture`) VALUES ($fbId,'$fbFirstName','$fbFirstName', '$fbEmail','$fbPicture');";
 	$id = -1;
 	$db = getDBConnection();
 	if ($db != NULL){
@@ -171,9 +171,9 @@ function saveFBUser($fbFirstName, $fbEmail, $fbId){
 }
 
 
-function updateFbId($userId, $fbId){
+function updateFbId($userId, $fbId, $fbPicture){
 	$db = getDBConnection();
-	$sql = "UPDATE `users` u SET `fbid` = $fbId WHERE u.id = $userId;";
+	$sql = "UPDATE `users` u SET `fbid` = $fbId, `profilepicture` = '$fbPicture' WHERE u.id = $userId;";
 	$res = null;
 	if ($db != NULL){
 		$res = $db->query($sql);
@@ -736,8 +736,8 @@ function getUserFollowersCount($traderId){
 
 function getUserTradeCount($traderId){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT COUNT(*) AS numtrades FROM `requests` r WHERE r.requester = $traderId  AND r.decision = true;";
-	$sql .= "SELECT COUNT(*) AS numtrades FROM `requests` r WHERE r.requestee = $traderId AND r.decision = true;";
+	$sql = "SELECT COUNT(*) AS numtrades FROM `requests` r, `trade` t WHERE r.id = t.requestid AND r.requester = $traderId  AND r.decision = true AND t.tradedate < now();";
+	$sql .= "SELECT COUNT(*) AS numtrades FROM `requests` r, `trade` t WHERE r.id = t.requestid AND r.requestee = $traderId AND r.decision = true AND t.tradedate < now();";
 	$updates =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -1457,9 +1457,9 @@ function cancelRequest($requestId){
 function acceptRequest($requestId, $requesteeItem, $requesterItem){
 	$db = getDBConnection();
 	$sql = "UPDATE `requests` r SET r.decision = true WHERE r.id = $requestId;";
-	$sql .= "UPDATE `requests` r SET r.decision = false WHERE r.item = $requesteeItem AND r.id <> $requestId;";
-	$sql .= "UPDATE `requests` r SET r.decision = false WHERE r.item = $requesterItem AND r.id <> $requestId;";
-	$sql .= "UPDATE `requests` r SET r.decision = false WHERE r.item2 = $requesterItem AND r.id <> $requestId;";
+	$sql .= "UPDATE `requests` r SET r.decision = false, r.denyreason = 'Trader accepted another request, sorry' WHERE r.item = $requesteeItem AND r.id <> $requestId;";
+	$sql .= "UPDATE `requests` r SET r.decision = false, r.denyreason = 'Trader accepted another request, sorry' WHERE r.item = $requesterItem AND r.id <> $requestId;";
+	$sql .= "UPDATE `requests` r SET r.decision = false, r.denyreason = 'Trade already accepted for your item, sorry' WHERE r.item2 = $requesterItem AND r.id <> $requestId;";
 	$sql .= "DELETE FROM `saved`  WHERE  `itemid` = $requesteeItem OR `itemid` = $requesterItem;";
 	$sql .= "DELETE FROM `requests`  WHERE  `item2` = $requesteeItem AND `id` <> $requestId;";
 	$res = null;
