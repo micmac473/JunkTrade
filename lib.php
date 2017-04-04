@@ -155,8 +155,8 @@ function isExistFbId($fbId){
 	return $rec;
 }
 
-function saveFBUser($fbFirstName, $fbEmail, $fbId, $fbPicture){
-	$sql = "INSERT INTO `users` (`fbid`,`username`,`firstname`,`email`,`profilepicture`) VALUES ($fbId,'$fbFirstName','$fbFirstName', '$fbEmail','$fbPicture');";
+function saveFBUser($fbFirstName, $fbEmail, $fbId){
+	$sql = "INSERT INTO `users` (`fbid`,`username`,`firstname`,`email`) VALUES ($fbId,'$fbFirstName','$fbFirstName', '$fbEmail');";
 	$id = -1;
 	$db = getDBConnection();
 	if ($db != NULL){

@@ -5,19 +5,25 @@ include "base.php";
 ?>
 
 <div class="container-fluid">
-
   <div class="row">
-    <div class="well well-sm col-lg-4 col-lg-offset-1 col-md-6 col-sm-12 col-xs-12" style="background-color: white;">
-      <h4 class="text-center"><i class="fa fa-calendar" aria-hidden="true"></i> <u>Upcoming Events</u> </h4>
-      <div id="reminders" style="overflow-y: scroll; height:65px"> 
+    <div class="col-lg-6">
+      <div class="panel panel-primary" style="">
+        <div class="panel-heading text-center">
+          <i class="fa fa-calendar" aria-hidden="true"></i>  Upcoming Events (<span id="eventscount"></span>)
+        </div>
+        <div class="panel-body" id="reminders" style="overflow-y: scroll; height:50px; padding:0.2em"> 
           
+        </div>
       </div>
     </div>
-
-    <div class="well well-sm col-lg-4 col-lg-offset-1 col-md-6 col-sm-12 col-xs-12" style="background-color: white;">
-      <h4 class="text-center" ><i class="fa fa-rss" aria-hidden="true"></i> <u>Recent Updates</u> </h4>
-      <div id="followerupdates" style="overflow-y: scroll; height:65px"> 
-          
+    <div class="col-lg-6">
+      <div class="panel panel-primary" style="background-color: white;">
+        <div class="panel-heading text-center">
+          <i class="fa fa-rss" aria-hidden="true"></i> Recent Updates (<span id="updatescount"></span>)
+        </div>
+        <div class="panel-body" id="followerupdates" style="overflow-y: scroll; height:50px; padding:0.2em"> 
+              
+        </div>
       </div>
     </div>
   </div>

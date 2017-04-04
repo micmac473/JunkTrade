@@ -6,7 +6,7 @@ include "base.php";
 
   <div class="row">
     <div class="col-xs-12 table-responsive">
-      <div class="header text-center">
+      <div class="page-header text-center">
         <h1>Outgoing Requests <i class="fa fa-paper-plane fa-lg" aria-hidden="true" ></i></h1>
       </div>
     <!--<h4>Products</h4>

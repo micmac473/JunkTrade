@@ -15,7 +15,7 @@ function getCurrentPage(){
   else if(stripos($currentPage,"notifications") !== false)
     $page = "Notifications";
   else if(stripos($currentPage,"trader") !== false)
-    $page = "Trader";
+    $page = "Trader Detail";
   else if(stripos($currentPage,"trade") !== false)
     $page = "Requests";
   else if(stripos($currentPage,"people") !== false)
@@ -29,7 +29,7 @@ function getCurrentPage(){
   else if(stripos($currentPage,"history") !== false)
     $page = "History";
   else if(stripos($currentPage,"item") !== false)
-    $page = "Item";
+    $page = "Item Detail";
   
 
   return $page;
@@ -52,6 +52,7 @@ function getCurrentPage(){
     <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:900" rel="stylesheet">
 
     <!-- Latest compiled and minified CSS Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -126,9 +127,9 @@ function getCurrentPage(){
           <span class="icon-bar"></span>
         </button>
 
-        <a class="navbar-brand btn btn-link btn-menu toggle" id="menu-toggle" href="#" style="padding-left:0; padding-right:0;"><i class="fa fa-arrows-h fa-lg"></i>  </a>
+        <a class="navbar-brand btn btn-link btn-menu toggle" id="menu-toggle" href="#" style="padding-left:0.2em; padding-right:0.2em;"><i class="fa fa-bars"></i>  </a>
         <a class="navbar-brand" href="homepage.php" style="padding-left:0;padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
-        <a href="#" class="navbar-brand" style="color: white;font-family: 'Roboto Condensed', sans-serif; padding-left:0; padding-right:0;"><?php echo $currentPage ?></a>
+        <a href="#" class="navbar-brand" style="color: white;font-family: 'Roboto Condensed', sans-serif; padding-left:0.2em; padding-right:0.2em;"><?php echo $currentPage ?></a>
         
         <!--<a class="navbar-brand" href ="homepage.php">JunkTrade</a> -->
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
@@ -318,60 +319,99 @@ function getCurrentPage(){
             </ul>
         </div>
     <?php 
-    if($currentPage != "Trader"){
+    if($currentPage != "Trader" && $currentPage != "Profile" && $currentPage != "Trader Detail"){
 
       ?>
-      <div class="jumbotron">
-        <div class="container">
-          <div class="row text-center">
-            <div class="col-lg-2 col-md-1 col-sm-1 col-xs-12">
-              <?php   
-                $ppid = $_SESSION["id"];       
-                echo "<a href='#' onclick=\"viewProfileImage(".$ppid.")\">" .getProfileImage($ppid)."</a>"; 
-                //echo $_SESSION["id"];  
-              ?>
-            </div>
-            <div class="col-lg-10 col-md-11 col-sm-11 col-xs-12">
-              <h1 style="color:#096790 ;text-shadow: 2px 2px white;font-family: 'Oswald', sans-serif;"> 
-                <?php  
-                  date_default_timezone_set("America/Grenada");
-                  $hour = date("H");
+      <div class="container-fluid" style="background-color: white">
+        <div class="row text-center">
+          <div class="">
+            <h1 style="color:#096790;text-shadow: 2px 2px white; font-family: 'Oswald', sans-serif; text-transform: uppercase;padding-bottom: 1"> 
+              <?php  
+                date_default_timezone_set("America/Grenada");
+                $hour = date("H");
                   //echo $hour;
                   //$hour = 6;
-                  if($hour >= 0 && $hour < 12){
-                    if($hour < 6){
-                      echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-moonset'></i>";
-                    }
-                    else if ($hour >=6 && $hour <=7){
-                      echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-sunrise'></i>";
-                    }
-                    else{
-                      echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-day-sunny'></i>";
-                    }
-                    
+                if($hour >= 0 && $hour < 12){
+                  if($hour < 6){
+                    echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-moonset'></i>";
                   }
-                  else if($hour >= 12 && $hour < 18){
-                    echo "Good Afternoon, ". $_SESSION["user"]. "! <i class='wi wi-day-sunny'></i>";
+                  else if ($hour >=6 && $hour <=7){
+                    echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-sunrise'></i>";
                   }
                   else{
-                    if($hour == 18){
-                      echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-sunset'></i>";
-                    }
-                    else{
-                      echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-night-clear'></i>";
-                    }
-                    
+                    echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-day-sunny'></i>";
+                  }  
+                }
+                else if($hour >= 12 && $hour < 18){
+                  echo "Good Afternoon, ". $_SESSION["user"]. "! <i class='wi wi-day-sunny'></i>";
+                }
+                else{
+                  if($hour == 18){
+                    echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-sunset'></i>";
                   }
-                ?>
-              </h1>
-            </div>
+                  else{
+                    echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-night-clear'></i>";
+                  }  
+                }
+              ?>
+            </h1>
+          </div>
+        </div>
+      </div>
+      <br/>
+  <?php
+  }
+  ?>
+  <?php
+  if($currentPage == "Profile"){
+
+      ?>
+      <div class="jumbotron container-fluid">
+        <div class="row text-center">
+          <div class="col-lg-2 col-md-1 col-sm-1 col-xs-12">
+            <?php   
+              $ppid = $_SESSION["id"];       
+              echo "<a href='#' onclick=\"viewProfileImage(".$ppid.")\">" .getProfileImage($ppid)."</a>"; 
+                //echo $_SESSION["id"];  
+            ?>
+          </div>
+          <div class="col-lg-10 col-md-11 col-sm-11 col-xs-12">
+            <h1 style="color:#096790 ;text-shadow: 2px 2px white;font-family: 'Oswald', sans-serif; text-transform: uppercase;"> 
+              <?php  
+                date_default_timezone_set("America/Grenada");
+                $hour = date("H");
+                  //echo $hour;
+                  //$hour = 6;
+                if($hour >= 0 && $hour < 12){
+                  if($hour < 6){
+                    echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-moonset'></i>";
+                  }
+                  else if ($hour >=6 && $hour <=7){
+                    echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-sunrise'></i>";
+                  }
+                  else{
+                    echo "Good Morning, ".$_SESSION["user"]."! <i class='wi wi-day-sunny'></i>";
+                  }  
+                }
+                else if($hour >= 12 && $hour < 18){
+                  echo "Good Afternoon, ". $_SESSION["user"]. "! <i class='wi wi-day-sunny'></i>";
+                }
+                else{
+                  if($hour == 18){
+                    echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-sunset'></i>";
+                  }
+                  else{
+                    echo "Good Evening, ". $_SESSION["user"]. "! <i class='wi wi-night-clear'></i>";
+                  }  
+                }
+              ?>
+            </h1>
           </div>
         </div>
       </div>
   <?php
   }
   ?>
-
 
 
 <!-- Add Item -->

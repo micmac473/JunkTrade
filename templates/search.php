@@ -49,7 +49,7 @@ include "base.php";
 			   		}
 
 			   		$user = getCurrentUser();
-					echo "<h1 class='text-center'> Showing results for \"".$_POST['searchname']."\" </h1>";
+					echo "<h1 class='page-header text-center'> Showing results for \"".$_POST['searchname']."\" </h1>";
 
 			if($items != null){
 				if($type == "item"){

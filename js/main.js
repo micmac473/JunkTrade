@@ -2301,6 +2301,7 @@ function processUserMeetUp(records){
 
 function displayUserMeetUp(records){
     var events="<div class='container-fluid'>";
+    var eventsCount = 0;
     //console.log(records.length);
     if(records.length != 0){
         console.log(records.length);
@@ -2308,6 +2309,7 @@ function displayUserMeetUp(records){
         //records.forEach(function(el){
             for(var i = 0; i < records.length; i++){
                 events+="<div class='well well-sm'><a href='meetup.php' style='cursor: pointer; color:black'><i class='fa fa-calendar' aria-hidden='true'></i> " + moment(records[i][0]).format('dddd MMMM Do, YYYY') + " at <i class='fa fa-map-marker' aria-hidden='true'></i> " + records[i][1] + " with <i class='fa fa-user' aria-hidden='true'></i> "+records[i][4]+" </a></div>";
+                eventsCount += 1;
             }
             
         //});
@@ -2316,7 +2318,8 @@ function displayUserMeetUp(records){
     else{
         events+="<div class='well well-sm'> <em>No upcoming meetups</em></div>";
     }
-    events+="</div>"
+    events+="</div>";
+    $("#eventscount").html(eventsCount);
     $("#reminders").html(events);
 
 }
@@ -2337,6 +2340,7 @@ function processUserFollowerUpdates(records){
 function displayUserFollowerUpdates(records, requests){
     var updates="<div class='container-fluid'>", j;
     //alert(records.length);
+    var updatesCount = 0;
     if(records.length != requests.length){
         records.forEach(function(el){
             for(j = 0; j < requests.length; j ++){
@@ -2347,6 +2351,7 @@ function displayUserFollowerUpdates(records, requests){
 
             if(j == requests.length){
                 updates+="<div class='well well-sm'><a onclick=\"viewItem("+el['itemid']+")\" style='cursor: pointer; color:black'> <i class='fa fa-user' aria-hidden='true'></i>"+  " " + el['username'] + " uploaded <i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"</a></div>"; 
+                updatesCount += 1;
             }
             
         });
@@ -2354,8 +2359,10 @@ function displayUserFollowerUpdates(records, requests){
     else{
         updates+="<div class='well well-sm'> <em>No follower updates</em></div>";
     }
-    updates+="</div>"
+    updates+="</div>";
+    $("#updatescount").html(updatesCount);
     $("#followerupdates").html(updates);
+    
 
 }
 //--------------------------------------------------------------------------------------------

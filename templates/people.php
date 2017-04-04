@@ -8,7 +8,7 @@ include "base.php";
 
   <div class ="row">
     <div class="col-lg-7">
-      <div class="header text-center">
+      <div class="page-header text-center">
         <h1>Following <i class="fa fa-rss fa-lg" aria-hidden="true" ></i></h1>
       </div>
       <div class="table-responsive">
@@ -17,7 +17,7 @@ include "base.php";
     </div>
 
     <div class="col-lg-5">
-      <div class="header text-center">
+      <div class="page-header text-center">
         <h1>Followers <i class="fa fa-rss-square fa-lg" aria-hidden="true" ></i></h1>
       </div>
       <div class="table-responsive">

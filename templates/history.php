@@ -7,7 +7,7 @@ include "base.php";
 <div class ="container-fluid">
   <div class ="row">
     <div class="col-xs-12 table-responsive">
-      <div class="header text-center"> 
+      <div class="page-header text-center"> 
         <h1>Trades <i class="fa fa-handshake-o fa-lg" aria-hidden="true" ></i></h1>
       </div>
 
@@ -15,7 +15,7 @@ include "base.php";
     </div>
 
     <div class="col-xs-12 table-responsive">
-      <div class="header text-center"> 
+      <div class="page-header text-center"> 
         <h1>Incoming Requests <i class="fa fa-envelope-open fa-lg" aria-hidden="true" ></i></h1>
       </div>
 

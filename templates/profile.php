@@ -204,7 +204,7 @@ include "base.php";
     </div>
 
     <div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-      <button type="button" onclick ="showProfilePictureForm();" class="btn btn-primary btn-block"> <i class="fa fa-camera fa-lg" aria-hidden="true"></i> Update Profile Picture</button>
+      <button type="button" onclick ="showProfilePictureForm();" class="btn btn-primary btn-block"> <i class="fa fa-camera fa-lg" aria-hidden="true"></i> Update Picture</button>
     </div>
 
     <div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">

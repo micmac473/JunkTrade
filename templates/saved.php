@@ -5,7 +5,7 @@ include "base.php";
 ?>
 
 <div class ="container-fluid">
-  <div class="header text-center">
+  <div class="page-header text-center">
     <h1> Saved Items <i class="fa fa-bookmark fa-lg" aria-hidden="true" ></i> </h1>
   </div>
   <div class ="row">
