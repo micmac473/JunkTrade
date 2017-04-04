@@ -6,7 +6,7 @@ include "base.php";
 
 <div class ="container-fluid">
   <div class="page-header text-center">
-    <h1> Saved Items <i class="fa fa-bookmark fa-lg" aria-hidden="true" ></i> </h1>
+    <h2> Saved Items <i class="fa fa-bookmark" aria-hidden="true" ></i> </h2>
   </div>
   <div class ="row">
     <div class="col-xs-12 table-responsive">
@@ -20,8 +20,7 @@ include "base.php";
   <table class="table table-hover table-condensed">
     <thead>
     <tr>
-      <th></th>
-      <th><i class="fa fa-gift" aria-hidden="true" ></i> Item</th>
+      <th colspan="2" class="text-center"><i class="fa fa-gift" aria-hidden="true" ></i> Item</th>
       <th><i class="fa fa-user" aria-hidden="true" ></i> Owner</th>
       <th><i class="fa fa-calendar" aria-hidden="true" ></i> Date Saved</th>
       <th><i class="fa fa-cog" aria-hidden="true" ></i> Action</th>

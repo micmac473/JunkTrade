@@ -152,7 +152,7 @@ form {
                   $helper = $fb->getRedirectLoginHelper();
 
                   $permissions = ['email']; // Optional permissions
-                  $loginUrl = $helper->getLoginUrl('http://localhost:8080/junktrade/templates/facebookSession.php', $permissions);
+                  $loginUrl = $helper->getLoginUrl('http://localhost/junktrade/templates/facebookSession.php', $permissions);
                   //$loginUrl = $helper->getLoginUrl('http://198.199.66.99/junktrade/templates/facebookSession.php', $permissions);
 
                   echo '<div class="form-group"> <a href="' . htmlspecialchars($loginUrl) . '" class="btn btn-primary btn-block"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i> Login with Facebook</a></div>';

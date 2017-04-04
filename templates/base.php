@@ -54,6 +54,9 @@ function getCurrentPage(){
     <link href="https://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
     <!-- Latest compiled and minified CSS Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -130,7 +133,7 @@ function getCurrentPage(){
 
         <a class="navbar-brand btn btn-link btn-menu toggle" id="menu-toggle" href="#" style="padding-left:0.2em; padding-right:0.2em;"><i class="fa fa-bars"></i>  </a>
         <a class="navbar-brand" href="homepage.php" style="padding-left:0;padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
-        <a href="#" class="navbar-brand" style="color: white;font-family: 'Roboto Condensed', sans-serif; padding-left:0.2em; padding-right:5em;"><?php echo $currentPage ?></a>
+        <a href="#" class="navbar-brand" style="color: white;font-family: 'Roboto Condensed', sans-serif; padding-left:0.2em; padding-right:0.2em;"><?php echo $currentPage ?></a>
         
         <!--<a class="navbar-brand" href ="homepage.php">JunkTrade</a> -->
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
@@ -143,12 +146,12 @@ function getCurrentPage(){
           <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="toggler('uploadItem');" style="padding-left:5em; padding-right:2em"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
           <?php
           $ppid = $_SESSION["id"]; 
-          echo '<li style="padding-top: 7px"> <img class="img-rounded"alt ="logo" width ="40px" height ="40px" src ='. getProfilePictureNavBar($ppid).'> </li>'
+          echo '<li style="padding-top: 7px"> <img class="img-rounded" alt ="profilepicture" width ="40px" height ="40px" src ='. getProfilePictureNavBar($ppid).'> </li>'
           ?>
           <li class="dropdown" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-left: 0.2em">
               <?php
-                echo $_SESSION['user'];
+                echo '<strong>'.$_SESSION['user'].'</strong>';
               ?>
               <span class="caret"></span>
             </a>
@@ -325,10 +328,10 @@ function getCurrentPage(){
     if($currentPage != "Trader" && $currentPage != "Profile" && $currentPage != "Trader Detail"){
 
       ?>
-      <div class="container-fluid" style="background-color: white;">
+      <div class="container-fluid" style="">
         <div class="row text-center">
           <div class="">
-            <h1 style="color:#096790;text-shadow: 2px 2px white; font-family: 'Oswald', sans-serif; text-transform: uppercase;"> 
+            <h1 style="color:#096790;text-shadow: 4px 3px white; font-family: 'Lobster', cursive; "> 
               <?php  
                 date_default_timezone_set("America/Grenada");
                 $hour = date("H");
@@ -361,7 +364,6 @@ function getCurrentPage(){
           </div>
         </div>
       </div>
-      <br/>
   <?php
   }
   ?>
@@ -380,7 +382,7 @@ function getCurrentPage(){
             ?>
           </div>
           <div class="col-lg-10 col-md-11 col-sm-11 col-xs-12">
-            <h1 style="color:#096790 ;text-shadow: 2px 2px white;font-family: 'Oswald', sans-serif; text-transform: uppercase;"> 
+            <h1 style="color:#096790 ;text-shadow: 4px 3px white;font-family: 'Lobster', cursive;"> 
               <?php  
                 date_default_timezone_set("America/Grenada");
                 $hour = date("H");

@@ -8,7 +8,7 @@ include "base.php";
   <div class="row">
     <div class ="col-xs-12 table-responsive">
       <div class="page-header text-center">
-        <h1>Incoming Requests <i class="fa fa-envelope-open fa-lg" aria-hidden="true" ></i></h1>
+        <h2>Incoming Requests <i class="fa fa-envelope" aria-hidden="true" ></i></h2>
       </div>
       <div id="table_secr"></div>
     </div>

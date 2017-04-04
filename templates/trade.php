@@ -7,7 +7,7 @@ include "base.php";
   <div class="row">
     <div class="col-xs-12 table-responsive">
       <div class="page-header text-center">
-        <h1>Outgoing Requests <i class="fa fa-paper-plane fa-lg" aria-hidden="true" ></i></h1>
+        <h2>Outgoing Requests <i class="fa fa-paper-plane" aria-hidden="true" ></i></h2>
       </div>
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->

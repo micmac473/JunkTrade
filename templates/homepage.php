@@ -11,7 +11,7 @@ include "base.php";
         <div class="panel-heading text-center">
           <i class="fa fa-calendar" aria-hidden="true"></i>  Upcoming Events <span class="badge" id="eventscount"></span>
         </div>
-        <div class="panel-body" id="reminders" style="overflow-y: scroll; height:60px; padding:0.1em"> 
+        <div class="panel-body" id="reminders" style="overflow-y: scroll; height:60px; padding:0.2em"> 
           
         </div>
       </div>
@@ -21,7 +21,7 @@ include "base.php";
         <div class="panel-heading text-center">
           <i class="fa fa-rss" aria-hidden="true"></i> Recent Updates <span class="badge" id="updatescount"></span>
         </div>
-        <div class="panel-body" id="followerupdates" style="overflow-y: scroll; height:60px; padding:0.1em"> 
+        <div class="panel-body" id="followerupdates" style="overflow-y: scroll; height:60px; padding:0.2em"> 
               
         </div>
       </div>

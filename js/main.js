@@ -992,7 +992,7 @@ function processUserSavedItems(records){
     records.forEach(function(el){
         var date = moment(el['saveddate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
-        htmlStr += "<td><img src=\"" + el.picture + "\" width=\"150\" height=\"128\"></td>";
+        htmlStr += "<td><a href='#' onclick=\"viewItem("+el.itemid+")\"><img class='img-rounded' src=\"" + el.picture + "\" width=\"120\" height=\"128\"></a></td>";
         htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ date +"</td>";      
@@ -1098,6 +1098,7 @@ function processUserFollowees(records){
     records.forEach(function(el){
         var date = moment(el['followdate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
+        htmlStr += "<td><a href='#' onclick=\"viewTraderProfile("+el.followee+")\"><img class='img-rounded' src=\"" + el.profilepicture + "\" width=\"120\" height=\"128\"></a></td>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.followee+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ date +"</td>";      
         htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"unfollowTrader("+el.followee+")\"><i class='fa fa-times' aria-hidden='true'></i> Unfollow</button></td>";
@@ -1123,6 +1124,7 @@ function processUserFollowers(records){
     records.forEach(function(el){
         var date = moment(el['followdate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
+        htmlStr += "<td><a href='#' onclick=\"viewTraderProfile("+el.follower+")\"> <img class='img-rounded' src=\"" + el.profilepicture + "\" width=\"120\" height=\"128\"></a></td>";
         htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.follower+")\">" +  "<strong>"+ " "+el['username'] + "</strong></button></td>";
         htmlStr += "<td>"+ date +"</td>";      
         htmlStr +=" </tr>" ;

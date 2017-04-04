@@ -398,8 +398,8 @@ include "base.php";
 
   <div class="row">
     <div class="col-xs-12 table-responsive">
-      <div class="header text-center">
-        <h1> Your Junk <i class="fa fa-gift fa-lg" aria-hidden="true" ></i> </h1>
+      <div class="page-header text-center">
+        <h2> Your Junk <i class="fa fa-gift" aria-hidden="true" ></i> </h2>
       </div>
 
       <div id="table_secp"></div>

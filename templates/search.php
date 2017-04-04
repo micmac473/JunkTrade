@@ -49,7 +49,7 @@ include "base.php";
 			   		}
 
 			   		$user = getCurrentUser();
-					echo "<h1 class='page-header text-center'> Showing results for \"".$_POST['searchname']."\" </h1>";
+					echo "<h2 class='page-header text-center'> Showing results for \"".$_POST['searchname']."\" </h2>";
 
 			if($items != null){
 				if($type == "item"){
@@ -127,14 +127,14 @@ include "base.php";
 
 		  		if($type == "item"){
 					if($items == null){ 
-						echo  "<img src=../img/noresults.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 	  
+						echo  "<div class='col-lg-6 col-lg-offset-3'><img src=../img/noresults.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'></div>"; 	  
 					}else{}//end if($filterUsers == null)
 
 		  		}
 
 		  		if($type == "user"){
 					if($filterUsers == null){ 
-						echo  "<img src=../img/noresults.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'>"; 	  
+						echo  "<div class='col-lg-6 col-lg-offset-3'><img src=../img/noresults.jpg style='width:100%; border-radius: 50px;' class='img-responsive img-thumbnail mx-auto'></div>"; 	  
 					}else{}//end if($filterUsers == null)
 
 		  		}

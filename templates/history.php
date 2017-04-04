@@ -8,7 +8,7 @@ include "base.php";
   <div class ="row">
     <div class="col-xs-12 table-responsive">
       <div class="page-header text-center"> 
-        <h1>Trades <i class="fa fa-handshake-o fa-lg" aria-hidden="true" ></i></h1>
+        <h2>Trades <i class="fa fa-handshake-o" aria-hidden="true" ></i></h2>
       </div>
 
       <div id="table_sec_tradehistory"></div>
@@ -16,7 +16,7 @@ include "base.php";
 
     <div class="col-xs-12 table-responsive">
       <div class="page-header text-center"> 
-        <h1>Incoming Requests <i class="fa fa-envelope-open fa-lg" aria-hidden="true" ></i></h1>
+        <h2>Incoming Requests <i class="fa fa-envelope" aria-hidden="true" ></i></h2>
       </div>
 
       <div id="table_sec_incomingrequestshistory"></div>
