@@ -130,7 +130,7 @@ function getCurrentPage(){
 
         <a class="navbar-brand btn btn-link btn-menu toggle" id="menu-toggle" href="#" style="padding-left:0.2em; padding-right:0.2em;"><i class="fa fa-bars"></i>  </a>
         <a class="navbar-brand" href="homepage.php" style="padding-left:0;padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
-        <a href="#" class="navbar-brand" style="color: white;font-family: 'Roboto Condensed', sans-serif; padding-left:0.2em; padding-right:0.2em;"><?php echo $currentPage ?></a>
+        <a href="#" class="navbar-brand" style="color: white;font-family: 'Roboto Condensed', sans-serif; padding-left:0.2em; padding-right:5em;"><?php echo $currentPage ?></a>
         
         <!--<a class="navbar-brand" href ="homepage.php">JunkTrade</a> -->
         <!--<a class ="navbar-brand" href ="homepage.php">junkTrade</a> -->
@@ -140,7 +140,7 @@ function getCurrentPage(){
         
         
         <ul class="nav navbar-nav navbar-right">
-          <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="toggler('uploadItem');"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
+          <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="toggler('uploadItem');" style="padding-left:5em; padding-right:2em"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
           <?php
           $ppid = $_SESSION["id"]; 
           echo '<li style="padding-top: 7px"> <img class="img-rounded"alt ="logo" width ="40px" height ="40px" src ='. getProfilePictureNavBar($ppid).'> </li>'
