@@ -33,6 +33,7 @@ function getCurrentPage(){
   
 
   return $page;
+  $ppid = $SESSION['id'];
 }
 ?>
 
@@ -140,10 +141,12 @@ function getCurrentPage(){
         
         <ul class="nav navbar-nav navbar-right">
           <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="toggler('uploadItem');"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
-
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-user-circle fa-lg" aria-hidden="true" ></i>
+          <?php
+          $ppid = $_SESSION["id"]; 
+          echo '<li style="padding-top: 7px"> <img class="img-rounded"alt ="logo" width ="40px" height ="40px" src ='. getProfilePictureNavBar($ppid).'> </li>'
+          ?>
+          <li class="dropdown" >
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-left: 0.2em">
               <?php
                 echo $_SESSION['user'];
               ?>
@@ -322,10 +325,10 @@ function getCurrentPage(){
     if($currentPage != "Trader" && $currentPage != "Profile" && $currentPage != "Trader Detail"){
 
       ?>
-      <div class="container-fluid" style="background-color: white">
+      <div class="container-fluid" style="background-color: white;">
         <div class="row text-center">
           <div class="">
-            <h1 style="color:#096790;text-shadow: 2px 2px white; font-family: 'Oswald', sans-serif; text-transform: uppercase;padding-bottom: 1"> 
+            <h1 style="color:#096790;text-shadow: 2px 2px white; font-family: 'Oswald', sans-serif; text-transform: uppercase;"> 
               <?php  
                 date_default_timezone_set("America/Grenada");
                 $hour = date("H");
@@ -362,6 +365,7 @@ function getCurrentPage(){
   <?php
   }
   ?>
+
   <?php
   if($currentPage == "Profile"){
 

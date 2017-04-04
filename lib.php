@@ -1146,6 +1146,21 @@ function getProfilePicture($userId){
 	return $rec;
 }
 
+function getProfilePictureNavBar($userId){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != NULL){
+		$sql = "SELECT `profilepicture` FROM `users` u WHERE u.id = $userId;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec= $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	$rec = json_encode($rec['profilepicture']);
+	return $rec;
+}
+
 function getItemImages($itemId){
 	$db = getDBConnection();
 	$rec = null;
@@ -1369,7 +1384,7 @@ function getProfileImage($userid){
 	    $db->close();
 	}
 	$pp =  json_encode($rec['profilepicture']);
-	return "<img src= $pp style='width:auto; height: 100px; max-width: 150px; border-radius: 30px;' class='img-responsive img-thumbnail mx-auto'>"; 
+	return "<img src= $pp style='width:auto; height: 100px; max-width: 150px; border-radius: 10px;text-shadow: 2px 2px black' class='img-responsive img-thumbnail mx-auto'>"; 
 }
 
 function saveRequest($requestee, $requesteeItem, $requesterItem, $requesterContact){
