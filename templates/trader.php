@@ -19,9 +19,9 @@ if(isset($_GET['trader'])){
   else if($userRating[1][0]==null)
     $rating = $userRating[0][0];
   else
-    $rating = $userRating[0][0] + $userRating[1][0];
+    $rating = ($userRating[0][0] + $userRating[1][0])/2.0;
   $rating = number_format($rating, 1);
-
+  //print_r($rating);
 
   $followers = getUserFollowersCount($userID);
   $tradeCount = getUserTradeCount($userID);

@@ -35,6 +35,8 @@ function getCurrentPage(){
   return $page;
   $ppid = $SESSION['id'];
 }
+
+
 ?>
 
 <!doctype html>
@@ -371,8 +373,18 @@ function getCurrentPage(){
   ?>
 
   <?php
+  
   if($currentPage == "Profile"){
-
+      $userRating = getUserRating($_SESSION["id"]);
+      //print_r($userRating);
+      if($userRating[0][0] == null)
+        $rating = $userRating[1][0];
+      else if($userRating[1][0]==null)
+        $rating = $userRating[0][0];
+      else
+        $rating = ($userRating[0][0] + $userRating[1][0])/2.0;
+      $rating = number_format($rating, 1);
+      //print_r($rating);
       ?>
       <div class="jumbotron container-fluid">
         <div class="row text-center">
@@ -415,6 +427,7 @@ function getCurrentPage(){
               ?>
             </h1>
           </div>
+          <a href='#' data-toggle='tooltip' data-html='true' title= '<?php echo $rating. " out of 5 stars <br>  Trades: ". $trades?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php echo $rating ?> ></a>
         </div>
       </div>
   <?php

@@ -199,21 +199,21 @@ include "base.php";
 <div class ="container-fluid">
   <div class ="row">
 
-    <div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <button type="button" onclick ="showForm();" class="btn btn-primary btn-block"><i class="fa fa-gift fa-lg" aria-hidden="true"></i> Add Item</button>
     </div>
 
-    <div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <button type="button" onclick ="showProfilePictureForm();" class="btn btn-primary btn-block"> <i class="fa fa-camera fa-lg" aria-hidden="true"></i> Update Picture</button>
     </div>
 
-    <div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <button type="button" onclick ="showEditProfileForm();" class="btn btn-primary btn-block"><i class="fa fa-pencil-square fa-lg" aria-hidden="true"></i> Edit Profile</button>
     </div> 
 
-    <div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-      <a href='#' data-toggle='tooltip' data-html='true' title= '<?php echo $rating. " out of 5 stars <br>  Trades: ". $trades?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php echo $rating ?> ></a>
-    </div>
+    <!--<div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+      <a href='#' data-toggle='tooltip' data-html='true' title= '<?php //echo $rating. " out of 5 stars <br>  Trades: ". $trades?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php //echo $rating ?> ></a>
+    </div> -->
 
     
 
