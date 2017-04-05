@@ -10,11 +10,12 @@ include "base.php";
     <div id = "searchitemblock" class="">
 
 <?php
-		$items = [];
-		$name = "";
-		$requests = [];
-		$filterUsers = [];
-		$user = $_SESSION["id"];
+	$items = [];
+	$name = "";
+	$requests = [];
+	$filterUsers = [];
+	$user = $_SESSION["id"];
+	$currSearchItems = [];
 	if(isset($_POST['searchsubmit'])){ 
 		if(isset($_GET['go'])){ 
 		  	if(preg_match("/^[  a-zA-Z]+/", $_POST['searchname'])){ 
@@ -81,6 +82,7 @@ include "base.php";
 				             
 				            				echo "</div>";
 				            				echo "</div>";
+				            				$currSearchItems[] = $item['itemid'];
 				            				break;
 			   							}//end if($request['requester'] == $user)
 			   						}//end else
@@ -99,6 +101,7 @@ include "base.php";
 				             
 				            	echo "</div>";
 				            	echo "</div>";
+				            	$currSearchItems[] = $item['itemid'];
 			   				}//end ($j == count($requests))
 			          		
 		    		}//end for($i = 0; $i < count($items); $i++)
@@ -156,4 +159,46 @@ include "base.php";
   </div>
 </div>
 
+<script>
 
+var search = <?php echo json_encode($_POST['searchname']) ?>;
+var currItems = <?php echo json_encode($currSearchItems) ?>;
+
+
+setInterval(function(){
+  querySearchItemsChange(search, currItems);
+},2500);
+
+
+function querySearchItemsChange(search, currItems){
+  //console.log(userItems);
+  //$.get("../index.php/items/"+traderId, function(items){
+    $.get("../index.php/search/"+search, function(results){
+      //console.log(itemsRequests);
+      //console.log(currItems);
+      currItems.forEach(function(el){
+        for(var i =0; i < results.length; i++){
+          if(el == results[i]['item'] || el == results[i]['item2'])
+            itemChange();
+        }
+      });
+    },"json");
+  //},"json");
+
+}
+
+function itemChange(){
+  swal({ 
+        title: "Sorry, an item has been traded",
+        text: "Page shall be refreshed",
+        type: "warning",
+        timer: 2000,
+        showConfirmButton: false
+        },
+        function(){
+            window.location.reload();
+        }
+    );      
+}
+
+</script>

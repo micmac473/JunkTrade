@@ -30,6 +30,7 @@ if(isset($_GET['trader'])){
   ///print_r($rating);
 }
 
+$currProfileItems =[];
 ?>
 <div class ="container-fluid">
   <div class="jumbotron">
@@ -80,26 +81,27 @@ if(isset($_GET['trader'])){
               else{
                 if($req['requester'] == $currentUser){
                   echo "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>";
-                echo "<div class='panel panel-warning'>";
+                  echo "<div class='panel panel-warning'>";
 
-                echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$val['itemid'].")\"><strong>". $val['itemname'] . "</strong> </button><br><small> Views: ".$val['views']." </small><br></div>";
-          
-                echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
+                  echo "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem(".$val['itemid'].")\"><strong>". $val['itemname'] . "</strong> </button><br><small> Views: ".$val['views']." </small><br></div>";
+            
+                  echo "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem(".$val['itemid'].")\" src=\"" . $val['picture'] . "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
 
-                if($req['decision'] == null){
-                  echo "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest(".$req['id'].")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
-                  //echo "Pending!" . $val['itemid'];
+                  if($req['decision'] == null){
+                    echo "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest(".$req['id'].")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></div></div>";
+                    //echo "Pending!" . $val['itemid'];
+                  }
+                  else{
+                    echo "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-primary btn-block active' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
+                    //echo "Denied!";
+                  }
+                  
+            
+                  echo "</div>";
+                  echo "</div>";
+                  $currProfileItems [] = $val['itemid'];
+                  break;
                 }
-                else{
-                  echo "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-primary btn-block active' onclick=\"displayItemsForRequest(".$val['itemid'].")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
-                  //echo "Denied!";
-                }
-                
-          
-                echo "</div>";
-                echo "</div>";
-                break;
-              }
               }
             }
           }
@@ -116,6 +118,7 @@ if(isset($_GET['trader'])){
              
             echo "</div>";
             echo "</div>";
+            $currProfileItems [] = $val['itemid'];
             //echo "No Request made!";
           }
           
@@ -134,4 +137,51 @@ $(document).ready(function(){
 });
 
 $('#input').rating('rate', 2.5);
+
+
+var traderId = <?php echo json_encode($_GET['trader']) ?>;
+var currItems = <?php echo json_encode($currProfileItems) ?>;
+console.log(traderId);
+
+//var userItems = <?php echo json_encode(getUserItems($_GET['trader'])) ?>;
+//console.log(userItems);
+//var userItemsRequests = <?php echo json_encode(getAllNonUserItemRequestsForSpecificTrader($_GET['trader'])) ?>;
+
+setInterval(function(){
+  queryUserItemsChange(traderId, currItems);
+},2500);
+
+
+function queryUserItemsChange(traderId, currItems){
+  //console.log(userItems);
+  //$.get("../index.php/items/"+traderId, function(items){
+    $.get("../index.php/itemsrequests/"+traderId, function(itemsRequests){
+      //console.log(itemsRequests);
+      //console.log(currItems);
+
+      currItems.forEach(function(el){
+        for(var i =0; i < itemsRequests.length; i++){
+          if(el == itemsRequests[i]['item'] || el == itemsRequests[i]['item2'])
+            itemChange();
+        }
+      });
+    },"json");
+  //},"json");
+
+}
+
+function itemChange(){
+  swal({ 
+        title: "Sorry, an item has been traded",
+        text: "Page shall be refreshed",
+        type: "warning",
+        timer: 2000,
+        showConfirmButton: false
+        },
+        function(){
+            window.location.reload();
+        }
+    );      
+}
+
 </script>

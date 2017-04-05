@@ -117,6 +117,7 @@ function getCurrentPage(){
         background-image:url(http://www.buyandsellnow.ca/wp-content/uploads/2016/06/3d_banner_background.png);
         
       } */
+    
     </style>
 </head>
 <body>
@@ -143,13 +144,13 @@ function getCurrentPage(){
         
         
         <ul class="nav navbar-nav navbar-right">
-          <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="toggler('uploadItem');" style="padding-left:5em; padding-right:2em"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
+          <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="toggler('uploadItem');" style="padding-left:1em;"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
           <?php
           $ppid = $_SESSION["id"]; 
           echo '<li style="padding-top: 7px"> <img class="img-rounded" alt ="profilepicture" width ="40px" height ="40px" src ='. getProfilePictureNavBar($ppid).'> </li>'
           ?>
           <li class="dropdown" >
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-left: 0.2em">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-left: 0.1em">
               <?php
                 echo '<strong>'.$_SESSION['user'].'</strong>';
               ?>
@@ -192,30 +193,30 @@ function getCurrentPage(){
 
 
         <form method = "post" class="navbar-form" role="form" action ="search.php?go" id ="searchform">
-        <div class="form-group" style="display:inline;">
-          <div class="input-group" style="display:table;">
-
-                  <span class="input-group-addon search-panel" class="btn btn-default" style="width:1%;">
-                    <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
-                  <span id="search_concept">Filter by</span> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#item">Items</a></li>
-                      <li><a href="#user">Traders</a></li>
-                    </ul>
-                    <input type="hidden" name="search_param" value="item" id="search_param">
-                  </span>
-
-
-            <input autofocus class="form-control" name="searchname" placeholder="Search for Junk" autocomplete="off" autofocus="autofocus" type="text">
-            <span class="input-group-addon" class="btn btn-default" style="width:1%;" name="searchsubmit">
-              <button type="submit" class="btn btn-default btn-xs" name="searchsubmit" value="Search">
-                <i class="fa fa-search fa-fw"></i>
-              </button>
-            </span>
+          <div class="form-group" style="display:inline;">
+            <div class="input-group" style="display:table;">
+              <span class="input-group-addon search-panel" class="btn btn-default" style="width:1%;">
+                <button type="button" class="btn btn-link dropdown-toggle btn-xs" data-toggle="dropdown" style="text-decoration: none; color: grey">
+                  <span id="search_concept"><i class="fa fa-filter" aria-hidden="true" style="color: #096790;"></i> Filter by</span> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#item"><i class="fa fa-gift" aria-hidden="true" style="color: #096790;"></i> Items</a></li>
+                  <li><a href="#user"><i class="fa fa-user" aria-hidden="true" style="color: #096790;"></i> Traders</a></li>
+                </ul>
+                <input type="hidden" name="search_param" value="item" id="search_param">
+              </span>
+              <input autofocus class="form-control" name="searchname" placeholder="Search JunkTrade" autocomplete="off" autofocus="autofocus" type="text" required>
+              <span class="input-group-addon" class="btn btn-default" style="width:1%;" name="searchsubmit">
+                <button type="submit" class="btn btn-link btn-xs" name="searchsubmit" value="Search">
+                  <i class="fa fa-search fa-fw" style="color: #096790;"></i>
+                </button>
+              </span>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+
+
+
       </div><!--/.navbar-collapse -->
     </div>
   </nav>
@@ -330,7 +331,7 @@ function getCurrentPage(){
       ?>
       <div class="container-fluid" style="">
         <div class="row text-center">
-          <div class="">
+          <div id ="greeting" class="page-header col-xs-12" style="margin-top: 0; border-color: white; border-width: 2px; padding:0">
             <h1 style="color:#096790;text-shadow: 4px 3px white; font-family: 'Lobster', cursive; "> 
               <?php  
                 date_default_timezone_set("America/Grenada");
@@ -361,6 +362,7 @@ function getCurrentPage(){
                 }
               ?>
             </h1>
+
           </div>
         </div>
       </div>

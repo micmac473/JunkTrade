@@ -55,6 +55,22 @@ $app->get("/items/{id}", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/itemsrequests/{id}", function(Request $request, Response $response){
+	$userID = $request->getAttribute('id');
+	$items = getTraderProfileItemsTradedStatus($userID);
+	
+	$response = $response->withJson($items);
+	return $response;
+});
+
+$app->get("/search/{id}", function(Request $request, Response $response){
+	$userID = $request->getAttribute('id');
+	$items = getSearchItems($userID);
+	
+	$response = $response->withJson($items);
+	return $response;
+});
+
 $app->get("/edititem/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	$item = getUserItem($val);

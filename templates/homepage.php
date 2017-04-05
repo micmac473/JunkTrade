@@ -191,6 +191,7 @@ include "base.php";
           currAllItems = res;
           currAllRequests = reqs;
           processAllItems(res);
+          $("#requestModal").modal('hide');
         }
       },"json");
     }, "json");  

@@ -32,4 +32,20 @@ include "base.php";
 <script>window.onload = function() {
     getUserSavedItems();
 };
+
+
+var currSaved = <?php echo json_encode(getUserSavedItems()) ?>;
+
+setInterval(function(){
+    querySaved();
+},2500);
+
+function querySaved(){
+  $.get("../index.php/getsaveditems", function(saved){
+    if(JSON.stringify(saved) !== JSON.stringify(currSaved)){
+      currSaved = saved;
+      getUserSavedItems();
+    }
+  },"json");
+}
 </script>

@@ -939,7 +939,23 @@ function getAcceptedTradeStatus(){
 	return $items;
 }
 
-function getUserItems($userid){//should be session id here instead of useId
+function getUserItems($userid){
+	//$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `items` i, `users` u where u.id = i.userid AND `userid` = $userid ORDER BY `itemname` ASC;";
+	$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getUserItemsTraded($userid){
 	//$userID = $_SESSION["id"];
 	$sql ="SELECT * FROM `items` i, `users` u where u.id = i.userid AND `userid` = $userid ORDER BY `itemname` ASC;";
 	$items =[];
@@ -1025,6 +1041,38 @@ function getAllNonUserItemsState(){
 function getAllNonUserItemRequestsForSpecificTrader($traderId){
 	$userID = $_SESSION["id"];
 	$sql ="SELECT * FROM `requests` r WHERE r.requester = $traderId OR r.requestee = $traderId ORDER BY r.timerequested DESC, r.decision DESC;";
+	$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getTraderProfileItemsTradedStatus($traderId){
+	$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `requests` r WHERE r.requester = $traderId AND r.decision = true OR r.requestee = $traderId AND r.decision = true ORDER BY r.timerequested DESC;";
+	$items =[];
+	//print($sql);
+		$db = getDBConnection();
+		if ($db != NULL){
+			$res = $db->query($sql);
+			while($res && $row = $res->fetch_assoc()){
+			$items[] = $row;
+		}//while
+		$db->close();
+	}//if
+	return $items;
+}
+
+function getSearchItems(){
+	$userID = $_SESSION["id"];
+	$sql ="SELECT * FROM `requests` r WHERE r.decision = true;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
