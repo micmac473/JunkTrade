@@ -407,6 +407,15 @@ $app->get("/itemstatus/{id}", function(Request $request, Response $response){
 	return $response; */
 });
 
+$app->get("/itemtradedstatus/{id}", function(Request $request, Response $response){
+	$val = $request->getAttribute('id');
+	// Get Record for Specific Country
+	$rec = getItemTradedStatus($val);
+
+	$response = $response->withJson($rec);
+	return $response;
+});
+
 $app->get("/requeststatus/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country

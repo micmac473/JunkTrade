@@ -6,7 +6,7 @@ include "base.php";
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-xs-12">
       <div class="panel panel-primary" style="">
         <div class="panel-heading text-center">
           <i class="fa fa-calendar" aria-hidden="true"></i>  Upcoming Events <span class="badge" id="eventscount"></span>
@@ -16,7 +16,7 @@ include "base.php";
         </div>
       </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-xs-12">
       <div class="panel panel-primary" style="background-color: white;">
         <div class="panel-heading text-center">
           <i class="fa fa-rss" aria-hidden="true"></i> Recent Updates <span class="badge" id="updatescount"></span>

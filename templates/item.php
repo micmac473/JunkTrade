@@ -140,6 +140,42 @@ $(document).ready(function(){
                 $('#carousel-text').html($('#slide-content-'+id).html());
         });
 });
+
+//var itemId = <?php echo $_GET['item']; ?>;
+var itemId = <?php echo json_encode($_GET['item']) ?>;
+var tradedStatus = <?php echo json_encode(getItemTradedStatus($_GET['item'])) ?>;
+console.log(tradedStatus);
+if(tradedStatus != null){
+    tradedResponse();
+}
+//console.log(<?php echo json_encode($_GET['item']) ?>);
+
+setInterval(function(){
+    queryTradedItem(itemId);
+},2500);
+
+function queryTradedItem(itemId){
+    $.get("../index.php/itemtradedstatus/"+itemId, function(res){
+        //console.log(res);
+        if(res != null){
+            tradedResponse();
+        }
+    },"json");
+}
+
+function tradedResponse(){
+    swal({ 
+        title: "Sorry, this item has been traded",
+        text: "You shall be redirected to the homepage",
+        type: "warning",
+        timer: 2000,
+        showConfirmButton: false
+        },
+        function(){
+            window.location.href = 'homepage.php';
+        }
+    );       
+}
 </script>
 
 
