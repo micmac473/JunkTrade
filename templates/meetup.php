@@ -88,7 +88,7 @@ include "base.php";
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <button  class="btn btn-success btn-block" type="submit"><i class="fa fa-paper-plane" aria-hidden="true" ></i>Send</button>
+                    <button  class="btn btn-success btn-block" type="submit"><i class="fa fa-paper-plane" aria-hidden="true" ></i> Send</button>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <button  class="btn btn-danger btn-block" data-dismiss="modal" onclick="cancelFeedback()"><i class="fa fa-ban" aria-hidden="true" ></i> Cancel</button>
