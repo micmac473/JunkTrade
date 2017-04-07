@@ -428,6 +428,7 @@ function listAllItems(records, user){
             //console.log(res);
         
         records.forEach(function(el){
+            var dateUploaded = moment(el.uploaddate).startOf('minute').fromNow();
             for(i = 0; i < requests.length; i++){
                 if(requests[i]['item'] == el['itemid'] || requests[i]['item2'] == el['itemid']){
                     if(requests[i]['decision'] == true){
@@ -440,7 +441,7 @@ function listAllItems(records, user){
                             itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
                             itemdiv += "<div class='panel panel-warning'>";
 
-                            itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><small> Views: "+el.views+" </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
+                            itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><small> Views: "+el.views+" </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button><small><small> "+dateUploaded+"</small></small></div>"; 
 
                             itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer; width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'></div>";
 
@@ -467,7 +468,7 @@ function listAllItems(records, user){
             if(i == requests.length){
                 itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
                 itemdiv += "<div class='panel panel-info'>";
-                itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong></button><br><small> Views: "+el.views+" </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button></div>"; 
+                itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong></button><br><small> Views: "+el.views+" </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button><small><small> "+ dateUploaded+"</small></small></div>"; 
 
                 itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer; width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'></div>";
             

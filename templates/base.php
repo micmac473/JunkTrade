@@ -149,7 +149,7 @@ function getCurrentPage(){
           <li> <a href="#" data-toggle="tooltip" title="Upload Item" data-placement="bottom" onclick="toggler('uploadItem');" style="padding-left:1em;"> <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i> </a></li>
           <?php
           $ppid = $_SESSION["id"]; 
-          echo '<li style="padding-top: 7px"> <img class="img-rounded" alt ="profilepicture" width ="40px" height ="40px" src ='. getProfilePictureNavBar($ppid).'> </li>'
+          echo '<li style="padding-top: 7px"> <img class="img-circle" alt ="profilepicture" width ="40px" height ="40px" src ='. getProfilePictureNavBar($ppid).'> </li>'
           ?>
           <li class="dropdown" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-left: 0.1em">
