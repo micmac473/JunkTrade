@@ -195,8 +195,8 @@ app.config(function($routeProvider) {
         controller : "requestsCtrl"
     })
     .when("/graphs", {
-      templateUrl: "users.htm",
-      controller: "usersCtrl"
+      templateUrl: "graphs.htm",
+      controller: "graphsCtrl"
     })
     .when("/items", {
         templateUrl : "items.htm",
@@ -209,6 +209,14 @@ app.config(function($routeProvider) {
     .otherwise({
         redirectTo : "/users"
     });
+});
+app.controller("graphsCtrl", function($scope,  $http){
+            var url = "../angular_php/graphs.php";
+
+            $http.get(url).then( function(response) {
+                console.log(response.data);
+               $scope.graphs = response.data;
+            });
 });
 app.controller("usersCtrl", function ($scope, $http) {
             var url = "../angular_php/users.php";

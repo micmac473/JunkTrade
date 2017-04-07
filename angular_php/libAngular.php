@@ -5,7 +5,7 @@ function allUserDetails(){
 	$db = getDBConnection();
 	$rec = null;
 	if ($db != null){
-		$sql = "SELECT u.fbid, u.username, u.firstname, u.lastname, u.email, u.telephone FROM `users` u ORDER BY username ASC";
+		$sql = "SELECT u.fbid, u.username, u.firstname, u.lastname, u.email, u.telephone, u.status FROM `users` u ORDER BY username ASC";
 		$res = $db->query($sql);
 		while($res && $row = $res->fetch_assoc()){
 			$users[] = $row;
@@ -13,6 +13,20 @@ function allUserDetails(){
 		$db->close();
 	}
 	return $users;
+}
+
+function userOnlineDetails(){
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != null){
+		$sql = "SELECT u.status FROM `users` u WHERE status = 1 ";
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$user[] = $row;
+		}
+		$db->close();
+	}
+	return $user;
 }
 
 function allItemDetails(){
