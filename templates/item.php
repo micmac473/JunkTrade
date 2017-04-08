@@ -108,7 +108,7 @@ if(isset($_GET['item'])){
     else{
       echo "<button type='button' class='btn btn-success btn-block' onclick=\"removeSavedItem(".$savedItem['savedid'].")\" id='requestbtn' data-toggle='tooltip' title='Click to Unsave Item' data-placement='bottom'><i class='fa fa-check' aria-hidden='true'></i> Saved</button>";
     }
-    
+    echo "<button type='button' class='btn btn-info btn-block' data-toggle='tooltip' title='Click to Report Item' data-placement='bottom'><i class='fa fa-commenting' aria-hidden='true'></i> Report Item</button>";
     echo "</div>";
 
   ?>

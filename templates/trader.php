@@ -38,6 +38,7 @@ $currProfileItems =[];
       <div class="col-lg-2">
         <?php
           echo "<a href='#' onClick=\"viewProfileImage(".$userID.")\">".getProfileImage($userID)."</a>";
+          echo "<button type='button' class='btn btn-info btn-block btn-xs' data-toggle='tooltip' title='Click to Report Trader' data-placement='bottom'><i class='fa fa-commenting' aria-hidden='true'></i> Report Trader</button>";
         ?>
       </div>
       <div class="col-lg-10">
@@ -61,6 +62,7 @@ $currProfileItems =[];
             }
           echo "\">". count($followers)."</a> people</small></span><br>";
           echo "<a href='#' data-toggle='tooltip' data-html='true' title=\"Trades: ". $trades."<br>".$rating." out of 5 stars\" data-placement='bottom'><input  type='hidden' class='rating'  data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value=\"".$rating."\"/></a>";
+
           //echo "Trades: ".$tradeCount[0]['numtrades'];
         ?> 
     </div>
