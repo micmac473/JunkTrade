@@ -137,6 +137,13 @@ $app->get("/decisions", function(Request $request, Response $response){
 	return $response;
 });
 
+$app->get("/decisionsrequestee", function(Request $request, Response $response){
+	$decisions = getDecisionsRequesteeUsername();
+	
+	$response = $response->withJson($decisions);
+	return $response;
+});
+
 $app->get("/requester/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	$requests = getRequesterInfo($val);

@@ -234,7 +234,7 @@ function getNewMessages(){
 
 function getNewMessagesNotification(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT u.username, c.sentfrom, COUNT(*) As messages FROM `chat` c, `users` u WHERE c.sentfrom = u.id AND c.sentto = $userid AND c.readindicator = false GROUP BY u.username, c.sentfrom;";
+	$sql = "SELECT u.username, c.sentfrom, u.profilepicture, COUNT(*) As messages FROM `chat` c, `users` u WHERE c.sentfrom = u.id AND c.sentto = $userid AND c.readindicator = false GROUP BY u.username, c.sentfrom, u.profilepicture;";
 	$messages =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -532,7 +532,7 @@ function getUserMeetUp(){
 
 function getUserFollowerUpdates(){
 	$userid = $_SESSION['id'];
-	$sql = "SELECT i.itemname, u.username, i.itemid FROM `follow` f, `users` u, `items` i WHERE u.id = f.followee AND u.id = i.userid AND f.follower = $userid AND f.followindicator = true AND i.uploaddate >= f.followdate ORDER BY i.uploaddate DESC ;";
+	$sql = "SELECT i.itemname, u.username, i.itemid, i.uploaddate FROM `follow` f, `users` u, `items` i WHERE u.id = f.followee AND u.id = i.userid AND f.follower = $userid AND f.followindicator = true AND i.uploaddate >= f.followdate ORDER BY i.uploaddate DESC ;";
 	$updates =[];
 	$db = getDBConnection();
 		if ($db != NULL){
@@ -893,7 +893,7 @@ function getProfileItems($userID){
 
 function getAllUserTrade(){
 	$userID = $_SESSION["id"];
-	$sql ="SELECT r.requestee, u.username, i.itemid, i.itemname, r.timerequested, r.decision, r.id, r.denyreason FROM `requests` r, `items` i, `users` u where r.item = i.itemid AND r.requestee = u.id AND  r.requester = $userID ORDER BY r.timerequested DESC;";
+	$sql ="SELECT r.requestee, u.username, i.itemid, i.itemname, r.timerequested, r.decision, r.id, r.denyreason, u.profilepicture FROM `requests` r, `items` i, `users` u where r.item = i.itemid AND r.requestee = u.id AND  r.requester = $userID ORDER BY r.timerequested DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -1291,7 +1291,7 @@ function getRequests(){
 	$db = getDBConnection();
 	$requests = [];
 	if ($db != null){
-		$sql = "SELECT u.username, r.id, r.requester, i.itemname FROM `users` u, `requests` r, `items` i WHERE r.requester = u.id AND i.itemid = r.item AND r.requestee = $user AND `decision` IS NULL ORDER BY r.timerequested DESC;";
+		$sql = "SELECT u.username, r.id, r.requester, i.itemname, u.profilepicture FROM `users` u, `requests` r, `items` i WHERE r.requester = u.id AND i.itemid = r.item AND r.requestee = $user AND `decision` IS NULL ORDER BY r.timerequested DESC;";
 		$res = $db->query($sql);
 		while($res && $row = $res->fetch_assoc()){
 			$requests[] = $row;
@@ -1331,6 +1331,23 @@ function getDecisions(){
 	//var_dump($requests);
 	return $requests;
 }
+
+function getDecisionsRequesteeUsername(){
+	$user = $_SESSION["id"];
+	$db = getDBConnection();
+	$requests = [];
+	if ($db != null){
+		$sql = "SELECT u.username, u.profilepicture FROM `users` u, `requests` r, `items` i WHERE r.requestee = u.id AND i.itemid = r.item AND r.requester = $user AND `decision` IS NOT NULL ORDER BY i.itemname ASC;";
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$requests[] = $row;
+		}
+		$db->close();
+	}
+	//var_dump($requests);
+	return $requests;
+}
+
 
 function getItemOwner($itemid){
 	$db = getDBConnection();
@@ -1534,9 +1551,9 @@ function cancelRequest($requestId){
 function acceptRequest($requestId, $requesteeItem, $requesterItem){
 	$db = getDBConnection();
 	$sql = "UPDATE `requests` r SET r.decision = true WHERE r.id = $requestId;";
-	$sql .= "UPDATE `requests` r SET r.decision = false, r.denyreason = 'Trader accepted another request, sorry' WHERE r.item = $requesteeItem AND r.id <> $requestId;";
-	$sql .= "UPDATE `requests` r SET r.decision = false, r.denyreason = 'Trader accepted another request, sorry' WHERE r.item = $requesterItem AND r.id <> $requestId;";
-	$sql .= "UPDATE `requests` r SET r.decision = false, r.denyreason = 'Trade already accepted for your item, sorry' WHERE r.item2 = $requesterItem AND r.id <> $requestId;";
+	$sql .= "UPDATE `requests` r SET r.decision = false, r.denyreason = 'Trader accepted another request, sorry' WHERE r.item = $requesteeItem AND r.id <> $requestId AND r.denyreason IS NULL;";
+	$sql .= "UPDATE `requests` r SET r.decision = false, r.denyreason = 'Trader accepted another request, sorry' WHERE r.item = $requesterItem AND r.id <> $requestId AND r.denyreason IS NULL;";
+	$sql .= "UPDATE `requests` r SET r.decision = false, r.denyreason = 'Trade already accepted for your item, sorry' WHERE r.item2 = $requesterItem AND r.id <> $requestId AND r.denyreason IS NULL;";
 	$sql .= "DELETE FROM `saved`  WHERE  `itemid` = $requesteeItem OR `itemid` = $requesterItem;";
 	$sql .= "DELETE FROM `requests`  WHERE  `item2` = $requesteeItem AND `id` <> $requestId;";
 	$res = null;

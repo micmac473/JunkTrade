@@ -119,6 +119,10 @@ function getCurrentPage(){
         background-image:url(http://www.buyandsellnow.ca/wp-content/uploads/2016/06/3d_banner_background.png);
         
       } */
+
+      .dropdown-menu > li{
+    padding:50px;
+}
     
     </style>
 </head>
@@ -167,7 +171,7 @@ function getCurrentPage(){
           
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="requestsNotify"></span></a>
-            <ul class="dropdown-menu" id="requests">
+            <ul class="dropdown-menu" id="requests" style="padding: 50">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
             </ul>
@@ -175,7 +179,7 @@ function getCurrentPage(){
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="decisionsNotify"></span></a>
-            <ul class="dropdown-menu" id="decisions">
+            <ul class="dropdown-menu" id="decisions" >
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
             </ul>
