@@ -38,7 +38,7 @@ $currProfileItems =[];
       <div class="col-lg-2">
         <?php
           echo "<a href='#' onClick=\"viewProfileImage(".$userID.")\">".getProfileImage($userID)."</a>";
-          echo "<button type='button' class='btn btn-info btn-block btn-xs' data-toggle='tooltip' title='Click to Report Trader' data-placement='bottom'><i class='fa fa-commenting' aria-hidden='true'></i> Report Trader</button>";
+          echo "<button type='button' class='btn btn-link btn-xs' data-toggle='tooltip' title='Click to Report Trader' data-placement='bottom'><i class='fa fa-commenting' aria-hidden='true'></i> Report Trader</button>";
         ?>
       </div>
       <div class="col-lg-10">
