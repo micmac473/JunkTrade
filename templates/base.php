@@ -170,7 +170,7 @@ function getCurrentPage(){
           </li>
           
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="requestsNotify"></span></a>
+            <a href="#" data-toggle="tooltip" title="Incoming Requests" data-placement="bottom" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="requestsNotify"></span></a>
             <ul class="dropdown-menu" id="requests" style="padding: 50">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
@@ -178,7 +178,7 @@ function getCurrentPage(){
 
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="decisionsNotify"></span></a>
+            <a href="#" data-toggle="tooltip" title="Request Decisions" data-placement="bottom" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gavel fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="decisionsNotify"></span></a>
             <ul class="dropdown-menu" id="decisions" >
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 
@@ -187,7 +187,7 @@ function getCurrentPage(){
           </li>
 
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comment fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="chatNotify"></span></a>
+            <a href="#" data-toggle="tooltip" title="New Messages" data-placement="bottom" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comment fa-lg" aria-hidden="true" ></i><span class="badge badge-notify" id ="chatNotify"></span></a>
             <ul class="dropdown-menu" id="messages">
                 <!-- <li><a href="#">Dynamically Populated Requets</a></li> -->
                 

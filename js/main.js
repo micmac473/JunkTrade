@@ -767,6 +767,7 @@ function listUserTrade(records, res, status){
 
     records.forEach(function(el){
         //alert(el.rid);
+        
         var viewedRequest = {
             "requestid" : el.id
         };
@@ -809,11 +810,12 @@ function listUserTrade(records, res, status){
             
         }
         else{
+            var denyreason = el.denyreason.replace(/\'/g, "\'");
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
             htmlStr += "<td><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
             htmlStr += "<td>" + date + "</td>";
             htmlStr += "<td class='text-danger'> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
-            htmlStr += "<td><em>" + el.denyreason + "</em></td>";
+            htmlStr += "<td><em>" + denyreason + "</em></td>";
             htmlStr += "<td>-</td>";
         }
 
@@ -914,6 +916,7 @@ function displayIncomingRequestsHistory(records, records2){
     var htmlStr = $("#table_heading_incomingrequestshistory").html(); 
     var i = 0;
     records.forEach(function(el){
+        
         var requestDate = moment(el.timerequested).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
         htmlStr += "<td>"+requestDate+"</td>";  
@@ -925,8 +928,9 @@ function displayIncomingRequestsHistory(records, records2){
             htmlStr += "<td>-</td>";
         }  
         else{
+            var denyreason = el.denyreason.replace(/\'/g, "\'");
             htmlStr += "<td>Denied</td>"; 
-            htmlStr += "<td>"+el.denyreason+"</td>";
+            htmlStr += "<td>"+denyreason+"</td>";
         }
             
         htmlStr += "</tr>"; 
@@ -1720,7 +1724,7 @@ function denyRequest(requestId){
         },
 
         function(inputValue){
-            denyReason = inputValue;
+            denyReason = inputValue.replace(/'/g, "\\'");
             if (inputValue === false){
                 return false;
             }
@@ -2148,7 +2152,7 @@ function logout(){
     return false;
 }
 //------------------------------------------------------------------------------------------------------
-var currChat = [];
+var currChat = [], chatInterval=null;
 function chat(traderid){
     console.log(traderid);
     var chatId;
@@ -2165,13 +2169,15 @@ function chat(traderid){
             $("#chatform #tradername").text(trader.firstname + " " + trader.lastname);
 
             getMessages(traderid, userid, username);        
-            setInterval(function(){
+            chatInterval = setInterval(function(){
                 //console.log(traderid);
                 getNewMessages(traderid, userid, username);
-            },2000);
-                
+            },2000);   
             $("#chatmodal").modal('show');
-            
+            $("#chatmodal").on("hidden.bs.modal", function () {
+                clearInterval(chatInterval);
+                console.log("Chat closed and Interval stopped");
+            });
         },"json");
         
     });
@@ -2182,6 +2188,7 @@ function sendMessage(){
     var sentFrom = $("#chatform #userid").val();
     var sentTo = $("#chatform #traderid").val();
     var message = $("#chatform #message").val();
+    message = message.replace(/'/g, "\\'");
     //message = encodeURIComponent(message).replace(/'/g,"%27");
     var traderName = $("#chatform #traderusername").val();
     console.log(traderName);
@@ -2221,6 +2228,7 @@ function getMessages(traderid, userid, username){
         },"json");
 
         messages.forEach(function(el){
+            var message = el.message.replace(/\'/g, "\'");
             var messageDate = moment(el['senton']).format('MMMM Do YYYY, h:mm:ss a');
             chatId = {
                 "chatid" : el.chatid
@@ -2234,10 +2242,10 @@ function getMessages(traderid, userid, username){
                 isRead = "<i class='fa fa-check-circle-o' aria-hidden='true'></i>";
 
             if(el.sentfrom == userid){
-                divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+" "+isRead+"<br/><small><small>"+sentDate+"</small></small></div></div>";
+                divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+message+" "+isRead+"<br/><small><small>"+sentDate+"</small></small></div></div>";
             }
             else{  
-                divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+" "+isRead+"<br/> <small><small>"+sentDate+"</small></small></div></div>";  
+                divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+message+" "+isRead+"<br/> <small><small>"+sentDate+"</small></small></div></div>";  
             }      
         });
 
@@ -2265,6 +2273,7 @@ function getNewMessages(traderid, userid, username){
             currChat = messages;
 
             messages.forEach(function(el){
+                var message = el.message.replace(/\'/g, "\'");
                 chatId = {
                     "chatid" : el['chatid']
                 };
@@ -2280,10 +2289,10 @@ function getNewMessages(traderid, userid, username){
                     isRead = "<i class='fa fa-check-circle-o' aria-hidden='true'></i>";
 
                 if(el.sentfrom == userid){
-                    divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+el.message+" "+isRead+"<br/><small><small>"+sentDate+"</small></small></div></div>";
+                    divchat += "<div class='row'><div class='well well-sm pull-right' data-toggle='tooltip'  data-placement='left'title=\""+messageDate+"\" ><strong>Me</strong>: "+message+" "+isRead+"<br/><small><small>"+sentDate+"</small></small></div></div>";
                 }
                 else{  
-                    divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+el.message+" "+isRead+"<br/> <small><small>"+sentDate+"</small></small></div></div>";  
+                    divchat += "<div class='row'><div class='well well-sm pull-left' data-toggle='tooltip' data-placement='right' title=\""+messageDate+"\" ><strong>"+username +"</strong>: "+message+" "+isRead+"<br/> <small><small>"+sentDate+"</small></small></div></div>";  
                 }      
                                 
             });
