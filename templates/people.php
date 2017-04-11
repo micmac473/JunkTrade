@@ -9,7 +9,9 @@ include "base.php";
   <div class ="row">
     <div class="col-lg-7">
       <div class="page-header text-center">
-        <h2>Following <i class="fa fa-rss" aria-hidden="true" ></i></h2>
+        <h2><i class="fa fa-rss" aria-hidden="true" ></i> Following 
+          <small> <span class="label label-primary" id="followingcount">s</span> </small>
+        </h2>
       </div>
       <div class="table-responsive">
         <div id="table_sec_followees"></div>
@@ -18,7 +20,9 @@ include "base.php";
 
     <div class="col-lg-5">
       <div class="page-header text-center">
-        <h2>Followers <i class="fa fa-rss-square" aria-hidden="true" ></i></h2>
+        <h2><i class="fa fa-rss-square" aria-hidden="true" ></i> Followers 
+          <small> <span class="label label-primary" id="followerscount"></span> </small>
+        </h2>
       </div>
       <div class="table-responsive">
         <div id="table_sec_followers"></div>

@@ -8,7 +8,9 @@ include "base.php";
   <div class ="row">
     <div class="col-xs-12 table-responsive">
       <div class="page-header text-center"> 
-        <h2>Requested Items <i class="fa fa-handshake-o" aria-hidden="true" ></i></h2>
+        <h2><i class="fa fa-handshake-o" aria-hidden="true" ></i> Requested Items 
+          <small> <span class="label label-primary" id="requestedcount"></span> </small>
+        </h2>
       </div>
 
       <div id="table_sec_requested"></div>
@@ -16,7 +18,9 @@ include "base.php";
 
     <div class ="col-xs-12 table-responsive">
       <div class="page-header text-center">
-        <h2>Requests For Items <i class="fa fa-handshake-o" aria-hidden="true" ></i></h2>
+        <h2><i class="fa fa-handshake-o" aria-hidden="true" ></i> Requests For Items 
+          <small> <span class="label label-primary" id="requestscount"></span> </small>
+        </h2>
       </div>
 
       <div id="table_sec_requests"></div>

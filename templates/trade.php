@@ -7,7 +7,17 @@ include "base.php";
   <div class="row">
     <div class="col-xs-12 table-responsive">
       <div class="page-header text-center">
-        <h2>Outgoing Requests <i class="fa fa-paper-plane" aria-hidden="true" ></i></h2>
+        <h2><i class="fa fa-paper-plane" aria-hidden="true" ></i> Outgoing Requests
+          <small>
+            <span class="label label-primary" id="totalrequests"></span>
+          </small>
+        </h2>
+        <h4>
+          Pending <span class="label label-info" id="pendingrequests"></span>
+          Accepted <span class="label label-success" id="acceptedrequests"></span>
+          Denied <span class="label label-danger" id="deniedrequests"></span>
+          Completed <span class="label label-default" id="completedrequests"></span>
+        </h4>
       </div>
     <!--<h4>Products</h4>
     <p>A table highlighting the available products</p> -->

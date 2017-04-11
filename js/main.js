@@ -531,7 +531,7 @@ function processUserItems(records){
 }
 
 function listUserItems(records){
-    var i;
+    var i, totalCount = 0, availableCount = 0, tradedCount = 0;
     var sec_id = "#table_secp";
     var htmlStr = $("#table_headingp").html(); //Includes all the table, thead and tbody declarations
     $.get("../index.php/accepteduseritems", function(res){
@@ -554,6 +554,7 @@ function listUserItems(records){
                         htmlStr += "<td><em> Traded </em> </td>";
 
                         htmlStr +=" </tr>" ;
+                        tradedCount++;
                         break;
                     }
                     else{
@@ -568,6 +569,7 @@ function listUserItems(records){
                         htmlStr += "<td>" + date + "</td>";
                         htmlStr += "<td><strong> Available </strong></td>";
                         htmlStr +=" </tr>" ;
+                        availableCount++;
                         break;
                     }
                     
@@ -585,10 +587,16 @@ function listUserItems(records){
                 htmlStr += "<td>" + date + "</td>";
                 htmlStr += "<td><strong> Available </strong></td>";
                 htmlStr +=" </tr>" ;
+                availableCount++;
             }
         });
         htmlStr += "</tbody></table>";
         $(sec_id).html(htmlStr);
+        //totalCount = $("#userprofileitems tbody tr").length;
+        //$("#useritemscounttotal").html(totalCount);
+        $("#useritemscountavailable").html(availableCount);
+        $("#useritemscounttraded").html(tradedCount);
+        $("#useritemscounttotal").html(tradedCount+availableCount);
     },"json");
     
     //count = $("#mylist li").size();
@@ -761,7 +769,7 @@ function processUserTrade(records){
 }
 
 function listUserTrade(records, res, status){
-    var i=0, j=0;
+    var i=0, j=0, pending = 0, accepted = 0, denied = 0, completed = 0;
     var sec_id = "#table_sect";
     var htmlStr = $("#table_headingt").html(); //Includes all the table, thead and tbody declarations
 
@@ -789,6 +797,7 @@ function listUserTrade(records, res, status){
             htmlStr += "<td class='text-info'> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
             htmlStr += "<td>-</td>";
             htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
+            pending++;
         }
         else if(el['decision'] == true){
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
@@ -799,11 +808,13 @@ function listUserTrade(records, res, status){
                     htmlStr += "<td class='text-muted'> Trade Complete <i class='fa fa-check-circle fa-lg' aria-hidden='true'></i></td>";
                     htmlStr += "<td>-</td>";
                     htmlStr += "<td>-</td>";
+                    completed++;
                 }
                 else{
                     htmlStr += "<td class='text-success'> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
                     htmlStr += "<td>-</td>";
                     htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.id+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
+                    accepted++;
                 }
                 j++;
             }
@@ -817,6 +828,7 @@ function listUserTrade(records, res, status){
             htmlStr += "<td class='text-danger'> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
             htmlStr += "<td><em>" + denyreason + "</em></td>";
             htmlStr += "<td>-</td>";
+            denied++;
         }
 
         htmlStr +=" </tr>" ;
@@ -825,6 +837,12 @@ function listUserTrade(records, res, status){
     //count = $("#mylist li").size();
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr);
+    $("#pendingrequests").html(pending);
+    $("#acceptedrequests").html(accepted);
+    $("#deniedrequests").html(denied);
+    $("#completedrequests").html(completed);
+    $("#totalrequests").html(pending+accepted+denied+completed);
+
 } 
 
 function meetUp(requestid){
@@ -894,6 +912,7 @@ function displayTradeHistory(records, requests, requestsUser, requestedUser){
     });
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr); 
+    $("#tradeshistorycount").html(records.length + requests.length);
 }
 //-------------------------------------------------------------------------------------
 // Displays as a table all the incoming requests for the user
@@ -914,7 +933,7 @@ function processIncomingRequestsHistory(records){
 function displayIncomingRequestsHistory(records, records2){
     var sec_id = "#table_sec_incomingrequestshistory";
     var htmlStr = $("#table_heading_incomingrequestshistory").html(); 
-    var i = 0;
+    var i = 0, accepted = 0, denied = 0;
     records.forEach(function(el){
         
         var requestDate = moment(el.timerequested).format('dddd MMMM Do, YYYY');
@@ -926,11 +945,13 @@ function displayIncomingRequestsHistory(records, records2){
         if(el.decision == true){
             htmlStr += "<td>Accepted</td>"; 
             htmlStr += "<td>-</td>";
+            accepted++;
         }  
         else{
             var denyreason = el.denyreason.replace(/\'/g, "\'");
             htmlStr += "<td>Denied</td>"; 
             htmlStr += "<td>"+denyreason+"</td>";
+            denied++;
         }
             
         htmlStr += "</tr>"; 
@@ -938,6 +959,9 @@ function displayIncomingRequestsHistory(records, records2){
     })
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr);
+    $("#incomingrequestshistorycount").html(records.length);
+    $("#acceptedrequestshistory").html(accepted);
+    $("#deniedrequestshistory").html(denied);
 }
 //---------------------------------------------------------------------------------------
 function viewItem(itemid){
@@ -1013,6 +1037,7 @@ function processUserSavedItems(records){
 
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr);
+    $("#savedcount").html(records.length);
     return false;
 }
 
@@ -1118,6 +1143,7 @@ function processUserFollowees(records){
 
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr);
+    $("#followingcount").html(records.length);
     return false;
 }
 
@@ -1143,6 +1169,7 @@ function processUserFollowers(records){
 
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr);
+    $("#followerscount").html(records.length);
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -1547,7 +1574,7 @@ function deleteItem(itemid){
                 //swal("Cancelled", "Your item is safe", "error");
                 swal({
                     title: "Cancelled!",
-                    text: "Your item is still avaialable for trade",
+                    text: "Your item is still available for trade",
                     type: "success",
                     timer: 2000,
                     showConfirmButton: false
@@ -1720,11 +1747,11 @@ function denyRequest(requestId){
         closeOnConfirm: false,
         animation: "slide-from-top",
         inputPlaceholder: "Leave a reason",
-        confirmButtonText: "Deny"
+        confirmButtonText: "Send Reason"
         },
 
         function(inputValue){
-            denyReason = inputValue.replace(/'/g, "\\'");
+            
             if (inputValue === false){
                 return false;
             }
@@ -1733,10 +1760,12 @@ function denyRequest(requestId){
                 swal.showInputError("Kindly leave a reason for denying request");
                 return false
             }
+            denyReason = inputValue.replace(/'/g, "\\'");
             var deniedRequest = {
                 "requestid": requestId,
                 "denyreason" : denyReason
             };
+
             console.log(deniedRequest);
             $.post("../index.php/denyrequest", deniedRequest, function(res){
                 console.log(res);
@@ -1845,6 +1874,7 @@ function processRequestedMeetUp(records, records2){
     //count = $("#mylist li").size();
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr); 
+    $("#requestedcount").html(records.length); 
 }
 
 
@@ -1895,6 +1925,7 @@ function processRequestsMeetUp(records, records2){
     //count = $("#mylist li").size();
     htmlStr += "</tbody></table>";
     $(sec_id).html(htmlStr); 
+    $("#requestscount").html(records2.length); 
 }
 
 function editTradeDate(tradeId){
@@ -2386,6 +2417,90 @@ function displayUserFollowerUpdates(records, requests){
 }
 //--------------------------------------------------------------------------------------------
 
+function reportTrader(traderId){
+    swal({
+        title: "Trader Report",
+        text: "Please leave a comment about your concern",
+        type: "input",
+        confirmButtonColor: "#DD6B55",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: "slide-from-top",
+        inputPlaceholder: "",
+        confirmButtonText: "Send Report"
+        },
 
+        function(inputValue){
+            
+            if (inputValue === false){
+                return false;
+            }
+      
+            if (inputValue === "") {
+                swal.showInputError("Kindly leave a reason for reporting trader");
+                return false
+            }
+            var traderReport = inputValue.replace(/'/g, "\\'");
+            var reportedTrader = {
+                "traderid": traderId,
+                "traderreport" : traderReport
+            };
+            /*console.log(deniedRequest);
+            $.post("../index.php/reporttrader", reportedTrader, function(res){
+                console.log(res); */
+                swal({
+                    title: "Trader Report Sent!",
+                    type: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            //}, "json"); 
+            //swal("Nice!", "You wrote: " + denyReason, "success");
+        }
+    );
+}
+
+function reportItem(itemId){
+    swal({
+        title: "Item Report",
+        text: "Please leave a comment about your concern",
+        type: "input",
+        confirmButtonColor: "#DD6B55",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: "slide-from-top",
+        inputPlaceholder: "",
+        confirmButtonText: "Send Report"
+        },
+
+        function(inputValue){
+            
+            if (inputValue === false){
+                return false;
+            }
+      
+            if (inputValue === "") {
+                swal.showInputError("Kindly leave a reason for reporting item");
+                return false
+            }
+            var itemReport = inputValue.replace(/'/g, "\\'");
+            var reportedItem = {
+                "itemid": itemId,
+                "itemreport" : itemReport
+            };
+            /*console.log(deniedRequest);
+            $.post("../index.php/reporttrader", reportedTrader, function(res){
+                console.log(res); */
+                swal({
+                    title: "Item Report Sent!",
+                    type: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            //}, "json"); 
+            //swal("Nice!", "You wrote: " + denyReason, "success");
+        }
+    );
+}
 //---------------------------------END-------------------------------------------------
 console.log("JavaScript file was successfully loaded in the page");

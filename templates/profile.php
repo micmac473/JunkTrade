@@ -399,7 +399,15 @@ include "base.php";
   <div class="row">
     <div class="col-xs-12 table-responsive">
       <div class="page-header text-center" style="margin-top: 0;">
-        <h2> Your Junk <i class="fa fa-gift" aria-hidden="true" ></i> </h2>
+        <h2><i class="fa fa-gift" aria-hidden="true" ></i> Your Junk 
+          <small>
+            <span class="label label-primary" id="useritemscounttotal"></span>
+          </small> 
+        </h2>
+        <h4>
+          Available <span class="label label-success" id="useritemscountavailable"></span>
+          Traded <span class="label label-danger" id="useritemscounttraded"></span> 
+        </h4>
       </div>
 
       <div id="table_secp"></div>
@@ -442,13 +450,13 @@ include "base.php";
   </div>
   
 <script type="text/template" id="table_headingp">
-  <table class="table table-hover table-condensed">
+  <table class="table table-hover table-condensed" id="userprofileitems">
     <thead>
     <tr>
       <th><i class="fa fa-picture-o" aria-hidden="true" ></i> Picture</th>
       <th><i class="fa fa-gift" aria-hidden="true" ></i> Name</th>
       <th><i class="fa fa-pencil" aria-hidden="true" ></i> Description</th>
-      <th><i class="fa fa-cog" aria-hidden="true" ></i> Action</th>
+      <th><i class="fa fa-cog" aria-hidden="true" ></i></th>
       <th><i class="fa fa-calendar" aria-hidden="true" ></i> Uploaded</th>
       <th><i class="fa fa-question-circle" aria-hidden="true" ></i> State</th>
     </tr>
