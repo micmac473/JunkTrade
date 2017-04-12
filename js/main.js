@@ -95,10 +95,10 @@ function queryUserRequests(){
             console.log("Request change");
             //toastr["info"]("New/Cancelled/Decision", "Request");
             if(res.length < currNotifcations.length){
-                toastr["warning"]("Cancelled", "Item Request");
+                toastr["warning"]("Cancelled/Denied", "Request");
             }
             else{
-                toastr["info"]("New/Decision made", "Item Request");
+                toastr["info"]("New/Decision", "Request");
             }
             toastr.options = {
               "closeButton": false,
@@ -676,8 +676,8 @@ function displayRequests(records, res){
             htmlStr += "<button style='color:black;text-decoration:none;' type='button' class='btn btn-link btn-xs' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+res[i]['itemid']+")\"><strong>" + " "+res[i]['itemname']+"<strong></button></td>";
             //htmlStr += "<td></td>";
-            htmlStr += "<td><a href='profile.php' class='btn btn-default'> "+el['itemname']+"</a></td>";
-            htmlStr += "<td><a href='#' class='btn btn-default'> "+date+"</a></td>";
+            htmlStr += "<td style='vertical-align:middle;'><a href='profile.php' class='btn btn-default'> "+el['itemname']+"</a></td>";
+            htmlStr += "<td style='vertical-align:middle;'><a href='#' class='btn btn-default'> "+date+"</a></td>";
             //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
             //htmlStr += "<td><button type='button' class='btn btn-info btn-block' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
             htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up fa-lg' aria-hidden='true'></i></button> ";
@@ -793,26 +793,26 @@ function listUserTrade(records, res, status){
         if(el['decision'] == null){
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>" + el['itemname']+"<strong></button></td>";
             htmlStr += "<td><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td>" + date + "</td>";
-            htmlStr += "<td class='text-info'> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
-            htmlStr += "<td>-</td>";
+            htmlStr += "<td style='vertical-align:middle;'>" + date + "</td>";
+            htmlStr += "<td class='text-info' style='vertical-align:middle;'> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
+            htmlStr += "<td style='vertical-align:middle;'>-</td>";
             htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
             pending++;
         }
         else if(el['decision'] == true){
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
             htmlStr += "<td><a disabled class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td>" + date + "</td>";
+            htmlStr += "<td style='vertical-align:middle;'>" + date + "</td>";
             if(status[j]['id'] == el.id){
                 if(status[j]['requesterfeedbackindicator'] == '1'){
-                    htmlStr += "<td class='text-muted'> Trade Complete <i class='fa fa-check-circle fa-lg' aria-hidden='true'></i></td>";
-                    htmlStr += "<td>-</td>";
-                    htmlStr += "<td>-</td>";
+                    htmlStr += "<td class='text-muted' style='vertical-align:middle;'> Trade Complete <i class='fa fa-check-circle fa-lg' aria-hidden='true'></i></td>";
+                    htmlStr += "<td style='vertical-align:middle;'>-</td>";
+                    htmlStr += "<td style='vertical-align:middle;'>-</td>";
                     completed++;
                 }
                 else{
-                    htmlStr += "<td class='text-success'> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
-                    htmlStr += "<td>-</td>";
+                    htmlStr += "<td class='text-success' style='vertical-align:middle;'> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
+                    htmlStr += "<td style='vertical-align:middle;'>-</td>";
                     htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.id+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
                     accepted++;
                 }
@@ -823,11 +823,11 @@ function listUserTrade(records, res, status){
         else{
             var denyreason = el.denyreason.replace(/\'/g, "\'");
             htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
-            htmlStr += "<td><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
-            htmlStr += "<td>" + date + "</td>";
-            htmlStr += "<td class='text-danger'> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
-            htmlStr += "<td><em>" + denyreason + "</em></td>";
-            htmlStr += "<td>-</td>";
+            htmlStr += "<td ><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
+            htmlStr += "<td style='vertical-align:middle;'>" + date + "</td>";
+            htmlStr += "<td class='text-danger' style='vertical-align:middle;'> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
+            htmlStr += "<td style='vertical-align:middle;'><em>" + denyreason + "</em></td>";
+            htmlStr += "<td style='vertical-align:middle;'>-</td>";
             denied++;
         }
 
@@ -1717,7 +1717,7 @@ function arrangement(){
     var tradeLocation = $("#meetupform #tradelocation").val();
     var requesteeContact = $("#meetupform #requesteecontact").val();
     var requesterContact = $("#meetupform #requestercontact").val();
-    tradeDate = moment(tradeDate).format('YYYY-MM-DD 23:59:59');
+    tradeDate = moment(tradeDate).format();
     //alert(tradeDate);
     var trade = {
         "requestid" : requestId,
@@ -1850,14 +1850,15 @@ function processRequestedMeetUp(records, records2){
         var date = moment(el['tradedate']).format('dddd MMMM Do, YYYY');
         // do get request with request id to get my item and contact
         htmlStr += "<tr>";
-        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>"
+        htmlStr += "<td> <a href='#' onclick=\"viewTraderProfile("+el.requestee+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"></a>"
+        htmlStr += "<button style='color:black;text-decoration:none;' type='button' class='btn btn-link btn-xs' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>"
         htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requestee+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
 
-        htmlStr += "<td>"+el['requesteecontact']+"</td>"
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>"
-        htmlStr += "<td>"+records2[i]['itemname']+"</td>";
-        htmlStr += "<td>" + date + "</td>";
-        htmlStr += "<td>" + el['tradelocation'] + "</td>";
+        htmlStr += "<td style='vertical-align:middle;'>"+el['requesteecontact']+"</td>"
+        htmlStr += "<td style='vertical-align:middle;'><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>"
+        htmlStr += "<td style='vertical-align:middle;'>"+records2[i]['itemname']+"</td>";
+        htmlStr += "<td style='vertical-align:middle;'>" + date + "</td>";
+        htmlStr += "<td style='vertical-align:middle;'>" + el['tradelocation'] + "</td>";
         //htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
         var now = moment().format();
         //alert(now > el.tradedate);
@@ -1901,13 +1902,14 @@ function processRequestsMeetUp(records, records2){
         // do get request with request id to get my item and contact
         var date = moment(el['tradedate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
-        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
+        htmlStr += "<td> <a href='#' onclick=\"viewTraderProfile("+el.requester+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"></a>"
+        htmlStr += "<button style='color:black;text-decoration:none;' type='button' class='btn btn-link btn-xs' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
         htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td>"+el['requestercontact']+"</td>";
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
-        htmlStr += "<td>"+records[i]['itemname']+"</td>";
-        htmlStr += "<td>" + date + " <button type='button' class='btn btn-default btn-xs' onclick=\"editTradeDate("+el.tradeid+")\"> <i class='fa fa-pencil' aria-hidden='true'></i></button></td>";
-        htmlStr += "<td>" + el['tradelocation'] + " <button type='button' class='btn btn-default btn-xs' onclick=\"editTradeLocation("+el.tradeid+")\"> <i class='fa fa-pencil' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'>"+el['requestercontact']+"</td>";
+        htmlStr += "<td style='vertical-align:middle;'><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'>"+records[i]['itemname']+"</td>";
+        htmlStr += "<td style='vertical-align:middle;'>" + date + " <button type='button' class='btn btn-default btn-xs' onclick=\"editTradeDate("+el.tradeid+")\"> <i class='fa fa-pencil' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'>" + el['tradelocation'] + " <button type='button' class='btn btn-default btn-xs' onclick=\"editTradeLocation("+el.tradeid+")\"> <i class='fa fa-pencil' aria-hidden='true'></i></button></td>";
         
         var now = moment().format();
         //alert(now);
@@ -1938,7 +1940,7 @@ function editTradeDate(tradeId){
 function changeTradeDate(){
     $("#editDateModal").modal('hide');
     var newTradeDate = $("#editdateform #newtradedate").val();
-    newTradeDate = moment(newTradeDate).format('YYYY-MM-DD 23:59:59');
+    newTradeDate = moment(newTradeDate).format();
     var tradeId = $("#editdateform #tradeid").val();
 
     var tradeDateDetails = {
@@ -2125,8 +2127,8 @@ function cancelFeedback(){
     //swal("Cancelled!", "Feedback not saved!", "error");
     swal({
         title: "Cancelled!",
-        text: "Feedback not saved; kindly rating this trade",
-        type: "success",
+        text: "Feedback not saved; kindly rate this trade",
+        type: "error",
         timer: 2000,
         showConfirmButton: false
     });
