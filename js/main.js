@@ -2315,6 +2315,7 @@ function getNewMessages(traderid, userid, username){
 
                 $.post("../index.php/readmessage", chatId);
                 var sentDate =  moment(el.senton).startOf('seconds').fromNow();
+                sentDate = sentDate - 4;
                 var isRead;
                 if(el.readindicator == '1')
                     isRead = "<i class='fa fa-check-circle' aria-hidden='true'></i>";
