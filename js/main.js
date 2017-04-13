@@ -1717,7 +1717,7 @@ function arrangement(){
     var tradeLocation = $("#meetupform #tradelocation").val();
     var requesteeContact = $("#meetupform #requesteecontact").val();
     var requesterContact = $("#meetupform #requestercontact").val();
-    tradeDate = moment(tradeDate).format();
+    tradeDate = moment(tradeDate).format('YYYY-MM-DD 00:00:00');
     //alert(tradeDate);
     var trade = {
         "requestid" : requestId,
@@ -1860,7 +1860,7 @@ function processRequestedMeetUp(records, records2){
         htmlStr += "<td style='vertical-align:middle;'>" + date + "</td>";
         htmlStr += "<td style='vertical-align:middle;'>" + el['tradelocation'] + "</td>";
         //htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"suggestLocation("+el.tradeid+")\"><i class='fa fa-edit' aria-hidden='true'></i></button></td>";
-        var now = moment().format();
+        var now = moment().format('YYYY-MM-DD hh:mm:ss');
         //alert(now > el.tradedate);
         if(moment(now).isAfter(el.tradedate)){
             htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\" data-toggle='tooltip' data-placement='bottom' title='Give feedback to remove transaction'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
@@ -1911,7 +1911,7 @@ function processRequestsMeetUp(records, records2){
         htmlStr += "<td style='vertical-align:middle;'>" + date + " <button type='button' class='btn btn-default btn-xs' onclick=\"editTradeDate("+el.tradeid+")\"> <i class='fa fa-pencil' aria-hidden='true'></i></button></td>";
         htmlStr += "<td style='vertical-align:middle;'>" + el['tradelocation'] + " <button type='button' class='btn btn-default btn-xs' onclick=\"editTradeLocation("+el.tradeid+")\"> <i class='fa fa-pencil' aria-hidden='true'></i></button></td>";
         
-        var now = moment().format();
+        var now = moment().format('YYYY-MM-DD hh:mm:ss');
         //alert(now);
         //alert(el.tradedate);
         if(moment(now).isAfter(el.tradedate)){
@@ -1940,7 +1940,7 @@ function editTradeDate(tradeId){
 function changeTradeDate(){
     $("#editDateModal").modal('hide');
     var newTradeDate = $("#editdateform #newtradedate").val();
-    newTradeDate = moment(newTradeDate).format();
+    newTradeDate = moment(newTradeDate).format('YYYY-MM-DD 00:00:00');
     var tradeId = $("#editdateform #tradeid").val();
 
     var tradeDateDetails = {
@@ -2315,7 +2315,6 @@ function getNewMessages(traderid, userid, username){
 
                 $.post("../index.php/readmessage", chatId);
                 var sentDate =  moment(el.senton).startOf('seconds').fromNow();
-                sentDate = sentDate - 4;
                 var isRead;
                 if(el.readindicator == '1')
                     isRead = "<i class='fa fa-check-circle' aria-hidden='true'></i>";
