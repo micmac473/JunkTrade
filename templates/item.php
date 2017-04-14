@@ -74,7 +74,7 @@ if(isset($_GET['item'])){
             </div>
         </div>";
 
-  	echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12' style='border:1px solid #cecece;'>
+  	echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12' style='border:1px solid #cecece; background-color: white;'>
         <h1><u>" . $itemDetails['itemname'] . "</u></h1>
   			<strong> Owned by </strong> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile(".$itemDetails['userid'].")\"><i class='fa fa-user' aria-hidden='true'></i> " . $username['username'] . "</button> 
         <p> <strong> Uploaded on </strong><i class='fa fa-calendar' aria-hidden='true'></i> " . $itemDetails['uploaddate'] . "</p>

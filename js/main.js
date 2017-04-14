@@ -185,80 +185,152 @@ function queryNewMessages(){
 }
 
  //--------------------------------------------------------------------------------------------------------------------
- var attempts =0;
+ // Registration functionality
+function register(){
+    var username = $("#username").val();
+    var firstname = $("#firstname").val();
+    var lastname = $("#lastname").val();
+    var email = $("#email").val();
+    var telephone = $("#telephone").val();
+    var password = $("#password").val();
+    var retypedpassword = $("#retypedpassword").val();
+    var securityQuestion = $("#securityquestion").val();
+    var securityAnswer = $("#securityanswer").val();
+    var retypedSecurityAnswer = $("#retypedanswer").val();
+    
+    if(username == "" || firstname ==""||lastname == ""||email ==""||telephone ==""||password ==""||securityQuestion==""||securityAnswer==""||retypedpassword == ""||retypedSecurityAnswer ==""){
+        swal({ 
+            title: "Form Incomplete!",
+            text: "Please fill in empty fields",
+            type: "error",
+            timer: 1000,
+            showConfirmButton: false
+        });
+    }
+    else{
+        var regUser = {
+            "username" : username,
+            "firstname" : firstname,
+            "lastname" : lastname,
+            "email" : email,
+            "telephone" : telephone,
+            "password" : password,
+            "securityquestion" : securityQuestion,
+            "securityanswer" : securityAnswer
+        };
+        console.log(regUser);
+        $.post("../index.php/register", regUser, function(res){
+            if(res){
+                console.log(res);
+                swal({ 
+                    title: "Registration Complete!",
+                    text: "Proceed to login",
+                    type: "success",
+                    timer: 1000,
+                    showConfirmButton: false
+                },
+                    function(){
+                        window.location.href = 'login.php';
+                });
+                //window.location.href="homepage.php";
+                //return false;
+            }
+            else{
+                swal("Incorrect Login","Please try again","error")
+                //return false;
+            }
+        },"json");
+     }
+
+    return false;
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+var attempts =0;
  // Log in functionality
 function login(){
     console.log("Hi");
     var email = $("#email").val();
     var password = $("#password").val();
     //console.log(email + " " + pass);
-    var user = {
-        "email" : email,
-        "password": password
+    if(email == "" || password ==""){
+        swal({ 
+            title: "Incomplete Credentials!",
+            text: "Please fill in both username/email and password",
+            type: "error",
+            timer: 1000,
+            showConfirmButton: false
+        });
     }
-
-    console.log(user);
-    $.post("../index.php/login", user, function(res){
-        //console.log(res);
-        if(res != 400){
-            console.log(res);
-            attempts=0;
-             console.log(attempts);
-
-            swal({ 
-                title: res + ", Welcome to JunkTrade!",
-                text: "Login Successful",
-                type: "success",
-                timer: 1000,
-                showConfirmButton: false
-            },
-                function(){
-                    if(res == "Administrator")
-                        window.location.href = 'admin.php';
-                    else
-                        window.location.href = 'homepage.php';
-            });
-            //window.location.href="homepage.php";
-            //return false;
+    else{
+        var user = {
+            "email" : email,
+            "password": password
         }
-        else{
-            attempts++;
-            console.log(attempts);
 
-            if(attempts == 3){
-                swal({
-                  title: "Problem!",
-                  text: "Your failed 3 login attempts.",
-                  showConfirmButton: false,
-                  timer: 30000
-               });
+        console.log(user);
+        $.post("../index.php/login", user, function(res){
+            //console.log(res);
+            if(res != 400){
+                console.log(res);
+                attempts=0;
+                 console.log(attempts);
 
+                swal({ 
+                    title: res + ", Welcome to JunkTrade!",
+                    text: "Login Successful",
+                    type: "success",
+                    timer: 1000,
+                    showConfirmButton: false
+                },
+                    function(){
+                        if(res == "Administrator")
+                            window.location.href = 'admin.php';
+                        else
+                            window.location.href = 'homepage.php';
+                });
+                //window.location.href="homepage.php";
+                //return false;
             }
-            else if(attempts == 5){
-                swal({
-                  title: "Problem!",
-                  text: "Your failed 5 login attempts..",
-                  showConfirmButton: false,
-                  timer: 60000
-               });
+            else{
+                attempts++;
+                console.log(attempts);
 
+                if(attempts == 3){
+                    swal({
+                      title: "Problem!",
+                      text: "Your failed 3 login attempts.",
+                      showConfirmButton: false,
+                      timer: 30000
+                   });
+
+                }
+                else if(attempts == 5){
+                    swal({
+                      title: "Problem!",
+                      text: "Your failed 5 login attempts..",
+                      showConfirmButton: false,
+                      timer: 60000
+                   });
+
+                }
+                else{ 
+                    swal("Incorrect Login","Please try again","error");
+                    swal({
+                      title: "Incorrect Credentials!",
+                      text: "Please try again",
+                      type: "error",
+                      showConfirmButton: false,
+                      timer: 1000
+                   });
             }
-            else{ 
-                swal("Incorrect Login","Please try again","error");
-                swal({
-                  title: "Incorrect Credentials!",
-                  text: "Please try again",
-                  type: "error",
-                  showConfirmButton: false,
-                  timer: 1000
-               });
-        }
 
-            
+                
 
-            //return false;
-        }
-    },"json");
+                //return false;
+            }
+        },"json");
+    }
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -308,61 +380,7 @@ function login1(){
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
-// Registration functionality
-function register(){
-    //console.log("Hi");
-    var username = $("#username").val();
-    var firstname = $("#firstname").val();
-    var lastname = $("#lastname").val();
-    var email = $("#email").val();
-    var telephone = $("#telephone").val();
-    //var address = $("#address").val();
-    var password = $("#password").val();
-    //var retypedpassword = $("#retypedpassword").val();
-    var securityQuestion = $("#securityquestion").val();
-    var securityAnswer = $("#securityanswer").val();
-    /*if(password != retypedpassword){
-        alert("Password do not match");
-        return false;
-    } */
 
-    var regUser = {
-        "username" : username,
-        "firstname" : firstname,
-        "lastname" : lastname,
-        "email" : email,
-        "telephone" : telephone,
-        "password" : password,
-        "securityquestion" : securityQuestion,
-        "securityanswer" : securityAnswer
-    };
-    console.log(regUser);
-    $.post("../index.php/register", regUser, function(res){
-        if(res){
-            console.log(res);
-            swal({ 
-                title: "Registration Complete!",
-                text: "Proceed to login",
-                type: "success",
-                timer: 1000,
-                showConfirmButton: false
-            },
-                function(){
-                    window.location.href = 'login.php';
-            });
-            //window.location.href="homepage.php";
-            //return false;
-        }
-        else{
-            swal("Incorrect Login","Please try again","error")
-            //return false;
-        }
-    },"json");
-
-    return false;
-}
-
-//--------------------------------------------------------------------------------------------------------------------
 // Registration functionality
 function updatePassword(){
     console.log("Hi");
