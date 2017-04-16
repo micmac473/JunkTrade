@@ -432,10 +432,22 @@ $app->get("/itemstatus/{id}", function(Request $request, Response $response){
 
 $app->get("/itemtradedstatus/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
-	// Get Record for Specific Country
 	$rec = getItemTradedStatus($val);
-
 	$response = $response->withJson($rec);
+	return $response;
+});
+
+$app->get("/itemdeniedstatus/{id}", function(Request $request, Response $response){
+	$val = $request->getAttribute('id');
+	$rec = getItemRequestDeniedStatus($val);
+	$response = $response->withJson($rec);
+	return $response;
+});
+
+$app->get("/itemsdeniedstatustrader/{id}", function(Request $request, Response $response){
+	$traderId = $request->getAttribute('id');
+	$deniedRequests = getItemRequestDeniedStatusTrader($traderId);
+	$response = $response->withJson($deniedRequests);
 	return $response;
 });
 

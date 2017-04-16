@@ -562,14 +562,14 @@ function listUserItems(records){
                     if(res[i]['decision'] == true){
                         htmlStr += "<tr>";
                         htmlStr += "<td style='display:none;'>"+ el['itemid'] +"</td>";
-                        htmlStr += "<td><img src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
-                        htmlStr += "<td><s>"+ el['itemname'] +"</s></td>";
-                        htmlStr += "<td><s>"+ el['itemdescription'] +"</s></td>";
+                        htmlStr += "<td style='vertical-align:middle;'><img src=\"" + el['picture'] + "\" width=\"120\" height=\"128\"></td>";
+                        htmlStr += "<td style='vertical-align:middle;'><s>"+ el['itemname'] +"</s></td>";
+                        htmlStr += "<td style='vertical-align:middle;'><s>"+ el['itemdescription'] +"</s></td>";
                         
-                        htmlStr += "<td><button type='button' class='btn btn-primary disabled'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>";
-                        htmlStr += "<button type='button' class='btn btn-danger disabled'><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
-                        htmlStr += "<td><s>" + date + "</s></td>";
-                        htmlStr += "<td><em> Traded </em> </td>";
+                        htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-primary disabled'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
+                        htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-danger disabled'><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
+                        htmlStr += "<td style='vertical-align:middle;'><s>" + date + "</s></td>";
+                        htmlStr += "<td style='vertical-align:middle;'><em> Traded </em> </td>";
 
                         htmlStr +=" </tr>" ;
                         tradedCount++;
@@ -578,14 +578,14 @@ function listUserItems(records){
                     else{
                         htmlStr += "<tr>";
                         htmlStr += "<td style='display:none;'>"+ el['itemid'] +"</td>";
-                        htmlStr += "<td><img style='cursor: pointer;' onclick=\"viewItemImages("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
-                        htmlStr += "<td>"+ el['itemname'] +"</td>";
-                        htmlStr += "<td>"+ el['itemdescription'] +"</td>";
+                        htmlStr += "<td style='vertical-align:middle;'><img style='cursor: pointer;' onclick=\"viewItemImages("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"120\" height=\"128\"></td>";
+                        htmlStr += "<td style='vertical-align:middle;'>"+ el['itemname'] +"</td>";
+                        htmlStr += "<td style='vertical-align:middle;'>"+ el['itemdescription'] +"</td>";
                     
-                        htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>";
-                        htmlStr += "<button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
-                        htmlStr += "<td>" + date + "</td>";
-                        htmlStr += "<td><strong> Available </strong></td>";
+                        htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
+                        htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
+                        htmlStr += "<td style='vertical-align:middle;'>" + date + "</td>";
+                        htmlStr += "<td style='vertical-align:middle;'><strong> Available </strong></td>";
                         htmlStr +=" </tr>" ;
                         availableCount++;
                         break;
@@ -596,14 +596,14 @@ function listUserItems(records){
             if(i == res.length){
                 htmlStr += "<tr>";
                 htmlStr += "<td style='display:none;'>"+ el['itemid'] +"</td>";
-                htmlStr += "<td><img style='cursor: pointer;' onclick=\"viewItemImages("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"150\" height=\"128\"></td>";
-                htmlStr += "<td>"+ el['itemname'] +"</td>";
-                htmlStr += "<td>"+ el['itemdescription'] +"</td>";
+                htmlStr += "<td style='vertical-align:middle;'><img style='cursor: pointer;' onclick=\"viewItemImages("+el.itemid+")\" src=\"" + el['picture'] + "\" width=\"120\" height=\"128\"></td>";
+                htmlStr += "<td style='vertical-align:middle;'>"+ el['itemname'] +"</td>";
+                htmlStr += "<td style='vertical-align:middle;'>"+ el['itemdescription'] +"</td>";
                     
-                htmlStr += "<td><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>";
-                htmlStr += "<button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
-                htmlStr += "<td>" + date + "</td>";
-                htmlStr += "<td><strong> Available </strong></td>";
+                htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-primary' onclick =\"showUpdateForm("+el.itemid+")\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button></td>";
+                htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-danger' onclick=\"deleteItem("+el.itemid+")\"><i class='fa fa-trash' aria-hidden='true'></i></button></td>";
+                htmlStr += "<td style='vertical-align:middle;'>" + date + "</td>";
+                htmlStr += "<td style='vertical-align:middle;'><strong> Available </strong></td>";
                 htmlStr +=" </tr>" ;
                 availableCount++;
             }
@@ -690,15 +690,15 @@ function displayRequests(records, res){
         var requestId = el['id'];
             var date = moment(el['timerequested']).format('dddd MMMM Do, YYYY');
             htmlStr += "<tr>";
-            htmlStr += "<td> <a href='#' onclick=\"viewTraderProfile("+el.requester+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"></a>";
+            htmlStr += "<td style='vertical-align:middle;'> <a href='#' onclick=\"viewTraderProfile("+el.requester+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"></a>";
             htmlStr += "<button style='color:black;text-decoration:none;' type='button' class='btn btn-link btn-xs' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+res[i]['itemid']+")\"><strong>" + " "+res[i]['itemname']+"<strong></button></td>";
+            htmlStr += "<td style='vertical-align:middle;'><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+res[i]['itemid']+")\"><strong>" + " "+res[i]['itemname']+"<strong></button></td>";
             //htmlStr += "<td></td>";
             htmlStr += "<td style='vertical-align:middle;'><a href='profile.php' class='btn btn-default'> "+el['itemname']+"</a></td>";
             htmlStr += "<td style='vertical-align:middle;'><a href='#' class='btn btn-default'> "+date+"</a></td>";
             //htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";    
             //htmlStr += "<td><button type='button' class='btn btn-info btn-block' onclick=\"viewRequest("+el.id+")\"><i class='fa fa-eye' aria-hidden='true'></i></button> ";    
-            htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up fa-lg' aria-hidden='true'></i></button> ";
+            htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-success' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-thumbs-up fa-lg' aria-hidden='true'></i></button> ";
             htmlStr += " <button type='button' class='btn btn-danger' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-thumbs-down fa-lg' aria-hidden='true'></i></button></td>";
             htmlStr +=" </tr>" ;
             i++;
@@ -716,9 +716,9 @@ function getDecisions(){
 
 function decisions(records){
     $.get("../index.php/decisionsrequestee", function(requestee){
-        console.log(requestee);
+        //console.log(requestee);
         currDecisions = records;
-        console.log(records);
+        //console.log(records);
         var htmlStr="", i = 0;
         records.forEach(function(el){
             if(el.decision == true && el.viewed == false){
@@ -774,11 +774,11 @@ function getTrade(){
 }
 
 function processUserTrade(records){
-    console.log(records);
+    //console.log(records);
     $.get("../index.php/outgoingrequestitems", function(res){
-        console.log(res);
+        //console.log(res);
         $.get("../index.php/acceptedtradestatus", function(status){
-            console.log(status);
+            //console.log(status);
             listUserTrade(records, res, status);
         }, "json");
         
@@ -790,36 +790,37 @@ function listUserTrade(records, res, status){
     var i=0, j=0, pending = 0, accepted = 0, denied = 0, completed = 0;
     var sec_id = "#table_sect";
     var htmlStr = $("#table_headingt").html(); //Includes all the table, thead and tbody declarations
-
+    //console.log(records);
     records.forEach(function(el){
         //alert(el.rid);
-        
-        var viewedRequest = {
-            "requestid" : el.id
-        };
+        if(el.viewed == false && el.decision != null){
+            var viewedRequest = {
+                "requestid" : el.id
+            };
 
-        //When the requests page is visited, all request status can be seen so all new request notifications are considered viewed since it would be redundant to have a count for an request that is currently being seen.
-        $.post("../index.php/setrequeststoviewed", viewedRequest);
-
+            //When the requests page is visited, all request status can be seen so all new request notifications are considered viewed since it would be redundant to have a count for an request that is currently being seen.
+            console.log("Set To Viewed called");
+            $.post("../index.php/setrequeststoviewed", viewedRequest);
+        }
         htmlStr += "<tr>";
-        htmlStr += "<td> <a href='#' onclick=\"viewTraderProfile("+el.requestee+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"></a>";
-        htmlStr += "<button style='color:black;text-decoration:none;' type='button' class='btn btn-link btn-xs' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'> <a href='#' onclick=\"viewTraderProfile("+el.requestee+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\">";
+        htmlStr += "<button style='color:black;text-decoration:none;' type='button' class='btn btn-link btn-xs'>" +  "<strong>"+  " " + el['username'] + "</strong></button></a></td>";
         /*htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong><i class='fa fa-gift' aria-hidden='true'></i>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td><i class='fa fa-gift' aria-hidden='true'></i>" + res[i]['itemname']+"</td>";
         htmlStr += "<td>" + el['timerequested'] + "</td>"; */
         var date = moment(el['timerequested']).format('dddd MMMM Do, YYYY');
         if(el['decision'] == null){
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>" + el['itemname']+"<strong></button></td>";
-            htmlStr += "<td><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
+            htmlStr += "<td style='vertical-align:middle;'><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>" + el['itemname']+"<strong></button></td>";
+            htmlStr += "<td style='vertical-align:middle;'><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
             htmlStr += "<td style='vertical-align:middle;'>" + date + "</td>";
             htmlStr += "<td class='text-info' style='vertical-align:middle;'> Pending <i class='fa fa-spinner fa-pulse fa-lg fa-fw'></i><span class='sr-only'>Loading...</span></td>";
             htmlStr += "<td style='vertical-align:middle;'>-</td>";
-            htmlStr += "<td><div><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div></td>";
+            htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-danger btn-block active' onclick=\"cancelMadeRequest("+el['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button></td>";
             pending++;
         }
         else if(el['decision'] == true){
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
-            htmlStr += "<td><a disabled class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
+            htmlStr += "<td style='vertical-align:middle;'><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
+            htmlStr += "<td style='vertical-align:middle;'><a disabled class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
             htmlStr += "<td style='vertical-align:middle;'>" + date + "</td>";
             if(status[j]['id'] == el.id){
                 if(status[j]['requesterfeedbackindicator'] == '1'){
@@ -831,7 +832,7 @@ function listUserTrade(records, res, status){
                 else{
                     htmlStr += "<td class='text-success' style='vertical-align:middle;'> Accepted <i class='fa fa-check fa-lg' aria-hidden='true'></i></td>";
                     htmlStr += "<td style='vertical-align:middle;'>-</td>";
-                    htmlStr += "<td><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.id+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
+                    htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-success btn-block' onclick=\"meetUp("+el.id+")\"><i class='fa fa-map-marker fa-lg' aria-hidden='true'></i> View Meetup</button></td>";
                     accepted++;
                 }
                 j++;
@@ -840,8 +841,8 @@ function listUserTrade(records, res, status){
         }
         else{
             var denyreason = el.denyreason.replace(/\'/g, "\'");
-            htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
-            htmlStr += "<td ><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
+            htmlStr += "<td style='vertical-align:middle;'><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
+            htmlStr += "<td style='vertical-align:middle;'><a href='profile.php' class='btn btn-default'>" + res[i]['itemname']+"</a></td>";
             htmlStr += "<td style='vertical-align:middle;'>" + date + "</td>";
             htmlStr += "<td class='text-danger' style='vertical-align:middle;'> Denied <i class='fa fa-ban fa-lg' aria-hidden='true'></i></td>";
             htmlStr += "<td style='vertical-align:middle;'><em>" + denyreason + "</em></td>";
@@ -1045,11 +1046,11 @@ function processUserSavedItems(records){
     records.forEach(function(el){
         var date = moment(el['saveddate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
-        htmlStr += "<td><a href='#' onclick=\"viewItem("+el.itemid+")\"><img class='img-rounded' src=\"" + el.picture + "\" width=\"120\" height=\"128\"></a></td>";
-        htmlStr += "<td><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>" + " "+el['itemname']+"<strong></button></td>";
-        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
-        htmlStr += "<td>"+ date +"</td>";      
-        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-times' aria-hidden='true'></i> Unsave</button></td>";
+        htmlStr += "<td style='vertical-align:middle;'><a href='#' onclick=\"viewItem("+el.itemid+")\"><img class='img-rounded' src=\"" + el.picture + "\" width=\"120\" height=\"128\"></a></td>";
+        htmlStr += "<td style='vertical-align:middle;'><button type='button' style='color:black;text-decoration:none;' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>" + " "+el['itemname']+"<strong></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'>"+ date +"</td>";      
+        htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-danger btn-block' onclick=\"removeSavedItem("+el.savedid+")\"><i class='fa fa-times' aria-hidden='true'></i> Unsave</button></td>";
         htmlStr +=" </tr>" ;
     });
 
@@ -1152,10 +1153,10 @@ function processUserFollowees(records){
     records.forEach(function(el){
         var date = moment(el['followdate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
-        htmlStr += "<td><a href='#' onclick=\"viewTraderProfile("+el.followee+")\"><img class='img-rounded' src=\"" + el.profilepicture + "\" width=\"120\" height=\"128\"></a></td>";
-        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.followee+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
-        htmlStr += "<td>"+ date +"</td>";      
-        htmlStr += "<td><button type='button' class='btn btn-danger btn-block' onclick=\"unfollowTrader("+el.followee+")\"><i class='fa fa-times' aria-hidden='true'></i> Unfollow</button></td>";
+        htmlStr += "<td style='vertical-align:middle;'><a href='#' onclick=\"viewTraderProfile("+el.followee+")\"><img class='img-rounded' src=\"" + el.profilepicture + "\" width=\"120\" height=\"128\"></a></td>";
+        htmlStr += "<td style='vertical-align:middle;'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.followee+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'>"+ date +"</td>";      
+        htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-danger btn-block' onclick=\"unfollowTrader("+el.followee+")\"><i class='fa fa-times' aria-hidden='true'></i> Unfollow</button></td>";
         htmlStr +=" </tr>" ;
     });
 
@@ -1179,9 +1180,9 @@ function processUserFollowers(records){
     records.forEach(function(el){
         var date = moment(el['followdate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
-        htmlStr += "<td><a href='#' onclick=\"viewTraderProfile("+el.follower+")\"> <img class='img-rounded' src=\"" + el.profilepicture + "\" width=\"120\" height=\"128\"></a></td>";
-        htmlStr += "<td><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.follower+")\">" +  "<strong>"+ " "+el['username'] + "</strong></button></td>";
-        htmlStr += "<td>"+ date +"</td>";      
+        htmlStr += "<td style='vertical-align:middle;'><a href='#' onclick=\"viewTraderProfile("+el.follower+")\"> <img class='img-rounded' src=\"" + el.profilepicture + "\" width=\"120\" height=\"128\"></a></td>";
+        htmlStr += "<td style='vertical-align:middle;'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.follower+")\">" +  "<strong>"+ " "+el['username'] + "</strong></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'>"+ date +"</td>";      
         htmlStr +=" </tr>" ;
     });
 
@@ -2373,8 +2374,8 @@ function displayUserMeetUp(records){
     var eventsCount = 0;
     //console.log(records.length);
     if(records.length != 0){
-        console.log(records.length);
-        console.log(records);
+        //console.log(records.length);
+        //console.log(records);
         //records.forEach(function(el){
             for(var i = 0; i < records.length; i++){
                 events+="<div class='well well-sm'><a href='meetup.php' style='cursor: pointer; color:black'><i class='fa fa-map-marker' aria-hidden='true'></i><strong> " + records[i][1] + "</strong> with <i class='fa fa-user' aria-hidden='true'></i><strong> "+records[i][4]+"</strong> on <i class='fa fa-calendar' aria-hidden='true'></i><em><small> " + moment(records[i][0]).format('dddd MMMM Do, YYYY') + "</small></em></a></div>";
@@ -2398,7 +2399,7 @@ function userFollowerUpdates(){
 }
 
 function processUserFollowerUpdates(records){
-    console.log(records);
+    //console.log(records);
     $.get("../index.php/userfollowerupdatesrequests", function(res){
         console.log(res);
         displayUserFollowerUpdates(records, res);
@@ -2412,7 +2413,7 @@ function displayUserFollowerUpdates(records, requests){
     var updatesCount = 0;
     if(records.length != requests.length){
         records.forEach(function(el){
-            var uploaded = moment(el.uploaddate).startOf('hour').fromNow();
+            var uploaded = moment(el.uploaddate).startOf('minute').fromNow();
             for(j = 0; j < requests.length; j ++){
                 if(el.itemname == requests[j][0]){
                     break;

@@ -54,13 +54,27 @@ include "base.php";
     <tbody>
 </script>
 
-<script>window.onload = function() {
-  getUserFollowees();
-  getUserFollowers();
+<script>
+  window.onload = function() {
+    getUserFollowees();
+    getUserFollowers();
+  };
+
+  var currFollowers = <?php echo json_encode(getAllUserTrade()) ?>;
+
   setInterval(function(){
-      getUserFollowers();
-  },2000);
-};
+      queryUserFollowers();
+  },2500);
+
+  function queryUserFollowers(){
+    $.get("../index.php/followers", function(followers){
+      if(JSON.stringify(followers) !== JSON.stringify(currFollowers)){
+        currFollowers = followers;
+        processUserFollowers(followers);
+      }
+    },"json");
+
+  }
 </script>
 
 

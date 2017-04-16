@@ -158,7 +158,13 @@ include "base.php";
     userFollowerUpdates();
   };
 
-  var currAllItems = [], currAllRequests = [] ,currMeetup = [], currFollowerUpdates = [], currFollowerUpdatesRequests = [], sort="mra";
+  var sort="mra";
+  var currAllItems = <?php echo json_encode(getAllItems("mra")) ?>;
+  var currAllRequests = <?php echo json_encode(getAllNonUserItemsState()) ?>;
+  var currMeetup = <?php echo json_encode(getUserMeetUp()) ?>;
+  var currFollowerUpdates = <?php echo json_encode(getUserFollowerUpdates()) ?>;
+  var currFollowerUpdatesRequests = <?php echo json_encode(getUserFollowerUpdatesRequests()) ?>;
+  
   setInterval(function(){
     queryAllItems(sort);
     queryMeetUp();
@@ -166,7 +172,7 @@ include "base.php";
   },2500);
   
 
-  $.get("../index.php/homepage/"+sort, function(res){
+  /*$.get("../index.php/homepage/"+sort, function(res){
     $.get("../index.php/allnonuseritemsstate", function(reqs){
       currAllItems = res;
       currAllRequests = reqs;
@@ -179,7 +185,7 @@ include "base.php";
 
   $.get("../index.php/userfollowerupdates", function(res){
     currFollowerUpdates = res;
-  },"json");
+  },"json"); */
 
     
   function queryAllItems(sort){

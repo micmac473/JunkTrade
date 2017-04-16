@@ -49,23 +49,34 @@ include "base.php";
     <tbody>
 </script>
 
-<script>window.onload = function() {
+<script>
+  window.onload = function() {
     getTrade();
-    setInterval(function(){
-      queryOutgoingRequests();
-    },5000);
+  };
 
-    var currOutgoingRequests = [];
-    function queryOutgoingRequests(){
-      $.get("../index.php/trade", function(res){
-        if(JSON.stringify(res) !== JSON.stringify(currOutgoingRequests)){
-          console.log("Outgoing request decision!");
-          currOutgoingRequests = res;
-          processUserTrade(res);
-        }
-      }, "json");  
-    }
-};
+  var currTrade = <?php echo json_encode(getAllUserTrade()) ?>;
+  var currOutgoingRequestsItems = <?php echo json_encode(getOutgoingRequestItems()) ?>;
+  var currAcceptedTrade = <?php echo json_encode(getAcceptedTradeStatus()) ?>;
+  console.log("On page load");
+  setInterval(function(){
+      queryUserOutgoingRequests();
+  },2500);
+
+  function queryUserOutgoingRequests(){
+    $.get("../index.php/trade", function(trade){
+      $.get("../index.php/outgoingrequestitems", function(requests){
+        $.get("../index.php/acceptedtradestatus", function(accepted){
+          if(JSON.stringify(trade) !== JSON.stringify(currTrade) || JSON.stringify(requests) !== JSON.stringify(currOutgoingRequestsItems) || JSON.stringify(accepted) !== JSON.stringify(currAcceptedTrade) ){
+            console.log("Outgoing request update!");
+            currTrade = trade;
+            currOutgoingRequestsItems = requests;
+            currAcceptedTrade = accepted;
+            processUserTrade(trade);
+          }
+        },"json");
+      },"json");
+    }, "json");  
+  }
 </script>
 
 </body>

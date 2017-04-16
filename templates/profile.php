@@ -197,46 +197,6 @@ include "base.php";
 ?>
 
 <div class ="container-fluid">
-  <div class ="row">
-
-    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-      <button type="button" onclick ="showForm();" class="btn btn-primary btn-block"><i class="fa fa-gift fa-lg" aria-hidden="true"></i> Add Item</button>
-    </div>
-
-    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-      <button type="button" onclick ="showProfilePictureForm();" class="btn btn-primary btn-block"> <i class="fa fa-camera fa-lg" aria-hidden="true"></i> Update Picture</button>
-    </div>
-
-    <div class ="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-      <button type="button" onclick ="showEditProfileForm();" class="btn btn-primary btn-block"><i class="fa fa-pencil-square fa-lg" aria-hidden="true"></i> Edit Profile</button>
-    </div> 
-
-    <!--<div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-      <a href='#' data-toggle='tooltip' data-html='true' title= '<?php //echo $rating. " out of 5 stars <br>  Trades: ". $trades?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php //echo $rating ?> ></a>
-    </div> -->
-
-    
-
-  </div>
- 
-  <!-- Perform a seafrch -->
-  <div class="container" id ="ProfileSearch" style ="display:none;">
-  <div class="row">
-        <div class="col-md-6">
-        <h2>Search Your Items</h2>
-            <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" class="form-control input-lg" placeholder="Seach.." />
-                    <span class="input-group-btn">
-                        <button onclick ="hideSearch();" class="btn btn-info btn-lg" type="button">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-        </div>
-  </div>
-</div>
 
   <!-- Update Profile Pic -->
   <div class ="row" style ="display:none" id ="uploadProfilePic">
@@ -398,7 +358,7 @@ include "base.php";
 
   <div class="row">
     <div class="col-xs-12 table-responsive">
-      <div class="page-header text-center" style="margin-top: 0;">
+      <div class="page-header text-center" style="margin-top: 0; padding:0">
         <h2><i class="fa fa-gift" aria-hidden="true" ></i> Your Junk 
           <small>
             <span class="label label-primary" id="useritemscounttotal"></span>
@@ -456,7 +416,7 @@ include "base.php";
       <th><i class="fa fa-picture-o" aria-hidden="true" ></i> Picture</th>
       <th><i class="fa fa-gift" aria-hidden="true" ></i> Name</th>
       <th><i class="fa fa-pencil" aria-hidden="true" ></i> Description</th>
-      <th><i class="fa fa-cog" aria-hidden="true" ></i></th>
+      <th colspan="2" class="text-center"><i class="fa fa-cog" aria-hidden="true" ></i></th>
       <th><i class="fa fa-calendar" aria-hidden="true" ></i> Uploaded</th>
       <th><i class="fa fa-question-circle" aria-hidden="true" ></i> State</th>
     </tr>

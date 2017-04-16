@@ -21,7 +21,7 @@ if(isset($_GET['item'])){
 }
 ?>
 
-<div class ="container-fluid">
+<div class ="container-fluid" style="background-color: white;">
   <div class="row">
   <?php
     echo "<div class='col-lg-1 col-md-1 col-sm-12 col-xs-12'>
@@ -74,9 +74,9 @@ if(isset($_GET['item'])){
             </div>
         </div>";
 
-  	echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12' style='border:1px solid #cecece; background-color: white;'>
+  	echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>
         <h1><u>" . $itemDetails['itemname'] . "</u></h1>
-  			<strong> Owned by </strong> <button type='button' class='btn btn-default' onclick=\"viewTraderProfile(".$itemDetails['userid'].")\"><i class='fa fa-user' aria-hidden='true'></i> " . $username['username'] . "</button> 
+  			<strong> Owned by </strong> <button type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile(".$itemDetails['userid'].")\"><i class='fa fa-user' aria-hidden='true'></i> " . $username['username'] . "</button> 
         <p> <strong> Uploaded on </strong><i class='fa fa-calendar' aria-hidden='true'></i> " . $itemDetails['uploaddate'] . "</p>
   			<h3> <u> Description </u> </h3>" . $itemDetails['itemdescription'] . "</div>";
 
@@ -144,14 +144,21 @@ $(document).ready(function(){
 //var itemId = <?php echo $_GET['item']; ?>;
 var itemId = <?php echo json_encode($_GET['item']) ?>;
 var tradedStatus = <?php echo json_encode(getItemTradedStatus($_GET['item'])) ?>;
+var deniedStatus = <?php echo json_encode(getItemRequestDeniedStatus($_GET['item'])) ?>;
+console.log(deniedStatus);
 console.log(tradedStatus);
 if(tradedStatus != null){
     tradedResponse();
+}
+
+if(deniedStatus != null && deniedStatus['decision'] == false){
+    deniedResponse();
 }
 //console.log(<?php echo json_encode($_GET['item']) ?>);
 
 setInterval(function(){
     queryTradedItem(itemId);
+    queryDeniedRequest(itemId);
 },2500);
 
 function queryTradedItem(itemId){
@@ -159,6 +166,15 @@ function queryTradedItem(itemId){
         //console.log(res);
         if(res != null){
             tradedResponse();
+        }
+    },"json");
+}
+
+function queryDeniedRequest(itemId){
+    $.get("../index.php/itemdeniedstatus/"+itemId, function(res){
+        //console.log(res);
+        if(res != null && res['decision'] == false){
+            deniedResponse();
         }
     },"json");
 }
@@ -173,6 +189,20 @@ function tradedResponse(){
         },
         function(){
             window.location.href = 'homepage.php';
+        }
+    );       
+}
+
+function deniedResponse(){
+    swal({ 
+        title: "Request denied!",
+        text: "Redirecting to Outgoing Requests to view reason",
+        type: "warning",
+        timer: 2000,
+        showConfirmButton: false
+    },
+        function(){
+            window.location.href = 'trade.php';
         }
     );       
 }

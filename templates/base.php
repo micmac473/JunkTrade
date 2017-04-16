@@ -430,9 +430,20 @@ function getCurrentPage(){
                 }
               ?>
             </h1>
+            <a href='#' data-toggle='tooltip' data-html='true' title= '<?php echo $rating. " out of 5 stars <br>  Trades: ". $trades?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php echo $rating ?> ></a>
+            <div class ="">
+              <button type="button" onclick="toggler('uploadItem');" class="btn btn-default"><i class="fa fa-gift fa-lg" aria-hidden="true"></i> Add Item</button>
+            
+
+            
+              <button type="button" onclick="toggler('uploadProfilePic');" class="btn btn-default"> <i class="fa fa-camera fa-lg" aria-hidden="true"></i> Update Picture</button>
+            
+
+    
+              <button type="button" onclick="toggler('updateItemform');" class="btn btn-default"><i class="fa fa-pencil-square fa-lg" aria-hidden="true"></i> Edit Profile</button>
+            </div>
           </div>
-          <a href='#' data-toggle='tooltip' data-html='true' title= '<?php echo $rating. " out of 5 stars <br>  Trades: ". $trades?>' data-placement='bottom'><input  type='hidden' class='rating' data-filled='fa fa-star fa-3x' data-empty='fa fa-star-o fa-3x' data-readonly value= <?php echo $rating ?> ></a>
-        </div>
+        </div>    
       </div>
   <?php
   }

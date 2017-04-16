@@ -317,7 +317,7 @@ function addItemToSaved($itemId, $itemOwner){
 		return $id;
 	}
 	else{
-		$sql = "UPDATE `saved` s SET `savedindicator` = true WHERE `savedid` = $savedId;";
+		$sql = "UPDATE `saved` s SET `savedindicator` = true, `saveddate`=now() WHERE `savedid` = $savedId;";
 		$res = null;
 		if ($db != NULL){
 			$res = $db->query($sql);
@@ -893,7 +893,7 @@ function getProfileItems($userID){
 
 function getAllUserTrade(){
 	$userID = $_SESSION["id"];
-	$sql ="SELECT r.requestee, u.username, i.itemid, i.itemname, r.timerequested, r.decision, r.id, r.denyreason, u.profilepicture FROM `requests` r, `items` i, `users` u where r.item = i.itemid AND r.requestee = u.id AND  r.requester = $userID ORDER BY r.timerequested DESC;";
+	$sql ="SELECT r.viewed, r.requestee, u.username, i.itemid, i.itemname, r.timerequested, r.decision, r.id, r.denyreason, u.profilepicture FROM `requests` r, `items` i, `users` u where r.item = i.itemid AND r.requestee = u.id AND  r.requester = $userID ORDER BY r.timerequested DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -1056,7 +1056,7 @@ function getAllNonUserItemRequestsForSpecificTrader($traderId){
 
 function getTraderProfileItemsTradedStatus($traderId){
 	$userID = $_SESSION["id"];
-	$sql ="SELECT * FROM `requests` r WHERE r.requester = $traderId AND r.decision = true OR r.requestee = $traderId AND r.decision = true ORDER BY r.timerequested DESC;";
+	$sql ="SELECT * FROM `requests` r, `items` i WHERE r.item2 = i.itemid AND r.requester = $traderId AND r.decision = true OR r.item = i.itemid AND r.requestee = $traderId AND r.decision = true ORDER BY r.timerequested DESC;";
 	$items =[];
 	//print($sql);
 		$db = getDBConnection();
@@ -1499,6 +1499,36 @@ function getItemTradedStatus($itemId){
 		$db->close();
 	}
 	return $rec;
+}
+
+function getItemRequestDeniedStatus($itemId){
+	$userId = $_SESSION["id"];
+	$db = getDBConnection();
+	$rec = null;
+	if ($db != NULL){
+		$sql = "SELECT r.id, r.decision FROM `requests` r WHERE r.item = $itemId AND r.requester = $userId AND r.viewed = false ORDER BY r.timerequested DESC;";
+		$res = $db->query($sql);
+		if ($res){
+			$rec= $res->fetch_assoc();
+		}
+		$db->close();
+	}
+	return $rec;
+}
+
+function getItemRequestDeniedStatusTrader($traderId){
+	$userId = $_SESSION["id"];
+	$db = getDBConnection();
+	$deniedRequests = [];
+	if ($db != NULL){
+		$sql = "SELECT r.item, r.decision, i.itemname FROM `requests` r, `items` i WHERE r.item = i.itemid AND r.requestee = $traderId AND r.requester = $userId AND r.viewed = false ORDER BY r.timerequested DESC;";
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$deniedRequests[] = $row;
+		}
+		$db->close();
+	}
+	return $deniedRequests;
 }
 
 //In progress

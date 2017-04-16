@@ -48,10 +48,10 @@ $currProfileItems =[];
       
         <?php
           if($followeeInfo == null || $followeeInfo['followindicator'] == false){
-            echo "<button type='button' class='btn btn-default' onClick=\"followTrader(". $userID .")\" data-toggle='tooltip' title='Click to Follow' data-placement='bottom'>Follow <i class='fa fa-rss' aria-hidden='true'></i></button> ";
+            echo "<button type='button' class='btn btn-default' onClick=\"followTrader(". $userID .")\" data-toggle='tooltip' title='Click to Follow' data-placement='bottom'><i class='fa fa-rss' aria-hidden='true'></i> Follow </button> ";
           }
           else{
-            echo "<button type='button' class='btn btn-success' onClick=\"unfollowTrader(". $userID .")\" data-toggle='tooltip' title='Click to Unfollow' data-placement='bottom'> Following <i class='fa fa-rss-square' aria-hidden='true'></i></button>";
+            echo "<button type='button' class='btn btn-success' onClick=\"unfollowTrader(". $userID .")\" data-toggle='tooltip' title='Click to Unfollow' data-placement='bottom'><i class='fa fa-rss-square' aria-hidden='true'></i> Following </button>";
           }
           echo "<span> <small>Followed by <a href='#' id='followerslist' data-html ='true' data-toggle='popover' data-placement='right' data-trigger='focus' data-content=\"";
             foreach ($followers as $key => $value) {
@@ -143,14 +143,33 @@ $('#input').rating('rate', 2.5);
 
 var traderId = <?php echo json_encode($_GET['trader']) ?>;
 var currItems = <?php echo json_encode($currProfileItems) ?>;
-console.log(traderId);
+var currDeniedRequests = <?php echo json_encode(getItemRequestDeniedStatusTrader($_GET['trader'])) ?>;
+var currItemRequests = <?php echo json_encode(getTraderProfileItemsTradedStatus($_GET['trader'])) ?>;
+console.log(currItems);
+console.log(currDeniedRequests);
+currItems.forEach(function(el){
+  for(var j =0; j < currItemRequests.length; j++){
+    if(el == currItemRequests[j]['item'] || el == currItemRequests[j]['item2']){
+      itemChange(currItemRequests[j]['itemname']);
+    }
+  }
 
+  if(currDeniedRequests != null){
+    for(var i =0; i < currDeniedRequests.length; i++){
+      if(el == currDeniedRequests[i]['item'] && currDeniedRequests[i]['decision'] == false){
+        deniedResponse(currDeniedRequests[i]['itemname']);
+      } 
+    } 
+  }
+  
+});
 //var userItems = <?php echo json_encode(getUserItems($_GET['trader'])) ?>;
 //console.log(userItems);
 //var userItemsRequests = <?php echo json_encode(getAllNonUserItemRequestsForSpecificTrader($_GET['trader'])) ?>;
 
 setInterval(function(){
   queryUserItemsChange(traderId, currItems);
+  queryDeniedRequestsTrader(traderId, currItems)
 },2500);
 
 
@@ -164,7 +183,7 @@ function queryUserItemsChange(traderId, currItems){
       currItems.forEach(function(el){
         for(var i =0; i < itemsRequests.length; i++){
           if(el == itemsRequests[i]['item'] || el == itemsRequests[i]['item2'])
-            itemChange();
+            itemChange(itemsRequests[i]['itemname']);
         }
       });
     },"json");
@@ -172,9 +191,23 @@ function queryUserItemsChange(traderId, currItems){
 
 }
 
-function itemChange(){
+function queryDeniedRequestsTrader(traderId, currItems){
+  $.get("../index.php/itemsdeniedstatustrader/"+traderId, function(traderRequests){
+    currItems.forEach(function(el){
+      if(traderRequests != null){
+        for(var i =0; i < traderRequests.length; i++){
+          if(traderRequests[i]['item'] == el && traderRequests[i]['decision'] == false){
+            deniedResponse(traderRequests[i]['itemname']);
+          }
+        }
+      }
+    });
+  },"json");
+}
+
+function itemChange(itemName){
   swal({ 
-        title: "Sorry, an item has been traded",
+        title: "Sorry,\"" +itemName+"\" has been traded",
         text: "Page shall be refreshed",
         type: "warning",
         timer: 2000,
@@ -184,6 +217,20 @@ function itemChange(){
             window.location.reload();
         }
     );      
+}
+
+function deniedResponse(itemName){
+    swal({ 
+        title: itemName +" Request was Denied!",
+        text: "Redirecting to Outgoing Requests to view reason",
+        type: "warning",
+        timer: 2000,
+        showConfirmButton: false
+    },
+        function(){
+            window.location.href = 'trade.php';
+        }
+    );       
 }
 
 </script>
