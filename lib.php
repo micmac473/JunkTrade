@@ -1531,6 +1531,21 @@ function getItemRequestDeniedStatusTrader($traderId){
 	return $deniedRequests;
 }
 
+function getItemRequestDeniedStatusSearch(){
+	$userId = $_SESSION["id"];
+	$db = getDBConnection();
+	$deniedRequests = [];
+	if ($db != NULL){
+		$sql = "SELECT r.item, r.decision, i.itemname FROM `requests` r, `items` i WHERE r.item = i.itemid AND r.requester = $userId AND r.viewed = false ORDER BY r.timerequested DESC;";
+		$res = $db->query($sql);
+		while($res && $row = $res->fetch_assoc()){
+			$deniedRequests[] = $row;
+		}
+		$db->close();
+	}
+	return $deniedRequests;
+}
+
 //In progress
 function getRequestStatus($itemId){
 	$db = getDBConnection();

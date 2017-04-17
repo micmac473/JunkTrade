@@ -440,7 +440,7 @@ function getCurrentPage(){
             
 
     
-              <button type="button" onclick="toggler('updateItemform');" class="btn btn-default"><i class="fa fa-pencil-square fa-lg" aria-hidden="true"></i> Edit Profile</button>
+              <button type="button" onclick="showEditProfileForm();" class="btn btn-default"><i class="fa fa-pencil-square fa-lg" aria-hidden="true"></i> Edit Profile</button>
             </div>
           </div>
         </div>    

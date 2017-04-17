@@ -1,8 +1,5 @@
 "use strict";
-console.log("hello I'm connected to the world");
-
-//var base_url = "base.php/api";
-
+console.log("Hello, I'm connected to the world via JunkTrade");
 
 (function( $ ) {
 
@@ -44,51 +41,29 @@ console.log("hello I'm connected to the world");
 
 //*************************************************************NEW
 
+
+//-------------------------------------------------------------------------------------------------------------
+// Functions to be invoked when the page DOM is ready for JavaScript code to execute
+// These functions are the ones to get the requests, decisions and chat notifications
+// Since the navbar is present on each page
 $(document).ready(function(){
     console.log("All Elements in the Page was successfully loaded, we can begin our application logic");
-    //getTrade();
-    //getAllItems();
     getUserRequests();
     getDecisions();
     newMessagesNotification();
-    //getUserItems(); 
-    //getRequestedMeetUp();
-    //getRequestsMeetUp();
-    //getUserSavedItems();
-    //getUserFollowees();
-    //getUserFollowers();
-    
-    //alert($('#requests > li').length);
     $('[data-toggle="tooltip"]').tooltip(); 
     
 });  
-// this acts as the main function in Java
+//------------------------------------------------------------------------------------------------------------
+// Long polling functionality for the requests, decisions and chat notifications
 setInterval(function(){
     queryUserRequests();
     queryDecisions();
-    //queryChat();
     queryNewMessages();
 },2500);
 
 var currNotifcations = [], currDecisions = [], currNewMessages =[], currNewMessagesNotification=[];
-
-/*$.get("../index.php/requests", function(res){
-    currNotifcations = res;
-},"json");
-
-$.get("../index.php/decisions", function(res){
-    currDecisions = res;
-},"json");
-
-$.get("../index.php/newmessagesnotification", function(messages){
-    currNewMessagesNotification = messages;
-},"json"); */
-
-/*$.get("../index.php/newmessages", function(messages){
-    currNewMessages = messages;
-},"json"); */
-
-
+// Polls for new item requests
 function queryUserRequests(){
     $.get("../index.php/requests", function(res){
         if(JSON.stringify(res) !== JSON.stringify(currNotifcations)){
@@ -122,6 +97,7 @@ function queryUserRequests(){
     }, "json");  
 }
 
+// Polls for new decisions of item requests
 function queryDecisions(){
     $.get("../index.php/decisions", function(res){
         if(JSON.stringify(res) !== JSON.stringify(currDecisions)){
@@ -149,15 +125,7 @@ function queryDecisions(){
     }, "json");  
 }
 
-/*function queryChat(){
-    $.get("../index.php/newmessages", function(messages){
-        if(JSON.stringify(messages) !== JSON.stringify(currNewMessages)){
-            //toastr["success"]("New Message");
-            currNewMessages = messages;
-        }
-    },"json");
-} */
-
+// Polls for new/unread chat messages
 function queryNewMessages(){
     $.get("../index.php/newmessagesnotification", function(messages){
         if(JSON.stringify(messages) !== JSON.stringify(currNewMessagesNotification)){
@@ -183,9 +151,10 @@ function queryNewMessages(){
         }
     },"json");
 }
-
- //--------------------------------------------------------------------------------------------------------------------
- // Registration functionality
+//--------------------------------------------------------------------------------------------------------------------
+// Registration functionality to capture and make a post request with the information entered in the registration form
+// If the user forgets to enter information in a field and tries to submit then him/her is greeted with an error message
+// And the corresponding input field/s will be highlighted to show the user where the missing information is required 
 function register(){
     var username = $("#username").val();
     var firstname = $("#firstname").val();
@@ -218,7 +187,7 @@ function register(){
             "securityquestion" : securityQuestion,
             "securityanswer" : securityAnswer
         };
-        console.log(regUser);
+        //console.log(regUser);
         $.post("../index.php/register", regUser, function(res){
             if(res){
                 console.log(res);
@@ -232,27 +201,24 @@ function register(){
                     function(){
                         window.location.href = 'login.php';
                 });
-                //window.location.href="homepage.php";
-                //return false;
             }
             else{
                 swal("Incorrect Login","Please try again","error")
-                //return false;
             }
         },"json");
-     }
-
+    }
     return false;
 }
-
 //--------------------------------------------------------------------------------------------------------------------
+// Login functionality to authenticate a user from the email/username and password entered
+// A post request is then made to determine if the email/username and password match
+// If a match is found then the user is redirected to the homepage
+// If a match is not found then the user is greeted with an error message
+// Traders and the administrator log in here and are redirected accordingly based on the credentials entered
 var attempts =0;
- // Log in functionality
 function login(){
-    console.log("Hi");
     var email = $("#email").val();
     var password = $("#password").val();
-    //console.log(email + " " + pass);
     if(email == "" || password ==""){
         swal({ 
             title: "Incomplete Credentials!",
@@ -289,8 +255,6 @@ function login(){
                         else
                             window.location.href = 'homepage.php';
                 });
-                //window.location.href="homepage.php";
-                //return false;
             }
             else{
                 attempts++;
@@ -323,65 +287,126 @@ function login(){
                       showConfirmButton: false,
                       timer: 1000
                    });
-            }
-
-                
-
-                //return false;
+                }
             }
         },"json");
     }
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
- // Password Reset functionality
-function login1(){
-    console.log("Hi");
+// Function that presents the user with a prompt after clicking the logout button
+// With options to stay logged in or logout
+// If the user chooses logout then they a greeted with a message and redirected to the login page
+function logout(){
+    swal({
+        title: "Logout of JunkTrade?",
+        //text: "You will not be able to undo this operation!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, logout",
+        cancelButtonText: "Cancel",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function(isConfirm){
+        
+        if (isConfirm) {
+            $.get("../index.php/user",function(userId){
+                $.get("../index.php/getusername/"+userId, function(res){
+                    var user = {
+                        "userid" : userId
+                    };
+
+                    $.post("../index.php/logout", user);
+                    swal({ 
+                        title: "Goodbye " + res.firstname,
+                        text: "Thanks for using JunkTrade, see you soon",
+                        type: "success",
+                        timer: 1000,
+                        showConfirmButton: false
+                    },
+                        function(){
+                            window.location.href = 'login.php';
+                        }
+                    );
+                },"json"); 
+            },"json");
+            
+
+        } else {
+            //swal("Still Logged In", "Continue Trading!", "success");
+            swal({
+                title: "Logout Cancelled!",
+                text: "Continue using JunkTrade",
+                type: "success",
+                timer: 1000,
+                showConfirmButton: false
+            });
+        }
+    });
+    return false;
+}
+//------------------------------------------------------------------------------------------------------
+// Password recovery functionality
+// A user must have a selected a security question and security when registering, that information can now be
+// used to reset one's password. The user then enters his/her username/email, selects their security question and answer
+// Once the username/email, security question and answer match from the post request, the user is redirected to the 
+// form where he/she can update his/her password
+function forgotPassword(){
     var email = $("#email").val();
     var securityQuestion = $("#securityquestion").val();
     var sAnswer = $("#sAnswer").val();
-    //console.log(email + " " + pass);
+
     var user = {
         "email" : email,
         "securityquestion" : securityQuestion,
         "sAnswer": sAnswer
     }
-
-    console.log(user);
-    $.post("../index.php/login1", user, function(res){
-        //console.log(res);
-        if(res != 400){
-            //console.log(res);
-            swal({ 
-                title: "Success " + res,
-                text: "You have reset your password",
-                type: "success",
-                timer: 1000,
-                showConfirmButton: false
-            },
-                function(){
-                    window.location.href = 'updatePassword.php';
-            });
-            //window.location.href="homepage.php";
-            //return false;
-        }
-        else{
-            swal({
-                title: "Incorrect Security Answer",
-                text: "Please try again",
-                type: "error",
-                timer: 1000,
-                showConfirmButton: false
-            });
-            //return false;
-        }
-    },"json");
-    console.log("Password Reset");
+    if(email == "" || securityQuestion == "" || sAnswer == ""){
+        swal({ 
+            title: "Incomplete form!",
+            text: "Please fill the in highlighted fields",
+            type: "error",
+            timer: 1000,
+            showConfirmButton: false
+        });
+    }
+    else{
+        console.log(user);
+        $.post("../index.php/login1", user, function(res){
+            if(res != 400){
+                //console.log(res);
+                swal({ 
+                    title: "Correct Security Answer, " + res,
+                    text: "Proceed to update your password",
+                    type: "success",
+                    timer: 1000,
+                    showConfirmButton: false
+                },
+                    function(){
+                        window.location.href = 'updatePassword.php';
+                });
+            }
+            else{
+                swal({
+                    title: "Incorrect Security Answer",
+                    text: "Please try again",
+                    type: "error",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            }
+        },"json");
+    }
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
-
-// Registration functionality
+// Update Password functionality
+// Upon successfully entering the correct answer for the security questions, the user to redirected here
+// The user enters his/her new password and confirms it. A post request is sent with that information to update
+// the user's old password to the new one. Upon completing this, the user is redirected back to the log in page
+// to enter his/her new credentials
 function updatePassword(){
     console.log("Hi");
     var password = $("#password").val();
@@ -390,40 +415,55 @@ function updatePassword(){
     var regUser = {
         "password" : password
     };
-
-    console.log(regUser)
-
-    $.post("../index.php/update", regUser, function(res){
-        if(res){
-            console.log(res);
-            swal({ 
-                title: "Password Update Complete!",
-                text: "Proceed to login",
-                type: "success" 
-            },
-                function(){
-                    window.location.href = 'login.php';
-            });
-        }
-        else{
-            swal("An error has occured","Please try again","error")
-        }
-    },"json");
-
+    if(password == "" || retypedpassword ==""){
+        swal({ 
+            title: "Incomplete form!",
+            text: "Please fill in both password fields",
+            type: "error",
+            timer: 1000,
+            showConfirmButton: false
+        });
+    }
+    else{
+        console.log(regUser)
+        $.post("../index.php/update", regUser, function(res){
+            if(res){
+                console.log(res);
+                swal({ 
+                    title: "Password Update Complete!",
+                    text: "Proceed to login",
+                    type: "success",
+                    timer: 1000,
+                    showConfirmButton: false 
+                },
+                    function(){
+                        window.location.href = 'login.php';
+                });
+            }
+            else{
+                swal("An error has occured","Please try again","error")
+            }
+        },"json");
+    }
     return false;
 }
 
 //--------------------------------------------------------------------------------------------------------------------
-//Dsiplay All items available (except user items) on homepage
+// Functionality to dsiplay ALL items available for trade (except user items) on the homepage
+
+// This functions accepts the type of sort selected on the homepage by the user
 function sortHomepageItems(sortOrder){
-    //alert(value);
     getAllItems(sortOrder);
 }
 
-function getAllItems(sort){//alter for slim 
+// By default, the sort for the items is in descending order by date
+// If the user doesn't select a new sort, then the default is used
+// If not then the sort type is passed to the function
+// A get request is sent with the sort type and all the items that are not traded nor do not belong
+// to the current user are displayed with images, name, when uploaded, views and the request status
+function getAllItems(sort){ 
     if(typeof(sort) === 'undefined')
         sort = "mra";
-    //alert(sort);
     $.get("../index.php/homepage/"+sort, processAllItems, "json");
 }
 
@@ -441,17 +481,11 @@ function listAllItems(records, user){
     var requests, i;
     $.get("../index.php/allnonuseritemsstate", function(res){
         requests = res;
-        //console.log(requests);
-        //$.get("../index.php/requesteritemsstate", function(res){
-            //console.log(res);
-        
         records.forEach(function(el){
             var dateUploaded = moment(el.uploaddate).startOf('minute').fromNow();
             for(i = 0; i < requests.length; i++){
                 if(requests[i]['item'] == el['itemid'] || requests[i]['item2'] == el['itemid']){
                     if(requests[i]['decision'] == true){
-                        //console.log("Decision for "+el['itemname'] + ": "+requests[i]['decision']);
-                        //console.log("Request Accepted for "+el['itemname']);
                         break;
                     }  
                     else {
@@ -459,7 +493,7 @@ function listAllItems(records, user){
                             itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
                             itemdiv += "<div class='panel panel-warning'>";
 
-                            itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong> </button><br><small> Views: "+el.views+" </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button><small><small> "+dateUploaded+"</small></small></div>"; 
+                            itemdiv += "<div class='panel-heading text-center'><a href='#' style='color: #096790;' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong></a><br><small>"+dateUploaded+"  </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button><small> Views: "+el.views+"</small></div>"; 
 
                             itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer; width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'></div>";
 
@@ -470,81 +504,47 @@ function listAllItems(records, user){
 
                             else{
                                 itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12'><button type='button' class='btn btn-primary btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
-                                //console.log(el['itemname']+ " is avaialable");
                             }
-                    
-                            //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
                             itemdiv += "</div>";
                             itemdiv += "</div>";
                             break;
                         }
                     }
-                }
-                    
+                }        
             }
 
             if(i == requests.length){
                 itemdiv += "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>"
+
                 itemdiv += "<div class='panel panel-info'>";
-                itemdiv += "<div class='panel-heading text-center'><button style='text-decoration:none; type='button' class='btn btn-link' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong></button><br><small> Views: "+el.views+" </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button><small><small> "+ dateUploaded+"</small></small></div>"; 
+
+                itemdiv += "<div class='panel-heading text-center'><a href='#' style='color: #096790;' onclick=\"viewItem("+el.itemid+")\"><strong>"+ el['itemname'] + "</strong></a><br><small> "+ dateUploaded+" </small><br><button style='color:black;text-decoration:none;' type='button' class='btn btn-default btn-xs' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong> by "+ el['username'] + "</strong></button><small> Views: "+el.views+"</small></div>"; 
 
                 itemdiv += "<div class='panel-body'> <div class='text-center'> </div><img style='cursor: pointer; width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'></div>";
             
 
                 itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-xs-12 col-xs-offset-0'><button type='button' class='btn btn-primary btn-block active' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div></div></div>";
-                
-                //itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
-                //itemdiv += "<div class='col-lg-6'> <button type='button' class='btn btn-warning btn-block' onclick=\"addToSavedItems("+el['itemid']+")\" id='requestbtn'><i class='fa fa-bookmark' aria-hidden='true'></i> Save</button></div></div></div>"
                 itemdiv += "</div>";
+
                 itemdiv += "</div>";
-                //console.log(el['itemname']+ " is avaialable");
             }
-            /*var requested = false;
-            itemdiv += "<div class='panel panel-default'>";
-            itemdiv += "<div class='panel-heading'><button style='color:black;text-decoration:none;' type='button' class='btn btn-link' onclick=\"viewTraderProfile("+el.userid+")\">" +  "<strong>"+ el['username'] + "</strong></button></div>"; 
-
-            itemdiv += "<div class='panel-body'> <div class='text-center lead'> <strong>"+  el['itemname'] + "</strong> </div><img style='cursor: pointer;width:100%;' onclick=\"viewItem("+el.itemid+")\" src=\"" + el['picture'] + "\"  class='img-responsive img-thumbnail mx-auto'> </div>";
-            
-            //If the item displayed on the homepage has been requested by the current user already then they cannot
-            // make another request for that item; however, they can cancel that request
-            for(i = 0; i < requests.length; i++){
-                if(requests[i]['item'] == el['itemid'] && requests[i]['requester'] == user && requests[i]['decision'] == null){
-                    itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-danger btn-block' onclick=\"cancelMadeRequest("+requests[i]['id']+")\" id='requestbtn'><i class='fa fa-ban fa-lg' aria-hidden='true'></i> Cancel Request</button> </div>";
-                    requested = true;
-                    break;
-                }
-            }
-
-            //If the any of the items displayed do not currently have a request from the current user, then that user will be able to make 
-            //a request for that item
-            if(requested == false){
-                itemdiv += "<div class='panel-footer'> <div class='row'><div class='col-lg-6'><button type='button' class='btn btn-success btn-block' onclick=\"displayItemsForRequest("+el.itemid+")\" id='requestbtn'><i class='fa fa-cart-plus fa-lg' aria-hidden='true'></i> Make Request</button> </div>";
-            }
-            
-            itemdiv += "<div class='col-lg-6'><button type='button' class='btn btn-info btn-block' onclick=\"viewItem("+el.itemid+")\"><i class='fa fa-eye fa-lg' aria-hidden='true'></i> View more</button> </div> </div></div>";
-            itemdiv += "</div>"; */
         });
 
         itemdiv += "</div>";
         $("#itemblock").html(itemdiv);
-        //htmlStr += "</tbody></table>";
-        //$(sec_id).html(htmlStr);
-    //},"json");
-    },"json");
-
-    
-    
-    
+    },"json");   
 }
 //--------------------------------------------------------------------------------------------------------------------
-
-//Dsiplay All user items on profile
+// Functionality to display ALL the user's items on his/her profile page
+// If a request has been accepted for an item, it is considered trader and that is reflected on the profile page
+// The status is set to Traded and any functionlity is disabled
+// All functionality is available for available items
 function getUserItems(){//alter for slim 
     $.get("../index.php/profile", processUserItems, "json");
 }
 
 function processUserItems(records){
-    console.log(records);
+    //console.log(records);
     listUserItems(records)
 }
 
@@ -553,11 +553,10 @@ function listUserItems(records){
     var sec_id = "#table_secp";
     var htmlStr = $("#table_headingp").html(); //Includes all the table, thead and tbody declarations
     $.get("../index.php/accepteduseritems", function(res){
-        console.log(res);
+        //console.log(res);
         records.forEach(function(el){
             var date = moment(el['uploaddate']).format('dddd MMMM Do, YYYY');
-            for(i = 0; i < res.length; i++){
-                
+            for(i = 0; i < res.length; i++){ 
                 if(res[i]['item'] == el['itemid'] || res[i]['item2']==el['itemid']){
                     if(res[i]['decision'] == true){
                         htmlStr += "<tr>";
@@ -610,28 +609,23 @@ function listUserItems(records){
         });
         htmlStr += "</tbody></table>";
         $(sec_id).html(htmlStr);
-        //totalCount = $("#userprofileitems tbody tr").length;
-        //$("#useritemscounttotal").html(totalCount);
         $("#useritemscountavailable").html(availableCount);
         $("#useritemscounttraded").html(tradedCount);
         $("#useritemscounttotal").html(tradedCount+availableCount);
     },"json");
-    
-    //count = $("#mylist li").size();
-    
 } 
-
-
+//--------------------------------------------------------------------------------------------------------------------
+// Function to display the full size of all the images of a user's items in a sliding modal
 function viewItemImages(itemId){
     $.get("../index.php/itemimages/"+itemId, function(image){
         $('#picture1').attr('src', image.picture);
         $('#picture2').attr('src', image.picture2);
         $('#picture3').attr('src', image.picture3);
         $('#itemimagesmodal').modal('show'); 
-    },"json");
-    
+    },"json");   
 }
-
+//--------------------------------------------------------------------------------------------------------------------
+// Function to display the full size of an item image
 function viewProfileImage(userId){
     //swal("Working!", "", "success");
     console.log(userId);
@@ -641,30 +635,31 @@ function viewProfileImage(userId){
         $('#profilepicturemodal').modal('show'); 
     },"json");  
 }
-
+//--------------------------------------------------------------------------------------------------------------------
+// Function to display the full size of a user's profile picture
 function viewItemImage(image){
     console.log(image);
     $('#profilepicture').attr('src', image);
     $('#profilepicturemodal').modal('show');  
 }
 //--------------------------------------------------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------------
-//Dsiplay requests for user items in the notification icon
-
-
+// Functionality to display the number of incoming requests for user items in the notification icon, and a dropdown
+// which displays the requester/s and the item/s being requested
+// Additionally, more details of the requests are display on the notifications page where the requestee has the option
+// to accept or deny a request
 function getUserRequests(){
     $.get("../index.php/requests", notifications, "json");  
 }
 
+// Function that displays the notification count and listing of notifications
 function notifications(records){
     currNotifcations = records;
-    console.log(records);
+    //console.log(records);
     var htmlStr="";
     records.forEach(function(el){
-        htmlStr += "<li><a href='notifications.php'><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"> <strong>"+ el.username + "</strong> is requesting <strong>"+ el.itemname + "</strong></a></li>";
-        
+        htmlStr += "<li><a href='notifications.php'><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"> <strong>"+ el.username + "</strong> is requesting <strong>"+ el.itemname + "</strong></a></li>";  
     });
+
     $("#requests").html(htmlStr);
     var countR = null;
     countR = $("#requests li").length;
@@ -673,19 +668,18 @@ function notifications(records){
     else
         $("#requestsNotify").html(countR);
     $.get("../index.php/requesteritem", function(res){
-        console.log(res);
+        //console.log(res);
         displayRequests(records, res);
     });
-
 }
 
+// Function that displays the listing of incoming requests on the notifications page
 function displayRequests(records, res){
     var key;
     var sec_id = "#table_secr";
     var htmlStr = $("#table_headingr").html(); //Includes all the table, thead and tbody declarations
     var i=0;
-    console.log(records);
-
+    //console.log(records);
     records.forEach(function(el){
         var requestId = el['id'];
             var date = moment(el['timerequested']).format('dddd MMMM Do, YYYY');
@@ -709,7 +703,7 @@ function displayRequests(records, res){
     $(sec_id).html(htmlStr);
 }
 //--------------------------------------------------------------------------------------------------------------------
-//Dsiplay decisions for requests made by user
+// Functionality to display the count and listing of new/unread decision of requests sent by the user
 function getDecisions(){
     $.get("../index.php/decisions", decisions, "json");  
 }
@@ -736,39 +730,8 @@ function decisions(records){
         else
             $("#decisionsNotify").html(countD);
     },"json");
-    
-    //displayRequests(records);
 }
 
-
-//---------------------------------------------------------------------------------------------------------
-// Display as a count and dropdown list, the new messages sent to the user -- unread messages
-function newMessagesNotification(){
-    $.get("../index.php/newmessagesnotification", processNewMessagesNotification,"json");
-}
-
-function processNewMessagesNotification(records){
-    currNewMessagesNotification = records;
-    console.log(records);
-    displayNewMessagesNotification(records);
-}
-
-function displayNewMessagesNotification(records){
-    var htmlStr = "";
-    records.forEach(function(el){
-        htmlStr += "<li><a href='#' onclick=\"chat("+el.sentfrom+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"> <strong>"+ el.username + "</strong> messaged you (<strong>" +el.messages+"</strong>)</a></li>";
-    });
-    $("#messages").html(htmlStr);
-    var countM = $("#messages li").length;
-    if(countM == 0)
-        $("#chatNotify").html("");
-    else
-        $("#chatNotify").html(countM);
-
-}
-
-//---------------------------------------------------------------------------------------------------------
-//Dsiplay decisions for requests made by user in a table on the outgoing requests page
 function getTrade(){
     $.get("../index.php/trade", processUserTrade, "json");
 }
@@ -864,35 +827,58 @@ function listUserTrade(records, res, status){
 
 } 
 
+//---------------------------------------------------------------------------------------------------------
+// Display as a count and dropdown list, the new messages sent to the user -- unread messages
+function newMessagesNotification(){
+    $.get("../index.php/newmessagesnotification", processNewMessagesNotification,"json");
+}
+
+function processNewMessagesNotification(records){
+    currNewMessagesNotification = records;
+    //console.log(records);
+    displayNewMessagesNotification(records);
+}
+
+function displayNewMessagesNotification(records){
+    var htmlStr = "";
+    records.forEach(function(el){
+        htmlStr += "<li><a href='#' onclick=\"chat("+el.sentfrom+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"> <strong>"+ el.username + "</strong> messaged you (<strong>" +el.messages+"</strong>)</a></li>";
+    });
+    $("#messages").html(htmlStr);
+    var countM = $("#messages li").length;
+    if(countM == 0)
+        $("#chatNotify").html("");
+    else
+        $("#chatNotify").html(countM);
+
+}
+
+//---------------------------------------------------------------------------------------------------------
+// Redirects a user to the meetup page when the View Meetup button is clicked
 function meetUp(requestid){
-    //swal("Working!", "", "success");
     window.location.href = "meetup.php";
 }
-//-------------------------------------------------------------------------------------------
-// Display a user trade history
+//---------------------------------------------------------------------------------------------------------
+// Functionality to display a user's history of trades made including the feedback given and rating
 function getTradeHistory(){
     $.get("../index.php/gettradehistoryrequested", processTradeHistory, "json");
 }
 
 function processTradeHistory(records){
-    
     $.get("../index.php/gettradehistoryrequests", function(requests){
         $.get("../index.php/gettradehistoryrequestsuserinfo", function(requestsUser){
             $.get("../index.php/gettradehistoryrequesteduserinfo", function(requestedUser){
                 displayTradeHistory(records, requests, requestsUser, requestedUser);
-            },"json");
-            
+            },"json");  
         },"json");
-        
-    },"json");
-    
+    },"json");  
 }
 
 function displayTradeHistory(records, requests, requestsUser, requestedUser){
-    console.log(records);
-    console.log(requests);
-    console.log(requestsUser);
-    console.log(requestedUser);
+    //console.log(records);
+    //console.log(requests);
+    //console.log(requestsUser);
+    //console.log(requestedUser);
     var i = 0, j = 0;
     var sec_id = "#table_sec_tradehistory";
     var htmlStr = $("#table_heading_tradehistory").html(); 
@@ -933,9 +919,8 @@ function displayTradeHistory(records, requests, requestsUser, requestedUser){
     $(sec_id).html(htmlStr); 
     $("#tradeshistorycount").html(records.length + requests.length);
 }
-//-------------------------------------------------------------------------------------
-// Displays as a table all the incoming requests for the user
-
+//--------------------------------------------------------------------------------------------------------------
+// Displays a listing of all the previous incoming requests to the user for his/her items
 
 function getIncomingRequests(){
     $.get("../index.php/incomingrequestshistoryrequester", processIncomingRequestsHistory, "json");
@@ -953,8 +938,7 @@ function displayIncomingRequestsHistory(records, records2){
     var sec_id = "#table_sec_incomingrequestshistory";
     var htmlStr = $("#table_heading_incomingrequestshistory").html(); 
     var i = 0, accepted = 0, denied = 0;
-    records.forEach(function(el){
-        
+    records.forEach(function(el){  
         var requestDate = moment(el.timerequested).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
         htmlStr += "<td>"+requestDate+"</td>";  
@@ -982,37 +966,40 @@ function displayIncomingRequestsHistory(records, records2){
     $("#acceptedrequestshistory").html(accepted);
     $("#deniedrequestshistory").html(denied);
 }
-//---------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
+// Function that redirects to the item detail page and loads the data for the item that was clicked
 function viewItem(itemid){
-    /*$.get("../index.php/getitem/"+itemid, processItem,"json"); */
     views(itemid); 
     window.location.href = "item.php?item="+itemid;
     return false;
 }
-
-//--------------------------------------------------------------------
-//Redirects to trader.php and displays the items and other items of the trader clicked
+//-----------------------------------------------------------------------------------------------------------------
+// Function that updates the number of views, by 1, for that item clicked
+function views(itemid){
+    $.get("../index.php/viewitem/"+itemid, function(res){
+        //console.log(res);
+    }, "json");
+}
+//-----------------------------------------------------------------------------------------------------------------
+// Function that redirects to the trader detail page and displays the items and other information for that user
 function viewTraderProfile(userid){
     window.location.href = 'trader.php?trader='+userid;
-    //$.get("../index.php/items/"+userid, processTraderProfile, "json");
     return false;
 }
-//--------------------------------------------------------------------
-
-
-// Add the item clicked to the user's saved items
+//-----------------------------------------------------------------------------------------------------------------
+// Functionality to add the item for which the Save button is clicked to the user's saved items
 function addToSavedItems(itemid){
     $.get("../index.php/owner/"+itemid, function(res){
-        console.log(res.id);
+        //console.log(res.id);
         var itemOwner = res.id;
         var item= {
             "itemid": itemid,
             "itemowner": itemOwner
         };
 
-        console.log(item);
+        //console.log(item);
         $.post("../index.php/saveitem", item, function(res){
-            console.log(res);
+            //console.log(res);
             if(res){
                 //swal("Item Saved!", "You can view item in Saved Items!", "success");
                 swal({ 
@@ -1034,13 +1021,37 @@ function addToSavedItems(itemid){
         },"json"); 
     }, "json");   
 }
-
+//-----------------------------------------------------------------------------------------------------------------
+// Functionality to remove the item for which the Unsave button is clicked from the user's saved items
+function removeSavedItem(savedId){
+    var savedItem = {
+        "savedid": savedId
+    };
+    $.post("../index.php/removedsaveditem",savedItem, function(res){
+        //console.log(res);
+        //swal("Item removed!", "You can save the item again", "error");
+        swal({ 
+            title: "Item Removed from Saved!",
+            text: "You can save the item again!",
+            type: "success",
+            timer: 1000,
+            showConfirmButton: false
+        });
+        if(window.location.href.indexOf("/item.php?") > -1)
+            window.location.reload();
+        else
+            getUserSavedItems();
+    }, "json");
+    return false;
+}
+//---------------------------------------------------------------------------------------------------------------
+// Functionality to display the listing of all saved items for the user
 function getUserSavedItems(){
     $.get("../index.php/getsaveditems", processUserSavedItems, "json");
 }
 
 function processUserSavedItems(records){
-    console.log(records);
+    //console.log(records);
     var sec_id = "#table_sec_saveditems";
     var htmlStr = $("#table_heading_saveditems").html(); //Includes all the table, thead and tbody declarations
     records.forEach(function(el){
@@ -1059,40 +1070,15 @@ function processUserSavedItems(records){
     $("#savedcount").html(records.length);
     return false;
 }
-
-//-----------------------------------------------------------------------------------------------------------
-function removeSavedItem(savedId){
-    var savedItem = {
-        "savedid": savedId
-    };
-    $.post("../index.php/removedsaveditem",savedItem, function(res){
-        console.log(res);
-        //swal("Item removed!", "You can save the item again", "error");
-        swal({ 
-            title: "Item Removed from Saved!",
-            text: "You can save the item again!",
-            type: "success",
-            timer: 1000,
-            showConfirmButton: false
-        });
-        if(window.location.href.indexOf("/item.php?") > -1)
-            window.location.reload();
-        else
-            getUserSavedItems();
-    }, "json");
-    return false;
-}
-
 //--------------------------------------------------------------------------------------------------------------------
-// Adds the trader clicked to the user's followers
+// Function to add a trader for which the Follow button is clicked to the user's followers
 function followTrader(userid){
-    //alert(userid);
     var followee = {
         "followee" : userid
-    }
+    };
 
     $.post("../index.php/follow",followee, function(res){
-        console.log(res);
+        //console.log(res);
         if(res){
             swal({ 
                 title: "Trader Followed!",
@@ -1104,50 +1090,42 @@ function followTrader(userid){
                 function(){
                     window.location.reload();
             });
-            //swal("Trader Followed!", "You can view followed trader in People!", "success");
-            
         }
         else{
             swal("Trader Not Followed!", "Error!", "error")
         }
-
     },"json");
-
-    //swal("Trader Followed!", "You can view followed trader in People!", "success");
-    
 }
-
+//--------------------------------------------------------------------------------------------------------------------
+// Function to remove a trader for which the Following/Unfollow button is clicked from the user's followers
 function unfollowTrader(userid){
-        var followee = {
-            "followee" : userid
-        };
+    var followee = {
+        "followee" : userid
+    };
 
-        $.post("../index.php/unfollow", followee, function(res){
-            //console.log(res);
-            //swal("Trader Unfollowed!", "You can follow them again!", "error");
-            swal({ 
-                title: "Trader Unfollowed!",
-                text: "You can follow them again!",
-                type: "success",
-                timer: 1000,
-                showConfirmButton: false
-            });
+    $.post("../index.php/unfollow", followee, function(res){
+        swal({ 
+            title: "Trader Unfollowed!",
+            text: "You can follow them again!",
+            type: "success",
+            timer: 1000,
+            showConfirmButton: false
+        });
 
-            if(window.location.href.indexOf("/trader.php") > -1)
-                window.location.reload();
-            else
-                getUserFollowees();
-        }, "json");    
+        if(window.location.href.indexOf("/trader.php") > -1)
+            window.location.reload();
+        else
+            getUserFollowees();
+    }, "json");    
 }
-
-
+//--------------------------------------------------------------------------------------------------------------------
+// Functionality to display a listing of all the traders that the user is following
 function getUserFollowees(){
     $.get("../index.php/followees", processUserFollowees, "json");
-
 }
 
 function processUserFollowees(records){
-    console.log(records);
+    //console.log(records);
     var sec_id = "#table_sec_followees";
     var htmlStr = $("#table_heading_followees").html(); //Includes all the table, thead and tbody declarations
     records.forEach(function(el){
@@ -1165,16 +1143,14 @@ function processUserFollowees(records){
     $("#followingcount").html(records.length);
     return false;
 }
-
-
-
+//--------------------------------------------------------------------------------------------------------------------
+// Functionality to display a listing of all the traders that are following the user
 function getUserFollowers(){
     $.get("../index.php/followers", processUserFollowers, "json");
-
 }
 
 function processUserFollowers(records){
-    console.log(records);
+    //console.log(records);
     var sec_id = "#table_sec_followers";
     var htmlStr = $("#table_heading_followers").html(); //Includes all the table, thead and tbody declarations
     records.forEach(function(el){
@@ -1192,40 +1168,10 @@ function processUserFollowers(records){
     return false;
 }
 //--------------------------------------------------------------------------------------------------------------------
-
-
-/*function displayDecisions(records){
-    var key;
-    var sec_id = "#table_secr";
-    var htmlStr = $("#table_headingr").html(); //Includes all the table, thead and tbody declarations
-    var pic;
-    records.forEach(function(el){
-        htmlStr += "<tr>";
-        htmlStr += "<td style='display:none;'>"+ el['id'] +"</td>";
-        htmlStr += "<td>"+ el['username'] +"</td>";
-        htmlStr += "<td>"+ el['itemname'] +"</td>";
-
-        $.get("../index.php/itemimage/"+el['item'], function(res){
-            //alert(res.picture);
-            htmlStr += "<td><img src=\"" + res.picture + "\" width=\"150\" height=\"128\"></td>";
-        }, "json");
-
-        htmlStr += "<td><img src=\"" + pic + "\" width=\"150\" height=\"128\"></td>";        
-        htmlStr += "<td><button type='button' class='btn btn-success' onclick=\"acceptRequest("+el.id+")\"><i class='fa fa-check-square-o' aria-hidden='true'></i></button> ";
-        htmlStr += "<button type='button' class='btn btn-warning' onclick=\"denyRequest("+el.id+")\"><i class='fa fa-ban' aria-hidden='true'></i></button></td>";
-        htmlStr +=" </tr>" ;
-    });
-
-    htmlStr += "</tbody></table>";
-    $(sec_id).html(htmlStr);
-} */
-
-//--------------------------------------------------------------------------------------------------------------------
+// Function to show forms on first click and hide on second click
 function toggler(divId) {
     $("#" + divId).toggle("slow");
 }
-
-
 //--------------------------------------------------------------------------------------------------------------------
 // Show and hide add item form
 function showForm(){
@@ -1298,73 +1244,15 @@ function hideUpdateForm(){
     $('#updateItemform').hide("slow");
 
 }
-//--------------------------------------------------------------------------------------------------------------
-// Add item image, name and description to database
-function addItem(){
-    var image = $("#image").val();
-    var itemName = $("#itemname").val();
-    var itemDescription = $("#itemdescription").val();
-    //alert(image);
-    var slash = image.indexOf("\\",5);
-    image = image.substring(slash+1, image.length);
-    //alert(image);
-    var item = {
-        "image" : image,
-        "itemname" : itemName,
-        "itemdescription" : itemDescription
-    };
-
-    console.log(item);
-    $.post("../index.php/additem", item, function(res){
-        if (res.id && res.id > 0)swal("Uploaded", "Item Saved", "success");
-        else swal("Upload Error", "Unable to save item", "error");
-        hideForm();
-        getUserItems();
-        clearFields();
-    },"json");
-    return false;
-}
-
-function clearFields(){
-    $("#image").val(""); 
-    $("#itemname").val("");
-    $("#itemdescription").val("");
-}
-
 //--------------------------------------------------------------------------------------------------------------------
-
-// Update existing item data
-function updateItem(){
-    
-    return false;
-}
-
-//--------------------------------------------------------------------------------------------------------------------
-// Inserts a records to the database when a user makes a request to that item
-function makeRequest(itemid){
-    $.get("../index.php/user", function(res){
-        console.log(res);
-        $.get("../index.php/items/"+res, function(res){
-            //console.log(res);
-            //displayItemsForRequest(res);
-        }, "json");
-    }, "json");
-    $.get("../index.php/request/"+itemid, function(res){
-        if (res.id && res.id > 0)
-            swal("Request Made!", "", "success");
-        else 
-            swal("Record", "Unable to save record", "error");
-    }, "json");
-}
-
+// Functionality to make a request for an item which involves selecting from a list of available items of the current user
 function displayItemsForRequest(itemid){
     $.get("../index.php/user", function(res){
         var user = res;
         //console.log(user);
         $.get("../index.php/items/"+user, function(res){
-            console.log(res);
+            //console.log(res);
             displayInModal(res, itemid);
-
         }, "json")
     }, "json");
     
@@ -1373,8 +1261,7 @@ function displayItemsForRequest(itemid){
 function displayInModal(records, itemid){
     if ($("#requesteritem").length > 0){ 
         $.get("../index.php/accepteduseritems", function(res){
-            console.log(res);
-        
+            //console.log(res);
             var htmlStr, i;
             records.forEach(function(item){
                 for(i = 0; i < res.length; i++){
@@ -1419,7 +1306,7 @@ function sendRequest(){
         "requestercontact" : requesterContact
     };
 
-    console.log(request);
+    //console.log(request);
     swal(
         {
             title: "Send Request for \"" + requesteeItem + "\"?",
@@ -1435,7 +1322,7 @@ function sendRequest(){
         function(isConfirm){
             if (isConfirm) {
                 $.post("../index.php/request", request, function(res){
-                    console.log(res);
+                    //console.log(res);
                     if (res.id && res.id > 0){
                         //swal("Request Made!", "Trader will be notified", "success");
                         swal({ 
@@ -1456,14 +1343,6 @@ function sendRequest(){
             } 
 
             else {
-                //swal("Request Cancelled!", "You can make another request", "error");
-                /*swal({
-                  title: "Request Cancelled!",
-                  text: "You can make another request",
-                  type: "error",
-                  timer: 1000,
-                  showConfirmButton: false
-                }); */
                 cancelRequest();
             }
         }
@@ -1473,6 +1352,8 @@ function sendRequest(){
     return false;
 }
 
+//--------------------------------------------------------------------------------------------------------------------
+// Function to hide the request modal and display a message to the user
 function cancelRequest(){
     $('#requestModal').modal('hide');
     //swal("Request Cancelled!", "You can make another request", "error");
@@ -1485,7 +1366,8 @@ function cancelRequest(){
     });   
     return false;
 }
-//------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+// Function to cancel a request for an item that the user already sent
 function cancelMadeRequest(requestId){
     swal({
         title: "Cancel Sent Request?",
@@ -1504,7 +1386,7 @@ function cancelMadeRequest(requestId){
             var request = {
                 "requestid" : requestId
             }; 
-            console.log(request);
+            //console.log(request);
             $.post("../index.php/cancelrequest", request, function(res){
                 //swal("Request Cancelled!", "The owner will no longer see your request", "success");
                 swal({ 
@@ -1538,16 +1420,9 @@ function cancelMadeRequest(requestId){
     });
 }
 //--------------------------------------------------------------------------------------------------------------------
-// Deletes a user item from the list
+// Function to delete an item from the list of user items
+// An item can only be deleted if there are no requests pending for it
 function deleteItem(itemid){
-    
-    $.get("../index.php/requeststatus/"+itemid, function(res){
-        //if(res.pending != 0)
-        //console.log("Pending requests: " + res.pending);
-        console.log(res);
-        //var count = parseInt(res[0][0]) + parseInt(res[1][0]);
-        //console.log("Pending requests: " + count);
-    },"json");
     swal({
             title: "Delete Item?",
             text: "You will not be able to undo this operation",
@@ -1563,7 +1438,7 @@ function deleteItem(itemid){
             if (isConfirm) {
                 $.get("../index.php/requeststatus/"+itemid, function(res){
                     var count = parseInt(res[0][0]) + parseInt(res[1][0]);
-                    console.log("Pending requests: " + count);
+                    //console.log("Pending requests: " + count);
                     if(count != 0){
                         //swal("Requests Pending: "+count, "Cannot delete item!", "error");
                         swal({
@@ -1604,44 +1479,12 @@ function deleteItem(itemid){
     
 }
 //-------------------------------------------------------------------------------------------------------------------
-function views(itemid){
-    $.get("../index.php/itemimage/"+itemid, function(res){
-        console.log(res);
-        var url = res.picture;
-        console.log(url);
-        //$('.imagepreview').attr('src', url);
-        //$('#imagemodal').modal('show'); 
-    }, "json");
-    
-    $.get("../index.php/viewitem/"+itemid, function(res){
-                //swal("Viewed!", "You view the item.", "success");
-                console.log(res);
-    }, "json");
-
-    getAllItems();
-    //getData();
-}
-//--------------------------------------------------------------------------------------------------------------------
-
-//---------------------------------------------------------------
-function viewRequest(requestId){
-    console.log(requestId);
-    $.get("../index.php/requestdetails/"+requestId, function(res){
-            console.log(res);
-            
-            $("#viewrequestform #requester").val(res.username);
-            $("#viewrequestform #requesteritem").val(res.itemname);
-            $('#viewrequestform #imagepreview').attr('src', res.picture);
-            $("#requestModalP").modal('show');
-        }, "json");
-}
-
-//--------------------------------------------------------------------------------------------------------------------
+// Functionality to accept a request sent to a user and to propose the meet up details
 function acceptRequest(requestId){
     $("#meetupform #requestid").val(requestId);
 
     $.get("../index.php/requester/"+requestId, function(res){
-        console.log(res);
+        //console.log(res);
 
         $("#meetupform #requester").val(res.username);
         $("#meetupform #requesteritemid").val(res.itemid);
@@ -1649,7 +1492,7 @@ function acceptRequest(requestId){
         $("#meetupform #requestercontact").val(res.requestercontact);
 
         $.get("../index.php/requestee/"+requestId, function(res){
-            console.log(res);
+            //console.log(res);
             $("#meetupform #requesteecontact").val(res.telephone);
             $("#meetupform #requesteeitemid").val(res.itemid);
             $("#meetupform #requesteeitem").val(res.itemname);
@@ -1688,7 +1531,7 @@ function sendArrangement(){
     function(isConfirm){
         if (isConfirm) {
             $.post("../index.php/acceptrequest", request, function(res){
-                console.log(res);
+                //console.log(res);
                 arrangement();
                 //swal("Request Accepted and Arrangment Sent!", "The trader will be notified", "success");
                 swal({
@@ -1717,19 +1560,6 @@ function sendArrangement(){
     return false;   
 }
 
-//------------------------------------------------------------------------------------------------
-function cancelArrangement(){
-    //sweetAlert("Cancelled", "Request and Arrangement still Pending", "error");
-    swal({
-        title: "Cancelled!",
-        text: "Request and Arrangement still Pending",
-        type: "error",
-        timer: 1000,
-        showConfirmButton: false
-    });
-    return false;
-}
-//---------------------------------------------------------------------------------------------
 function arrangement(){
     var requestId = $("#meetupform #requestid").val();
     var tradeDate = $("#meetupform #tradedate").val();
@@ -1753,8 +1583,21 @@ function arrangement(){
     },"json");
     return false;
 }
-
+//---------------------------------------------------------------------------------------------------------------------
+// Function to display a greeting when the user Cancel while accepting a request
+function cancelArrangement(){
+    //sweetAlert("Cancelled", "Request and Arrangement still Pending", "error");
+    swal({
+        title: "Cancelled!",
+        text: "Request and Arrangement still Pending",
+        type: "error",
+        timer: 1000,
+        showConfirmButton: false
+    });
+    return false;
+}
 //--------------------------------------------------------------------------------------------------------------------
+// Function to deny a request sent to a user and send an appropriate reason for denying his/her request
 function denyRequest(requestId){
     var denyReason="";
     swal({
@@ -1787,7 +1630,7 @@ function denyRequest(requestId){
 
             console.log(deniedRequest);
             $.post("../index.php/denyrequest", deniedRequest, function(res){
-                console.log(res);
+                //console.log(res);
                 swal({
                     title: "Request Denied!",
                     text: "Decision and Reason sent to Trader",
@@ -1796,61 +1639,17 @@ function denyRequest(requestId){
                     showConfirmButton: false
                 });
             }, "json");
-            //swal("Nice!", "You wrote: " + denyReason, "success");
         }
     );
-    /*swal({
-        title: "Deny Request?",
-        //text: "You will not be able to undo this operation!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Deny",
-        cancelButtonText: "Cancel",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function(isConfirm){
-        
-        if (isConfirm) {
-            $.get("../index.php/denyrequest/"+requestId, function(res){
-                //swal("Denied!", "The trader will be notified of your decision", "success");
-                swal({
-                    title: "Request Denied!",
-                    text: "The trader will be notified of your decision",
-                    type: "success",
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-                 getUserRequests();
-            }, "json");
-           
-        } else {
-            //swal("Cancelled", "The item request is still pending", "error");
-            swal({
-                title: "Cancelled!",
-                text: "The item request is still pending",
-                type: "error",
-                timer: 1000,
-                showConfirmButton: false
-            });
-        }
-    }); */
 }
 
-
-
 //--------------------------------------------------------------------------------------------------------------------
-//
-
-
-//-------------------------------------------------------------------------//
-// Gets the information for the items that the user requested
+// Functionality to display a listing of meetup details of items that the user made requests for
 function getRequestedMeetUp(){
     $.get("../index.php/requestedmeetuprequestee", function(res1){
-        console.log(res1);
+        //console.log(res1);
         $.get("../index.php/requestedmeetuprequester",function(res2){
-            console.log(res2);
+            //console.log(res2);
             processRequestedMeetUp(res1,res2);
         },"json");
     },"json");
@@ -1858,7 +1657,7 @@ function getRequestedMeetUp(){
 } 
 
 function processRequestedMeetUp(records, records2){
-    console.log(records);
+    //console.log(records);
     var sec_id = "#table_sec_requested";
     var htmlStr = $("#table_heading_requested").html(); //Includes all the table, thead and tbody declarations
     var i = 0, size = records2.length -1;
@@ -1867,11 +1666,10 @@ function processRequestedMeetUp(records, records2){
     //var currDate = new Date();
     records.forEach(function(el){
         var date = moment(el['tradedate']).format('dddd MMMM Do, YYYY');
-        // do get request with request id to get my item and contact
         htmlStr += "<tr>";
-        htmlStr += "<td> <a href='#' onclick=\"viewTraderProfile("+el.requestee+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"></a>"
-        htmlStr += "<button style='color:black;text-decoration:none;' type='button' class='btn btn-link btn-xs' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>"
-        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requestee+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'> <a href='#' onclick=\"viewTraderProfile("+el.requestee+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"></a>"
+        htmlStr += "<button style='color:black;text-decoration:none;vertical-align:middle;' type='button' class='btn btn-link btn-xs' onclick=\"viewTraderProfile("+el.requestee+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>"
+        htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-default' onclick =\"chat("+el.requestee+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
 
         htmlStr += "<td style='vertical-align:middle;'>"+el['requesteecontact']+"</td>"
         htmlStr += "<td style='vertical-align:middle;'><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>"
@@ -1882,10 +1680,10 @@ function processRequestedMeetUp(records, records2){
         var now = moment().format('YYYY-MM-DD hh:mm:ss');
         //alert(now > el.tradedate);
         if(moment(now).isAfter(el.tradedate)){
-            htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\" data-toggle='tooltip' data-placement='bottom' title='Give feedback to remove transaction'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+            htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-info' onclick =\"showRequesterFeedbackForm("+el.tradeid+")\" data-toggle='tooltip' data-placement='bottom' title='Give feedback to remove transaction'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         else{
-            htmlStr += "<td><button type='button' class='btn btn-info disabled' data-toggle='tooltip' data-placement='bottom' title='Unable to give feedback, trade date not passed yet'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+            htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-info disabled' data-toggle='tooltip' data-placement='bottom' title='Unable to give feedback, trade date not passed yet'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         
         htmlStr +=" </tr>" ;
@@ -1898,32 +1696,30 @@ function processRequestedMeetUp(records, records2){
 }
 
 
-//---------------------------------------------------------------------------------//
-// Gets requests for the requests made for the users' items
-
+//------------------------------------------------------------------------------------------------------------------------
+// Functionality to display a listing of meetup details of the user's items that other users requested
 function getRequestsMeetUp(){
      $.get("../index.php/requestsmeetuprequestee", function(res1){
-        console.log(res1);
+        //console.log(res1);
         $.get("../index.php/requestsmeetuprequester",function(res2){
-            console.log(res2);
+            //console.log(res2);
             processRequestsMeetUp(res1, res2);
         },"json");
     },"json");
 }
 
 function processRequestsMeetUp(records, records2){
-    console.log(records);
+    //console.log(records);
     var sec_id = "#table_sec_requests";
     var htmlStr = $("#table_heading_requests").html(); //Includes all the table, thead and tbody declarations
     var i = 0;
 
     records2.forEach(function(el){
-        // do get request with request id to get my item and contact
         var date = moment(el['tradedate']).format('dddd MMMM Do, YYYY');
         htmlStr += "<tr>";
-        htmlStr += "<td> <a href='#' onclick=\"viewTraderProfile("+el.requester+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"></a>"
-        htmlStr += "<button style='color:black;text-decoration:none;' type='button' class='btn btn-link btn-xs' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
-        htmlStr += "<td><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'> <a href='#' onclick=\"viewTraderProfile("+el.requester+")\"><img class='img-rounded' src=\"" + el['profilepicture'] + "\" width=\"40\" height=\"45\"></a>"
+        htmlStr += "<button style='color:black;text-decoration:none;vertical-align:middle;' type='button' class='btn btn-link btn-xs' onclick=\"viewTraderProfile("+el.requester+")\">" +  "<strong>"+  " " + el['username'] + "</strong></button></td>";
+        htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-default' onclick =\"chat("+el.requester+")\"><i class='fa fa-comments' aria-hidden='true'></i></button></td>";
         htmlStr += "<td style='vertical-align:middle;'>"+el['requestercontact']+"</td>";
         htmlStr += "<td style='vertical-align:middle;'><button type='button' style='color:black;text-decoration:none;' class='btn btn-link disabled'><strong>" + " "+el['itemname']+"<strong></button></td>";
         htmlStr += "<td style='vertical-align:middle;'>"+records[i]['itemname']+"</td>";
@@ -1934,10 +1730,10 @@ function processRequestsMeetUp(records, records2){
         //alert(now);
         //alert(el.tradedate);
         if(moment(now).isAfter(el.tradedate)){
-            htmlStr += "<td><button type='button' class='btn btn-info' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\" data-toggle='tooltip' data-placement='bottom' title='Give feedback to remove transaction'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+            htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-info' onclick =\"showRequesteeFeedbackForm("+el.tradeid+")\" data-toggle='tooltip' data-placement='bottom' title='Give feedback to remove transaction'><i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         else{
-            htmlStr += "<td><button type='button' class='btn btn-info disabled' data-toggle='tooltip' data-placement='bottom' title='Unable to give feedback, trade date not passed yet'> <i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
+            htmlStr += "<td style='vertical-align:middle;'><button type='button' class='btn btn-info disabled' data-toggle='tooltip' data-placement='bottom' title='Unable to give feedback, trade date not passed yet'> <i class='fa fa-commenting-o' aria-hidden='true'></i></button></td>";
         }
         
         htmlStr +="</tr>" ;
@@ -1949,6 +1745,8 @@ function processRequestsMeetUp(records, records2){
     $("#requestscount").html(records2.length); 
 }
 
+//------------------------------------------------------------------------------------------------------------------------
+// Functionality for the requestee to modify the proposed meetup date
 function editTradeDate(tradeId){
     $("#editdateform #tradeid").val(tradeId);
     $("#editDateModal").modal('show');
@@ -1966,9 +1764,9 @@ function changeTradeDate(){
         "tradeid": tradeId,
         "newtradedate" : newTradeDate
     };
-    console.log(tradeDateDetails);
+    //console.log(tradeDateDetails);
     $.post("../index.php/changetradedate", tradeDateDetails, function(res){
-        console.log(res);
+        //console.log(res);
         swal({
             title: "Trade Date modified!",
             text: "Requester will see change",
@@ -1980,9 +1778,8 @@ function changeTradeDate(){
     getRequestsMeetUp();
     return false;
 }
-
-
-
+//------------------------------------------------------------------------------------------------------------------------
+// Functionality for the requestee to modify the proposed meetup location
 function editTradeLocation(tradeId){
     $("#editlocationform #tradeid").val(tradeId);
     $("#editLocationModal").modal('show');
@@ -2001,7 +1798,7 @@ function changeTradeLocation(){
     };
     //alert(tradeLocationDetails);
     $.post("../index.php/changetradelocation", tradeLocationDetails, function(res){
-        console.log(res);
+        //console.log(res);
         swal({
             title: "Trade Location modified!",
             text: "Requester will see change",
@@ -2013,70 +1810,20 @@ function changeTradeLocation(){
     getRequestsMeetUp();
     return false;
 }
-
-
+//------------------------------------------------------------------------------------------------------------------------
+// Function to display a greeting to the user if the cancel button is clicked
 function cancelEdit(){
     swal({
-            title: "Cancelled!",
-            text: "Nothing modified",
-            type: "error",
-            timer: 1000,
-            showConfirmButton: false
-        });
+        title: "Cancelled!",
+        text: "Nothing modified",
+        type: "error",
+        timer: 1000,
+        showConfirmButton: false
+    });
     return false;
 }
-//------------------------------------------------------------------------------//
-// Decides on the location given by the requestee
-function locationDecision(tradeid){
-    swal({
-            title: "Accept Location?",
-            text: tradeid,
-            type: "warning",
-            animation: "slide-from-top",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, accept it!",
-            cancelButtonText: "No, deny it!",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-
-        },
-        function(isConfirm){
-            if (isConfirm) {
-                swal("Accepted!", "You have confirmed meetup location!", "success");
-            } 
-            else {
-                swal("Denied!", "Location rejected!", "error");
-            }
-        }
-    );
-}
-
-//------------------------------------------------------------------------------//
-function suggestLocation(tradeid){
-    /*swal({
-          title: "Suggest a meet up location",
-          text: "Write something interesting:",
-          type: "input",
-          showCancelButton: true,
-          closeOnConfirm: false,
-          animation: "slide-from-top",
-          inputPlaceholder: "E.g. DAAGA"
-        },
-        function(inputValue){
-          if (inputValue === false) return false;
-          
-          if (inputValue === "") {
-            swal.showInputError("You need to write something!");
-            return false
-          }
-          
-          swal("Nice!", "Your suggested locationn is: " + inputValue, "success");
-        }
-    ); */
-}
-
-
+//-----------------------------------------------------------------------------------------------------------------------
+// Functionality to display a feedback form with a rating and comments for the requester to rate the requestee
 function showRequesterFeedbackForm(tradeId){
     $("#requesterfeedbackform #tradeid").val(tradeId);
     $('#requesterFeedbackModal').modal('show');
@@ -2093,7 +1840,7 @@ function requesterFeedback(){
         "comment" : comment
     };
 
-    console.log(feedback);
+    //console.log(feedback);
     $.post("../index.php/requesterfeedback", feedback, function(res){
         //swal("Feedback saved!", "Thank you for your rating and comment", "success");
         swal({
@@ -2107,9 +1854,8 @@ function requesterFeedback(){
     }, "json");
     return false;
 }
-
-
-
+//-----------------------------------------------------------------------------------------------------------------------
+// Functionality to display a feedback form with a rating and comments for the requestee to rate the requester
 function showRequesteeFeedbackForm(tradeId){
     $("#requesteefeedbackform #tradeid").val(tradeId);
     $('#requesteeFeedbackModal').modal('show');
@@ -2127,7 +1873,7 @@ function requesteeFeedback(){
         "comment" : comment
     };
     
-    console.log(feedback);
+    //console.log(feedback);
     $.post("../index.php/requesteefeedback", feedback, function(res){
         //swal("Feedback saved!", "Thank you for your rating and comment", "success");
         swal({
@@ -2141,7 +1887,8 @@ function requesteeFeedback(){
     }, "json");
     return false;
 }
-
+//-----------------------------------------------------------------------------------------------------------------------
+// Function to display a greeting when the user chooses to cancel sending feedback
 function cancelFeedback(){
     //swal("Cancelled!", "Feedback not saved!", "error");
     swal({
@@ -2153,60 +1900,10 @@ function cancelFeedback(){
     });
 }
 //------------------------------------------------------------------------------------------------
-function logout(){
-    swal({
-        title: "Logout of JunkTrade?",
-        //text: "You will not be able to undo this operation!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, logout",
-        cancelButtonText: "Cancel",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function(isConfirm){
-        
-        if (isConfirm) {
-            $.get("../index.php/user",function(userId){
-                $.get("../index.php/getusername/"+userId, function(res){
-                    var user = {
-                        "userid" : userId
-                    };
-
-                    $.post("../index.php/logout", user);
-                    swal({ 
-                        title: "Goodbye " + res.firstname,
-                        text: "Thanks for using JunkTrade, see you soon",
-                        type: "success",
-                        timer: 1000,
-                        showConfirmButton: false
-                    },
-                        function(){
-                            window.location.href = 'login.php';
-                        }
-                    );
-                },"json"); 
-            },"json");
-            
-
-        } else {
-            //swal("Still Logged In", "Continue Trading!", "success");
-            swal({
-                title: "Logout Cancelled!",
-                text: "Continue using JunkTrade",
-                type: "success",
-                timer: 1000,
-                showConfirmButton: false
-            });
-        }
-    });
-    return false;
-}
-//------------------------------------------------------------------------------------------------------
+// Functionality to provide a chat between two users
 var currChat = [], chatInterval=null;
 function chat(traderid){
-    console.log(traderid);
+    //console.log(traderid);
     var chatId;
     $.get("../index.php/user",function(userid){
         //console.log(userid);
@@ -2235,7 +1932,6 @@ function chat(traderid){
     });
 }
 
-
 function sendMessage(){ 
     var sentFrom = $("#chatform #userid").val();
     var sentTo = $("#chatform #traderid").val();
@@ -2243,7 +1939,7 @@ function sendMessage(){
     message = message.replace(/'/g, "\\'");
     //message = encodeURIComponent(message).replace(/'/g,"%27");
     var traderName = $("#chatform #traderusername").val();
-    console.log(traderName);
+    //console.log(traderName);
     var chat = {
         "sentfrom" : sentFrom,
         "sentto" : sentTo,
@@ -2269,7 +1965,7 @@ function getMessages(traderid, userid, username){
     $.get("../index.php/getmessages/"+traderid, function(messages){
         currChat = messages;
         var currMessages = $("#chatform #messages").val();
-        console.log("getMessages  called");
+        //console.log("getMessages  called");
         var chat="", divchat="<div class='container-fluid'>",chatId, isRead, sentDate;
 
         $.get("../index.php/userstatus/"+traderid, function(res){
@@ -2321,7 +2017,7 @@ function getNewMessages(traderid, userid, username){
 
         var chat="",chatId, divchat="<div class='container-fluid'>";
         if(JSON.stringify(messages) !== JSON.stringify(currChat) && $('#chatmodal').hasClass('in')){
-            console.log("New Message/s");
+            //console.log("New Message/s");
             currChat = messages;
 
             messages.forEach(function(el){
@@ -2358,14 +2054,15 @@ function getNewMessages(traderid, userid, username){
 
 
 
-//-------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
+// Functionality to display upcoming meetups that the user has with other traders
 function userMeetUp(){
     $.get("../index.php/usermeetup",processUserMeetUp,"json");
 
 }
 
 function processUserMeetUp(records){
-    console.log(records);
+    //console.log(records);
     displayUserMeetUp(records);
 }
 
@@ -2374,16 +2071,10 @@ function displayUserMeetUp(records){
     var eventsCount = 0;
     //console.log(records.length);
     if(records.length != 0){
-        //console.log(records.length);
-        //console.log(records);
-        //records.forEach(function(el){
-            for(var i = 0; i < records.length; i++){
-                events+="<div class='well well-sm'><a href='meetup.php' style='cursor: pointer; color:black'><i class='fa fa-map-marker' aria-hidden='true'></i><strong> " + records[i][1] + "</strong> with <i class='fa fa-user' aria-hidden='true'></i><strong> "+records[i][4]+"</strong> on <i class='fa fa-calendar' aria-hidden='true'></i><em><small> " + moment(records[i][0]).format('dddd MMMM Do, YYYY') + "</small></em></a></div>";
-                eventsCount += 1;
-            }
-            
-        //});
-    
+        for(var i = 0; i < records.length; i++){
+            events+="<div class='well well-sm'><a href='meetup.php' style='cursor: pointer; color:black'><i class='fa fa-map-marker' aria-hidden='true'></i><strong> " + records[i][1] + "</strong> with <i class='fa fa-user' aria-hidden='true'></i><strong> "+records[i][4]+"</strong> on <i class='fa fa-calendar' aria-hidden='true'></i><em><small> " + moment(records[i][0]).format('dddd MMMM Do, YYYY') + "</small></em></a></div>";
+            eventsCount += 1;
+        }
     }
     else{
         events+="<div class='well well-sm'> <em>No upcoming meetups</em></div>";
@@ -2393,7 +2084,8 @@ function displayUserMeetUp(records){
     $("#reminders").html(events);
 
 }
-//---------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+// Functionality to display follower uploaded items
 function userFollowerUpdates(){
     $.get("../index.php/userfollowerupdates", processUserFollowerUpdates, "json");
 }
@@ -2401,7 +2093,7 @@ function userFollowerUpdates(){
 function processUserFollowerUpdates(records){
     //console.log(records);
     $.get("../index.php/userfollowerupdatesrequests", function(res){
-        console.log(res);
+        //console.log(res);
         displayUserFollowerUpdates(records, res);
     },"json");
     
@@ -2436,8 +2128,8 @@ function displayUserFollowerUpdates(records, requests){
     
 
 }
-//--------------------------------------------------------------------------------------------
-
+//---------------------------------------------------------------------------------------------------------------------------
+// Function that displays a prompt for a user to comment of why he/she is reporting another trader
 function reportTrader(traderId){
     swal({
         title: "Trader Report",
@@ -2480,7 +2172,8 @@ function reportTrader(traderId){
         }
     );
 }
-
+//---------------------------------------------------------------------------------------------------------------------------
+// Function that displays a prompt for a user to comment of why he/she is reporting an item
 function reportItem(itemId){
     swal({
         title: "Item Report",
@@ -2524,4 +2217,4 @@ function reportItem(itemId){
     );
 }
 //---------------------------------END-------------------------------------------------
-console.log("JavaScript file was successfully loaded in the page");
+console.log("JunkTrade's JavaScript file was successfully loaded in the page");

@@ -148,12 +148,6 @@ var currItemRequests = <?php echo json_encode(getTraderProfileItemsTradedStatus(
 console.log(currItems);
 console.log(currDeniedRequests);
 currItems.forEach(function(el){
-  for(var j =0; j < currItemRequests.length; j++){
-    if(el == currItemRequests[j]['item'] || el == currItemRequests[j]['item2']){
-      itemChange(currItemRequests[j]['itemname']);
-    }
-  }
-
   if(currDeniedRequests != null){
     for(var i =0; i < currDeniedRequests.length; i++){
       if(el == currDeniedRequests[i]['item'] && currDeniedRequests[i]['decision'] == false){

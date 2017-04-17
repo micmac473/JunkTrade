@@ -14,7 +14,7 @@ include "../lib.php";
     <meta name="description" content="">
     <meta name="author" content="">
     
-    <title>junkTrade Login</title>
+    <title>JunkTrade Password Update</title>
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
@@ -54,6 +54,7 @@ body {
   padding-bottom: 6rem;
   min-height: 100%;
   background-color: #f6f6f6;
+  font-family: "Roboto Condensed", sans-serif;
 }
 form {
   background-color: #FFFFFF;
@@ -70,8 +71,8 @@ form {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img alt ="logo" width ="30px" height ="30px" src ="../img/logo.png"></a>
-          <a class ="navbar-brand" href ="../">junkTrade</a>
+          <a class="navbar-brand" href="../" style="padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
+          <a class ="navbar-brand" href ="../">JunkTrade</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
       
@@ -90,8 +91,8 @@ form {
     </nav>
   <div class ="container">
     <div class="jumbotron" style="text-align:center; color: #096790; font-family: 'Oswald', sans-serif;">
-    <h1 >JunkTrade </h1>
-    <h3> Enter new passsword Details <i class="em em-grin"></i> <span class="glyphicon glyphicon-thumbs-up"></span></h3>
+    <h1>JunkTrade Password Update</h1>
+    <h3> Enter new password</h3>
   </div>
     <div class ="row main">
       <div class="main-login main-center">
@@ -99,8 +100,6 @@ form {
           <form  role="form" data-toggle="validator" onsubmit="return updatePassword();">
           <fieldset>
             <!-- Form Name -->
-            <legend style="text-align: center"> <h2> Update Password </h2></legend>
-
             <div class="form-group has-feedback">
               <label for="password" class="cols-sm-2 control-label">Password</label>
               <div class="cols-sm-10">
@@ -133,9 +132,9 @@ form {
           </fieldset>
         </form>
 <!--footer -->
-  <div class="footer">
-    <p> &copy; JunkTrade 2016 </p>
-  </div>
+        <div class="footer">
+          <p> <strong> &copy;2017 JunkTrade. All rights reserved</strong> </p>
+        </div>
       </div>
     </div>
   </div>

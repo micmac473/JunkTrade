@@ -14,7 +14,7 @@ include "../lib.php";
     <meta name="description" content="">
     <meta name="author" content="">
     
-    <title>junkTrade Login</title>
+    <title>JunkTrade Password Recovery</title>
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
@@ -55,6 +55,7 @@ body {
   padding-bottom: 6rem;
   min-height: 100%;
   background-color: #f6f6f6;
+  font-family: "Roboto Condensed", sans-serif;
 }
 form {
   background-color: #FFFFFF;
@@ -71,8 +72,8 @@ form {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img alt ="logo" width ="30px" height ="30px" src ="../img/logo.png"></a>
-          <a class ="navbar-brand" href ="../">junkTrade</a>
+          <a class="navbar-brand" href="../" style="padding-top: 0; margin:0;"><img alt ="logo" width ="70px" height ="500px" src ="../img/logo.png" class="img-responsive" style="max-height:146%;"></a>
+          <a class ="navbar-brand" href ="../">JunkTrade</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
       
@@ -91,17 +92,15 @@ form {
     </nav>
   <div class ="container">
     <div class="jumbotron" style="text-align:center; color: #096790; font-family: 'Oswald', sans-serif;">
-    <h1 >JunkTrade </h1>
-    <h3> Oops you forgot your password <i class="em em-cry"></i> <span class="glyphicon glyphicon-thumbs-down"></span></h3>
-  </div>
+      <h1>JunkTrade Password Recovery</h1>
+      <h3>Oops, it seems that you forgot your password</h3>
+    </div>
     <div class ="row main">
       <div class="main-login main-center">
         <!-- <form class="form-horizontal" onsubmit="return login();" method ="POST" action="index.php/users"> -->
-          <form  role="form" data-toggle="validator" onsubmit="return login1() ;">
+          <form  role="form" data-toggle="validator" onsubmit="return forgotPassword() ;">
           <fieldset>
             <!-- Form Name -->
-            <legend style="text-align: center"> <h2> Forget Password </h2></legend>
-
             <div class="form-group has-feedback">
               <label for="username" class="cols-xs-2 control-label">Username or email address</label>
               <div class="cols-xs-12">

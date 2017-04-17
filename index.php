@@ -451,6 +451,12 @@ $app->get("/itemsdeniedstatustrader/{id}", function(Request $request, Response $
 	return $response;
 });
 
+$app->get("/itemsdeniedstatussearch", function(Request $request, Response $response){
+	$deniedRequests = getItemRequestDeniedStatusSearch();
+	$response = $response->withJson($deniedRequests);
+	return $response;
+});
+
 $app->get("/requeststatus/{id}", function(Request $request, Response $response){
 	$val = $request->getAttribute('id');
 	// Get Record for Specific Country

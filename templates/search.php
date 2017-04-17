@@ -82,7 +82,7 @@ include "base.php";
 				             
 				            				echo "</div>";
 				            				echo "</div>";
-				            				$currSearchItems[] = $item['itemid'];
+				            				$currSearchItems[] = $item;
 				            				break;
 			   							}//end if($request['requester'] == $user)
 			   						}//end else
@@ -101,7 +101,7 @@ include "base.php";
 				             
 				            	echo "</div>";
 				            	echo "</div>";
-				            	$currSearchItems[] = $item['itemid'];
+				            	$currSearchItems[] = $item;
 			   				}//end ($j == count($requests))
 			          		
 		    		}//end for($i = 0; $i < count($items); $i++)
@@ -163,10 +163,12 @@ include "base.php";
 
 var search = <?php echo json_encode($_POST['searchname']) ?>;
 var currItems = <?php echo json_encode($currSearchItems) ?>;
+var currDeniedRequests = <?php echo json_encode(getItemRequestDeniedStatusSearch()) ?>;
 
 
 setInterval(function(){
   querySearchItemsChange(search, currItems);
+  queryDeniedRequestsChange(currItems);
 },2500);
 
 
@@ -178,8 +180,8 @@ function querySearchItemsChange(search, currItems){
       //console.log(currItems);
       currItems.forEach(function(el){
         for(var i =0; i < results.length; i++){
-          if(el == results[i]['item'] || el == results[i]['item2'])
-            itemChange();
+          if(el['itemid'] == results[i]['item'] || el['itemid'] == results[i]['item2'])
+            itemChange(el['itemname']);
         }
       });
     },"json");
@@ -187,9 +189,21 @@ function querySearchItemsChange(search, currItems){
 
 }
 
-function itemChange(){
+function queryDeniedRequestsChange(currItems){
+	$.get("../index.php/itemsdeniedstatussearch", function(results){
+		//console.log(results);
+		currItems.forEach(function(el){
+	        for(var i =0; i < results.length; i++){
+	          if(el['itemid'] == results[i]['item'] && results[i]['decision'] == false)
+	            deniedResponse(results[i]['itemname']);
+	        }
+		});
+    },"json");
+}
+
+function itemChange(itemName){
   swal({ 
-        title: "Sorry, an item has been traded",
+        title: "Sorry,\"" +itemName+"\" has been traded",
         text: "Page shall be refreshed",
         type: "warning",
         timer: 2000,
@@ -199,6 +213,20 @@ function itemChange(){
             window.location.reload();
         }
     );      
+}
+
+function deniedResponse(itemName){
+    swal({ 
+        title: itemName +" Request was Denied!",
+        text: "Redirecting to Outgoing Requests to view reason",
+        type: "warning",
+        timer: 2000,
+        showConfirmButton: false
+    },
+        function(){
+            window.location.href = 'trade.php';
+        }
+    );       
 }
 
 </script>
